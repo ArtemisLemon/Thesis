@@ -1,0 +1,427 @@
+\section{CP Models for OCL Collection Type Casting Operations}\label{sec:contrib_type_casting}
+
+To illustrate OCL type casting, consider the following invariant, taken from the Zoo Model used in the experimentation:
+%To illustrate what happens during OCL type casting, let's take another look at our zoo constraint: 
+\begin{lstlisting}
+context Cage inv:
+    self.animals.species.asSet().size < 2
+\end{lstlisting}
+If \inlineocl{self.animals.species} evaluates to the sequence \{1,1,1\}, applying \inlineocl{asSet()} yields the set $\{1\}$, indicating that the cage contains a single species of animal. In the following, we define CP models to capture such collection type conversions. 
+
+Consider an expression of the form \inlineocl{src.asOP()}, where \inlineocl{src} is a collection-valued expression such as \inlineocl{self.attribute}, and \inlineocl{asOP()} denotes a type-casting operation applied to the source collection (e.g., \inlineocl{asSequence()}, \inlineocl{asSet()}, etc.).
+Let $X = \{x_1,...,x_z\}$ be the array of variables modeling the values of \inlineocl{src}, and let $Y = \{y_1,...,y_z\}$ represent the resulting collection after applying \inlineocl{asOP()}.
+
+% The set encoding has the same number of variables as the bag encoding it comes from.
+% Because we cannot foresee how many of the variables encoding the set will preserve their value from the bag, the resulting array is of the same size.
+% \ytodo{We don't know values, we model based on number of variables encoding the expressions.}
+
+% \subsection{asBag()}
+\smallskip
+\noindent
+\textbf{A. asBag():}
+\label{ssec:asBag}
+% Consider an expression \inlineocl{src.asBag()} where \inlineocl{src} is an expression such as \inlineocl{self.attribute}. Let $X = \{x_1,...,x_z\}$ be the array of variables representing \inlineocl{src}, the result of \inlineocl{src.asBag()} is a multiset $Y = \{y_1,...,y_z\}$ that preserves all values from $X$, including duplicates, but with symmetries removed. 
+Consider the expression \inlineocl{src.asBag()}, where the result is evaluated as a multiset $Y$ that preserves all values from the source collection $X$, including repeated elements. Because OCL bags are insensitive to permutations, multiple orderings of the same values are semantically equivalent. To avoid such symmetries in the model, we impose a canonical form by sorting $Y$ in descending order. This also ensures that any dummy values $d$ used to pad the collection appear at the end. For example, given $X=\{1,2,d,1\}$, we enforce the canonical bag representation $Y=\{2,1,1,d\}$. This transformation is modeled using the global constraint \inlinecstr{sort}{X, Y}, which sorts $X$ into $Y$. 
+%%
+% For example given an instantiated array of variables such as $X=\{1,2,d,1\}$, \inlineocl{asBag} returns the array $Y=\{2,1,1,d\}$.
+% In $Y$ the counts of each value are preserved from $X$, but the only allowed permutation for $Y$ is that in descending order.
+% \inlinecstr{asBag}{X,Y} holds true if:
+% \ytodo{formal definition}
+% \begin{equation*}\label{csp:bag_XY_def}
+% asBag(X,Y) \iff
+% \begin{aligned}
+% &permutation(X,Y,P)\\
+% \wedge\;& y_i \geq y_{i+1}, \forall i\in [1,z[
+% \end{aligned}
+% \end{equation*}
+%Our implementation reformulates \inlinecstr{asBag}{X,Y} using the \inlinecstr{sort}{X,Y} global constraint:
+\begin{equation}\label{csp:bag_XY} \footnotesize
+asBag(X,Y):
+\begin{cases}
+sort(X,\reverse{Y}) \\
+% Y' = \reverse{Y}\\
+% Bag(Y)
+% Y = reverse(Y')
+\end{cases}
+\end{equation}
+$\reverse{Y}$ denotes the reverse of $Y$, used to enforce descending order.
+% Here we introduce the notation $\reverse{Y}$ which represents the reversed array of variables.
+% For instance if $X=\{x_1,x_2\}$ then $\reverse{X}=\{x_2,x_1\}$.
+% This allows us to use \inlinecstr{sort}{X,Y} for a descending order.
+
+% \subsection{asSet()}
+\smallskip
+\noindent
+\textbf{B. asSet():}
+\label{ssec:asSet}
+Consider the expression \inlineocl{src.asSet()}. The \inlineocl{asSet()} operation removes duplicate elements from the source collection $X$ while disregarding order. In our encoding, this corresponds to extracting the distinct values from $X$ and placing them into the result array $Y$ in a canonical form. Since the number of unique elements in $X$ is not known beforehand, $Y$ is defined with the same arity as $X$, and any unused positions are filled with a dummy value $d$. For instance, given an instantiation $X=\{1,2,1,d\}$, the result of \inlineocl{asSet()} would be $Y=\{2,1,d,d\}$. 
+% Let $X = \{x_1,...,x_z\}$ represent the source collection, and $Y = \{y_1,...,y_z\}$ the resulting set with possible padding using the dummy value $d$. Because the number of distinct elements in $X$ is not known in advance, $Y$ is defined with the same arity, and dummy values are used to fill unused positions. For example given an instantiated array of variables such as $X=\{1,2,1,d\}$, \inlineocl{asSet} returns the array $Y=\{2,1,d,d\}$.
+% Lets consider an expression of the form \inlineocl{src.asSet()}, where \inlineocl{src} is an expression such as \inlineocl{self.attribute}.
+% Let $X = \{x_1,...,x_z\}$ be the variables representing \inlineocl{src}.
+% Let $Y = \{y_1,...,y_z\}$ be the variables representing \inlineocl{src.asSet()}.
+% For example given an instantiated array of variables such as $X=\{1,2,1,d\}$, \inlineocl{asSet} returns the array $Y=\{2,1,d,d\}$.
+% All values of $X$ appear in $Y$ once, and the only permutation allowed is that in descending order.
+% \vspace{-0.3cm}
+\begin{equation}\label{csp:set_XY} \footnotesize
+asSet(X,Y) :
+\begin{cases} 
+sort(X,\reverse{S}) \\
+X' = S \mathbin{\|} \{d\} \\
+Y' = Y \mathbin{\|} \{d\} \\
+p_1=1\\
+\forall i \in ]2,z+1] :& p_i=p_{i-1}+ \llbracket x'_{i-1} \neq x'_i \rrbracket \\
+&element(x'_i,Y',p_i)\\
+\forall i \in [1,z] :  &y_i \geq y_{i+1}\\
+% Set(Y)
+\end{cases}
+\end{equation}
+To enforce the \inlineocl{asSet()} semantics, we first sort the source array $X$ in descending order into an auxiliary array $S$. We then define an array of position variables $P$ and compute the position $p_i$ of each variable $s_i$ in a new array $Y$, ensuring that repeated values in $S$ map to the same position. The first occurrence of a new value increments the position counter: $p_i=p_{i-1}+ \llbracket s_{i-1} \neq s_i \rrbracket$.
+%%
+To support cases where all positions in $Y$ are filled with unique values, we append a dummy value $d$ to $S$, yielding $X' = S \mathbin{\|} \{d\}$. In the case where all values in $X$ are distinct (e.g., $X = \{2,3,1,4\}$), the dummy has no room in $Y$. We resolve this by appending a dummy value to $Y$ as well, forming $Y' = Y \mathbin{\|} \{d\}$. This dummy will occupy the first unused position in $Y$, and all subsequent positions are forced to $d$ by a descending sort constraint $y_i \geq y_{i+1}$. The final mapping from positions $p_i$ to $Y'$ is enforced via an \inlinecstr{element} constraint over $X'$ and $Y'$.
+% This ensures that when fewer than $|X|$ distinct values exist, the first unused position in $Y$ then receives this dummy, and the remaining positions are forced to $d$ via the descending sort constraint: $y_i \geq y_{i+1}$.
+% For example, with $X = \{2,1,2,1\}$, the result should be the set $\{2,1\}$ extended with dummy values: $\{2,1,d,d\}$.
+% The final mapping from $X'$ to $Y'$ is then enforced using the $\mathit{element}$ constraint, using the computed positions $p_i$. 
+% The resulting final CP model is detailed by equation~(\ref{csp:set_XY}).
+
+% First we sort $X$ in descending order into $S$.
+% % This naturally gives us ranges of repeated values.
+% For each variable $s_i$ of $S$ we associate a variable $p_i$ indicating their position in $Y$.
+% Each range of repeated values in $S$, will share a position in $Y$.
+% The first value of a range increments the position value: $p_i=p_{i-1}+ \llbracket x'_{i-1} \neq x'_i \rrbracket$.
+% A special case appears when the source collection is full, For example: given the instantiation \{2,1,2,1\} the expected result is \{2,1,d,d\}.
+% To handle this case, we add a dummy value at the end of the input: $X'=S\;d$.
+% This dummy value will be copied into the first variable of $Y$ not holding a value from $X$.
+% The subsequent variables of $Y$ are all forced to the dummy value by the sorting constraint: $y_i\geq y_{i+1}$.
+% In the case the source is full and all values are different, such as \{2,3,1,4\} the dummy value has no place in the result \{4,3,2,1\}, so we reserve a place for it $Y'=Y\;d$.
+% The element constraint is then applied using the determined positions $p_i$, and the arrays with the added dummy values $X'$ and $Y'$.
+
+% \subsection{asSequence()}
+\smallskip
+\noindent
+\textbf{C. asSequence():}
+\label{ssec:asSeq}
+The \inlineocl{asSequence} operation retains all values from the source collection, including duplicates, and reorders them such that all non-dummy values appear first in their original relative order, followed by the dummy values.
+For example, if $X = \{1, d, 2, d, 1\}$, then \inlineocl{asSequence} yields $Y = \{1, 2, 1, d, d\}$. To enforce this transformation, we introduce the following CP model: 
+% \vspace*{-.2em}
+\begin{equation}\label{csp:seq_X2Y} \footnotesize
+asSeq_{x2y}(X,Y) :
+\begin{cases}
+stable\_keysort(\langle B,X\rangle,\langle B',Y\rangle,1) \\
+~~b_i=\llbracket x_i=d \rrbracket, \forall i \in [1,z] \\
+~~b'_i=\llbracket y_i=d \rrbracket, \forall i \in [1,z]
+\end{cases}
+\end{equation}
+Here, $B$ and $B'$ are arrays of integer variables of size $z$, of domain ${0,1}$, used as booleans indicating which variables in $X$ and $Y$ are equal to the dummy value $d$. The \inlinecstr{stable\_keysort}{T, S, k} constraint takes a matrix $T$ and produces a sorted matrix $S$, ordering rows based on the first $k$ columns, which form the sort key. In our case, we construct the matrices $\langle B, X \rangle$ and $\langle B', Y \rangle$, and sort on the first column, which separates dummy and non-dummy values while preserving the original order of the non-dummy elements. 
+
+To illustrate, let $X = \{1, d, 2, d, 1\}$, yielding $B = \{0, 1, 0, 1, 0\}$. We apply a stable sort to $B$, considering the pairs $(b_i,x_i)$, and sorting by the key $b_i$. 
+This ensures that all 0s (non-dummy values) appear before all 1s (dummy values), and the relative order of elements with the same key (e.g., all 0s) is preserved (see Table~\ref{tab:sort_stable}). The sorted Boolean array becomes $B' = \{0, 0, 0, 1, 1\}$. Applying the permutation used to sort $B$ to the array $X$ results in $Y = \{1, 2, 1, d, d\}$.
+
+\definecolor{dummyred}{RGB}{255, 200, 200}
+\definecolor{normalgreen}{RGB}{200, 255, 200}
+\definecolor{headerblue}{RGB}{180, 210, 255}
+\begin{table}[!t] \label{tab:sort_stable}
+\centering
+\rowcolors{2}{white}{gray!5}
+\begin{tabular}{|c|>{\columncolor{white}}c|>{\columncolor{white}}c|>{\columncolor{white}}c|>{\columncolor{white}}c|>{\columncolor{white}}c|}
+\rowcolor{headerblue}
+\hline
+\textbf{Index} & \textbf{\( B \)} & \textbf{\( X \)} & \textbf{Sorted Index} & \textbf{\( B' \)} & \textbf{\( Y \)} \\
+\hline
+1 & \cellcolor{normalgreen}0 & \cellcolor{normalgreen}1 & 1 & \cellcolor{normalgreen}0 & \cellcolor{normalgreen}1 \\
+2 & \cellcolor{dummyred}1 & \cellcolor{dummyred}d & 3 & \cellcolor{normalgreen}0 & \cellcolor{normalgreen}2 \\
+3 & \cellcolor{normalgreen}0 & \cellcolor{normalgreen}2 & 5 & \cellcolor{normalgreen}0 & \cellcolor{normalgreen}1 \\
+4 & \cellcolor{dummyred}1 & \cellcolor{dummyred}d & 2 & \cellcolor{dummyred}1 & \cellcolor{dummyred}d \\
+5 & \cellcolor{normalgreen}0 & \cellcolor{normalgreen}1 & 4 & \cellcolor{dummyred}1 & \cellcolor{dummyred}d \\
+\hline
+\end{tabular} \vspace{0.5em}
+\caption{Example of \texttt{asSequence()} transformation using stable sort. Dummy values are in red.}
+\end{table}
+
+
+% \begin{table}[h!]
+% \centering
+% \begin{tabular}{|c|c|c|c|c|}
+% \hline
+% \textbf{Index} & \textbf{\( B \)} & \textbf{\( X \)} & \textbf{Sorted Index} & \textbf{\( Y \)} \\
+% \hline
+% 1 & 0 & 1 & 1 & 1 \\
+% 2 & 1 & d & 3 & 2 \\
+% 3 & 0 & 2 & 5 & 1 \\
+% 4 & 1 & d & 2 & d \\
+% 5 & 0 & 1 & 4 & d \\
+% \hline
+% \end{tabular}
+% \caption{Example of \texttt{asSequence()} transformation using stable sort}
+% \end{table}
+
+% where $B$ and $B'$ are arrays of pseudo-boolean variables of size $z$, telling which variables of $X$ and $Y$ are equal to the dummy value $d$.
+% The \inlinecstr{stable\_keysort}{T,S,k} constraint takes a table $T$ (a matrix of variables) and sorts it into $S$, ordering on the $k$ first columns which form the key.
+% We assemble the tables from the arrays $B$ and $X$, and $B'$ and $Y$.
+% The final parameter for the \emph{stable keysort} identifies the columns of the key, here we're sorting on the pseudo-boolean variables of the first column.
+% \begin{table}[!t]
+% \centering
+% \begin{tabular}{|l|l|l|l|l|}
+% \cline{1-2} \cline{4-5}
+% B & X &  & B' & Y \\ \cline{1-2} \cline{4-5} 
+% 0 & 1 &  & 0  & 1 \\ \cline{1-2} \cline{4-5} 
+% 1 & d &  & 0  & 2 \\ \cline{1-2} \cline{4-5} 
+% 0 & 2 &  & 0  & 1 \\ \cline{1-2} \cline{4-5} 
+% 1 & d &  & 1  & d \\ \cline{1-2} \cline{4-5} 
+% 0 & 1 &  & 1  & d \\ \cline{1-2} \cline{4-5} 
+% \end{tabular}
+% \end{table}
+% To illustrate: given $X=\{1,d,2,d,1\}$ 
+% we determine $B=\{0,1,0,1,0\}$, 
+% sorting $B$ gives us $B'=\{0,0,0,1,1\}$, 
+% applying to $X$ the permutation that sorts $B$ gives us $Y=\{1,2,1,d,d\}$.
+
+One of the strategies during the search process involves enumerating the variables representing the \emph{top-level nodes} in the OCL abstract syntax tree (AST). For example, in the expression \inlineocl{src.asSequence().sum()<3}, we explore possible values for \inlineocl{.sum()}, which helps filter the values of \inlineocl{src.asSequence}. To extend this filtering process down to \inlineocl{src}, an additional model is needed to manage the refinement.
+%%
+To filter from $Y$ to $X$, we use a cumulative constraint, commonly applied in task scheduling. In this approach, we treat the intervals between values in $Y$ as blocking tasks that prevent certain values from $X$ during scheduling. 
+By scheduling the tasks derived from $X$ around the blocking intervals from $Y$, we filter down the possible values for $X$, effectively refining the search space according to the constraints set by $Y$.
+% During search, one of our strategies is to also enumerate on the variables modeling the \emph{top nodes} of the OCL AST.
+% This means given an expression such as \inlineocl{src.asSequence().sum()<3}, we would try values for \inlineocl{.sum()}, which would filter values for \inlineocl{src.asSequence}, and to continue filtering downwards to the \inlineocl{src} we need an additional model.
+% To filter from $Y$ to $X$ we use the cumulative constraint, which is generally used for task scheduling. 
+% We'll use it by making \emph{blocking tasks} out of the intervals between the values of $Y$, and scheduling the tasks made from $X$ around them:
+\begin{equation}\label{csp:seq_Y2X} \footnotesize
+asSeq_{y2x}(X,Y):
+\begin{cases}
+&sort(Y,Y')\\
+\text{let}\; T_y\; &\text{be the set of tasks such that:}\\
+~\forall i \in [1,z[ &: s_i=y'_i+1\\
+&\hspace{5pt} d_i=\max(0,y'_{i+1}-y'_i-1)\\
+&\hspace{5pt}h_i=z\\
+\text{let}\; T_x\; &\text{be the set of tasks such that:}\\
+~\forall i \in [1,z] &: s_i=x_i\\
+&~~d_i=1\\
+&~~h_i=1\\
+&cumulative(T_y\cup T_x,z)
+\end{cases}
+\end{equation}
+Equation (\ref{csp:seq_Y2X}) defines how to filter values of $X$ based on the sequence $Y$ using a cumulative constraint:
+\begin{enumerate}
+    \item First, $Y$ is sorted into $Y'$ to identify ordered non-dummy values.
+    \item From $Y'$, we define blocking tasks $T_y$ representing disallowed intervals. Each task (associated to value $y'_{i}$ in $Y'$):  
+    \begin{itemize}
+        \item Starts at $s_i=y'_i+1$, 
+        \item Has a duration $d_i=\max(0,y'_{i+1}-y'_{i}-1)$,
+        \item Has a height of $h_i=z$, fully consuming the resource and thus excluding $X$ from that interval.
+    \end{itemize}
+    
+    \item For each variable $x_i \in X$, a task is created in $T_x$ starting at $x_i$, with duration $1$ and height $1$.
+    
+    \item The cumulative constraint on $T_y\cup T_x$ ensures tasks from $X$ are only scheduled in the non-blocked intervals.
+\end{enumerate}
+
+
+% Here we see the cumulative constraint is applied to $T_y\cup T_x$, a set of tasks made from the variables of $X$ and $Y$, and $z$ -- the length of $X$ and $Y$-- is the amount of \emph{resource} for the cumulative constraint.
+% A task is a tuple of variables <$s$,$d$,$h$>, where $s$ represents the start time of a task, $d$ the duration of the task, and $h$ the \emph{height} of the task, which generally encodes \emph{how much of a resource is required by a task}.
+In Figure \ref{fig:cumulative}, blocking tasks (highlighted in red and blue) are created from the intervals between values in $Y'$, representing values that are prohibited for $X$. The white space represents the available slots for scheduling tasks from $X$. This model effectively restricts the possible values for $X$ by ensuring that certain values, determined by the sorted sequence $Y'$, are "blocked" from being selected, refining the search space.
+% we can see how tasks are made from $Y'$ the sorted copy of $Y$ and $X$.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 30 0 0},width=1\linewidth]{Articles/ICTAI2025/figures/cumulative.pdf}
+    \caption{Visualization of the use of cumulative to filter from $Y'$ to $X$}
+    \label{fig:cumulative}
+\end{figure}
+Combining both the \emph{X to Y} and \emph{Y to X} models give us the complete model for \inlineocl{asSequence}.
+\vspace*{-.2cm}
+\begin{equation}\label{csp:seq_XY} \footnotesize
+asSequence(X,Y) :
+\begin{cases}
+asSeq_{x2y}(X,Y)\\
+% asSeq_{0}(X,Y)\\
+asSeq_{y2x}(X,Y)\\
+% Sequence(Y)
+\end{cases}
+\end{equation} 
+% \ytodo{conclude}
+
+
+% In red and blue, we have what we called \emph{blocking tasks}, made from the intervals between values of $Y'$, which are forbidden values for $X$.
+
+
+
+% Tasks are made for every interval between consecutive variables of $Y'$, but here we show the only tasks that block a range of values and hence have width.
+% The duration of blocking tasks, is the size of the interval between values,
+% and the start of a blocking task is the first blocked value.
+% The height of blocking tasks is $z$, which means that it uses the whole \emph{resource} and forces the tasks from $X$ to start at a different time.
+% The white area left available, is where we schedule the tasks from $X$.
+% Each variable $x_i$ of $X$ gets a task, starting at $x_i$, lasting 1 unit of time as a variable holds 1 value, and 1 unit high as it take one spot in the list. 
+% Additionally, we show how the tasks representing $X$ would fit in the solution to the cumulative constraint.
+% \subsection{asOrderedSet()}
+\smallskip
+\noindent
+\textbf{D. asOrderedSet():}
+\label{ssec:asOrderedSet}
+% \ytodo{give motivation, give rigorous definition, before formulation}
+Consider the expression \inlineocl{src.asOrderedSet()}. The \inlineocl{asOrderedSet()} operation removes duplicates from $X$ while preserving the relative order of first occurrences. Unused positions in $Y$ are filled with dummy values $d$. For example if $X=\{1,2,d,1\}$, then \inlineocl{asOrderedSet} returns the array $Y=\{1,2,d,d\}$. To enforce this behavior, we use the following CP model: 
+\begin{equation}\label{csp:ordseq_XY} \footnotesize
+asOrdSet(X,Y):
+\begin{cases}
+% \mathit{stable\_keysort}(\{X,Y'\},\{\reverse{S},\reverse{T}\},1) \\
+\mathit{stable\_keysort}(<X,Y'>,<S,T>,1) \\
+t_1=s_1\\
+\forall i \in ]1,z] : t_i = 
+\begin{cases}
+    s_i &\text{if}\; s_i\neq s_{i-1}\\
+    d &\text{otherwise} \\
+\end{cases}\\
+asSequence(Y',Y)\\
+% OrderedSet(Y)
+\end{cases}
+\end{equation}
+The idea is to sort $X$ into $S$ to group identical values. We build $T$ by keeping the first occurrence of each value in $S$ and replacing subsequent duplicates with the dummy value $d$. We then invert the sort to obtain $Y'$, restoring the original structure. Finally, we apply \inlineocl{asSequence} to push all dummy values to the end, yielding the final ordered set $Y$.
+
+% The strategy here is to sort $X$ into $S$ to get equal values side by side.
+% From $S$ we keep the first occurrence of each value in $T$, the other occurrences in $S$ are replaced with the dummy value in $T$.
+% We undo the sorting of $T$ into $Y'$ to get the order back.
+% To \emph{do and undo} the sorting we leverage the \emph{stable\_keysort} constraint.
+% The removed values may introduce gaps into $Y'$, and to remove them we simply reuse \inlineocl{asSequence}.
+% \ytodo{detail the steps with examples}
+
+Given $X=\{2,1,2,3\}$, sorting yields $S=\{1,2,2,3\}$, filtering gives $T=\{1,2,d,3\}$, reversing the sort results in $Y'=\{2,1,d,3\}$, and packing dummies yields $Y=\{2,1,3,d\}$.
+
+% To illustrate: given $X=\{2,1,2,3\}$
+% we sort $S=\{1,2,2,3\}$,
+% and save the first of each value $T=\{1,2,d,3\}$.
+% Undoing the sort returns the order $Y'=\{2,1,d,3\}$ and we apply \inlineocl{asSequence} to pack the dummies at the end $Y=\{2,1,3,d\}$.
+% \begin{equation}\label{csp:ordseq_XY}
+% asOrdSet(X,Y):
+% \begin{cases}
+% sort\_permutation(X,S,P) \\
+% X' = \reverse{S}\\
+% X'' = \reverse{T}\\
+% x''_1=x'_1\\
+% \forall i \in ]1,z] : x''_i = 
+% \begin{cases}
+%     x'_i &\text{if}\; x'_i\neq x'_{i-1}\\
+%     0 &\text{otherwise} \\
+% \end{cases}\\
+% % \forall i \in ]1,n] : \llbracket x'_i\neq x'_{i-1}\rrbracket
+% % \begin{cases}
+% %     \llbracket x''_i=x'_i\rrbracket \mathit{if} \top\\
+% %     \llbracket x''_i=0\rrbracket \mathit{if} \bot\\
+% % \end{cases}\\
+
+% % \forall i \in ]1,n] : \llbracket x'_i\neq x'_{i-1}\rrbracket\Rightarrow \llbracket x''_i=x'_i\rrbracket\\
+% % \forall i \in ]1,n] : \neg\llbracket x'_i\neq x'_{i-1}\rrbracket \Rightarrow\llbracket x''_i=0\rrbracket\\
+% permutation(Y',T,P)\\
+% asSequence(Y',Y)\\
+% OrderedSet(Y)
+% \end{cases}
+% \end{equation}
+% For example given an instantiated array of variables such as $X=\{1,2,1,d\}$, \inlineocl{asOrderedSet} returns the array $Y=\{1,2,d,d\}$.
+
+% \ytodo{detail permulation refomulation using element}
+% \begin{equation*}
+%     permutation(X,Y,Z) \iff 
+% \begin{aligned}
+%     & z_i\neq z_j,\forall i<j \in [1,n]\\
+%     \wedge\;& x_i=y_{z_i},\forall i\in[1,n]\\
+% \end{aligned}
+% \end{equation*}
+
+% \subsection{Filtering Dummy Values in OCL Collection Operations}
+\smallskip
+\noindent 
+\label{ssec:as_0}
+\textbf{E. Filtering Dummy Values in OCL Collection Operations}
+For many OCL collection operations, the filtering process from $X$ to $Y$ can be enhanced by introducing a dedicated constraint to handle dummy values. This filtering mechanism can be integrated into models such as \ref{csp:bag_XY}, \ref{csp:set_XY}, \ref{csp:seq_XY}, and \ref{csp:ordseq_XY}.
+%%
+% For many OCL collection operations filtration from $X$ to $Y$ can be improved: by adding a filter specifically for dummy values.
+% This constraint model can be added to the collection operation models  \ref{csp:bag_XY}, \ref{csp:set_XY}, \ref{csp:seq_XY} and \ref{csp:ordseq_XY}, and some other collection operations.
+%%
+The filtering approach is inspired by the strategy used in Equation (\ref{csp:seq_X}), employing a $\mathit{regular}$ constraint over a masked array:
+% This filter borrows from the strategy used in CSP \ref{csp:seq_X} by using a regular constraint to accept a masked array.
+% It can also be applied the navigation model in CSP \ref{csp:nav}, with a slight alteration to the mask logic.
+\begin{equation}\label{csp:as_0} \footnotesize
+\mathit{dChannel}(X,Y) :
+\begin{cases}
+\mathit{regular}(S,\mathit{NFA})\\
+\text{where}\; s_i=\llbracket s'_i\neq d\rrbracket, i \in [1,z]\\
+\text{with} \; S' = X\;\mathbin{\|}\;c\mathbin{\|}\;\reverse{Y} \\
+% count(0,Y,c)\\
+% count(0,X,c)
+\end{cases}
+\end{equation}
+The mask encodes non-dummy values with 1s and dummy values with 0s. 
+The $\mathit{regular}$ constraint is applied over the concatenated sequence $S' = X\mathbin{\|}c\mathbin{\|}\reverse{Y}$, where $c$ is a counter variable ranging from 0 to $z$. The non-deterministic finite automaton (NFA), shown in Figure~\ref{fig:afn}, ensures that the number of 0s (i.e., dummies) in $X$ is matched by the same number of leading 0s in $\reverse{Y}$.
+
+% We have the same mask logic as for CSP \ref{csp:seq_X}, hiding values behind 1 and dummies behind 0.
+% The array of variables we apply the mask to is a concatenation of $X$ followed by $c$ followed by $\reverse{Y}$, where $domain(c)=[0,z]$.
+% \ytodo{count closes the cycle meaning not berge acyclic?}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 15 0 0},width=0.45\linewidth]{Articles/ICTAI2025/figures/afn.pdf}
+    \caption{Non-Deterministic Finite Automaton accepting strings where $Y$ starts with the same number of 0 found in $X$.}
+    \label{fig:afn}
+\end{figure}
+% The non-deterministic finite automaton illustrated in Figure \ref{fig:afn}, counts the number of 0 in $X$ and forces $\reverse{Y}$ to start with the same count of 0.
+%An example accepted word would be 1101003000111.
+Given a partial instantiation such as $X=\{x_1,d,x_3,d,x_5\}$, this constraint allows filtering to deduce  $Y=\{y_1,y_2,y_3,d,d\}$.
+
+% \ytodo{conclude}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Section \ref{Typeset section headers in sentence case}
+
+% You presumably are already familiar with the use of \LaTeX. But let 
+% us still have a quick look at how to typeset a simple equation: 
+%
+% \begin{eqnarray}\label{eq:vcg}
+% p_i(\boldsymbol{\hat{v}}) & = &
+% \sum_{j \neq i} \hat{v}_j(f(\boldsymbol{\hat{v}}_{-i})) - 
+% \sum_{j \neq i} \hat{v}_j(f(\boldsymbol{\hat{v}})) 
+% \end{eqnarray}
+% %
+% Use the usual combination of \verb|\label{}| and \verb|\ref{}| to 
+% refer to numbered equations, such as Equation~(\ref{eq:vcg}). 
+% Next, a theorem: 
+
+% \begin{theorem}[Fermat, 1637]\label{thm:fermat}
+% No triple $(a,b,c)$ of natural numbers satisfies the equation 
+% $a^n + b^n = c^n$ for any natural number $n > 2$.
+% \end{theorem}
+
+% \begin{proof}
+% A full proof can be found in the supplementary material.
+% \end{proof}
+
+% Table captions should be centred \emph{above} the table, while figure 
+% captions should be centred \emph{below} the figure.\footnote{Footnotes
+% should be placed \emph{after} punctuation marks (such as full stops).}
+ 
+% \begin{table}[h]
+% \caption{Locations of selected conference editions.}
+% \centering
+% \begin{tabular}{ll@{\hspace{8mm}}ll} 
+% \toprule
+% AISB-1980 & Amsterdam & ECAI-1990 & Stockholm \\
+% ECAI-2000 & Berlin & ECAI-2010 & Lisbon \\
+% ECAI-2020 & \multicolumn{3}{l}{Santiago de Compostela (online)} \\
+% \bottomrule
+% \end{tabular}
+% \end{table}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \subsection{Result CSP for Species Constraint}\label{ssec:zooCSP}
+% To illustrate how all the CSP can be composed, lets see the model for the example zoo constraint:
+% \begin{lstlisting}
+% context Cage inv:
+%   self.animals.species.asSet().size < 2
+% \end{lstlisting}
+% \begin{equation*}
+%     inv(self) \iff
+%     \begin{aligned}
+%         &nav(self,Cage.animals,A) \\
+%         \wedge &nav(A,Animal.species,B)\\
+%         \wedge &asSet(B,C)\\
+%         \wedge &dChannel(B,C)\\
+%         \wedge &size(C,y)\wedge y<2\\
+%     \end{aligned}
+% \end{equation*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

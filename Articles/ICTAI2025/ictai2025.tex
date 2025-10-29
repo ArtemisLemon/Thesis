@@ -1,0 +1,1418 @@
+\clearemptydoublepage
+\chapter{Modeling OCL Collection Types and Type Casting using Constraint Programming}
+
+\section{Introduction}
+In the context of Model-Driven Engineering (MDE), \emph{models} represent \emph{structured data}, and the \emph{model of the data structure} is known as a \emph{metamodel}. The Unified Modeling Language (UML)
+\footnote{\url{https://www.omg.org/spec/UML/2.4}}
+% \cite{uml}
+provides visual languages, such as class and object diagrams, to define both models and meta-models. The Object Constraint Language (OCL)
+\footnote{\url{https://www.omg.org/spec/OCL/2.4}}
+% \cite{ocl} 
+complements UML by enabling the specification of constraints over models, based on the underlying metamodel concepts. The Eclipse Modeling Framework (EMF)
+\footnote{\url{https://projects.eclipse.org/projects/modeling.emf.emf}}
+% \cite{emf} 
+supports UML and OCL, enabling validation of models against their meta-models and associated constraints. It also includes model transformation tools such as ATL~\cite{jouault2008atl,Le_Calvar2019-atol}, an OCL-based language that expresses mappings between meta-models. ATLc~\cite{Le_Calvar2021-solvers} extends ATL by introducing model space exploration capabilities to facilitate transformation specification. It leverages constraint solvers to generate and visualize model instances, which users can then adjust or repair using solver feedback.
+%In the context of model-driven engineering, \emph{models} are in general terms \emph{structured data} and the \emph{model of the data structure} is called a \emph{metamodel}. UML \ytodo{cite} provides visual languages to describe models and metamodels, such as object and class diagrams.
+%OCL \ytodo{cite}leverages the concepts in a UML metamodel to specify constraints on the models.
+%The Eclipse Modeling Framework (EMF) \ytodo{cite} provides an implementation of UML\&OCL, allowing users to validate the models (i.e. data), against the metamodel, or data structure, and the model constraints provided in OCL.
+%EMF also provides model transformation tools such as ATL \ytodo{cite}, \textcolor{blue}{a transformation language based on OCL. ATL uses OCL queries to link concepts across metamodels, facilitating the automatic transformation and restructuring of models.}
+%which uses OCL queries to link concepts across metamodels, allowing users to automatically transform, or restructure, their data.
+%ATLc \ytodo{cite} is a plug-in for ATL that enables model space exploration, with the aim of simplifying model transformation specifications.
+%The predominant use of ATLc is to leverage constraint solvers to generate visual representations of the data and its structure.
+%These visual models of the data can be manipulated by the user and subsequently repaired, if needed, by a constraint solver.
+\textcolor{black}{
+The primary use of ATLc is to create a Graphical User Interface for a model, allowing the user to easily edit the model. This generally breaks some of the user defined OCL constraints, and our work hopes to provide a way to repair the models around the user's choices.
+}
+\textcolor{black}{
+The core problem is: given a metamodel, a partial model and model constraints as input, the objective is to find model instances that satisfy the metamodel and model constraints.
+}
+ATLc does so by interpreting part of their OCL expressions upon an instance as a constraint satisfaction problem (CSP), which can be solved by engines like Cassowary (for linear programming) or Choco (for constraint programming). 
+% The generated GUI allows users to choose which model parameters to edit, allowing for model repair or automated reconfigurations.
+% In summary, our method aims to take an incomplete or otherwise incorrect model, the metamodel and model constraints it must conform to, and searches to complete or fix model data accordingly.
+However, ATLc is currently limited to single-valued model attributes, using integers or reals.
+\textcolor{black}{
+Our work seeks to generalize this approach to support collection-valued properties: attributes and relations.
+}
+% a solution or repair can update attributes of objects, but not the links between objects.
+%The CSP that ATLc generates can then be handed to a variety of solvers such as Cassowary for Linear Programming, and Choco for Constraint Programming. This implementation is limited to single-value properties of a model and our efforts aim to generalise the method for collections.
+
+Among existing tools, Alloy~\cite{Jackson2002-alloy} stands out as a tool offering a dedicated language for defining meta-models and constraints. Alloy is often used for specification testing--such as verifying security protocols or code--by searching for models that satisfy given constraints. 
+It can also be used for checking specifications by searching for valid instances or counterexamples. Alloy has also been applied to model transformation and model repair~\cite{alloyMT}, with some approaches translating UML/OCL into Alloy specifications~\cite{uml2alloy, uml2alloy2uml}.
+The core difference with our approach lies in the underlying solving technique: Alloy is based on SAT solving, while we use Constraint Programming (CP). Choosing between SAT and CP for model search tasks is not straightforward, and through our experimentation, we aim to shed some light on that choice in the context of model search.
+Related work leveraging CP, global constraints and similar models also exists \cite{ferdjoukh_instantiation_2015}, however UML/OCL coverage doesn't include the general case of collection properties discussed in this paper, and required for the experimentation.
+% , and the tool's focus is generating models from scratch instead of around data.
+
+%Among the related work one that stands out is Alloy \ytodo{cite} which provides a language for metamodels and model constraints.
+%A predominant use of Alloy is to test specifications, such as security protocols and code, by searching for models satisfying the specification.
+%In many cases users search for counter-examples which help reveal issues, but Alloy can be used for general model search.
+%Alloy has also been applied to model transformations and model repair \ytodo{cite}, and some related work proposes a method to transform UML\&OCL specifications into Alloy ones \ytodo{cite}.
+%The core difference with our work is the choice of Artificial Intelligence to solve the problem: where we choose to target CP, Alloy chooses SAT.
+%Choosing between these methods for a problem isn't trivial, and with our experimentation we hope to shed some light on that choice in the context of model search.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Section \ref{sec:ctxt} presents the context of our work.
+Section \ref{sec:contrib_encoding} describes the CP model for representing UML instances and evaluating queries. 
+Section \ref{sec:contrib_enforcing_type} details the CP models used to enforce collection types and break symmetries within instances. 
+%we present the CP models to enforce collection type and break symmetries on the instance.
+In Section \ref{sec:contrib_type_casting}, we present CP models for casting between different collection types. 
+Section \ref{sec:tests} reports some experimental results, and Section \ref{sec:conclusion} provides a discussion and concluding remarks.
+%In Section \ref{sec:conclusion} we will further discuss these models and conclude. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Context: UML \& CP}\label{sec:ctxt}
+Our work is based on translating UML/OCL object models into Constraint Programming (CP) models, leveraging domain variables and global constraints. %The foundation of our work is a translation of UML\&OCL object models to CP models leveraging domain variables and global constraints.
+% What we propose is an extension of the solution proposed by ATLc, an alternative to that provided by Alloy.
+% The Unified Modeling Language at its core provides visual languages to model the structure and behavior of systems.
+% Two notable languages used to model structure are Class Diagrams and Instance Diagrams.
+% The primary use case for a class diagram is modeling object-oriented code such as Java.
+% In the context of OOP, an instance diagram could be used to model a state of the running code: showing the objects (instances of a class), their attributes, and their relations. 
+% Additionally, it provides a specification for the Object Constraint Language, which adds expressivity to the visual languages.
+%\subsection{Constraint Programming}
+
+\smallskip
+\noindent
+\textbf{A. Constraint Programming} \cite{HoeveK06} is a powerful paradigm that offers a generic and modular approach to modeling and solving combinatorial problems.
+A CP model consists of a set of variables $X=\{x_1,\ldots, x_n\}$, a set of domains $\mathcal{D}$ mapping each variable $x_i\in X$ to a finite set of possible values $dom(x_i)$, and a set of constraints $\mathcal{C}$ on $X$, where each constraint $c$ defines a set of values that a subset of variables $X(c)$ can take. 
+%%
+Domains can be either bounded, defined as an interval $\{lb..ub\}$, or enumerated, explicitly listing all possible values (e.g., ${1, 10, 100, 1000}$). This distinction impacts the choice of constraints: for instance, the global cardinality constraint is more effective with enumerated domains. 
+%%
+An assignment on a set $Y \subseteq X$ of variables is a mapping from variables in $Y$ to values in their domains. A solution is an assignment on $X$ satisfying all constraints. 
+
+\noindent 
+\textbf{CP solvers} use backtracking search to explore the search space of partial assignments. The main concept used to speed up the search is constraint propagation by {\it filtering algorithms}. 
+At each assignment, constraint filtering algorithms prune
+the search space by enforcing local consistency properties like {\it domain consistency} (a.k.a., {\it Generalized Arc Consistency} (GAC)). A constraint $c$ on $X(c)$ is domain consistent, if and only if, for every  $x_i \in X(c)$ and every
+$v \in dom(x_i)$, there is an assignment satisfying $c$ such that $(x_i = v)$. 
+
+\noindent
+\textbf{Global constraints} provide shorthand to often-used combinatorial substructures. More precisely, a global constraint is a constraint that captures a relationship between several variables~\cite{beldiceanu2010global, HoeveK06}, for which an efficient filtering algorithm is proposed to prune the search tree. In other words, the ``global" qualification of the constraint is due to the efficiency of its filtering algorithm, and its capacity to filter any value that is not globally consistent relative to the constraint in question.
+Global constraints are thus a key component to solving complex problems efficiently with CP.
+% An exercise in constraint programming can be described as having three parts: a constraint satisfaction problem, algorithms to filter for possible values given the constraints, and heuristics to search the space of what is possible.
+% At the intersection of CP modeling and filtration algorithms we have global constraints.
+% Global constraints, such as \emph{alldifferent}, predicate over any number of variables and may have readily available implementations for their filtration algorithms, such as those provided by the Choco solver \ytodo{cite}.
+% This allows users who can model their problem in terms of global constraints to leverage state-of-the-art algorithms to narrow the search space.
+% % The user therefore can focus on modeling the problem and orchestrating the search for solutions. 
+% A CP model, also referred to as a Constraint Satisfaction Problem (CSP), is formally described as a tuple $<\mathcal{V},\mathcal{D},\mathcal{C}>$, where:
+% \begin{itemize}
+%     \item $\mathcal{V}$ is a finite set of variables.
+%     \item $\mathcal{D}$ is a set of finite domains for the variables.
+%     \item $\mathcal{C}$ is a finite set of constraints upon the variables. 
+% \end{itemize}
+% The domain of an integer variable $v$ is can be described by a lower bound $lb$ and an upper bound $ub$: $domain(v)=[lb,ub]$, in which case the domain is said to be \emph{bounded}.
+% However, in some cases we can list the possible values of an integer: $domain(v)=\{1,10,100,1000\}$, in which case the domain is said to be \emph{enumerated}.
+% This difference can have a significant impact on the constraint models, for example constraints such as \emph{the global cardinality constraint} are better suited to enumerated domains.
+% During search, \emph{problem variables} are enumerated upon, meaning we test their possible values in search of a solution.
+% This also means all other variables must be functionally dependent on the \emph{problem variables}
+% Testing a value for a variable means we can re-run the filtering algorithms, to narrow the choice of values for the next variable.
+% Search strategies generally try to choose the best variable to test, and the best value to test it with.
+Some notable examples of global constraints used in this paper are:
+\begin{itemize}
+    \item 
+    \textcolor{black}{
+    Element is useful when \emph{"selecting a variable from a list"} is part of the problem.
+    }
+    Let $X=[x_1,…,x_n]$ be an array of integer variables, $z \in \{1,…,n\}$ be an integer variable representing the index, and $y$ be an integer variable representing the selected value. \inlinecstr{element}{y,X,z}~\cite{DBLP:conf/aaai/HentenryckC88,van1999opl} holds iff $y=x_z$ and $1\leq z \leq n$, this means that   variable $y$ is constrained to take the value of the $z$-th element of array $X$.
+    
+    \item 
+    \textcolor{black}{
+    Regular expression constraints are very expressive when describing sequences of variables, and offers powerful filtering.
+    }
+    Let $X=[x_1,…,x_n]$ be an array of integer variables and $A$ be a finite automaton. \inlinecstr{regular}{X, A}~\cite{pesant2004regular} enforces that the sequence of values in $X$ must form a valid word in the language recognized by the automaton $A$. 
+    
+    % \item Let $X=[x_1,…,x_n]$ be an array of integer variables, and $Y=[y_1,…,y_n]$ be the the sorted version of $X$, and $P=[p_1,…,p_n]$ be an array of integer variables representing a permutation of $\{1,…,n\}$. \inlinecstr{sort\_permutation}{X,Y,P} holds iff (1) $x_i=y_{p_i},  \forall i \in \{1,…,n\}$, (2) $P$ is a permutation of $\{1,…,n\}$, and (3) $y_1\leq y_2\leq …\leq y_n$ \ytodo{cite}. 
+    %iff \ytodo{cite} this constraint holds true if $x_i=y_{p_i}$ and $p_i\neq p_j$, meaning the $x_i$ and $y_i$ are a permutation described by $p_i$, and $y_i\leq y_{i+1}$ meaning the $y_i$ are sorted.
+    
+    \item The \inlinecstr{stable\_keysort}{X,Y,z}~\cite{beldiceanu2002sweep,DBLP:conf/gcai/BeldiceanuCFLPP15} defined over two matrices of integer variables holds iff (1) there exists a permutation $\pi$ s.t. each row $y_k$ of $Y$ is equal to the row $x_{\pi(k)}$ of $X$ ($k \in \{1,…,i\}$); (2) the sequence of rows in $Y$, truncated to the first $z$ columns, is lexicographically non-decreasing; 
+    %i.e., $\forall k \in \{1,\ldots,i-1\},(y_{k1},…,y_{kz})\leq_{lex}(y_{(k+1)1},\ldots,y_{(k+1)}z)$; 
+    (3) if two rows in $X$ have equal key values for the first $z$ columns, then their relative order in $Y$ must match their original order in $X$.
+    \textcolor{black}{Table \ref{tab:sort_stable} illustrates with an instance that satisfied this constraint.}
+    % The permutation can be applied to other arrays of integer variables, which allows us to sort table rows with respect to a column, giving us the constraint \inlinecstr{stable\_keysort}{x_{11},..,x_{ij},y_{11},..,y_{ij},z}, where $z\leq i$ is the number of columns in the key lexicographically sorted upon\ytodo{cite}.
+    % \item \inlinecstr{sort}{x_1,..,x_n,y_1,..,y_n} \ytodo{cite and define}
+    
+    \item 
+    Cumulative is generally used for scheduling tasks defined by their start time, duration and resource usage: $<s_i,d_i,r_i>$.
+    \textcolor{black}{
+    It requires that at any instant $t$ of the schedule, the summation of the amount of resource $r$ of the tasks that overlap $t$, does not exceed the upper limit $C$. The values of $t$ range from: $a$ the earliest possible start time $s_i$, to $b$ the latest possible end time $s_j+d_j$.
+    }
+    Let $S=[s_1,…,s_n]$ be the start times of $n$ tasks, $D=[d_1,…,d_n]$ their durations, $R=[r_1,…,r_n]$ their resource demands, and $C$ the total capacity of the resource (a constant). %$E=[e_1,…,e_n]$ their end times, where $e_i=s_i+d_i$, 
+    \inlinecstr{cumulative}{S,D,R,C}~\cite{beldiceanu1994chip,DBLP:journals/informs/MercierH08} holds iff $\forall t \in [a,b], \sum_{ i | s_i\leq t < s_{i}+d_i} r_i \leq R$ \cite{cumulative}.
+    where $a = min(s_0,..,s_n)$ and $b = max(s_0+d_0,..,s_n+d_n)$,
+    %this constraint holds true if $\sum_{j/s_j\leq i \leq s_{j}+d_j-1} r_j \leq R,\forall i\in[a,b]$ where $a$ is the lowest possible value for $s_j$ and $b$ the highest possible value for $s_j+d_j$.
+    % \item \inlinecstr{element}{y,X,z} \ytodo{cite and define}
+    % \item \inlinecstr{regular}{X, Y} \ytodo{cite and define}
+    % \item \inlinecstr{sort}{X,Y} \ytodo{cite and define}
+    % \item \inlinecstr{sort\_permutation}{X,Y,P} \ytodo{cite and define}
+    % \item \inlinecstr{cumulative}{T,h} \ytodo{cite and define}
+\end{itemize}
+
+%\subsection{Class Diagrams}
+\smallskip
+\noindent \label{ssec:ctxt_cd}
+\textbf{B. Class diagrams} identify concepts and their properties.
+In a family tree for instance, the core concept is Person, with attributes such as age and references such as parent  (or its inverse, child) to express relationships between people. 
+%a relation of the person such as \emph{parent} or it's opposite \emph{child} would be a reference type property, an example attribute would be age.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 12 0 0},width=1\linewidth]{Articles/ICTAI2025/figures/metamodel.pdf}
+    \caption{UML Class Diagram as Metamodel}
+    \label{fig:metamodel}
+\end{figure}
+Figure \ref{fig:metamodel} present a generic metamodel. It describes a class named \inlineocl{Object}, which has two properties: 
+\inlineocl{attribute}: a collection of integers, with at least one and at most $m$ elements, \inlineocl{reference}: a collection of up to $n$ references to other \inlineocl{Object} instances.
+%\inlineocl{reference} a collection of up to $n$ objects and \inlineocl{attribute} a collection of at least one and at most $m$ integers.
+These illustrate the two main types of properties in object-oriented modeling:
+Attributes, which store intrinsic data values (e.g., numbers or strings),
+References, which define relationships between objects in the model.
+%These are illustrative of the two types of object property : references and attributes.
+%References describe the relations across a graph of objects, whereas attributes colour the graph nodes.
+
+UML allows properties to be collections, and distinguishes four standard collection types, based on two dimensions: order and uniqueness.
+%Properties are generally collections of elements, and UML distinguishes between 4 concrete collection types: \inlineocl{Sequence}, \inlineocl{Bag}, \inlineocl{OrderedSet} and \inlineocl{Set}.
+%hese collection types exist at the intersection between two qualities: orderedness and uniqueness.
+\begin{itemize}
+    \item \inlineocl{Sequence}: ordered, allows duplicates -- e,g., [2,3,1,1],
+   % has ordered non-unique elements:\\ ~[2,3,1,1] has information about order such as \emph{3 before 1}, and repeated values.
+    \item \inlineocl{Bag}: unordered, allows duplicates -- e.g., [1,1,2,3], 
+    %has non-unique non-ordered elements:\\~[1,1,2,3] has repeated values but we've lost the order.
+    \item \inlineocl{Set}: unordered, unique elements only -- e.g., [1,2,3], 
+    %has unique non-ordered elements:\\~[1,2,3] has no order and no repeated values.
+    \item \inlineocl{OrderedSet}:  ordered, unique elements -- e.g., [2,3,1]. 
+    %has order across unique elements:\\ ~[2,3,1] has order but no repeating values.
+\end{itemize}
+\textcolor{black}{An important note is that \emph{ordered} doesn't pertain to the values.
+In [2,3,1,1]: 2 is the \emph{first} value, and 1 is the \emph{last} value. 
+}
+The intended collection type can be indicated in the class diagram using annotations such as \inlineocl{ordered}, \inlineocl{unique}, or \inlineocl{seq} (for sequences).
+%To indicate the collection type of a property in the class diagram, the properties can be annotated with the words \inlineocl{ordered}, \inlineocl{unordered}, \inlineocl{unique}, \inlineocl{ordered} or \inlineocl{seq} (for sequences).
+% In modeling tools like the Eclipse Modeling Framework (EMF), class diagrams can be used to automatically generate code. For example, the diagram in Figure \ref{fig:metamodel} could yield the following class definition in an object-oriented programming language:
+% %Within a framework such as the Eclipse Modeling Framework, these kinds of diagram can be used to generate code. For instance, from Figure \ref{fig:metamodel} we could generate a class description in an object-oriented programming language:
+% \begin{lstlisting}
+% class Object {  attribute : int[1..3]
+%                 reference : Object[0..2]}
+% \end{lstlisting}
+% Code generation includes not only class definitions but also methods (getters/setters) and factory mechanisms for instantiating objects and populating models from data sources (e.g., EMF's XMI serialization).
+%and generate getters, setters and factories to build these objects when loading data from an EMF model.
+
+% \subsection{Object Diagrams}
+\smallskip
+\noindent \label{ssec:ctxt_id}
+\textbf{C. Object Diagrams}
+% Object diagrams 
+describe instances of the classes defined in a class diagram.
+%Object (or instance) diagrams show the data, as instances of the concepts described in a class diagram.
+For example, Figure~\ref{fig:model} shows an instance conforming to the class diagram in Figure~\ref{fig:metamodel}. It includes three objects, each identified by a unique ID (e.g., \inlineocl{o1}, \inlineocl{o2}, \inlineocl{o3}). For instance, object \inlineocl{o1} has as attribute a collection of 3 integers and is connected to other objects (e.g., \inlineocl{o2} and \inlineocl{o3}).
+% Similarly to class diagrams, EMF also supports the use of object diagrams to visually manipulate data instances. 
+
+% which are the maximums allowed by our choice of $n=2$ and $m=3$.
+
+% A family tree is an example of an instance diagram;
+% previously, we declared what concepts make up a family tree, but an actual family tree needs instances of related people.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 17 0 0},width=1\linewidth]{Articles/ICTAI2025/figures/model.pdf}
+    \caption{UML Instance Diagram as Model}
+    \label{fig:model}
+\end{figure}
+% In Figure \ref{fig:model} we see a model which conforms to the metamodel from Figure \ref{fig:metamodel}, for which we chose $n=2$ and $m=3$. This here shows objects of the type described by the class, and the values assigned to their properties.
+% % This instance will serve to illustrate the result of queries and the operations upon them.
+% In this model, \inlineocl{o2 : Object} is an instance of the \inlineocl{Object} class named \inlineocl{o2}, as attribute it has a collection of integers with a single value: 1000.
+% The object \inlineocl{o1} has as attribute a collection of 3 integers and is connected to both other objects, which are the maximums allowed by our choice of $n=2$ and $m=3$.
+
+% These instances can be serialized using the XML Metadata Interchange (XMI) format.
+%Similarly to class diagrams, EMF allows us to use object diagrams to manipulate instances of data visually.
+%Such an instance would be serialized in the XML Metadate Interchange format.
+
+% \subsection{Object Constraint Language}
+\smallskip
+\noindent \label{ssec:ctxt_ocl}
+\textbf{D. The Object Constraint Language}
+% The Object Constraint Language 
+(OCL) is a declarative language used to specify additional rules and constraints on UML models that 
+cannot be expressed using diagrams alone. It enables the formalization of conditions that instances of the model must satisfy, serving as a powerful complement to class and object diagrams.
+%%
+For example, in the context of a family tree, a constraint such as \emph{“a child must be younger than their parents”} cannot be represented directly in a class diagram. However, it can be expressed in OCL as follows:
+% The Object Constraint Language is used to express specifications that can't be illustrated with Class Diagrams.
+% Using OCL we can add more information about the form of a family tree than the class diagram can express.
+% For example \emph{a child is always younger than their parents} cannot be expressed in the class diagram, but using OCL we can write the following constraint: 
+% \inlineocl{context Person inv: self.parents.age.forall(a | a > self.age)}.
+\begin{lstlisting}
+context Person inv: 
+  self.parents.age.forall(a| a > self.age)
+\end{lstlisting}
+This constraint states that for every Person instance, all of their parents must be older. The \inlineocl{context} keyword specifies the class to which the constraint applies, and \inlineocl{inv} stands for \emph{invariant}, i.e., a condition that must always hold true. This invariant states that for every Person, the age of each parent must be greater than the person’s age. 
+%%
+OCL Supports \emph{navigation expressions} (e.g., \inlineocl{self.parents.age}) and \emph{collection operations} (e.g., \inlineocl{forall}, \inlineocl{exists}, \inlineocl{size}) that apply to attributes and references. 
+% Table \ref{tab:queries_tgt} shows how different OCL queries evaluate on a sample object model (cf. Figure \ref{fig:model}). 
+The expression \inlineocl{self} refers to the current object, \inlineocl{self.attribute} returns its attribute values, and \inlineocl{self.reference} retrieve related objects. Chained queries like \inlineocl{self.reference.attribute} retrieve the attributes of referenced objects.
+
+% loosly translating to: \emph{given any person, that person's parents' ages are all greater than that of the given person}.
+% The top of this expression defines its type and context: \inlineocl{context Person} means this applies to all objects of the \inlineocl{Person} class, and \inlineocl{inv} stands for \emph{invariant}, meaning a statement which is always true.
+% Among the sub-expressions of this constraint we find two queries: \inlineocl{self.age} the age of the given person, and \inlineocl{self.parents.age} the ages of their parents.
+% This means of querying the instance is core to the object constraint language.
+% \begin{table}[!t]
+% \centering
+% \begin{tabular}{|l|l|l|l|}
+% \hline
+% \textbf{expression * context} & \textbf{o1} & \textbf{o2} & \textbf{o3}\\ \hline
+% % self            & 1         & 2         & 3         \\ \hline
+% % self.attribute  & [-3,4,6]  & [1000]    & [-99,-33] \\ \hline
+% self.reference  & [3,   2]     & []        & [1]       \\ \hline
+% self.reference.attribute      &[-99,-33,1000]&[]&[-3,4,6]\\ \hline
+% \end{tabular}
+%     \caption{Results of queries (first column) on the instance from Figure \ref{fig:model}}
+%     \label{tab:queries_tgt}
+% \end{table}
+% \begin{table}
+% \centering
+% \begin{tabular}{|l|l|l|l|l|}
+% \hline
+% \textbf{expression * context} & \textbf{o1} & \textbf{o2} & \textbf{o3} & \textbf{o4} \\ \hline
+% self            & 1         & 2         & 3         & 4     \\ \hline
+% self.attribute  & [-3,4,6]  & [1000]    & [-99,-33] & []    \\ \hline
+% self.reference  & [3,2]     & []        & [1]       & []    \\ \hline
+% self.reference.attribute      &[-99,-33,1000]&[]&[-3,4,6]&[]\\ \hline
+% \end{tabular}
+%     \caption{Results of queries on the Instance}
+%     \label{tab:queries}
+% \end{table}
+% In Table \ref{tab:queries_tgt} we can see the results of some queries on the instance in Figure \ref{fig:model}.
+% Starting with the query \inlineocl{self}, we get the object for which the expression is being interpreted, or in our case an identifier for the object. 
+% The queries \inlineocl{self.attribute} and \inlineocl{self.reference} retrieve the information found in Figure \ref{fig:model} for each object.
+% For \inlineocl{self.reference} like \inlineocl{self}, we retrieve the identifier of the referenced objects.
+% And finally, we have the query \inlineocl{self.reference.attribute} that retrieves the attributes of the objects resulting from \inlineocl{self.reference}.
+
+OCL also supports a rich set of operations on primitive types and collections. Examples include: 
+\emph{Boolean expressions} (\inlineocl{forall}, \inlineocl{exists}, \inlineocl{not}, \inlineocl{and}, \inlineocl{or}), 
+\emph{Arithmetic and comparison} (\inlineocl{+}, \inlineocl{-}, \inlineocl{>}, \inlineocl{<}), and \emph{Collection operations} (\inlineocl{sum}, \inlineocl{size}, \inlineocl{includes}, \inlineocl{asSet}, \inlineocl{asSequence}, etc). Each collection type comes with its own operations and can be explicitly cast using operations like \inlineocl{asSet()}. 
+% \ytodo{OCL provides lots of operations}
+% OCL also provides operations, such as \inlineocl{forall} and \inlineocl{>} seen in the family tree constraint, but also integer and collection operations such as \inlineocl{sum}, \inlineocl{size}.
+% Each collection type also comes with their operations, and there are operations to cast a collection from one type to another.
+% \ytodo{put as example env}
+
+% The following example enforces that each cage contains animals of at most one species. This constraint involves casting the collection to a \inlineocl{Set} to eliminate duplicates, followed by a cardinality check on the resulting collection. To achieve this, the model is queried for the species of animals present in a given cage using \inlineocl{self.animals.species}. The result is then cast to a set to eliminate duplicates, and the constraint ensures that this set contains at most one element by checking \inlineocl{.asSet().size()<2}.
+% %a constraint on cages in a zoo using both collection type casting and an operation on the resulting collection to express a constraint: 
+% \begin{lstlisting}
+% context Cage inv:
+%   self.animals.species.asSet().size() < 2
+% \end{lstlisting}
+% The constraint requires that there be only one species of animal per cage.
+% To do so, it queries the model for the species found in a given cage: \inlineocl{self.animals.species}, and requires the result of that query, when interpreted as a set (eliminating values appearing multiple times) to have at most one element: \inlineocl{.asSet().size()<2}.
+
+Given an instance such as the one shown in Figure \ref{fig:model}, OCL is typically used to verify whether it satisfies the specified constraints. In this work, however, we aim to use OCL as a means to guide model search, thereby enabling the completion or correction of partial or inconsistent data. To this end, we propose an approach that reformulates OCL specifications as constraint satisfaction problems (CSPs). This paper focuses on how OCL’s collection typing, defined in the Class Diagram, and type casting operations can be modeled using global constraints over bounded domains.
+
+
+% Given an instance such as Figure \ref{fig:model}, OCL is normally used to verify it conforms to the additional constraints.
+% However, we wish to use this language to guide model search, allowing us to complete or fix data.
+% The method we propose here is to reformulate OCL operations using global constraints, and interpret instances and the OCL constraints upon them as constraint satisfaction problems.
+% This paper will show how we reformulate the collection typing specified in the Class Diagram and the type casting OCL operations, using global constraints on integers with bounded domains.
+% \ytodo{Motivation from here: if we want to verify or fix the data}
+% \ytodo{Motivation for this paper, we want to do this in the context of OCL types}
+% \ytodo{Converting types can also be useful when describing constraints}
+
+% \subsection{Alloy}
+\smallskip
+\noindent
+\textbf{E. Alloy}
+% Among related work, Alloy 
+and the Alloy Analyzer \cite{Jackson2002-alloy} are at the forefront of the related works; furthermore, they are commonly found as a tool employed by related work, such as the Viatra Generator \cite{Bergmann2015-viatra,ViatraSolver}. 
+Alloy is a textual specification language not too dissimilar to UML class diagrams and OCL, most notably:
+the native collection type in Alloy is sets.
+Alloy also has utilities for the sequence type and offers a similar set of operations.
+The Alloy Analyzer allows the user to test their specification by finding conforming models, which can help prove or disprove the specification.
+UML models and the problems upon them have also been translated to Alloy, to leverage the analyzer. \cite{uml2alloy,uml2alloy2uml}
+The underlying tool is Kodkod \cite{Torlak2007-kodkod}, a relational first-order logic API for SAT solvers, which is used to compile Alloy models to CNF for solving by a third-party solver.
+Their solution for integers is encoding them as bit-vectors (5=101), and modeling arithmetic accordingly.
+This could in some cases become a limitation when modeling with integers and sequences,
+which guided our choice to explore models using domain variables and sequences as the native collection type.
+
+\section{CP Models for UML Instances and OCL Queries}\label{sec:contrib_encoding}
+
+To solve problems on UML instances using constraint programming (CP), we must first define a CP model that represents the instance. Since  constraints are expressed in OCL, this model must also encode how OCL expressions query the instance.
+
+% To solve problems on the instance using constraint programming, we first need to build a CP model of the instance. 
+% The model constraints being described using OCL means we also need to model how OCL queries the instance.
+
+%\subsection{Encoding properties}\label{ssec:contrib_encoding_properties}
+
+\smallskip
+\noindent
+\textbf{A. Encoding Properties.} 
+% \ytodo{remind that properties are the generalisation of attribute and reference}
+The variables represent the properties--attributes and references--of the objects in the instance.
+Each class property is encoded as a matrix of integer variables, denoted $Class.property$. 
+Each row in this matrix corresponds to one object of the class; for example, the $i$-th row is noted as $Class_i.property$ where $i \in [1, o]$ and $o = |Class|$ is the number of objects of that class. The number of columns $p$ in this table is derived from the property's cardinality, which is given by $n$ and $m$ from Figure~\ref{fig:metamodel}.
+% The variables in our CSP represent the properties--attributes and references--of the objects of an instance.
+% A property of a class is encoded as a matrix of integer variables $Class.property$.
+% For each of the objects of the class, there is a row in the table,
+% an array of integer variables we note $Class_{i}.property$ where $i\in[1,o]$ identifies the object and $o=|Class|$, the count of the objects of the class.
+% The number of columns in the table depends on the number of variables $p$ encoding the property.
+% The value of $p$ is found in the class diagram, $n$ and $m$ from Figure \ref{fig:metamodel}.
+% and we can identify an individual integer variable of the property $Class_o.property_m$.
+$$\mathit{Class.property} = \{x_{11},...,x_{op}\}$$
+$$\forall x \in Class.property,\;domain(x) = \{d\}\cup\{lb..ub\}$$
+% \begin{equation}\label{csp:seq_X2Y}
+% Class.property
+% \begin{cases}
+% \end{cases}
+% \end{equation}
+Each property variable $x_{ij}$ in the matrix has a domain defined by a lower bound $lb$, an upper bound $ub$, and a special dummy value $d$, where we set $d = lb - 1$. The property type, e.g., reference or attribute, determines the specific domain bounds.
+Attributes with an integer type may require large ranges, making domain enumeration impractical. This limits our ability to use certain global constraints like \inlinecstr{global\_cardinality} constraint, which counts the occurrences of domain values and therefore require finite, reasonably small domains.
+\textcolor{black}{
+By default we chose a 16-bit range for these values: $lb=-32768$ and $ub=32767$, meaning $d=-32769$, but these bounds can be refined by annotating the model accordingly\cite{coyle_towards_2025}.
+}
+%%
+For reference properties, the domain is defined as $\{1, \ldots, o\} \cup \{nullptr\}$, where $o$ is the number of instances of the target class. 
+These variables, named \texttt{ptr}, acts as pointers: values in $[1, o]$ identify object rows, and $0$ (i.e., dummy value \emph{nullptr}) denotes the absence of a reference. To support \emph{nullptr}, an extra row is added to each table to represent a dummy object.
+
+% The domain of property variables (such as $x_{ij}$) has three important values: a lower bound $lb$, an upper bound $ub$, and a dummy value $d$.
+% A natural choice is $d=lb-1$.
+% Properties of objects come in two types as discussed in Section \ref{ssec:ctxt_cd}, either a reference or an attribute.
+% The choice of $lb$ and $ub$ depends on the type of property.
+% Integer type attributes can require a large range between lowest and highest possible value that isn't practical to enumerate.
+% This will reveal itself as a constraint on our reformulations of OCL operations into global constraints, as they cannot rely on globals such as \inlinecstr{global\_cardinality}, which counts the occurrences of the values in the domain.
+% % \ytodo{note the domain of attributes being large, we focus on reformulations dependent on the number of variables, not the number of values}
+% In the case the table encodes a reference property, the domain can be set to $\{1..o\}\cup \{nullptr\}$ where $o$ is the number of  instances of the class, and generally name such variables $\mathit{ptr}$ for \emph{pointer}.
+% The range $[1,o]$ identifies objects, and 0 is the dummy value that we call \emph{nullptr}.
+% These variables therefore also identify rows in the $Class.property$ tables, and to handle the case of \emph{nullptr} we add a row for a \emph{dummy object}.
+\begin{table}[!t]
+\centering
+\begin{tabular}{|lrrr|l|lrr|}
+\cline{1-4} \cline{6-8}
+\multicolumn{4}{|l|}{\textbf{Object.attribute}}                                                                    &  & \multicolumn{3}{l|}{\textbf{Object.reference}}                                   \\ \cline{1-4} \cline{6-8} 
+\multicolumn{1}{|l|}{\textbf{$Object_i$}} & \multicolumn{3}{l|}{\textbf{attribute}}                                     &  & \multicolumn{1}{l|}{\textbf{$Object_i$}} & \multicolumn{2}{l|}{\textbf{reference}}    \\ \cline{1-4} \cline{6-8} 
+\multicolumn{1}{|l|}{\textbf{0}}    & \multicolumn{1}{r|}{d}         & \multicolumn{1}{r|}{d}         & d         &  & \multicolumn{1}{l|}{\textbf{0}}    & \multicolumn{1}{r|}{nullptr}         & nullptr         \\ \cline{1-4} \cline{6-8} 
+\multicolumn{1}{|l|}{\textbf{1}}    & \multicolumn{1}{r|}{-3}        & \multicolumn{1}{r|}{4}         & 6         &  & \multicolumn{1}{l|}{\textbf{1}}    & \multicolumn{1}{r|}{3}         & 2         \\ \cline{1-4} \cline{6-8} 
+\multicolumn{1}{|l|}{\textbf{2}}    & \multicolumn{1}{r|}{1000}      & \multicolumn{1}{r|}{$a_{22}$} & $a_{23}$ &  & \multicolumn{1}{l|}{\textbf{2}}    & \multicolumn{1}{r|}{$ptr_{21}$} & $ptr_{22}$ \\ \cline{1-4} \cline{6-8} 
+\multicolumn{1}{|l|}{\textbf{3}}    & \multicolumn{1}{r|}{-99}       & \multicolumn{1}{r|}{-33}       & $a_{33}$ &  & \multicolumn{1}{l|}{\textbf{3}}    & \multicolumn{1}{r|}{1}         & $ptr_{32}$ \\ \cline{1-4} \cline{6-8} 
+% \multicolumn{1}{|l|}{\textbf{4}}    & \multicolumn{1}{r|}{$a_{41}$} & \multicolumn{1}{r|}{$a_{42}$} & $a_{43}$ &  & \multicolumn{1}{l|}{\textbf{4}}    & \multicolumn{1}{r|}{$ptr_{40}$} & $ptr_{41}$ \\ \cline{1-4} \cline{6-8} 
+\end{tabular} \vspace{0.5em}
+    \caption{Encoding of the instance from Figure \ref{fig:model} as tables of integer variables}
+    \label{tab:encoding}
+\end{table}
+Table~\ref{tab:encoding} shows the encoding of the instance from Figure~\ref{fig:model}, assuming $n=2$ and $m=3$ from the metamodel in Figure~\ref{fig:metamodel}. The left side represents attributes, while the right side represents references. Each object (plus one \emph{dummy object}) gets a row. The attribute variables $a_{ij}$ are assigned the domain $\{lb, \ldots, ub\} \cup \{d\}$, and reference variables $ptr_{ij}$ are assigned the domain $\{1, \ldots, o\} \cup \{nullptr\}$ with $o=3$.
+
+Model construction proceeds in two steps. First, we create matrices of variables with their full domains. Second, we instantiate some of these variables using data from the actual instance. In our current setting, we assign the exact values from the instance. Variables that remain uninstantiated may either be assigned dummy values or left free to explore during search, depending on the objective of the analysis.
+\textcolor{black}{
+To choose between these behaviors and to reduce the size of the CSP, in previous work we've proposed an annotation system for OCL \cite{coyle_towards_2025}, which allows the user to identify variables. 
+These annotations split the OCL expressions into parts which can be dispatched between our CP interpretation, and that of a standard interpreter.
+This reduces the scope and size of the CSP, notably in terms of modeled properties. 
+}
+
+
+% In Table \ref{tab:encoding} we can see the encoding resulting from the instance in Figure \ref{fig:model}, and the metamodel in Figure \ref{fig:metamodel} with $n=2$ and $m=3$.
+% On the left we have the table encoding the attribute \inlineocl{attribute} of our objects of type \inlineocl{Object}, and on the right the table encoding the references.
+% The number of columns is defined by $n$ and $m$, the choices of cardinality for these properties. 
+% For each object there is a row in the table, and an additional row for the \emph{dummy object}.
+% Building these tables in done in two steps, first the integer variable matrices are built. 
+% The attribute variables $a_{ij}$ are given the domain $\{lb..ub\}\cup \{d\}$,
+% and the reference variables $ptr_{ij}$ are given the domain $\{1..o\}\cup \{nullptr\}$ with $o=|Object|=3$.
+% In a second phase, some variables are instantiated using the data from the instance.
+% Here we instantiate them to the exact values found in the instance, but one could widen the domain allowing for small changes to be allowed.
+% The remaining variables can be instantiated to their associated dummy value, allowing us to verify the model.
+% Otherwise, such as here, they can be left with a whole domain, allowing us to try completing the model.
+% To choose between these behaviors we intend to annotate the OCL as seen in \ytodo{cite previous work}.
+% These variables are key to the problem, and will be the primary variables we test possible values for during search.
+% The values in the domain of pointer variables identify rows of property tables.
+% The domain of relation variables is generally small enough to be enumerated.
+% Therefore, we give them accompanying variables counting the occurrences for each value of the domain.
+
+% \begin{equation}\label{csp:seq_X2Y}
+% \begin{cases}
+% \forall Class_o.ref \in Class.reference\\
+% \implies gcc(Class_o.ref, Class_o.refOcc)
+% \end{cases}
+% \end{equation}
+
+
+% $$Class.ref = \{r_{00},...,r_{nm}\}$$
+% $$Class.refOcc = \{occ_{00},...,occ_{nm}\}$$
+% $$\forall r \in Class.ref,\;domain(r) = \{0..n'\}$$
+% $$\forall occ \in Class.refOcc,\;domain(occ) = \{0..m\}$$
+% $$\forall n :object \in Class,\; gcc(Class_o.ref, Class_o.refOcc)$$
+
+% When two references are opposites, such as \emph{child} and \emph{parent}, we need to do stuff.
+
+% $$\forall i,j \in \{0..n\}*\{0..n'\} A.refOcc_{ij},\neq 0 \iff B.oppOcc_{ji}\neq 0$$
+
+% For containment 
+
+% \subsection{CP model for OCL queries on the instance}\label{ssec:contrib_navigation}
+\smallskip
+\noindent
+\textbf{B. CP model for OCL queries on the instance.}
+Querying an instance involves navigating the object graph through references and retrieving attribute values. In OCL, \emph{navigation} refers to the operation that, 
+% given a collection of source objects, returns a collection of referenced objects. 
+given source collection of objects and a reference property, returns a collection of target objects through that reference. We conflate this with \emph{attribute operations}--as defined in the OCL specification--which return a collection of attribute values from a source collection of objects. In our encoding, both navigation and attribute access results are uniformly represented as integer variables.
+
+% Here we will conflate it with what the OCL specification names \emph{Attribute Operations}, which from a source collection of objects returns a collection of attribute values, as in both cases for us: the results are encoded as integer variables.
+
+Consider an OCL expression of the form \inlineocl{src.property}, where \inlineocl{src} is itself an expression like \inlineocl{self.reference} or \inlineocl{self.reference.reference}. 
+%%
+
+Let $Ptr = \{ptr_1,...,ptr_z\}$ be the variables encoding the evaluation of \inlineocl{src}, with $dom(ptr_i)=\{1..o\} \cup \{nullptr\}$. Let $T$ be the flattened array representing the \texttt{Class.property} matrix for \texttt{property}, where \inlineocl{property} refers to either an attribute or reference of the referenced class. Let $p$ be the number of columns in the matrix. Let $Y = \{y_1, \ldots, y_{z \cdot p}\}$ be the variables representing the result of \texttt{src.property}. To link $Y$ with $T$ and $Ptr$, we define the navigation constraint:
+% \inlinecstr{nav}{Ptr, T, Y}:
+% We can refine the domain of the variables $Ptr$, 
+% Because the \inlineocl{src} expression identifies objects, $\forall ptr \in Ptr, domain(ptr)=\{1..o\} \cup \{nullptr\}$.
+% Let $T$ be the $Class.property$ table identified by \inlineocl{property} flattened into an array, and $p$ be the number of columns in the property table.
+% Let $Y = \{y_1,...,y_{z\times p}\}$ be the variables created to represent \inlineocl{src.property}, and their domain is the same as for the variables in the property table.
+% To link $Y$ with the problem data in $T$, we define \inlinecstr{nav}{Ptr,T,Y} that ties values from $T$ into $Y$ according to $Ptr$.
+\begin{equation*}\label{csp:nav_def} \footnotesize 
+nav(Ptr,T,Y) \iff
+\begin{aligned}
+\forall i \in [1,z],\forall j \in [1,p] : y_{(i-1)p+j} = T_{ptr_i \times p+j} \\
+% ~~~~p_{ij}=ptr_ip+j\\
+% ~~~~element(y_k,T,p_{ij}), k = (i-1)p+j \\
+%~~~~y_{(i-1)p+j} = T_{ptr_i \times p+j} \\
+\end{aligned}
+\end{equation*}
+% Here we have a formal definition for our encoding.
+% This is greatly simplified from the OCL specification by virtue of our encoding.
+This constraint links the source pointers to the appropriate rows in the property table. This is reformulated in CP as a conjunction of $\mathit{element}$ constraints, using intermediate variables for encoding the pointer arithmetic ($ptr_i \times p + j$):
+% The CP model for \inlinecstr{nav}{Ptr,T,Y} is reformulated using a conjunction of \inlinecstr{element}{y,\{t_1,...,t_n\},p} constraints and intermediate variables to hold the results of the \emph{pointer arithmetic} constraint:
+% for $y_k = T_{p_{ij}}$.
+\begin{equation}\label{csp:nav} \footnotesize
+nav(Ptr,T,Y):
+\begin{cases}
+\forall i \in [1,z],\forall j \in [1,p] :\\ 
+~~~ptr'_{ij}=ptr_i \times p+j\\
+~~~element(y_k,T,ptr'_{ij}),\, k = (i-1)p+j \\
+% ~~~~y_k = T_{p_{ij}}, k = (i-1)m+j \\
+\end{cases}
+\end{equation}
+The intermediate variables introduced are functionally dependent on the $Ptr$ variables and do not require enumeration during search. Given $Ptr$ and $T$, the value of $Y$ can be determined. However, given an instantiation of $Y$, this model cannot fully determine $Ptr$ and $T$, but it can filter to some extent. Thus, OCL query variables depend on the instance variables, and a query result may correspond to multiple instances.
+
+
+% It is important to note that the intermediate variables introduced by this reformulation are functionally dependent on the $Ptr$ variables of the constraint.
+% This means, we do not need to enumerate upon these variables during search.
+% Similarly, given an instantiation of $Ptr$ and $T$, in the context of model verification for example, we can determine $Y$.
+% However, given an instantiation of $Y$, this model alone cannot determine $Ptr$ and $T$, but it can filter to some extent.
+% In the overall CSP this means that the variables encoding the OCL queries are all functionally dependent on the instance variables, but a query that solves the problem isn't associated with one instance.
+\begin{table}[!t]
+\centering
+\begin{tabular}{|lrrrrrr|}
+\hline
+\multicolumn{7}{|l|}{\textbf{Object.reference.attribute}}                                                                                                                                                        \\ \hline
+\multicolumn{1}{|l|}{\textbf{$Object_i$}} & \multicolumn{6}{l|}{\textbf{reference.attribute}}                                                                                                                        \\ \hline
+\multicolumn{1}{|l|}{\textbf{1}}     & \multicolumn{1}{r|}{-99}      & \multicolumn{1}{r|}{-33}      & \multicolumn{1}{r|}{$a'_{13}$} & \multicolumn{1}{r|}{1000}     & \multicolumn{1}{r|}{$a'_{15}$} & $a'_{16}$ \\ \hline
+\multicolumn{1}{|l|}{\textbf{2}}     & \multicolumn{1}{r|}{$a'_{21}$} & \multicolumn{1}{r|}{$a'_{22}$} & \multicolumn{1}{r|}{$a'_{23}$} & \multicolumn{1}{r|}{$a'_{24}$} & \multicolumn{1}{r|}{$a'_{25}$} & $a'_{26}$ \\ \hline
+\multicolumn{1}{|l|}{\textbf{3}}     & \multicolumn{1}{r|}{-3}       & \multicolumn{1}{r|}{4}        & \multicolumn{1}{r|}{5}        & \multicolumn{1}{r|}{$a'_{34}$} & \multicolumn{1}{r|}{$a'_{35}$} & $a'_{36}$ \\ \hline
+% \multicolumn{1}{|l|}{\textbf{4}}     & \multicolumn{1}{r|}{$n_{40}$} & \multicolumn{1}{r|}{$n_{41}$} & \multicolumn{1}{r|}{$n_{42}$} & \multicolumn{1}{r|}{$n_{43}$} & \multicolumn{1}{r|}{$n_{44}$} & $n_{45}$ \\ \hline
+\end{tabular} \vspace{0.5em}
+    \caption{Encodings of \inlineocl{self.reference.attribute} for all objects of Figure \ref{fig:model} as a table of integer variables}
+    \label{tab:nav_results}
+\end{table}
+
+Table \ref{tab:nav_results} shows the results of the query \inlineocl{self.reference.attribute} using the navigation CP model (\ref{csp:nav}) on the instance from Table \ref{tab:encoding}. Result variables $a'_{ij}$ share the same domains as $a_{ij}$ but follow the reference and attribute order, introducing gaps due to ordering, e.g., $a'_{13}$ might be the third variable, but yield a different third value (e.g., 1000) if $a'_{13}=d$. Similar effects occur in other OCL reformulations like \emph{union} and \emph{append}. Despite these gaps, value order and duplicates are preserved. These outputs are interpreted using the same models used for casting to collection types, such as \inlineocl{asSequence()}, discussed in Section \ref{sec:contrib_type_casting}.
+
+% Table \ref{tab:nav_results} shows us the result of query \inlineocl{self.reference.attribute} using the navigation model CSP \ref{csp:nav} on the instance from Table \ref{tab:encoding} 
+% The variables in this table, noted $a'_{ij}$, have the same domain as the $a_{ij}$ variables.
+% We also find the instantiated values, with respect to the order in the reference and the attribute: the variables of the first referred object come first, in the same order as in their original table.
+% This introduces gaps between values, as illustrated by the first line: the \emph{third variable} is $a'_{13}$, but if $a'_{13}=d$ the \emph{third value} is 1000.
+% Our reformulations of other OCL operations, such as \emph{union} and the sequence operation \emph{append}, similarly introduce gaps.
+% However, despite these gaps, the order and multiplicity across values are preserved.
+% The models to get a correct interpretation these collections are the same as the models to cast to a collection type, such as \inlineocl{asSequence()}, and are explored in Section \ref{sec:contrib_type_casting}. 
+% We will therefore need models to interpret these as the correct collection type.
+
+% \begin{outline}
+%     % \item Figure  shows the all the results for \inlineocl{self.reference.attribute}
+%     % \item there are "gaps" in this table, notably line one. If n12 is equal to the dumym value, the third value of the sequence is 1000.
+%     % \item this is some motivation for asType(), as similar problem can be presented by collection operations such as \inlineocl{union}, \inlineocl{append}, etc..
+% \end{outline}
+
+% \begin{table}
+% \centering
+% \begin{tabular}{|l|l|}
+% \hline
+% \textbf{expression * context} & \textbf{o1}\\ \hline
+% self            & 1         \\ \hline
+% self.attribute  & [-3,4,6]       \\ \hline
+% self.reference  & [3,2]                \\ \hline
+% self.reference.attribute      &[-99,-33,$n_{12}$,1000,$n_{14}$,$n_{15}$]\\ \hline
+% \end{tabular}
+%     \caption{Results of queries on the Instance CSP}
+% %     \label{tab:queries}
+% % \end{table}
+% \begin{table}
+% \centering
+% \begin{tabular}{|l|l|l|}
+% \hline
+% \textbf{expression * context} & \textbf{o1}  & \textbf{o3}  \\ \hline
+% self            & 1         & 3             \\ \hline
+% self.attribute  & [-3,4,6]     & [-99,-33,$a_{32}$]   \\ \hline
+% self.reference  & [3,2]           & [1,$r_{31}$]      \\ \hline
+% self.reference.attribute      
+
+% &\makecell[l]{[-99,-33, $n_{12}$,\\1000, $n_{14}$, $n_{15}$]}
+% &\makecell[l]{[-3,4,6,\\$n_{33}$, $n_{34}$, $n_{35}$]}\\ \hline
+% \end{tabular}
+%     \caption{Results of queries on the Instance CSP}
+%     \label{tab:queries_nav}
+% \end{table}
+
+% $$Table = append(\{d_0,...,d_m\}, flatten(Class.prop))$$
+% $$src.pointer_i$$
+% $$src.pointer_i.property_j$$
+% $$element(src.pointer_{ij},Table,src.pointer_i.property_j)$$
+
+
+\section{CP Models for UML Collection Types}\label{sec:contrib_enforcing_type}
+
+As described in Section \ref{ssec:ctxt_cd}, properties in class diagrams (e.g., Figure \ref{fig:metamodel}) can be annotated with collection types: \inlineocl{Sequence}, \inlineocl{Bag}, \inlineocl{Set}, or \inlineocl{OrderedSet}. These types can be enforced through constraint models to ensure consistency and reduce symmetries in the data..
+
+For \inlineocl{Sequence}, permutations of the same multiset (e.g., $\{1,1,2\}$) yield distinct sequences. However, in our encoding, sequences such as $\{1,2,d,1\}$ and $\{1,2,1,d\}$ are treated as equivalent, since they encode the same effective ordering of values (e.g., the position of the dummy value $d$ is ignored). To correctly model sequences, we impose an ordering where all dummy values are grouped at the end. 
+
+
+Let $X=\{x_1,..,x_p\}$ be the variable array for a property in the matrix $=Class.property$. The \inlineocl{Sequence} constraint is defined as: 
+%\begin{equation*}
+$\mathit{Sequence}(X) \iff \forall i \in [1,p[, (x_i=d)\Rightarrow (x_{i+1}=d) $. 
+%\end{equation*}
+This ensures dummy values appear only at the end. We reformulate it using the \texttt{regular} global constraint applied to a Boolean mask $S = \{s_1, \dots, s_p\}$:
+% where $s_i = \llbracket x_i \neq d \rrbracket$:
+%This constraint can be reformulated using the regular global constraints, defined over an array of boolean variables $S=\{s_1,...,s_p\}$ functionally dependent on $X$:
+\begin{equation}\label{csp:seq_X} \footnotesize
+\mathit{Sequence}(X):
+\begin{cases}
+\mathit{regular}(S,\mathit{DFA})\\
+% \text{where}\; s_i=\llbracket x_i\neq d\rrbracket, i \in [1,p]\\
+s_i=\llbracket x_i\neq d\rrbracket\\
+\end{cases}
+\end{equation} 
+
+The automaton $\mathit{DFA}$ (Figure \ref{fig:afd}) accepts patterns of the form $1^*0^*$, ensuring non-dummy values precede dummy ones. %The mask $S$ enforces this structure without introducing search over dummy placements.
+Here, $S$ acts as a mask distinguishing actual values (1) from dummies (0) while avoiding symmetry.
+
+% Here we use a regular expression constraint defined by the automaton named $\mathit{DFA}$ illustrated in Figure \ref{fig:afd} which accepts words of the form $1^*0^*$.
+% The boolean array $S$ serves as a \emph{mask} for $X$, hiding the dummy value behind 0, and values behind 1.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 7 0 8},clip,width=0.5\linewidth]{Articles/ICTAI2025/figures/afd.pdf}
+    \vspace{-0.7em}
+    \caption{DFA packing dummy values for instance variables}
+    \label{fig:afd}
+\end{figure}
+
+For the \inlineocl{Bag} and \inlineocl{Set} types, all permutations of values are considered equivalent. 
+To remove ordering symmetries, we sort the values in decreasing order, effectively pushing dummy values to the end:
+% When considering the types \inlineocl{Bag} and \inlineocl{Set}, all permutations of the values are equivalent.
+% To eliminate these symmetries we simply enforce that the values are sorted in decreasing order, which also pushes the dummy values to the end.
+\begin{equation}\label{csp:bag_X} \footnotesize
+\mathit{Bag}(X):
+\begin{cases}
+\forall i\in[1,p[:x_i\geq x_{i+1}\\
+\end{cases}
+\end{equation}
+
+To model \inlineocl{Set}, we additionally enforce uniqueness among non-dummy values. Indeed, the sequence $\{d,d,d\}$ would be interpreted as an empty set. To this end, we define a relaxed variant of the \texttt{alldifferent} global constraint: 
+% $\mathit{alldifferent\_except\_d}(X) \\ \iff \forall \,i,j \,(i < j) \in [1,|X|], & \, (x_i \neq x_j) \, \vee \, (x_i=x_j=d)$
+% In the case of \inlineocl{Set} we also must enforce that all the values are different, however we don't want this to apply to the dummy value.
+% For instance $\{d,d,d\}$ would be interpreted as an empty set.
+%To do this we define a variation on $\mathit{alldifferent\_except\_0}$.
+\begin{equation*}\label{csp:alldiff_def} \small
+\begin{aligned}
+\mathit{alldifferent\_except\_d}(X) \\
+\iff \forall \,i,j \,(i < j) \in [1,|X|], & \, (x_i \neq x_j) \, \vee \, (x_i=x_j=d)
+\end{aligned}
+\end{equation*}
+
+
+\begin{equation}\label{csp:set_X} \footnotesize
+\mathit{Set}(X):
+\begin{cases}
+\mathit{alldifferent\_except\_d}(X)\\
+\mathit{Bag}(X)
+% \forall i\in[1,p[:x_i\geq x_{i+1}\\
+\end{cases}
+\end{equation}
+
+For \inlineocl{OrderedSet}, both value order and uniqueness matter. We combine the constraints used for \inlineocl{Sequence} and \inlineocl{Set}: dummy values must be packed at the end, and non-dummy values must be pairwise distinct. Formally:
+% Finally for the type \inlineocl{OrderedSet} we reuse the constraints distinctive of \inlineocl{Sequence} and \inlineocl{Set}.
+% \vspace{-0.3cm}
+\begin{equation}\label{csp:ordset_X} \footnotesize
+\mathit{OrderedSet}(X):
+\begin{cases}
+\mathit{alldifferent\_except\_d}(X) \\%\, \wedge \, 
+\mathit{Sequence}(X)\\
+\end{cases}
+\end{equation}
+This ensures a well-formed sequence without repetitions, where dummy values are ignored in uniqueness checks and appear only at the end of the array.  These CP encodings ensure that model properties respect their specified UML and OCL collection types, enabling correct interpretation and reducing symmetry in instance generation.
+
+% \begin{table}
+% \centering
+% \begin{tabular}{|l|l|}
+% \hline
+%  Sequence & CSP \ref{csp:seq_X} \\ \hline
+%  Bag & CSP \ref{csp:bag_X} \\ \hline
+%  Set & $\geq$ \& All Different \\ \hline
+%  Ordered Set & DFA \& All Different \\ \hline
+% \end{tabular}
+%     \caption{Constraints used to enforce collection type constraints upon instance variables}
+%     \label{tab:prop_type_csp}
+% \end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{CP Models for OCL Collection Type Casting Operations}\label{sec:contrib_type_casting}
+
+To illustrate OCL type casting, consider the following invariant, taken from the Zoo Model used in the experimentation:
+%To illustrate what happens during OCL type casting, let's take another look at our zoo constraint: 
+\begin{lstlisting}
+context Cage inv:
+    self.animals.species.asSet().size < 2
+\end{lstlisting}
+If \inlineocl{self.animals.species} evaluates to the sequence \{1,1,1\}, applying \inlineocl{asSet()} yields the set $\{1\}$, indicating that the cage contains a single species of animal. In the following, we define CP models to capture such collection type conversions. 
+
+Consider an expression of the form \inlineocl{src.asOP()}, where \inlineocl{src} is a collection-valued expression such as \inlineocl{self.attribute}, and \inlineocl{asOP()} denotes a type-casting operation applied to the source collection (e.g., \inlineocl{asSequence()}, \inlineocl{asSet()}, etc.).
+Let $X = \{x_1,...,x_z\}$ be the array of variables modeling the values of \inlineocl{src}, and let $Y = \{y_1,...,y_z\}$ represent the resulting collection after applying \inlineocl{asOP()}.
+
+% The set encoding has the same number of variables as the bag encoding it comes from.
+% Because we cannot foresee how many of the variables encoding the set will preserve their value from the bag, the resulting array is of the same size.
+% \ytodo{We don't know values, we model based on number of variables encoding the expressions.}
+
+% \subsection{asBag()}
+\smallskip
+\noindent
+\textbf{A. asBag():}
+\label{ssec:asBag}
+% Consider an expression \inlineocl{src.asBag()} where \inlineocl{src} is an expression such as \inlineocl{self.attribute}. Let $X = \{x_1,...,x_z\}$ be the array of variables representing \inlineocl{src}, the result of \inlineocl{src.asBag()} is a multiset $Y = \{y_1,...,y_z\}$ that preserves all values from $X$, including duplicates, but with symmetries removed. 
+Consider the expression \inlineocl{src.asBag()}, where the result is evaluated as a multiset $Y$ that preserves all values from the source collection $X$, including repeated elements. Because OCL bags are insensitive to permutations, multiple orderings of the same values are semantically equivalent. To avoid such symmetries in the model, we impose a canonical form by sorting $Y$ in descending order. This also ensures that any dummy values $d$ used to pad the collection appear at the end. For example, given $X=\{1,2,d,1\}$, we enforce the canonical bag representation $Y=\{2,1,1,d\}$. This transformation is modeled using the global constraint \inlinecstr{sort}{X, Y}, which sorts $X$ into $Y$. 
+%%
+% For example given an instantiated array of variables such as $X=\{1,2,d,1\}$, \inlineocl{asBag} returns the array $Y=\{2,1,1,d\}$.
+% In $Y$ the counts of each value are preserved from $X$, but the only allowed permutation for $Y$ is that in descending order.
+% \inlinecstr{asBag}{X,Y} holds true if:
+% \ytodo{formal definition}
+% \begin{equation*}\label{csp:bag_XY_def}
+% asBag(X,Y) \iff
+% \begin{aligned}
+% &permutation(X,Y,P)\\
+% \wedge\;& y_i \geq y_{i+1}, \forall i\in [1,z[
+% \end{aligned}
+% \end{equation*}
+%Our implementation reformulates \inlinecstr{asBag}{X,Y} using the \inlinecstr{sort}{X,Y} global constraint:
+\begin{equation}\label{csp:bag_XY} \footnotesize
+asBag(X,Y):
+\begin{cases}
+sort(X,\reverse{Y}) \\
+% Y' = \reverse{Y}\\
+% Bag(Y)
+% Y = reverse(Y')
+\end{cases}
+\end{equation}
+$\reverse{Y}$ denotes the reverse of $Y$, used to enforce descending order.
+% Here we introduce the notation $\reverse{Y}$ which represents the reversed array of variables.
+% For instance if $X=\{x_1,x_2\}$ then $\reverse{X}=\{x_2,x_1\}$.
+% This allows us to use \inlinecstr{sort}{X,Y} for a descending order.
+
+% \subsection{asSet()}
+\smallskip
+\noindent
+\textbf{B. asSet():}
+\label{ssec:asSet}
+Consider the expression \inlineocl{src.asSet()}. The \inlineocl{asSet()} operation removes duplicate elements from the source collection $X$ while disregarding order. In our encoding, this corresponds to extracting the distinct values from $X$ and placing them into the result array $Y$ in a canonical form. Since the number of unique elements in $X$ is not known beforehand, $Y$ is defined with the same arity as $X$, and any unused positions are filled with a dummy value $d$. For instance, given an instantiation $X=\{1,2,1,d\}$, the result of \inlineocl{asSet()} would be $Y=\{2,1,d,d\}$. 
+% Let $X = \{x_1,...,x_z\}$ represent the source collection, and $Y = \{y_1,...,y_z\}$ the resulting set with possible padding using the dummy value $d$. Because the number of distinct elements in $X$ is not known in advance, $Y$ is defined with the same arity, and dummy values are used to fill unused positions. For example given an instantiated array of variables such as $X=\{1,2,1,d\}$, \inlineocl{asSet} returns the array $Y=\{2,1,d,d\}$.
+% Lets consider an expression of the form \inlineocl{src.asSet()}, where \inlineocl{src} is an expression such as \inlineocl{self.attribute}.
+% Let $X = \{x_1,...,x_z\}$ be the variables representing \inlineocl{src}.
+% Let $Y = \{y_1,...,y_z\}$ be the variables representing \inlineocl{src.asSet()}.
+% For example given an instantiated array of variables such as $X=\{1,2,1,d\}$, \inlineocl{asSet} returns the array $Y=\{2,1,d,d\}$.
+% All values of $X$ appear in $Y$ once, and the only permutation allowed is that in descending order.
+% \vspace{-0.3cm}
+\begin{equation}\label{csp:set_XY} \footnotesize
+asSet(X,Y) :
+\begin{cases} 
+sort(X,\reverse{S}) \\
+X' = S \mathbin{\|} \{d\} \\
+Y' = Y \mathbin{\|} \{d\} \\
+p_1=1\\
+\forall i \in ]2,z+1] :& p_i=p_{i-1}+ \llbracket x'_{i-1} \neq x'_i \rrbracket \\
+&element(x'_i,Y',p_i)\\
+\forall i \in [1,z] :  &y_i \geq y_{i+1}\\
+% Set(Y)
+\end{cases}
+\end{equation}
+To enforce the \inlineocl{asSet()} semantics, we first sort the source array $X$ in descending order into an auxiliary array $S$. We then define an array of position variables $P$ and compute the position $p_i$ of each variable $s_i$ in a new array $Y$, ensuring that repeated values in $S$ map to the same position. The first occurrence of a new value increments the position counter: $p_i=p_{i-1}+ \llbracket s_{i-1} \neq s_i \rrbracket$.
+%%
+To support cases where all positions in $Y$ are filled with unique values, we append a dummy value $d$ to $S$, yielding $X' = S \mathbin{\|} \{d\}$. In the case where all values in $X$ are distinct (e.g., $X = \{2,3,1,4\}$), the dummy has no room in $Y$. We resolve this by appending a dummy value to $Y$ as well, forming $Y' = Y \mathbin{\|} \{d\}$. This dummy will occupy the first unused position in $Y$, and all subsequent positions are forced to $d$ by a descending sort constraint $y_i \geq y_{i+1}$. The final mapping from positions $p_i$ to $Y'$ is enforced via an \inlinecstr{element} constraint over $X'$ and $Y'$.
+% This ensures that when fewer than $|X|$ distinct values exist, the first unused position in $Y$ then receives this dummy, and the remaining positions are forced to $d$ via the descending sort constraint: $y_i \geq y_{i+1}$.
+% For example, with $X = \{2,1,2,1\}$, the result should be the set $\{2,1\}$ extended with dummy values: $\{2,1,d,d\}$.
+% The final mapping from $X'$ to $Y'$ is then enforced using the $\mathit{element}$ constraint, using the computed positions $p_i$. 
+% The resulting final CP model is detailed by equation~(\ref{csp:set_XY}).
+
+% First we sort $X$ in descending order into $S$.
+% % This naturally gives us ranges of repeated values.
+% For each variable $s_i$ of $S$ we associate a variable $p_i$ indicating their position in $Y$.
+% Each range of repeated values in $S$, will share a position in $Y$.
+% The first value of a range increments the position value: $p_i=p_{i-1}+ \llbracket x'_{i-1} \neq x'_i \rrbracket$.
+% A special case appears when the source collection is full, For example: given the instantiation \{2,1,2,1\} the expected result is \{2,1,d,d\}.
+% To handle this case, we add a dummy value at the end of the input: $X'=S\;d$.
+% This dummy value will be copied into the first variable of $Y$ not holding a value from $X$.
+% The subsequent variables of $Y$ are all forced to the dummy value by the sorting constraint: $y_i\geq y_{i+1}$.
+% In the case the source is full and all values are different, such as \{2,3,1,4\} the dummy value has no place in the result \{4,3,2,1\}, so we reserve a place for it $Y'=Y\;d$.
+% The element constraint is then applied using the determined positions $p_i$, and the arrays with the added dummy values $X'$ and $Y'$.
+
+% \subsection{asSequence()}
+\smallskip
+\noindent
+\textbf{C. asSequence():}
+\label{ssec:asSeq}
+The \inlineocl{asSequence} operation retains all values from the source collection, including duplicates, and reorders them such that all non-dummy values appear first in their original relative order, followed by the dummy values.
+For example, if $X = \{1, d, 2, d, 1\}$, then \inlineocl{asSequence} yields $Y = \{1, 2, 1, d, d\}$. To enforce this transformation, we introduce the following CP model: 
+% \vspace*{-.2em}
+\begin{equation}\label{csp:seq_X2Y} \footnotesize
+asSeq_{x2y}(X,Y) :
+\begin{cases}
+stable\_keysort(\langle B,X\rangle,\langle B',Y\rangle,1) \\
+~~b_i=\llbracket x_i=d \rrbracket, \forall i \in [1,z] \\
+~~b'_i=\llbracket y_i=d \rrbracket, \forall i \in [1,z]
+\end{cases}
+\end{equation}
+Here, $B$ and $B'$ are arrays of integer variables of size $z$, of domain ${0,1}$, used as booleans indicating which variables in $X$ and $Y$ are equal to the dummy value $d$. The \inlinecstr{stable\_keysort}{T, S, k} constraint takes a matrix $T$ and produces a sorted matrix $S$, ordering rows based on the first $k$ columns, which form the sort key. In our case, we construct the matrices $\langle B, X \rangle$ and $\langle B', Y \rangle$, and sort on the first column, which separates dummy and non-dummy values while preserving the original order of the non-dummy elements. 
+
+To illustrate, let $X = \{1, d, 2, d, 1\}$, yielding $B = \{0, 1, 0, 1, 0\}$. We apply a stable sort to $B$, considering the pairs $(b_i,x_i)$, and sorting by the key $b_i$. 
+This ensures that all 0s (non-dummy values) appear before all 1s (dummy values), and the relative order of elements with the same key (e.g., all 0s) is preserved (see Table~\ref{tab:sort_stable}). The sorted Boolean array becomes $B' = \{0, 0, 0, 1, 1\}$. Applying the permutation used to sort $B$ to the array $X$ results in $Y = \{1, 2, 1, d, d\}$.
+
+\definecolor{dummyred}{RGB}{255, 200, 200}
+\definecolor{normalgreen}{RGB}{200, 255, 200}
+\definecolor{headerblue}{RGB}{180, 210, 255}
+\begin{table}[!t] \label{tab:sort_stable}
+\centering
+\rowcolors{2}{white}{gray!5}
+\begin{tabular}{|c|>{\columncolor{white}}c|>{\columncolor{white}}c|>{\columncolor{white}}c|>{\columncolor{white}}c|>{\columncolor{white}}c|}
+\rowcolor{headerblue}
+\hline
+\textbf{Index} & \textbf{\( B \)} & \textbf{\( X \)} & \textbf{Sorted Index} & \textbf{\( B' \)} & \textbf{\( Y \)} \\
+\hline
+1 & \cellcolor{normalgreen}0 & \cellcolor{normalgreen}1 & 1 & \cellcolor{normalgreen}0 & \cellcolor{normalgreen}1 \\
+2 & \cellcolor{dummyred}1 & \cellcolor{dummyred}d & 3 & \cellcolor{normalgreen}0 & \cellcolor{normalgreen}2 \\
+3 & \cellcolor{normalgreen}0 & \cellcolor{normalgreen}2 & 5 & \cellcolor{normalgreen}0 & \cellcolor{normalgreen}1 \\
+4 & \cellcolor{dummyred}1 & \cellcolor{dummyred}d & 2 & \cellcolor{dummyred}1 & \cellcolor{dummyred}d \\
+5 & \cellcolor{normalgreen}0 & \cellcolor{normalgreen}1 & 4 & \cellcolor{dummyred}1 & \cellcolor{dummyred}d \\
+\hline
+\end{tabular} \vspace{0.5em}
+\caption{Example of \texttt{asSequence()} transformation using stable sort. Dummy values are in red.}
+\end{table}
+
+
+% \begin{table}[h!]
+% \centering
+% \begin{tabular}{|c|c|c|c|c|}
+% \hline
+% \textbf{Index} & \textbf{\( B \)} & \textbf{\( X \)} & \textbf{Sorted Index} & \textbf{\( Y \)} \\
+% \hline
+% 1 & 0 & 1 & 1 & 1 \\
+% 2 & 1 & d & 3 & 2 \\
+% 3 & 0 & 2 & 5 & 1 \\
+% 4 & 1 & d & 2 & d \\
+% 5 & 0 & 1 & 4 & d \\
+% \hline
+% \end{tabular}
+% \caption{Example of \texttt{asSequence()} transformation using stable sort}
+% \end{table}
+
+% where $B$ and $B'$ are arrays of pseudo-boolean variables of size $z$, telling which variables of $X$ and $Y$ are equal to the dummy value $d$.
+% The \inlinecstr{stable\_keysort}{T,S,k} constraint takes a table $T$ (a matrix of variables) and sorts it into $S$, ordering on the $k$ first columns which form the key.
+% We assemble the tables from the arrays $B$ and $X$, and $B'$ and $Y$.
+% The final parameter for the \emph{stable keysort} identifies the columns of the key, here we're sorting on the pseudo-boolean variables of the first column.
+% \begin{table}[!t]
+% \centering
+% \begin{tabular}{|l|l|l|l|l|}
+% \cline{1-2} \cline{4-5}
+% B & X &  & B' & Y \\ \cline{1-2} \cline{4-5} 
+% 0 & 1 &  & 0  & 1 \\ \cline{1-2} \cline{4-5} 
+% 1 & d &  & 0  & 2 \\ \cline{1-2} \cline{4-5} 
+% 0 & 2 &  & 0  & 1 \\ \cline{1-2} \cline{4-5} 
+% 1 & d &  & 1  & d \\ \cline{1-2} \cline{4-5} 
+% 0 & 1 &  & 1  & d \\ \cline{1-2} \cline{4-5} 
+% \end{tabular}
+% \end{table}
+% To illustrate: given $X=\{1,d,2,d,1\}$ 
+% we determine $B=\{0,1,0,1,0\}$, 
+% sorting $B$ gives us $B'=\{0,0,0,1,1\}$, 
+% applying to $X$ the permutation that sorts $B$ gives us $Y=\{1,2,1,d,d\}$.
+
+One of the strategies during the search process involves enumerating the variables representing the \emph{top-level nodes} in the OCL abstract syntax tree (AST). For example, in the expression \inlineocl{src.asSequence().sum()<3}, we explore possible values for \inlineocl{.sum()}, which helps filter the values of \inlineocl{src.asSequence}. To extend this filtering process down to \inlineocl{src}, an additional model is needed to manage the refinement.
+%%
+To filter from $Y$ to $X$, we use a cumulative constraint, commonly applied in task scheduling. In this approach, we treat the intervals between values in $Y$ as blocking tasks that prevent certain values from $X$ during scheduling. 
+By scheduling the tasks derived from $X$ around the blocking intervals from $Y$, we filter down the possible values for $X$, effectively refining the search space according to the constraints set by $Y$.
+% During search, one of our strategies is to also enumerate on the variables modeling the \emph{top nodes} of the OCL AST.
+% This means given an expression such as \inlineocl{src.asSequence().sum()<3}, we would try values for \inlineocl{.sum()}, which would filter values for \inlineocl{src.asSequence}, and to continue filtering downwards to the \inlineocl{src} we need an additional model.
+% To filter from $Y$ to $X$ we use the cumulative constraint, which is generally used for task scheduling. 
+% We'll use it by making \emph{blocking tasks} out of the intervals between the values of $Y$, and scheduling the tasks made from $X$ around them:
+\begin{equation}\label{csp:seq_Y2X} \footnotesize
+asSeq_{y2x}(X,Y):
+\begin{cases}
+&sort(Y,Y')\\
+\text{let}\; T_y\; &\text{be the set of tasks such that:}\\
+~\forall i \in [1,z[ &: s_i=y'_i+1\\
+&\hspace{5pt} d_i=\max(0,y'_{i+1}-y'_i-1)\\
+&\hspace{5pt}h_i=z\\
+\text{let}\; T_x\; &\text{be the set of tasks such that:}\\
+~\forall i \in [1,z] &: s_i=x_i\\
+&~~d_i=1\\
+&~~h_i=1\\
+&cumulative(T_y\cup T_x,z)
+\end{cases}
+\end{equation}
+Equation (\ref{csp:seq_Y2X}) defines how to filter values of $X$ based on the sequence $Y$ using a cumulative constraint:
+\begin{enumerate}
+    \item First, $Y$ is sorted into $Y'$ to identify ordered non-dummy values.
+    \item From $Y'$, we define blocking tasks $T_y$ representing disallowed intervals. Each task (associated to value $y'_{i}$ in $Y'$):  
+    \begin{itemize}
+        \item Starts at $s_i=y'_i+1$, 
+        \item Has a duration $d_i=\max(0,y'_{i+1}-y'_{i}-1)$,
+        \item Has a height of $h_i=z$, fully consuming the resource and thus excluding $X$ from that interval.
+    \end{itemize}
+    
+    \item For each variable $x_i \in X$, a task is created in $T_x$ starting at $x_i$, with duration $1$ and height $1$.
+    
+    \item The cumulative constraint on $T_y\cup T_x$ ensures tasks from $X$ are only scheduled in the non-blocked intervals.
+\end{enumerate}
+
+
+% Here we see the cumulative constraint is applied to $T_y\cup T_x$, a set of tasks made from the variables of $X$ and $Y$, and $z$ -- the length of $X$ and $Y$-- is the amount of \emph{resource} for the cumulative constraint.
+% A task is a tuple of variables <$s$,$d$,$h$>, where $s$ represents the start time of a task, $d$ the duration of the task, and $h$ the \emph{height} of the task, which generally encodes \emph{how much of a resource is required by a task}.
+In Figure \ref{fig:cumulative}, blocking tasks (highlighted in red and blue) are created from the intervals between values in $Y'$, representing values that are prohibited for $X$. The white space represents the available slots for scheduling tasks from $X$. This model effectively restricts the possible values for $X$ by ensuring that certain values, determined by the sorted sequence $Y'$, are "blocked" from being selected, refining the search space.
+% we can see how tasks are made from $Y'$ the sorted copy of $Y$ and $X$.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 30 0 0},width=1\linewidth]{Articles/ICTAI2025/figures/cumulative.pdf}
+    \caption{Visualization of the use of cumulative to filter from $Y'$ to $X$}
+    \label{fig:cumulative}
+\end{figure}
+Combining both the \emph{X to Y} and \emph{Y to X} models give us the complete model for \inlineocl{asSequence}.
+\vspace*{-.2cm}
+\begin{equation}\label{csp:seq_XY} \footnotesize
+asSequence(X,Y) :
+\begin{cases}
+asSeq_{x2y}(X,Y)\\
+% asSeq_{0}(X,Y)\\
+asSeq_{y2x}(X,Y)\\
+% Sequence(Y)
+\end{cases}
+\end{equation} 
+% \ytodo{conclude}
+
+
+% In red and blue, we have what we called \emph{blocking tasks}, made from the intervals between values of $Y'$, which are forbidden values for $X$.
+
+
+
+% Tasks are made for every interval between consecutive variables of $Y'$, but here we show the only tasks that block a range of values and hence have width.
+% The duration of blocking tasks, is the size of the interval between values,
+% and the start of a blocking task is the first blocked value.
+% The height of blocking tasks is $z$, which means that it uses the whole \emph{resource} and forces the tasks from $X$ to start at a different time.
+% The white area left available, is where we schedule the tasks from $X$.
+% Each variable $x_i$ of $X$ gets a task, starting at $x_i$, lasting 1 unit of time as a variable holds 1 value, and 1 unit high as it take one spot in the list. 
+% Additionally, we show how the tasks representing $X$ would fit in the solution to the cumulative constraint.
+% \subsection{asOrderedSet()}
+\smallskip
+\noindent
+\textbf{D. asOrderedSet():}
+\label{ssec:asOrderedSet}
+% \ytodo{give motivation, give rigorous definition, before formulation}
+Consider the expression \inlineocl{src.asOrderedSet()}. The \inlineocl{asOrderedSet()} operation removes duplicates from $X$ while preserving the relative order of first occurrences. Unused positions in $Y$ are filled with dummy values $d$. For example if $X=\{1,2,d,1\}$, then \inlineocl{asOrderedSet} returns the array $Y=\{1,2,d,d\}$. To enforce this behavior, we use the following CP model: 
+\begin{equation}\label{csp:ordseq_XY} \footnotesize
+asOrdSet(X,Y):
+\begin{cases}
+% \mathit{stable\_keysort}(\{X,Y'\},\{\reverse{S},\reverse{T}\},1) \\
+\mathit{stable\_keysort}(<X,Y'>,<S,T>,1) \\
+t_1=s_1\\
+\forall i \in ]1,z] : t_i = 
+\begin{cases}
+    s_i &\text{if}\; s_i\neq s_{i-1}\\
+    d &\text{otherwise} \\
+\end{cases}\\
+asSequence(Y',Y)\\
+% OrderedSet(Y)
+\end{cases}
+\end{equation}
+The idea is to sort $X$ into $S$ to group identical values. We build $T$ by keeping the first occurrence of each value in $S$ and replacing subsequent duplicates with the dummy value $d$. We then invert the sort to obtain $Y'$, restoring the original structure. Finally, we apply \inlineocl{asSequence} to push all dummy values to the end, yielding the final ordered set $Y$.
+
+% The strategy here is to sort $X$ into $S$ to get equal values side by side.
+% From $S$ we keep the first occurrence of each value in $T$, the other occurrences in $S$ are replaced with the dummy value in $T$.
+% We undo the sorting of $T$ into $Y'$ to get the order back.
+% To \emph{do and undo} the sorting we leverage the \emph{stable\_keysort} constraint.
+% The removed values may introduce gaps into $Y'$, and to remove them we simply reuse \inlineocl{asSequence}.
+% \ytodo{detail the steps with examples}
+
+Given $X=\{2,1,2,3\}$, sorting yields $S=\{1,2,2,3\}$, filtering gives $T=\{1,2,d,3\}$, reversing the sort results in $Y'=\{2,1,d,3\}$, and packing dummies yields $Y=\{2,1,3,d\}$.
+
+% To illustrate: given $X=\{2,1,2,3\}$
+% we sort $S=\{1,2,2,3\}$,
+% and save the first of each value $T=\{1,2,d,3\}$.
+% Undoing the sort returns the order $Y'=\{2,1,d,3\}$ and we apply \inlineocl{asSequence} to pack the dummies at the end $Y=\{2,1,3,d\}$.
+% \begin{equation}\label{csp:ordseq_XY}
+% asOrdSet(X,Y):
+% \begin{cases}
+% sort\_permutation(X,S,P) \\
+% X' = \reverse{S}\\
+% X'' = \reverse{T}\\
+% x''_1=x'_1\\
+% \forall i \in ]1,z] : x''_i = 
+% \begin{cases}
+%     x'_i &\text{if}\; x'_i\neq x'_{i-1}\\
+%     0 &\text{otherwise} \\
+% \end{cases}\\
+% % \forall i \in ]1,n] : \llbracket x'_i\neq x'_{i-1}\rrbracket
+% % \begin{cases}
+% %     \llbracket x''_i=x'_i\rrbracket \mathit{if} \top\\
+% %     \llbracket x''_i=0\rrbracket \mathit{if} \bot\\
+% % \end{cases}\\
+
+% % \forall i \in ]1,n] : \llbracket x'_i\neq x'_{i-1}\rrbracket\Rightarrow \llbracket x''_i=x'_i\rrbracket\\
+% % \forall i \in ]1,n] : \neg\llbracket x'_i\neq x'_{i-1}\rrbracket \Rightarrow\llbracket x''_i=0\rrbracket\\
+% permutation(Y',T,P)\\
+% asSequence(Y',Y)\\
+% OrderedSet(Y)
+% \end{cases}
+% \end{equation}
+% For example given an instantiated array of variables such as $X=\{1,2,1,d\}$, \inlineocl{asOrderedSet} returns the array $Y=\{1,2,d,d\}$.
+
+% \ytodo{detail permulation refomulation using element}
+% \begin{equation*}
+%     permutation(X,Y,Z) \iff 
+% \begin{aligned}
+%     & z_i\neq z_j,\forall i<j \in [1,n]\\
+%     \wedge\;& x_i=y_{z_i},\forall i\in[1,n]\\
+% \end{aligned}
+% \end{equation*}
+
+% \subsection{Filtering Dummy Values in OCL Collection Operations}
+\smallskip
+\noindent 
+\label{ssec:as_0}
+\textbf{E. Filtering Dummy Values in OCL Collection Operations}
+For many OCL collection operations, the filtering process from $X$ to $Y$ can be enhanced by introducing a dedicated constraint to handle dummy values. This filtering mechanism can be integrated into models such as \ref{csp:bag_XY}, \ref{csp:set_XY}, \ref{csp:seq_XY}, and \ref{csp:ordseq_XY}.
+%%
+% For many OCL collection operations filtration from $X$ to $Y$ can be improved: by adding a filter specifically for dummy values.
+% This constraint model can be added to the collection operation models  \ref{csp:bag_XY}, \ref{csp:set_XY}, \ref{csp:seq_XY} and \ref{csp:ordseq_XY}, and some other collection operations.
+%%
+The filtering approach is inspired by the strategy used in Equation (\ref{csp:seq_X}), employing a $\mathit{regular}$ constraint over a masked array:
+% This filter borrows from the strategy used in CSP \ref{csp:seq_X} by using a regular constraint to accept a masked array.
+% It can also be applied the navigation model in CSP \ref{csp:nav}, with a slight alteration to the mask logic.
+\begin{equation}\label{csp:as_0} \footnotesize
+\mathit{dChannel}(X,Y) :
+\begin{cases}
+\mathit{regular}(S,\mathit{NFA})\\
+\text{where}\; s_i=\llbracket s'_i\neq d\rrbracket, i \in [1,z]\\
+\text{with} \; S' = X\;\mathbin{\|}\;c\mathbin{\|}\;\reverse{Y} \\
+% count(0,Y,c)\\
+% count(0,X,c)
+\end{cases}
+\end{equation}
+The mask encodes non-dummy values with 1s and dummy values with 0s. 
+The $\mathit{regular}$ constraint is applied over the concatenated sequence $S' = X\mathbin{\|}c\mathbin{\|}\reverse{Y}$, where $c$ is a counter variable ranging from 0 to $z$. The non-deterministic finite automaton (NFA), shown in Figure~\ref{fig:afn}, ensures that the number of 0s (i.e., dummies) in $X$ is matched by the same number of leading 0s in $\reverse{Y}$.
+
+% We have the same mask logic as for CSP \ref{csp:seq_X}, hiding values behind 1 and dummies behind 0.
+% The array of variables we apply the mask to is a concatenation of $X$ followed by $c$ followed by $\reverse{Y}$, where $domain(c)=[0,z]$.
+% \ytodo{count closes the cycle meaning not berge acyclic?}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 15 0 0},width=0.45\linewidth]{Articles/ICTAI2025/figures/afn.pdf}
+    \caption{Non-Deterministic Finite Automaton accepting strings where $Y$ starts with the same number of 0 found in $X$.}
+    \label{fig:afn}
+\end{figure}
+% The non-deterministic finite automaton illustrated in Figure \ref{fig:afn}, counts the number of 0 in $X$ and forces $\reverse{Y}$ to start with the same count of 0.
+%An example accepted word would be 1101003000111.
+Given a partial instantiation such as $X=\{x_1,d,x_3,d,x_5\}$, this constraint allows filtering to deduce  $Y=\{y_1,y_2,y_3,d,d\}$.
+
+% \ytodo{conclude}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Section \ref{Typeset section headers in sentence case}
+
+% You presumably are already familiar with the use of \LaTeX. But let 
+% us still have a quick look at how to typeset a simple equation: 
+%
+% \begin{eqnarray}\label{eq:vcg}
+% p_i(\boldsymbol{\hat{v}}) & = &
+% \sum_{j \neq i} \hat{v}_j(f(\boldsymbol{\hat{v}}_{-i})) - 
+% \sum_{j \neq i} \hat{v}_j(f(\boldsymbol{\hat{v}})) 
+% \end{eqnarray}
+% %
+% Use the usual combination of \verb|\label{}| and \verb|\ref{}| to 
+% refer to numbered equations, such as Equation~(\ref{eq:vcg}). 
+% Next, a theorem: 
+
+% \begin{theorem}[Fermat, 1637]\label{thm:fermat}
+% No triple $(a,b,c)$ of natural numbers satisfies the equation 
+% $a^n + b^n = c^n$ for any natural number $n > 2$.
+% \end{theorem}
+
+% \begin{proof}
+% A full proof can be found in the supplementary material.
+% \end{proof}
+
+% Table captions should be centred \emph{above} the table, while figure 
+% captions should be centred \emph{below} the figure.\footnote{Footnotes
+% should be placed \emph{after} punctuation marks (such as full stops).}
+ 
+% \begin{table}[h]
+% \caption{Locations of selected conference editions.}
+% \centering
+% \begin{tabular}{ll@{\hspace{8mm}}ll} 
+% \toprule
+% AISB-1980 & Amsterdam & ECAI-1990 & Stockholm \\
+% ECAI-2000 & Berlin & ECAI-2010 & Lisbon \\
+% ECAI-2020 & \multicolumn{3}{l}{Santiago de Compostela (online)} \\
+% \bottomrule
+% \end{tabular}
+% \end{table}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \subsection{Result CSP for Species Constraint}\label{ssec:zooCSP}
+% To illustrate how all the CSP can be composed, lets see the model for the example zoo constraint:
+% \begin{lstlisting}
+% context Cage inv:
+%   self.animals.species.asSet().size < 2
+% \end{lstlisting}
+% \begin{equation*}
+%     inv(self) \iff
+%     \begin{aligned}
+%         &nav(self,Cage.animals,A) \\
+%         \wedge &nav(A,Animal.species,B)\\
+%         \wedge &asSet(B,C)\\
+%         \wedge &dChannel(B,C)\\
+%         \wedge &size(C,y)\wedge y<2\\
+%     \end{aligned}
+% \end{equation*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Experimental Results}\label{sec:tests}
+
+\textcolor{black}{
+In order to perform our experiments we use our EMF interpreter, which employs the Choco Solver, to build and solve a CSP representing an instance and the associated model constraints. 
+As input the interpreter takes a metamodel (fig.\ref{fig:metamodel}) in ecore format, and a model (fig. \ref{fig:model}) in xmi format producing what we call the \emph{UML CSP}.
+\textcolor{black}{
+The UML CSP will employ the models \ref{csp:seq_X} to \ref{csp:ordset_X} to enforce the collection property types.
+}
+With as input the UML CSP and the model constraint written in ATL OCL, the interpreter builds the \emph{OCL CSP}.
+The OCL CSP is composed of models such as \ref{csp:nav} and \ref{csp:bag_XY} to \ref{csp:ordseq_XY}.
+}
+
+% We also modeled the following problems using Alloy, to compare with the State-of-the-Art. 
+As previously discussed, Alloy encodes models into SAT using bit-vectors for integers, while our approach translates to Constraint Programming (CP) using domain variables. In this experiment, the key parameter is the integer domain size, analogous to the bit-width in Alloy.
+%%
+To configure integer size in Alloy, we specify a bit-width using the solver call, e.g., \inlineocl{run\{\} for 8 int} sets a bit-width of 8. In CP, this corresponds to setting explicit lower and upper bounds for the integer variables.
+% \textcolor{blue}{
+% The second experiment looks at a case where the focus of the problem is finding associations, and we use the number of objects as variable.
+% }
+
+\smallskip
+\noindent
+\textbf{Zoo Model}. We conduct experiments on a zoo model, which includes three core classes:
+\inlineocl{Cage} with a sequence of \inlineocl{animals} and an integer attribute \inlineocl{capacity}.
+\inlineocl{Animal} linked to one Species and one Cage.
+\inlineocl{Species} has an integer attribute \inlineocl{space} indicating how much space one animal requires.
+% \vspace*{-.2cm}
+% \begin{itemize}
+%     \item \inlineocl{Cage} with a sequence of \inlineocl{animals} and an integer attribute \inlineocl{capacity}.
+%     \item \inlineocl{Animal} linked to one Species and one Cage.
+%     \item \inlineocl{Species} has an integer attribute \inlineocl{space} indicating how much space one animal requires.
+% \end{itemize}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 20 0 0},width=1\linewidth]{Articles/ICTAI2025/figures/zooMM.pdf}
+    \caption{Zoo Metamodel}
+    \label{fig:zoomm}
+\end{figure}
+
+We want to ensure that each cage contains only one species and does not exceed its capacity. 
+Space requirements are expressed in a unit such as square meters. 
+For instance, 3 lions needing $1000m^2$ each, 2 gnous needing $3000m^2$ each, and 2 cages with capacities of $3000m^2$ and $6000m^2$.
+Encoding such values in Alloy requires sufficient bit-width: 14 bits for encoding in square meters ($m^2$), 12 bits for decameters squared ($dam^2$), and 8–10 bits for hectometers squared ($hm^2$). In our CP model, we define domain bounds accordingly.
+%%
+The model has two cages, two species, and five animals. The associations (which animal is in which cage) are unknown and must be inferred. Constraints ensure:
+% \vspace*{-.2cm}
+\begin{enumerate}
+    \item A cage contains at most one species.
+    \item The total required space of animals in a cage does not exceed its capacity.
+\end{enumerate}
+To express the species constraint, we use collection type casting as discussed earlier. For the capacity constraint, we navigate over the sequence of animals to retrieve each individual's space requirement from their species, and then sum these values.
+
+% As previously discussed, Alloy relies on a translation of this problem to SAT, where we translate to CP.
+% The SAT problem from Alloy models integers using bit-vectors, while we use domain variables.
+% The size of the integer domain will be our main variable in this experiment.
+% To configure this in Alloy, we specify the bit-width in the solver call: \inlineocl{run\{\} for 8 int} sets the bit-width to 8.
+% Configuring this aspect for our solution means choosing the lower and upper bounds of property variables.
+
+% This experimentation uses the model our example zoo constraint comes from.
+% The metamodel describes three concepts: Cage, Animal and Species.
+% Cages have a sequence of animals \inlineocl{animals} and an integer attribute \inlineocl{capacity}.
+% Animals have one species \inlineocl{species} and one cage, which implies an animal must be in a cage. 
+% The Species class has an integer attribute \inlineocl{space} which tell us how much space an animal of that species requires. 
+% We wish to express capacities and space requirements in a unit such as square meters: for instance, we have three lions who each need $1000m^2$ and two gnou who each need $3000m^2$, and two cages: $3000m^2$ and $6000m^2$.
+% Depending on bit-width, we may need to round to decameters $dam^2$ or hectometers $hm^2$ for the value to fit in the encoding;
+% to encode capacity in $m^2$ we need a bit-width of at least 14.
+% A bit-width of 12 can encode the capacity in $dam^2$, while bit-widths of 8 and 10 can encode in $hm^2$.
+% We'll also specify the relation from Cage to Animal is a Sequence.
+% The model has two cages,
+% % : $3000m^2$ and $6000m^2$
+% two species,
+% % : Lions and Gnou which need $3000m^2$ each
+% and five animals, however the model data is incomplete and we need to find the associations between cages and animals.
+% The model constraints require cages aren't over-capacity and only contain one species of animal.
+% To express the species constraint, we use collection type casting as previously discussed,
+% and to express the capacity constraint, we leverage navigating from a sequence to get for each animal their individual space requirement, which we sum:
+\begin{lstlisting}
+context Cage inv:
+    self.animals.species.asSet().size() < 2
+and self.animals.species.space.sum() <= self.capacity
+\end{lstlisting}
+% Alloy doesn't have all the collection types and casting operations UML\&OCL has, but it does have an equivalent to \inlineocl{asSet} for it's sequence type: given an Alloy declaration such as \inlineocl{x:seq Type} meaning \inlineocl{x} is a sequence of \inlineocl{Type}, we can cast it to a set using the \inlineocl{elems} operation: \inlineocl{x.elems} is the set of elements in the sequence \inlineocl{x}.
+% To get the size of the set, we have the \inlineocl{\#} operator.
+% Similarly to perform the sum over the sequence of \emph{space} values, we need to slightly reformulate the OCL expression to explicitly iterate over the values and sum them.
+% \begin{lstlisting}
+% pred inv[c : Cage] {
+%     #c.animals.species.elems < 2
+% and (sum i: c.animals.species.space.inds 
+%         | c.animals.species.space[i]) 
+%             <= c.capacity
+% \end{lstlisting}
+% This choice in model illustrates an intersection of expressivity between the Alloy and UML\&OCL modeling languages.
+We compare our CP-based encoding of the OCL constraints with an equivalent Alloy model that incorporates sequences and type casting.
+Additionally, we also include an optimized Alloy variant that uses only sets, omitting sequence order over animals.
+The solver employed here is SAT4J.
+% \textcolor{blue}{
+% Using sets over sequences greatly reduces symmetries in the search space
+% }
+% Both Alloy models are provided in the supplementary materials.
+% , using both collection types available in Alloy that have equivalents in UML\&OCL.
+% We will also test a similar Alloy model using only sets, by declaring \inlineocl{animals: set Animal} and reformulating the constraint in consequence: \inlineocl{one animals.species}.
+
+% \begin{outline}
+%     % \item using zoo model: cages have a Sequence of Animals
+%     % \item testing our solution VS Alloy
+%     % \item the main variable in this test is size of domain for the integer variables, for Alloy this means choosing the bit-width of integers.
+%     \item the result is the size of the model, and if it fits in memory: the time to solve it. 
+%     \item With this model the maximum bit-width for Alloy is 10: meaning at most $2^{10}=1024$ different int values
+%     \item With a set based version of this model the maximum bit-width for Alloy is 12: 4096 different int values.
+%     \item We used upto an equivalent equivalent of bit-width=16 (we can do wider, but 16 allows for integer operations such as $\sqrt{}$ and $\times$). 
+% \end{outline}
+\begin{table}[!t]
+\centering
+\begin{tabular}{|ll|l|l|l|l|l|}
+\hline
+\multicolumn{2}{|r|}{bit-width} & 8               & 10            & 12         & 14           & 16             \\ \hline
+\multicolumn{1}{|l|}{Alloy Seq}    & \makecell[l]{variables\\clauses\\build (sec)\\solve (sec)}   & 
+\makecell[r]{84k\\316k\\0.1\\\textless{} 0.1} & 
+\makecell[r]{382k\\1.5M\\0.6\\ 0.3}            & Atm               & Atm               & Atm               \\ \hline
+\multicolumn{1}{|l|}{Alloy Set}    &  \makecell[l]{variables\\clauses\\build (sec)\\solve (sec)}  & \makecell[r]{35k\\128k\\\textless{} 0.1\\\textless{} 0.1} & 
+\makecell[r]{157k\\589k\\0.2\\0.1} & 
+\makecell[r]{703k\\2.7M\\2.6\\0.5}            & 
+\makecell[r]{3.1M\\11.2M\\26\\2.3}              & Mem               \\ \hline
+\multicolumn{1}{|l|}{OCL in CP}           &  \makecell[l]{variables\\constraints\\build (sec)\\solve (sec)}  & 
+\makecell[r]{223\\126\\0.6\\\textless{} 0.1} & 
+\makecell[r]{223\\126\\0.6\\\textless{} 0.1} & 
+\makecell[r]{223\\126\\0.6\\\textless{} 0.1} & 
+\makecell[r]{223\\126\\0.6\\\textless{} 0.1} & 
+\makecell[r]{223\\126\\0.6\\\textless{} 0.1} \\ \hline
+\end{tabular} \vspace{0.5em}
+    \caption{Comparison of Alloy and our work for models with integer properties}
+    \label{tab:experiment}
+\end{table}
+% \vspace{-0.5cm}
+Table \ref{tab:experiment} compares the Alloy (Sequence and Set) and our CP models across different integer bit-widths (8 to 16 bits). 
+As a reminder: 8-bit allows for integers ranging from -128 to 127, and 16-bit ranges from -32768 to 32767.
+For Alloy, we report the number of SAT variables and clauses, while for the CP model we provide the number of variables and constraints. 
+While these metrics aren’t directly comparable across paradigms, they illustrate model growth with respect to integer encoding. 
+We also show solver build times. Some Alloy configurations failed\footnote{The generated model is too large to fit within a 2.5 gigabyte memory limit} due to memory limits ("Mem") or excessive atoms ("Atm"). Resolution times are low across all models, reflecting the relative simplicity of the problem.
+% In Table \ref{tab:experiment} we have the results for the Alloy Sequence and Set models, and our model.
+% The models are each solved with growing domains for the internal integer model, ranging from 8-bit to 16-bit.
+% As a reminder: 8-bit allows for integers ranging from -128 to 127, and 16-bit ranges from -32k to 32k.
+% The resulting SAT models are described by the number of variables and clauses (binary constraint on booleans), and for our CP model we display variable and constraint count.
+% These measures illustrate how the size of the solver model changes relative to the integer encoding.
+% There is little meaning comparing such counts between SAT and CP.
+% We also give the build time for the solver model, in some cases the model is too large to fit within a 2.5 gigabyte memory limit (marked Mem) or has too many atoms for the translation process (marked Atm).
+% Finally, for resolution times, we averaged over several runs; the problem being somewhat trivial to solve.
+% , most solutions were found in tens of milliseconds.
+\textcolor{black}{
+% TODO: make the table say more, 
+% explain Alloy Seq vs Set, 
+Alloy models explode when faced with integers: each extra bit roughly doubles the number of variables and clauses in the SAT model, you can approximate the model growth with regards to bit-width with: $2^{\text{bit-width}}$. 
+The CP model's size however, is independent from the integer domain, and the model size remains constant.
+This trend can also be found in resolution times, where incrementing bit-width doubles resolution time for Alloy.
+}
+This experiment shows that our CP solution scales independently of the integer domain size. While Alloy models hit limitations due to memory or atom count at higher bit-widths, our approach continues to support larger domains and remains solvable. 
+Moreover, our model can exceed 16-bit integers, with the only limitation being operations, such as addition and multiplication, that require wider domains to hold intermediate results.
+% \textcolor{blue}{
+% The work from \cite{ferdjoukh_instantiation_2015} was not included in this experimentation because the implementation didn't provide as much OCL coverage, notably the \inlineocl{asSet} operation. 
+% However our shared CP models are similar enough to expect similar performance.
+% }
+
+% This experiment shows that our model sizes are independent of integer domain size, and where we hit the limits for Alloy models using integers, we can still model the problem and attempt to solve it.
+% Our model can also go beyond 16-bit integers, the first limiting factor being the use of integer operations for which the results require more bits, for instance: adding two 16-bit numbers requires an extra carry-bit.
+% , and the second limiting factor being the increased complexity. 
+% \begin{figure}[!ht]
+%     \centering
+%     \includegraphics[trim={0 20 0 0},width=1\linewidth]{figures/rmsMM.pdf}
+%     \caption{RMS Metamodel}
+%     \label{fig:rmsmm}
+% \end{figure}
+% \begin{lstlisting}
+% context Task inv:
+%   self.doneBy.stageID >= 
+%       self.prev.doneBy.stageID;
+% context Stage inv: 
+%   self.machines.size() 
+%         <= self.maxMachines
+% and self.tasks.time.sum() 
+%         <= self.machines.size()*500;
+% \end{lstlisting}
+% \smallskip
+% \noindent
+% \textbf{B) Reconfigurable Manufacturing System (RMS)}. We also conducted experiments using a model of a Reconfigurable Manufacturing System (RMS). 
+% \textcolor{blue}{In this experiment the search is dominated by a relational problem where the difficulty depends on the number of objects.}
+% In this system, tasks and machines are assigned to an ordered sequence of stages. The model enforces task precedence constraints and ensures that each stage selects a valid number of machines capable of executing the assigned tasks. The tested configuration --inspired by \cite{Wang2012-srms}-- includes 4 stages, each allowing up to 6 machines. The number of machines allocated per stage is determined by the resources required to complete the assigned collection tasks.
+% % In an RMS we associate tasks and machines to an order of stages, while respecting a precedence constraint across the tasks, and each stage must associate machines that can perform the task while conforming to constraints on the number of machines.
+% % \begin{lstlisting}
+% % context RMS!Task inv:
+% %   self.stage.ID >= self.prev.stage.ID;
+% % context RMS!Stage inv:
+% %   self.machines.size() <= self.maxMachines
+% % and self.tasks.time.sum() 
+% %         <= self.machines.size()*10;
+% % \end{lstlisting}
+% \begin{table}[!t]
+% \centering
+% \begin{tabular}{|l|l|l|l|l|l|l|l|}
+% \hline
+% \multicolumn{2}{|l|}{Number of Tasks}   & 6    & 7    & 8    & 9 &10 &11  \\ \hline
+% Alloy     & 
+% \makecell[l]{build\\solve} & 
+% \makecell[r]{1.5s\\0.8s} & 
+% \makecell[r]{1.5s\\0.8s} & 
+% \makecell[r]{1.7s\\1s} & 
+% \makecell[r]{2s\\1.2s} &
+% \makecell[r]{2s\\1.2s} &
+% \makecell[r]{2.2s\\1.2s}\\ \hline
+% % Alloy     & 
+% % \makecell[l]{build\\solve} & 
+% % \makecell[r]{0.2s\\0.1s} & 
+% % \makecell[r]{0.2s\\0.2s} & 
+% % \makecell[r]{0.2s\\0.2s} & 
+% % \makecell[r]{0.3s\\0.2s} &
+% % \makecell[r]{0.3s\\0.2s} &
+% % \makecell[r]{1.6s\\1.0s}\\ \hline
+% OCL in CP & \makecell[l]{build\\solve} & 
+% \makecell[r]{0.7s\\0.1s} & 
+% \makecell[r]{0.7s\\0.3s} & 
+% \makecell[r]{0.7s\\0.7s} & 
+% \makecell[r]{0.7s\\1.2s} &
+% \makecell[r]{0.7s\\6.2s} &
+% \makecell[r]{0.7s\\19.6s}\\ \hline
+% % OCL in CP & \makecell[l]{build\\solve} & 
+% % \makecell[r]{0.5s\\0.3s} & 
+% % \makecell[r]{0.5s\\0.7s} & 
+% % \makecell[r]{0.5s\\0.8s} & 
+% % \makecell[r]{0.5s\\1.7s} &
+% % \makecell[r]{0.5s\\14.2s} &
+% % \makecell[r]{0.5s\\32.4s}\\ \hline
+% \end{tabular}
+% \end{table}
+% % The model tested has 4 stages with a maximum of 6 machines per stage, and the number of machines in a stage depends on the time to complete the assigned tasks.
+% For the instance tested here, tasks needs 150 of resource and each machine provides 500, e.g. a stage assigned 4 tasks needs 2 machines.
+% The results show that our model falls behind when the primary focus is searching for associations.
+% % cases where attribute values are small, and the core of the problem is finding associations, 
+% % Alloy still has the advantage.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \section{Experimental Results}\label{sec:tests}
+% As previously discussed, Alloy relies on a translation of this problem to SAT, where we translate to CP.
+% The SAT problem from Alloy models integers using bit-vectors, while we use domain variables.
+% The size of the integer domain will be our main variable in this experiment.
+% To configure this in Alloy, we specify the bit-width in the solver call: \inlineocl{run\{\} for 8 int} sets the bit-width to 8.
+% Configuring this aspect for our solution means choosing the lower and upper bounds of property variables.
+
+% This experimentation uses the model our example zoo constraint comes from.
+% The metamodel describes three concepts: Cage, Animal and Species.
+% Cages have animals and capacity as properties, and animals have one species.
+% We'll also specify the relation from Cage to Animal is a Sequence.
+% The model has two cages, two species, and five animals.
+% The model data is incomplete however, and we need to find the associations between cages and animals.
+% The model constraints require cages aren't over-capacity and only have one species of animal.
+% To express the species constraint, we use collection type casting:
+% \begin{lstlisting}
+% context Cage inv:
+%   self.animals.size() <= self.capacity
+% and self.animals.species.asSet().size() < 2
+% \end{lstlisting}
+% Alloy doesn't have all the collection types and casting operations UML\&OCL has, but it does have an equivalent to \inlineocl{asSet} for it's sequence type: given an Alloy declaration such as \inlineocl{x:seq Type} meaning \inlineocl{x} is a sequence of \inlineocl{Type}, we can cast it to a set using the \inlineocl{elems} operation: \inlineocl{x.elems} is the set of elements in the sequence \inlineocl{x}.
+% To get the size of the set, we have the \inlineocl{\#} operator. 
+% \begin{lstlisting}
+% sig Cage {  animals: seq Animal }{
+%            #animals <= capacity
+%            #animals.species.elems < 2}
+% \end{lstlisting}
+% This choice in model illustrates an intersection of expressivity between the Alloy and UML\&OCL modeling languages
+% % , using both collection types available in Alloy that have equivalents in UML\&OCL.
+% We will also test a similar Alloy model using only sets, by declaring \inlineocl{animals: set Animal} and reformulating the constraint in consequence: \inlineocl{one animals.species}.
+
+% % \begin{outline}
+% %     % \item using zoo model: cages have a Sequence of Animals
+% %     % \item testing our solution VS Alloy
+% %     % \item the main variable in this test is size of domain for the integer variables, for Alloy this means choosing the bit-width of integers.
+% %     \item the result is the size of the model, and if it fits in memory: the time to solve it. 
+% %     \item With this model the maximum bit-width for Alloy is 10: meaning at most $2^{10}=1024$ different int values
+% %     \item With a set based version of this model the maximum bit-width for Alloy is 12: 4096 different int values.
+% %     \item We used upto an equivalent equivalent of bit-width=16 (we can do wider, but 16 allows for integer operations such as $\sqrt{}$ and $\times$). 
+% % \end{outline}
+% \begin{table}[!t]
+% \centering
+% \begin{tabular}{|ll|l|l|l|l|l|}
+% \hline
+% \multicolumn{2}{|l|}{model * bit-width} & 8               & 10              & 12              & 14              & 16              \\ \hline
+% \multicolumn{1}{|l|}{Alloy Seq}    & \makecell[l]{variables\\clauses\\build (sec)\\solve (sec)}   & 
+% \makecell[r]{17k\\61k\\\textless{} 0.1\\\textless{} 0.1} & 
+% \makecell[r]{73k\\276k\\0.1\\\textless{} 0.1}            & x               & x               & x               \\ \hline
+% \multicolumn{1}{|l|}{Alloy Set}    &  \makecell[l]{variables\\clauses\\build (sec)\\solve (sec)}  & \makecell[r]{16k\\58k\\\textless{} 0.1\\\textless{} 0.1} & 
+% \makecell[r]{72k\\274k\\0.1\\\textless{} 0.1} & 
+% \makecell[r]{327k\\1256k\\1\\0.3}            & 
+% \makecell[r]{1457k\\5652k\\20\\1.5}              & x               \\ \hline
+% \multicolumn{1}{|l|}{Us}           &  \makecell[l]{variables\\constraints\\build (sec)\\solve (sec)}  & 
+% \makecell[r]{200\\102\\0.5\\\textless{} 0.1} & 
+% \makecell[r]{200\\102\\0.5\\\textless{} 0.1} & 
+% \makecell[r]{200\\102\\0.5\\\textless{} 0.1} & 
+% \makecell[r]{200\\102\\0.5\\\textless{} 0.1} & 
+% \makecell[r]{200\\102\\0.5\\\textless{} 0.1} \\ \hline
+% \end{tabular}
+%     \caption{Comparison of Alloy and our work for models with integer properties}
+%     \label{tab:experiment}
+% \end{table}
+% In Table \ref{tab:experiment} we have the results for the Alloy Sequence and Set models, and our model.
+% The models are each solved with growing domains for the internal integer model, ranging from 8-bit to 16-bit.
+% As a reminder: 8-bit allows for integers ranging from -128 to 127, and 16-bit ranges from -32k to 32k.
+% The resulting SAT models are described by the number of variables and clauses (binary constraint on booleans), and for our CP model we display variable and constraint count.
+% These measures illustrate how the size of the solver model changes relative to the integer encoding.
+% There is little meaning comparing such counts between SAT and CP.
+% We also give the build time for the solver model, in some cases (marked X) the model is too large to fit within a 1 gigabyte memory limit.
+% Finally, for resolution times, we averaged over several runs; the problem being somewhat trivial to solve, most solutions were found in tens of milliseconds.
+
+% This experiment shows that our model's sizes are independent from integer domain size, and where we hit the limits for Alloy models using integers, we can hope for a speed up.
+% Our model can also go beyond 16-bit integers, the limiting factor being the use of integer operations, for instance: adding two 16-bit numbers requires an extra bit for the carry. 
+% % \ytodo{we can similarly explose Alloy model size with the number of objects: We want a zoo that Alloy has a hard time with}
+% % \ytodo{I've also got a RMS problem, and to solve it I need to use a certain bit-width}
+% % \begin{table}[!hb]
+% % \centering
+% % \begin{tabular}{|l|l|l|l|l|l|l|}
+% % \hline
+% % Model * bit-width & 8               & 10              & 12              & 14              & 16              \\ \hline
+% % Alloy Seq         &  &             & x               & x               & x               \\ \hline
+% % Alloy Set         &  & \textless{}0.1s & 0.3s            & 2s              & x               \\ \hline
+% % Us                & \textless{}0.1s & \textless{}0.1s & \textless{}0.1s & \textless{}0.1s & \textless{}0.1s \\ \hline
+% % \end{tabular}
+% % \end{table}
+% % Note: Building the Alloy Set model for bit-width 14 took 22 seconds, by far the longest build time.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conclusions}\label{sec:conclusion}
+In this paper, we extended the ATLc approach by generalizing the CP encoding of UML/OCL models to fully support collection types: \inlineocl{Sequence}, \inlineocl{Bag}, \inlineocl{Set}, and \inlineocl{OrderedSet}. We introduced modular and semantically faithful constraint models for collection type casting using global constraints such as \inlineocl{keysort}, \inlineocl{regular}, and \inlineocl{cumulative}. We also proposed a filtering constraint \inlineocl{(dChannel)} to help prune symmetries of dummy values. These encodings allow precise control over ordering, multiplicity, and filtering, leveraging constraint propagation mechanisms for effective instance generation and validation.
+
+% In conclusion, we have generalised the CP method proposed by ATLc, allowing us to build CP models from UML instances using collections of type \inlineocl{Sequence}, \inlineocl{Bag}, \inlineocl{Set} or \inlineocl{OrderedSet} for attribute and reference properties.
+% We've also extended coverage of OCL with global constraint models for navigation operations, and the collection type casting operations \inlineocl{asSequence}, \inlineocl{asBag}, \inlineocl{asSet} and \inlineocl{asOrderedSet}.
+We evaluated our encodings against Alloy’s SAT-based analysis, showing that our CP models scale independently of integer domain size, unlike Alloy where performance degrades with increasing bit-width. Our CP models remain tractable even beyond 16-bit integers, demonstrating better adaptability for data-intensive configurations. 
+% We further illustrated the expressiveness of our approach with a model of a Reconfigurable Manufacturing System, involving sequencing, filtering, and numeric constraints.
+% , revealing that CP can have an advantage.
+Overall, our method offers a flexible and scalable foundation for interpreting UML/OCL models through constraint programming. Future work includes extending support to more OCL operations and exploring optimization techniques for larger problem instances. 

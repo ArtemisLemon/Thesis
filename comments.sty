@@ -1,0 +1,85 @@
+%% Massimo's macros for proof-reading
+
+% Configuration: 
+% \usepackage[show]{comments} or \usepackage[hide]{comments}
+
+% Examples:
+% \mtodo{Task description}
+% \mnote{Existing text}{Annotation text}
+% \mreplace{Existing text}{New text}
+% \mdelete{Existing text to delete}
+% \madd{New text to add}
+%
+% \begin{outline}
+%   \1 First point
+%     \2 First subpoint
+%     \2 Second subpoint
+%   \1 Second point
+% \end{outline}
+
+\ProvidesPackage{comments}
+
+\RequirePackage{ifthen}
+\newboolean{showcomments}
+
+%% Options
+\DeclareOption{show}{\setboolean{showcomments}{true}}
+\DeclareOption{hide}{\setboolean{showcomments}{false}}
+\ExecuteOptions{show} % default
+\ProcessOptions\relax % terminates the option processing
+
+%% Definitions
+\ifthenelse{\boolean{showcomments}} {
+    \usepackage{outlines}
+    \let\oldoutline\outline
+    \def\outline{\oldoutline\color{teal}}
+
+    \usepackage[normalem]{ulem}
+    \def \ifempty#1{\def\temp{#1} \ifx\temp\empty }
+    \newcommand{\xnote}[3][]{\textcolor{red}{#2}$\rightarrow$ \textcolor{blue}{\textbf{#1} #3}}
+    \newcommand{\xtodo}[2][]{\xnote[#1]{}{#2}}
+
+    \newcommand{\xreplace}[3][]{\ifempty {#3} \textcolor{red}{\textbf{#1} \sout{#2}} \else \textcolor{red}{\sout{#2}} $\rightarrow$ \textcolor{blue}{\textbf{#1} "#3"} \fi}
+    \newcommand{\xdelete}[2][]{\xreplace[#1]{#2}{}}
+    \newcommand{\xadd}[2][]{\xreplace[#1]{}{#2}}
+} {
+    \newcommand{\xnote}[3][]{#2}
+    \newcommand{\xtodo}[2][]{}
+    \newcommand{\xreplace}[3][]{#2}
+    \newcommand{\xdelete}[2][]{#2}
+    \newcommand{\xadd}[2][]{}
+    \newenvironment{outline}{\setbox\z@\vbox\bgroup}{\egroup}
+    \def\1{}
+    \def\2{}
+    \def\3{}
+    \def\4{}
+}
+
+%% Aliases for each contributor
+% Massimo
+\newcommand{\mtodo}[1]{\xtodo[MT]{#1}}
+\newcommand{\mnote}[2]{\xnote[MT]{#1}{#2}}
+\newcommand{\mreplace}[2]{\xreplace[MT]{#1}{#2}}
+\newcommand{\mdelete}[1]{\xdelete[MT]{#1}}
+\newcommand{\madd}[1]{\xadd[MT]{#1}}
+
+% Matthew
+\newcommand{\ytodo}[1]{\xtodo[MC]{#1}}
+\newcommand{\ynote}[2]{\xnote[MC]{#1}{#2}}
+\newcommand{\yreplace}[2]{\xreplace[MC]{#1}{#2}}
+\newcommand{\ydelete}[1]{\xdelete[MC]{#1}}
+\newcommand{\yadd}[1]{\xadd[MC]{#1}}
+
+% Samir
+\newcommand{\stodo}[1]{\xtodo[SL]{#1}}
+\newcommand{\snote}[2]{\xnote[SL]{#1}{#2}}
+\newcommand{\sreplace}[2]{\xreplace[SL]{#1}{#2}}
+\newcommand{\sdelete}[1]{\xdelete[SL]{#1}}
+\newcommand{\sadd}[1]{\xadd[SL]{#1}}
+
+% Theo
+\newcommand{\ttodo}[1]{\xtodo[TLC]{#1}}
+\newcommand{\tnote}[2]{\xnote[TLC]{#1}{#2}}
+\newcommand{\treplace}[2]{\xreplace[TLC]{#1}{#2}}
+\newcommand{\tdelete}[1]{\xdelete[TLC]{#1}}
+\newcommand{\tadd}[1]{\xadd[TLC]{#1}}

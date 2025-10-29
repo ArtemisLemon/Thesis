@@ -2,39 +2,113 @@
 \addcontentsline{toc}{chapter}{Introduction}
 \chaptermark{Introduction}
 
+The Object Constraint Language 
+(OCL)\footnote{\url{https://www.omg.org/spec/OCL/2.4/}} is a popular language in Model-Driven Engineering (MDE) to define constraints on models and metamodels. OCL invariants are commonly used to express and validate model correctness. For instance, logical solvers have been leveraged to validate UML models against OCL constraints, used by tools like Viatra \cite{Bergmann2015-viatra}, EMF2CSP \cite{Gonzalez2012-emf2csp} and Alloy~\cite{Jackson2002-alloy}.
+% ,jackson_alcoa_2000
+However several problems in MDE require a way to automatically enforce constraints on models that do not satisfy them, e.g. to complete such models or repair them.
+% \ynote{This can also help implement proof assistants, such as Alloy \cite{jackson_alloy_2002, torlak_kodkod_2007} can find counter proofs to models and assertions upon them.}{too soon?}
+% Other problems require to generate models from scratch, that satisfy a given set of constraints\mtodo{add citation Varro}.
+Because of its combinatorial nature, the problem of enforcing constraints can be computationally hard even for small models. 
 
-Lorem ipsum dolor sit amet, «~consectetuer~» adipiscing elit. Maecenas fermentum, elit non lobortis cursus, orci velit suscipit est, id mollis turpis mi eget orci. Ut aliquam sollicitudin metus. Mauris at sapien sed sapien congue iaculis. Nulla lorem urna, bibendum id, laoreet iaculis, nonummy eget, massa. Phasellus ullamcorper commodo velit. Class aptent taciti sociosqu ad litora torquent per «~conubia nostra~», per inceptos hymenaeos. Phasellus est. Maecenas felis augue, gravida quis, porta adipiscing, iaculis vitae, felis. Nullam ipsum. Nulla a sem ac leo fringilla mattis. Phasellus egestas augue in sem. Etiam ac enim non mauris ullamcorper scelerisque. In wisi leo, malesuada vulputate, tempor sit amet, facilisis vel, velit. Mauris massa est, sodales placerat, luctus id, hendrerit a, urna. Nullam eleifend pede eget odio. Duis non erat. Nullam pellentesque.
+%Model Transformations \ytodo{\cite{}MT} come in flavours such as: model generation \ytodo{\cite{}}, model repair\ytodo{\cite{}}, view generation\ytodo{\cite{}James?}, model weaving \ytodo{\cite{}}, etc... Some of these problems require enforcing OCL constraints.
+% \ytodo{more expressive languages encourage bigger problems.}
+%These problems can be hard, which motivates us to find more efficient faster solutions.
+%A particular transformation problem which interests us is that of Model Set Exploration \cite{schatz_design-space_2010, le_calvar_toward_2019}, which could be specified with a language using constraints.
 
-\begin{verse}
-Maître Corbeau, sur un arbre perché, \\
-Tenait en son bec un fromage. \\
-Maître Renard, par l'odeur alléché, \\
-Lui tint à peu près ce langage : \\
-«~Hé ! bonjour, Monsieur du Corbeau. \\
-Que vous êtes joli ! que vous me semblez beau ! \\
-Sans mentir, si votre ramage \\
-Se rapporte à votre plumage, \\
-Vous êtes le Phénix des hôtes de ces bois.~» \\
-\end{verse}
+% When solving such problems, there are two dominant strategies, which can be combined:
+% building a solution (space) from inferences, and cutting down a space to carve out a solution.
+% A popular technique is generate and test, which uses both heuristics, to in turn generate a solution (space) with positive inferences, and cut it down with negative inferences as counter arguments for potential solutions.
+% This is the dominant strategy in related works such as 
+% \mtodo{\ytodo{(Why CP) trying to very quickly give the intuition on why this work has an \emph{important difference}, and this is probably where we should start citing \emph{all} related work.
+% Alloy \ytodo{\cite{}Alloy}, 
+Constraint Programming (CP) aims to efficiently prune a solution space by providing tailored algorithms. Such algorithms are made available in constraint solvers like Choco \cite{Prudhomme2022-choco} 
+in the form of global constraints. 
+% propagation techniques to reduce the variable domains.
+% , tailored to do so.
+%As CP's focus is on reducing the search space, we will use an ATL \cite{jouault_transforming_2006} model transformation to first build a fixed solution space, Choco to find a solution within and OCL as bridge between modeling worlds.
+% Hoping CP techniques can provide a boost in solving times.
+Leveraging such global
+constraints would potentially increase the performance of constraint enforcement on
+models.
+However, mapping OCL constraints to global constraints is not trivial. 
+%While some OCL operations' semantics seem close to a global constraint, such as \texttt{isUnique} and \texttt{AllDifferent}, there is also the question of which variables the constraint is applied to, as a result from OCL's query language.
+% One of the main problems is that most global constraints predicate on integers and booleans.
+% While global constraints for graphs variables exist, the catalogue for such constraint is generally not very expressive or efficient.
+Previous work 
+% by Le Calvar et al. 
+\cite{Le_Calvar2021-solvers} has started to bridge from arithmetic OCL constraints to arithmetic CP models, but it exclusively focused on constraints over attributes.%, found though \ynote{deterministic queries}{deterministic isn't the word} what we will later define as constant queries.
 
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas fermentum, elit non lobortis cursus, orci velit suscipit est, id mollis turpis mi eget orci. Ut aliquam sollicitudin metus. Mauris at sapien sed sapien congue iaculis. Nulla lorem urna, bibendum id, laoreet iaculis, nonummy eget, massa\footcite[32]{Pierre1901}. Phasellus ullamcorper commodo velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Phasellus est. Maecenas felis augue, gravida quis, porta adipiscing, iaculis vitae, felis. Nullam ipsum. Nulla a sem ac leo fringilla mattis. Phasellus egestas augue in sem. Etiam ac enim non mauris ullamcorper scelerisque. In wisi leo, malesuada vulputate, tempor sit amet, facilisis vel, velit. Mauris massa est, sodales placerat, luctus id, hendrerit a, urna. Nullam eleifend pede eget odio. Duis non erat. Nullam pellentesque. 
+% We take the first steps to solving for all model properties.
 
-\section*{Première section de l'intro}
-\addcontentsline{toc}{section}{Première section de l'intro}
+%Similar work proposes solutions to this problem:
+%SolverRational for QTV \cite{petter_solving_2009} which translates the transformation to prolog,
+%CSP(M) for Viatra \cite{horvath_dynamic_2012,schurr_cspm_2009}, a solver developed for this specific purpose.
 
-Lorem ipsum dolor sit amet, «~consectetuer~» adipiscing elit. Maecenas fermentum, elit non lobortis cursus, orci velit suscipit est, id mollis turpis mi eget orci. Ut aliquam sollicitudin metus. Mauris at sapien sed sapien congue iaculis. Nulla lorem urna, bibendum id, laoreet iaculis, nonummy eget, massa. Phasellus ullamcorper commodo velit. Class aptent taciti sociosqu ad litora torquent per «~conubia nostra~», per inceptos hymenaeos. Phasellus est. Maecenas felis augue, gravida quis, porta adipiscing, iaculis vitae, felis. Nullam ipsum. Nulla a sem ac leo fringilla mattis. Phasellus egestas augue in sem. Etiam ac enim non mauris ullamcorper scelerisque. In wisi leo, malesuada vulputate, tempor sit amet, facilisis vel, velit. Mauris massa est, sodales placerat, luctus id, hendrerit a, urna. Nullam eleifend pede eget odio. Duis non erat. Nullam pellentesque.
+In this paper we focus instead on structural constraints, i.e. OCL constraints that predicate on the links between model elements.
+%In other words, we want to model the problem of finding the variables upon which the operations will be enforced.
+% We propose a first mapping for such constraints to global constraints in Choco.
+% In this paper 
+In detail, we present a method in two steps: 1) we provide an in-language solution for users to denote CP variables in OCL constraints; 2)  %a standard for identifying OCL to enforce with solvers, 
+%the beginnings of a general solution for modeling queries involving variable references,
+%and its addition to a previous implementation.
+% we present our contributions. a standard for identifying OCL variables to give to solvers,
+we describe a general CP pattern for enforcing annotated structural OCL constraints, i.e. constraints predicating on navigation chains. 
+% , and the translation of several common OCL operations.
+% 3) a strategy to refactor the OCL around the annotations.
+To evaluate the effectiveness of the method, we discuss the size of the Constraint Satisfaction Problems (CSPs) it produces, and the resolution time in some examples.
 
-\textbf{Une boite magique : }
 
-\boitemagique{Titre de la boite}{
-Praesent placerat, ante at venenatis pretium, diam turpis faucibus arcu, nec vehicula quam lorem ut leo. Sed facilisis, augue in pharetra dapibus, ligula justo accumsan massa, eu suscipit felis ipsum eget enim.
+In the context of Model-Driven Engineering (MDE), \emph{models} represent \emph{structured data}, and the \emph{model of the data structure} is known as a \emph{metamodel}. The Unified Modeling Language (UML)
+\footnote{\url{https://www.omg.org/spec/UML/2.4}}
+% \cite{uml}
+provides visual languages, such as class and object diagrams, to define both models and meta-models. The Object Constraint Language (OCL)
+\footnote{\url{https://www.omg.org/spec/OCL/2.4}}
+% \cite{ocl} 
+complements UML by enabling the specification of constraints over models, based on the underlying metamodel concepts. The Eclipse Modeling Framework (EMF)
+\footnote{\url{https://projects.eclipse.org/projects/modeling.emf.emf}}
+% \cite{emf} 
+supports UML and OCL, enabling validation of models against their meta-models and associated constraints. It also includes model transformation tools such as ATL~\cite{jouault2008atl,Le_Calvar2019-atol}, an OCL-based language that expresses mappings between meta-models. ATLc~\cite{Le_Calvar2021-solvers} extends ATL by introducing model space exploration capabilities to facilitate transformation specification. It leverages constraint solvers to generate and visualize model instances, which users can then adjust or repair using solver feedback.
+%In the context of model-driven engineering, \emph{models} are in general terms \emph{structured data} and the \emph{model of the data structure} is called a \emph{metamodel}. UML \ytodo{cite} provides visual languages to describe models and metamodels, such as object and class diagrams.
+%OCL \ytodo{cite}leverages the concepts in a UML metamodel to specify constraints on the models.
+%The Eclipse Modeling Framework (EMF) \ytodo{cite} provides an implementation of UML\&OCL, allowing users to validate the models (i.e. data), against the metamodel, or data structure, and the model constraints provided in OCL.
+%EMF also provides model transformation tools such as ATL \ytodo{cite}, \textcolor{blue}{a transformation language based on OCL. ATL uses OCL queries to link concepts across metamodels, facilitating the automatic transformation and restructuring of models.}
+%which uses OCL queries to link concepts across metamodels, allowing users to automatically transform, or restructure, their data.
+%ATLc \ytodo{cite} is a plug-in for ATL that enables model space exploration, with the aim of simplifying model transformation specifications.
+%The predominant use of ATLc is to leverage constraint solvers to generate visual representations of the data and its structure.
+%These visual models of the data can be manipulated by the user and subsequently repaired, if needed, by a constraint solver.
+\textcolor{blue}{
+The primary use of ATLc is to create a Graphical User Interface for a model, allowing the user to easily edit the model. This generally breaks some of the user defined OCL constraints, and our work hopes to provide a way to repair the models around the user's choices.
 }
+\textcolor{blue}{
+The core problem is: given a metamodel, a partial model and model constraints as input, the objective is to find model instances that satisfy the metamodel and model constraints.
+}
+ATLc does so by interpreting part of their OCL expressions upon an instance as a constraint satisfaction problem (CSP), which can be solved by engines like Cassowary (for linear programming) or Choco (for constraint programming). 
+% The generated GUI allows users to choose which model parameters to edit, allowing for model repair or automated reconfigurations.
+% In summary, our method aims to take an incomplete or otherwise incorrect model, the metamodel and model constraints it must conform to, and searches to complete or fix model data accordingly.
+However, ATLc is currently limited to single-valued model attributes, using integers or reals.
+\textcolor{blue}{
+Our work seeks to generalize this approach to support collection-valued properties: attributes and relations.
+}
+% a solution or repair can update attributes of objects, but not the links between objects.
+%The CSP that ATLc generates can then be handed to a variety of solvers such as Cassowary for Linear Programming, and Choco for Constraint Programming. This implementation is limited to single-value properties of a model and our efforts aim to generalise the method for collections.
 
-Laoreet iaculis, nonummy eget, massa. Phasellus ullamcorper commodo velit. Class aptent taciti sociosqu ad litora torquent per «~conubia nostra~», per inceptos hymenaeos. Phasellus est. Maecenas felis augue, gravida quis, porta adipiscing, iaculis vitae, felis. Nullam ipsum. Nulla a sem ac leo fringilla mattis. Phasellus egestas augue in sem. Etiam ac enim non mauris ullamcorper scelerisque. In wisi leo, malesuada vulputate, tempor sit amet, facilisis vel, velit. Mauris massa est, sodales placerat, luctus id, hendrerit a, urna. Nullam eleifend pede eget odio. Duis non erat. Nullam pellentesque.
+Among existing tools, Alloy~\cite{Jackson2002-alloy} stands out as a tool offering a dedicated language for defining meta-models and constraints. Alloy is often used for specification testing--such as verifying security protocols or code--by searching for models that satisfy given constraints. 
+It can also be used for checking specifications by searching for valid instances or counterexamples. Alloy has also been applied to model transformation and model repair~\cite{alloyMT}, with some approaches translating UML/OCL into Alloy specifications~\cite{uml2alloy, uml2alloy2uml}.
+The core difference with our approach lies in the underlying solving technique: Alloy is based on SAT solving, while we use Constraint Programming (CP). Choosing between SAT and CP for model search tasks is not straightforward, and through our experimentation, we aim to shed some light on that choice in the context of model search.
+Related work leveraging CP, global constraints and similar models also exists \cite{ferdjoukh_instantiation_2015}, however UML/OCL coverage doesn't include the general case of collection properties discussed in this paper, and required for the experimentation.
+% , and the tool's focus is generating models from scratch instead of around data.
 
-\textbf{Une boite simple : }
-\boitesimple{Mauris lorem quam, tristique sollicitudin egestas sed, sodales vel leo. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed lorem lacus, at venenatis elit. Pellentesque nisl arcu, blandit ac eleifend non, sodales a quam.}
+%Among the related work one that stands out is Alloy \ytodo{cite} which provides a language for metamodels and model constraints.
+%A predominant use of Alloy is to test specifications, such as security protocols and code, by searching for models satisfying the specification.
+%In many cases users search for counter-examples which help reveal issues, but Alloy can be used for general model search.
+%Alloy has also been applied to model transformations and model repair \ytodo{cite}, and some related work proposes a method to transform UML\&OCL specifications into Alloy ones \ytodo{cite}.
+%The core difference with our work is the choice of Artificial Intelligence to solve the problem: where we choose to target CP, Alloy chooses SAT.
+%Choosing between these methods for a problem isn't trivial, and with our experimentation we hope to shed some light on that choice in the context of model search.
 
-Laoreet iaculis, nonummy eget, massa. Phasellus ullamcorper commodo velit. Class aptent taciti sociosqu ad litora torquent per «~conubia nostra~», per inceptos hymenaeos. Phasellus est. Maecenas felis augue, gravida quis, porta adipiscing, iaculis vitae, felis. Nullam ipsum. Nulla a sem ac leo fringilla mattis. Phasellus egestas augue in sem. Etiam ac enim non mauris ullamcorper scelerisque. In wisi leo, malesuada vulputate, tempor sit amet, facilisis vel, velit. Mauris massa est, sodales placerat, luctus id, hendrerit a, urna. Nullam eleifend pede eget odio. Duis non erat. Nullam pellentesque.
+\section*{Model Driven Engineering}
 
 
+\section*{Artificial Intelligence}
+
+
+\section*{Problem to solve}

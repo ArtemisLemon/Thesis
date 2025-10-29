@@ -27,7 +27,7 @@
 \LoadClass[twoside,multicol,12pt,a4paper]{report}	% notez le "twoside", essentiellement pour alterner les en-tete et pieds de page gauche et droit si on veut utliser les fancyhead. 
 
 \RequirePackage[utf8]{inputenc} 
-\RequirePackage[english,french]{babel} % Last language is the default, use \selectlanguage{english} to switch
+\RequirePackage[english]{babel} % Last language is the default, use \selectlanguage{english} to switch
 \RequirePackage{ifpdf}
 \RequirePackage[usenames,dvipsnames]{color} % pour les couleurs
 \RequirePackage{textcomp}
@@ -65,7 +65,7 @@
 \RequirePackage{ifthen} % Entrer valeurs bool\'{e}ennes et autres options
 \RequirePackage{csquotes} % Assurer les guillemets français
 \frenchspacing
-\FrenchFootnotes
+%\FrenchFootnotes %removed because of error
 
 % Define commands to set fonts throughout the document
 \newcommand*{\selectfontfrontcover}{\fontfamily{phv}\selectfont}  % Font style used in front cover 

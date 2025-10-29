@@ -1,0 +1,16 @@
+\newcommand{\inlinecstr}[2]{$\mathit{#1}(#2)$} % inline Constraint Signature
+\newcommand{\inlinecstrname}[1]{$\mathit{#1}$} % inline Constraint Name
+
+\newcommand{\reverse}[1]{#1^{\text{rev}}} % Notation for reversed arrays
+
+
+% TCOLORBOXES used in SAC2025 CSPs
+\DeclareFloatingEnvironment[placement={h},name=CSP]{csp}
+\captionsetup[csp]{labelfont=bf}
+\NewDocumentEnvironment{cspdef}{mm}
+    {\begin{csp}[t] \begin{tcolorbox}[colback=white]}   
+    {\end{tcolorbox}\caption{#1}\label{#2}\end{csp}}
+
+\NewDocumentEnvironment{anx_cspdef}{mm}
+    {\begin{csp}[h] \begin{tcolorbox}[colback=white]}   
+    {\end{tcolorbox}\caption{#1}\label{#2}\end{csp}}

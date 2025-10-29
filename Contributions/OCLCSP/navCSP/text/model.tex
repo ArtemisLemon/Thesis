@@ -1,0 +1,115 @@
+\section{CP model for OCL queries on the instance}
+
+Querying an instance involves navigating the object graph through references and retrieving attribute values. In OCL, \emph{navigation} refers to the operation that, 
+% given a collection of source objects, returns a collection of referenced objects. 
+given source collection of objects and a reference property, returns a collection of target objects through that reference. We conflate this with \emph{attribute operations}--as defined in the OCL specification--which return a collection of attribute values from a source collection of objects. In our encoding, both navigation and attribute access results are uniformly represented as integer variables.
+
+% Here we will conflate it with what the OCL specification names \emph{Attribute Operations}, which from a source collection of objects returns a collection of attribute values, as in both cases for us: the results are encoded as integer variables.
+
+Consider an OCL expression of the form \inlineocl{src.property}, where \inlineocl{src} is itself an expression like \inlineocl{self.reference} or \inlineocl{self.reference.reference}. 
+%%
+
+Let $Ptr = \{ptr_1,...,ptr_z\}$ be the variables encoding the evaluation of \inlineocl{src}, with $dom(ptr_i)=\{1..o\} \cup \{nullptr\}$. Let $T$ be the flattened array representing the \texttt{Class.property} matrix for \texttt{property}, where \inlineocl{property} refers to either an attribute or reference of the referenced class. Let $p$ be the number of columns in the matrix. Let $Y = \{y_1, \ldots, y_{z \cdot p}\}$ be the variables representing the result of \texttt{src.property}. To link $Y$ with $T$ and $Ptr$, we define the navigation constraint:
+% \inlinecstr{nav}{Ptr, T, Y}:
+% We can refine the domain of the variables $Ptr$, 
+% Because the \inlineocl{src} expression identifies objects, $\forall ptr \in Ptr, domain(ptr)=\{1..o\} \cup \{nullptr\}$.
+% Let $T$ be the $Class.property$ table identified by \inlineocl{property} flattened into an array, and $p$ be the number of columns in the property table.
+% Let $Y = \{y_1,...,y_{z\times p}\}$ be the variables created to represent \inlineocl{src.property}, and their domain is the same as for the variables in the property table.
+% To link $Y$ with the problem data in $T$, we define \inlinecstr{nav}{Ptr,T,Y} that ties values from $T$ into $Y$ according to $Ptr$.
+\begin{equation*}\label{csp:nav_def} \footnotesize 
+nav(Ptr,T,Y) \iff
+\begin{aligned}
+\forall i \in [1,z],\forall j \in [1,p] : y_{(i-1)p+j} = T_{ptr_i \times p+j} \\
+% ~~~~p_{ij}=ptr_ip+j\\
+% ~~~~element(y_k,T,p_{ij}), k = (i-1)p+j \\
+%~~~~y_{(i-1)p+j} = T_{ptr_i \times p+j} \\
+\end{aligned}
+\end{equation*}
+% Here we have a formal definition for our encoding.
+% This is greatly simplified from the OCL specification by virtue of our encoding.
+This constraint links the source pointers to the appropriate rows in the property table. This is reformulated in CP as a conjunction of $\mathit{element}$ constraints, using intermediate variables for encoding the pointer arithmetic ($ptr_i \times p + j$):
+% The CP model for \inlinecstr{nav}{Ptr,T,Y} is reformulated using a conjunction of \inlinecstr{element}{y,\{t_1,...,t_n\},p} constraints and intermediate variables to hold the results of the \emph{pointer arithmetic} constraint:
+% for $y_k = T_{p_{ij}}$.
+\begin{equation}\label{csp:nav} \footnotesize
+nav(Ptr,T,Y):
+\begin{cases}
+\forall i \in [1,z],\forall j \in [1,p] :\\ 
+~~~ptr'_{ij}=ptr_i \times p+j\\
+~~~element(y_k,T,ptr'_{ij}),\, k = (i-1)p+j \\
+% ~~~~y_k = T_{p_{ij}}, k = (i-1)m+j \\
+\end{cases}
+\end{equation}
+The intermediate variables introduced are functionally dependent on the $Ptr$ variables and do not require enumeration during search. Given $Ptr$ and $T$, the value of $Y$ can be determined. However, given an instantiation of $Y$, this model cannot fully determine $Ptr$ and $T$, but it can filter to some extent. Thus, OCL query variables depend on the instance variables, and a query result may correspond to multiple instances.
+
+
+It is important to note that the intermediate variables introduced by this reformulation are functionally dependent on the $Ptr$ variables of the constraint.
+This means, we do not need to enumerate upon these variables during search.
+Similarly, given an instantiation of $Ptr$ and $T$, in the context of model verification for example, we can determine $Y$.
+However, given an instantiation of $Y$, this model alone cannot determine $Ptr$ and $T$, but it can filter to some extent.
+In the overall CSP this means that the variables encoding the OCL queries are all functionally dependent on the instance variables, but a query that solves the problem isn't associated with one instance.
+\begin{table}[!t]
+\centering
+\begin{tabular}{|lrrrrrr|}
+\hline
+\multicolumn{7}{|l|}{\textbf{Object.reference.attribute}}                                                                                                                                                        \\ \hline
+\multicolumn{1}{|l|}{\textbf{$Object_i$}} & \multicolumn{6}{l|}{\textbf{reference.attribute}}                                                                                                                        \\ \hline
+\multicolumn{1}{|l|}{\textbf{1}}     & \multicolumn{1}{r|}{-99}      & \multicolumn{1}{r|}{-33}      & \multicolumn{1}{r|}{$a'_{13}$} & \multicolumn{1}{r|}{1000}     & \multicolumn{1}{r|}{$a'_{15}$} & $a'_{16}$ \\ \hline
+\multicolumn{1}{|l|}{\textbf{2}}     & \multicolumn{1}{r|}{$a'_{21}$} & \multicolumn{1}{r|}{$a'_{22}$} & \multicolumn{1}{r|}{$a'_{23}$} & \multicolumn{1}{r|}{$a'_{24}$} & \multicolumn{1}{r|}{$a'_{25}$} & $a'_{26}$ \\ \hline
+\multicolumn{1}{|l|}{\textbf{3}}     & \multicolumn{1}{r|}{-3}       & \multicolumn{1}{r|}{4}        & \multicolumn{1}{r|}{5}        & \multicolumn{1}{r|}{$a'_{34}$} & \multicolumn{1}{r|}{$a'_{35}$} & $a'_{36}$ \\ \hline
+% \multicolumn{1}{|l|}{\textbf{4}}     & \multicolumn{1}{r|}{$n_{40}$} & \multicolumn{1}{r|}{$n_{41}$} & \multicolumn{1}{r|}{$n_{42}$} & \multicolumn{1}{r|}{$n_{43}$} & \multicolumn{1}{r|}{$n_{44}$} & $n_{45}$ \\ \hline
+\end{tabular} \vspace{0.5em}
+    \caption{Encodings of \inlineocl{self.reference.attribute} for all objects of Figure \ref{fig:model} as a table of integer variables}
+    \label{tab:nav_results}
+\end{table}
+
+Table \ref{tab:nav_results} shows the results of the query \inlineocl{self.reference.attribute} using the navigation CP model (\ref{csp:nav}) on the instance from Table \ref{tab:encoding}. Result variables $a'_{ij}$ share the same domains as $a_{ij}$ but follow the reference and attribute order, introducing gaps due to ordering, e.g., $a'_{13}$ might be the third variable, but yield a different third value (e.g., 1000) if $a'_{13}=d$. Similar effects occur in other OCL reformulations like \emph{union} and \emph{append}. Despite these gaps, value order and duplicates are preserved. These outputs are interpreted using the same models used for casting to collection types, such as \inlineocl{asSequence()}, discussed in Section \ref{sec:contrib_type_casting}.
+
+Table \ref{tab:nav_results} shows us the result of query \inlineocl{self.reference.attribute} using the navigation model CSP \ref{csp:nav} on the instance from Table \ref{tab:encoding} 
+The variables in this table, noted $a'_{ij}$, have the same domain as the $a_{ij}$ variables.
+We also find the instantiated values, with respect to the order in the reference and the attribute: the variables of the first referred object come first, in the same order as in their original table.
+This introduces gaps between values, as illustrated by the first line: the \emph{third variable} is $a'_{13}$, but if $a'_{13}=d$ the \emph{third value} is 1000.
+Our reformulations of other OCL operations, such as \emph{union} and the sequence operation \emph{append}, similarly introduce gaps.
+However, despite these gaps, the order and multiplicity across values are preserved.
+The models to get a correct interpretation these collections are the same as the models to cast to a collection type, such as \inlineocl{asSequence()}, and are explored in Section \ref{sec:contrib_type_casting}. 
+We will therefore need models to interpret these as the correct collection type.
+
+\begin{outline}
+    % \item Figure  shows the all the results for \inlineocl{self.reference.attribute}
+    % \item there are "gaps" in this table, notably line one. If n12 is equal to the dumym value, the third value of the sequence is 1000.
+    % \item this is some motivation for asType(), as similar problem can be presented by collection operations such as \inlineocl{union}, \inlineocl{append}, etc..
+\end{outline}
+
+% \begin{table}
+% \centering
+% \begin{tabular}{|l|l|}
+% \hline
+% \textbf{expression * context} & \textbf{o1}\\ \hline
+% self            & 1         \\ \hline
+% self.attribute  & [-3,4,6]       \\ \hline
+% self.reference  & [3,2]                \\ \hline
+% self.reference.attribute      &[-99,-33,$n_{12}$,1000,$n_{14}$,$n_{15}$]\\ \hline
+% \end{tabular}
+%     \caption{Results of queries on the Instance CSP}
+% %     \label{tab:queries}
+% % \end{table}
+% \begin{table}
+% \centering
+% \begin{tabular}{|l|l|l|}
+% \hline
+% \textbf{expression * context} & \textbf{o1}  & \textbf{o3}  \\ \hline
+% self            & 1         & 3             \\ \hline
+% self.attribute  & [-3,4,6]     & [-99,-33,$a_{32}$]   \\ \hline
+% self.reference  & [3,2]           & [1,$r_{31}$]      \\ \hline
+% self.reference.attribute      
+
+% &\makecell[l]{[-99,-33, $n_{12}$,\\1000, $n_{14}$, $n_{15}$]}
+% &\makecell[l]{[-3,4,6,\\$n_{33}$, $n_{34}$, $n_{35}$]}\\ \hline
+% \end{tabular}
+%     \caption{Results of queries on the Instance CSP}
+%     \label{tab:queries_nav}
+% \end{table}
+
+% $$Table = append(\{d_0,...,d_m\}, flatten(Class.prop))$$
+% $$src.pointer_i$$
+% $$src.pointer_i.property_j$$
+% $$element(src.pointer_{ij},Table,src.pointer_i.property_j)$$

@@ -17,6 +17,90 @@
 % Specify you bibliography files here
 \addbibresource{./biblio/biblio.bib}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% GLOBAL IMPORT SECTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx} % Required for inserting images
+\usepackage{subcaption}
+\usepackage{svg}
+\usepackage{xparse}
+\usepackage{newfloat}
+\usepackage{caption}
+\usepackage{multirow}
+% \usepackage{algorithm}
+% \usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{AMMALanguages}
+\usepackage{minted}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+\usepackage{appendix}
+\usepackage{ulem}
+\usepackage{pgfplots}
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+% \usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+
+% \usepackage{latexym}
+% \usepackage{amssymb}
+% \usepackage{amsmath}
+% \usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+% \usepackage{graphicx}
+\usepackage{color}
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\footnotesize, % font style and size
+}
+
+\usepackage{stmaryrd}
+\usepackage{makecell}
+\usepackage{subfigure}
+
+\usepackage{url}
+
+\usepackage[table]{xcolor}
+\usepackage{colortbl}
+\usepackage{array}
+\definecolor{dummycolor}{RGB}{220,220,220}
+
+% PACKAGES 4Production 
+\usepackage[show]{comments}
+\usepackage{outline}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% GLOBAL COMMANDS / MACROS SECTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{TextStyling/umloclstyle}
+\input{TextStyling/cspstyle}
+% \newcommand{\inlineocl}[1]{\texttt{#1}}
+% \newcommand{\inlinecstr}[2]{$\mathit{#1}(#2)$}
+
+% \newcommand{\reverse}[1]{#1^{\text{rev}}}
+
+
+% % TCOLORBOXES
+% \DeclareFloatingEnvironment[placement={h},name=CSP]{csp}
+% \captionsetup[csp]{labelfont=bf}
+% \NewDocumentEnvironment{cspdef}{mm}
+%     {\begin{csp}[t] \begin{tcolorbox}[colback=white]}   
+%     {\end{tcolorbox}\caption{#1}\label{#2}\end{csp}}
+
+% \NewDocumentEnvironment{anx_cspdef}{mm}
+%     {\begin{csp}[h] \begin{tcolorbox}[colback=white]}   
+%     {\end{tcolorbox}\caption{#1}\label{#2}\end{csp}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT SECTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{document}
 
 % Page de garde avec commande \maketitle
@@ -25,7 +109,7 @@
 
 % Sélectionner la langue du contenu suivant cette ligne
 % Select the content language following this line
-\selectlanguage{french}
+\selectlanguage{english}
 
 % Inclusion du chapitre remerciement
 % Input acknowledgement chapter
@@ -40,22 +124,38 @@
 \tableofcontents %sommaire %table of content
 %\shorttableofcontents{Sommaire}{0}
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CONTENT SECTION        
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearemptydoublepage
 \input{./Introduction/introduction}
 
 \clearemptydoublepage
 \mainmatter
-\input{./Chapitre1/chapitre1}
 
+% Context
+\input{./Context/context}
+% Contributions
+\input{Contributions/VAR/var}
+\input{Contributions/UMLCSP/umlcsp}
+\input{Contributions/OCLCSP/navCSP/navcsp}
+\input{Contributions/OCLCSP/oclcsp}
+ 
+% Articles
+\input{./Articles/First/paper}
+\input{./Articles/SAC2025/sac2025}
+\input{./Articles/ICTAI2025/ictai2025}
 
-\clearemptydoublepage
-\ifenvsetTF{COMPILE_ALL}{
-	% Compile the chapter when the COMPILE_ALL environment variable is set
-	\input{./Chapitre2/chapitre2}
-}{
-	% Uncomment this line to compile this chapter locally (when the COMPILE_ALL variable is not set)
-	\input{./Chapitre2/chapitre2}
-}
+% \clearemptydoublepage
+% \ifenvsetTF{COMPILE_ALL}{
+% 	% Compile the chapter when the COMPILE_ALL environment variable is set
+% 	\input{./Chapitre2/chapitre2}
+% }{
+% 	% Uncomment this line to compile this chapter locally (when the COMPILE_ALL variable is not set)
+% 	\input{./Chapitre2/chapitre2}
+% }
 
 
 \clearemptydoublepage
