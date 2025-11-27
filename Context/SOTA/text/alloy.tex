@@ -1,0 +1,53 @@
+\begin{outline}
+    \item main tool from the SotA
+    \item Alloy modeling language
+    \item Kodkod Relation First Order Logic API, which outputs a CNF
+    \item SAT solver (SAT4J default)
+\end{outline}
+
+Alloy is a language, and the framework around it.
+
+
+% \section{Kodkod}
+% \subsection{Relational First Order Logic}
+\begin{itemize}
+    \item Propositional Logic: $((p \rightarrow q) \wedge p) \Rightarrow q$
+    \item First Order Logic: $((px \rightarrow qx) \wedge pa_1) \Rightarrow qa_1$
+    % \item First Order Relational Logic: $(((Sx \wedge Rxy) \rightarrow Ty) \wedge Sa_1\wedge Ra_1a_2)\Rightarrow Ta_2$
+    \item First Order Relational Logic: $\forall x (Sx \rightarrow \exists! y (Rxy \wedge Ty))$
+\end{itemize}
+
+% \begin{listing}
+\begin{lstlisting}
+sig S {R : one T}
+sig T {}
+run {#S=2 #T=2}
+\end{lstlisting}
+% \caption{Simple Alloy model, with two related concepts, with two instances each}
+% \end{listing}
+
+\begin{equation}\label{eq:RFOL:base}
+    \begin{aligned}
+        \{a_1,a_2,a_3,a_4\}\\
+        S :_1 [\{\Tuple{a_1},\Tuple{a_2}\},\{\Tuple{a_1},\Tuple{a_2}\}]\\
+        T :_1 [\{\Tuple{a_3},\Tuple{a_4}\},\{\Tuple{a_3},\Tuple{a_4}\}]\\
+        R :_2 [\{\},\{\Tuple{a_1,a_3},\Tuple{a_1,a_4},\Tuple{a_2,a_3},\Tuple{a_2,a_4}\}]\\
+        \forall s \in S : \vert R.s\vert = 1
+    \end{aligned}
+\end{equation}
+% \subsection{Satisfiability Modulo Theories}
+% \subsubsection{SMT}
+% \subsubsection{Applied to Relational First Order Logic}
+\begin{equation}\label{eq:RFOL:base}
+    \begin{aligned}
+        \{a_1,a_2,a_3,a_4,-2,-1,0,1\}\\
+        S :_1 [\{\Tuple{a_1},\Tuple{a_2}\},\{\Tuple{a_1},\Tuple{a_2}\}]\\
+        T :_1 [\{\Tuple{a_3},\Tuple{a_4}\},\{\Tuple{a_3},\Tuple{a_4}\}]\\
+        I :_1 [\{\Tuple{-2},\Tuple{-1},\Tuple{0},\Tuple{1}\},\{\Tuple{-2},\Tuple{-1},\Tuple{0},\Tuple{1}\}]\\
+        R :_2 [\{\},\{\Tuple{a_1,a_3},\Tuple{a_1,a_4},\Tuple{a_2,a_3},\Tuple{a_2,a_4}\}]\\
+        SA :_2 [\{\},\{\Tuple{a_1,1},\Tuple{a_1,-2},\Tuple{a_2,-1},\Tuple{a_2,0}\}]\\
+        TA :_2 [\{\},\{\Tuple{a_3,1},\Tuple{a_3,-2},\Tuple{a_4,-1},\Tuple{a_4,0}\}]\\
+        \forall s \in S : \vert R.s\vert = 1\\
+        \forall t \in T : t.A \geq 0
+    \end{aligned}
+\end{equation}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.8.31)  28 OCT 2025 11:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.8.31)  27 NOV 2025 11:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1138,7 +1138,15 @@ Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
 \multirow@cntb=\count463
 \multirow@dima=\skip114
 \bigstrutjot=\dimen293
-)
+) (./AMMALanguages.sty
+Package: AMMALanguages 2006/04/14 1.0 (Davide Di Ruscio and Fr\'ed\'eric Jouaul
+t)
+
+
+----------------------
+AMMA Languages Formatting Package
+----------------------
+
 (/usr/share/texmf-dist/tex/latex/listings/listings.sty
 \lst@mode=\count464
 \lst@gtempboxa=\box112
@@ -1166,16 +1174,8 @@ File: lstmisc.sty 2024/09/23 1.10c (Carsten Heinz)
 File: listings.cfg 2024/09/23 1.10c listings configuration
 ))
 Package: listings 2024/09/23 1.10c (Carsten Heinz)
- (./AMMALanguages.sty
-Package: AMMALanguages 2006/04/14 1.0 (Davide Di Ruscio and Fr\'ed\'eric Jouaul
-t)
-
-
-----------------------
-AMMA Languages Formatting Package
-----------------------
-
-) (/usr/share/texmf-dist/tex/latex/minted/minted.sty
+)
+(/usr/share/texmf-dist/tex/latex/minted/minted.sty
 Package: minted 2025/03/06 v3.6.0 Yet another Pygments shim for LaTeX
 
 (/usr/share/texmf-dist/tex/generic/catchfile/catchfile.sty
@@ -1711,11 +1711,11 @@ Package: outline 2002/08/23 Simple Outline Package
 )
 (./TextStyling/umloclstyle.tex) (./TextStyling/cspstyle.tex
 Package newfloat Info: New float `csp' with options `placement={h},name=CSP' on
- input line 8.
+ input line 11.
 \c@csp=\count548
-Package newfloat Info: float type `csp'=8 on input line 8.
+Package newfloat Info: float type `csp'=8 on input line 11.
 \c@locspdepth=\count549
-Package caption Info: New subtype `subcsp' on input line 8.
+Package caption Info: New subtype `subcsp' on input line 11.
 \c@subcsp=\count550
 )
 Package csquotes Info: Checking for multilingual support...
@@ -1730,12 +1730,12 @@ See the biblatex package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.104 \begin{document}
-                      
+l.88 \begin{document}
+                     
 The 'cite' package and biblatex are incompatible.
 
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 10
-4.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 88
+.
 (/usr/share/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -1743,28 +1743,116 @@ File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 LaTeX Warning: Unused global option(s):
     [multicol].
 
-(./main.aux)
+(./main.aux
+
+LaTeX Warning: Label `eq:RFOL:base' multiply defined.
+
+
+LaTeX Warning: Label `lst:uc_ocl_derive' multiply defined.
+
+
+LaTeX Warning: Label `csp:nav' multiply defined.
+
+
+LaTeX Warning: Label `fig:uc_ocl_derive_ast' multiply defined.
+
+
+LaTeX Warning: Label `fig:navcount' multiply defined.
+
+
+LaTeX Warning: Label `fig:metamodel' multiply defined.
+
+
+LaTeX Warning: Label `fig:model' multiply defined.
+
+
+LaTeX Warning: Label `tab:encoding' multiply defined.
+
+
+LaTeX Warning: Label `csp:nav_def' multiply defined.
+
+
+LaTeX Warning: Label `tab:nav_results' multiply defined.
+
+
+LaTeX Warning: Label `csp:nav' multiply defined.
+
+
+LaTeX Warning: Label `csp:seq_X' multiply defined.
+
+
+LaTeX Warning: Label `fig:afd' multiply defined.
+
+
+LaTeX Warning: Label `csp:bag_X' multiply defined.
+
+
+LaTeX Warning: Label `csp:alldiff_def' multiply defined.
+
+
+LaTeX Warning: Label `csp:set_X' multiply defined.
+
+
+LaTeX Warning: Label `csp:ordset_X' multiply defined.
+
+
+LaTeX Warning: Label `csp:bag_XY' multiply defined.
+
+
+LaTeX Warning: Label `csp:set_XY' multiply defined.
+
+
+LaTeX Warning: Label `tab:sort_stable' multiply defined.
+
+
+LaTeX Warning: Label `csp:seq_X2Y' multiply defined.
+
+
+LaTeX Warning: Label `csp:seq_Y2X' multiply defined.
+
+
+LaTeX Warning: Label `fig:cumulative' multiply defined.
+
+
+LaTeX Warning: Label `csp:seq_XY' multiply defined.
+
+
+LaTeX Warning: Label `csp:ordseq_XY' multiply defined.
+
+
+LaTeX Warning: Label `csp:as_0' multiply defined.
+
+
+LaTeX Warning: Label `fig:afn' multiply defined.
+
+(/usr/share/texmf-dist/tex/generic/babel/locale/fr/babel-french.tex)
+Package babel Info: Importing data for french
+(babel)             from babel-fr.ini. Reported on input line 386.
+Package babel Info: Hyphen rules for 'french' set to \l@english
+(babel)             (\language0). Reported on input line 386.
+)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
- (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+
+(/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count551
 \scratchdimen=\dimen355
@@ -1820,7 +1908,7 @@ e
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring ON on input line 104.
+Package hyperref Info: Link coloring ON on input line 88.
 (./main.out) (./main.out)
 \@outlinefile=\write7
 \openout7 = `main.out'.
@@ -1831,6 +1919,12 @@ Package biblatex Info: ... file 'english.lbx' found.
 (/usr/share/texmf-dist/tex/latex/biblatex/lbx/english.lbx
 File: english.lbx 2024/03/21 v3.20 biblatex localization (PK/MW)
 )
+Package biblatex Info: Trying to load language 'french'...
+Package biblatex Info: ... file 'french.lbx' found.
+
+(/usr/share/texmf-dist/tex/latex/biblatex/lbx/french.lbx
+File: french.lbx 2024/03/21 v3.20 biblatex localization (PK/MW)
+)
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Automatic encoding selection.
 (biblatex)             Assuming data encoding 'utf8'.
@@ -1840,8 +1934,8 @@ Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' not found.
 
 No file main.bbl.
-Package biblatex Info: Reference section=0 on input line 104.
-Package biblatex Info: Reference segment=0 on input line 104.
+Package biblatex Info: Reference section=0 on input line 88.
+Package biblatex Info: Reference segment=0 on input line 88.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: listings package is loaded.
@@ -1854,100 +1948,100 @@ Package newfloat Info: `float' package detected.
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
 ick labels; missing features). Consider writing \pgfplotsset{compat=1.18} into 
 your preamble.
- on input line 104.
+ on input line 88.
 
 (./Couverture-these/pagedegarde.tex
 (./Couverture-these/liste-ecoles-etablissements.tex)
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 8
-7.
+8.
 
 (/usr/share/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 8
-7.
+8.
 
 (/usr/share/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-87.
+88.
 
 (/usr/share/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-87.
+88.
 
 (/usr/share/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 87.
+(Font)              <12> on input line 88.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 87.
+(Font)              <8> on input line 88.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 87.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 87.
+(Font)              <6> on input line 88.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 88.
 
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 87.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 88.
 
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for U+stmry on input line 8
-7.
+8.
 
 (/usr/share/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
-<./Couverture-these/ecoles-doctorales/SPIN/logo.png, id=211, 584.9052pt x 185.2
+<./Couverture-these/ecoles-doctorales/SPIN/logo.png, id=529, 584.9052pt x 185.2
 521pt>
 File: ./Couverture-these/ecoles-doctorales/SPIN/logo.png Graphic file (type png
 )
 <use ./Couverture-these/ecoles-doctorales/SPIN/logo.png>
 Package pdftex.def Info: ./Couverture-these/ecoles-doctorales/SPIN/logo.png  us
-ed on input line 87.
+ed on input line 88.
 (pdftex.def)             Requested size: 179.66762pt x 56.9055pt.
-<./Couverture-these/logos-etablissements/IMTA.png, id=213, 462.528pt x 276.5532
+<./Couverture-these/logos-etablissements/IMTA.png, id=531, 462.528pt x 276.5532
 pt>
 File: ./Couverture-these/logos-etablissements/IMTA.png Graphic file (type png)
 <use ./Couverture-these/logos-etablissements/IMTA.png>
 Package pdftex.def Info: ./Couverture-these/logos-etablissements/IMTA.png  used
- on input line 87.
+ on input line 88.
 (pdftex.def)             Requested size: 95.17172pt x 56.90475pt.
-LaTeX Font Info:    Trying to load font information for T1+phv on input line 87
+LaTeX Font Info:    Trying to load font information for T1+phv on input line 88
 .
 
 (/usr/share/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
 )
-Underfull \hbox (badness 10000) in paragraph at lines 87--87
+Underfull \hbox (badness 10000) in paragraph at lines 88--88
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 87--87
+Underfull \hbox (badness 10000) in paragraph at lines 88--88
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 87--87
+Underfull \hbox (badness 10000) in paragraph at lines 88--88
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 87--87
+Underfull \hbox (badness 10000) in paragraph at lines 88--88
 
  []
 
 ! Undefined control sequence.
 <argument> \'{E}cole Doctorale \No 
                                    \@numeroecole 
-l.87 \maketitle
+l.88 \maketitle
                
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1956,45 +2050,45 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <12> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 87.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 88.
 
-Underfull \hbox (badness 10000) in paragraph at lines 87--87
+Underfull \hbox (badness 10000) in paragraph at lines 88--88
 
  []
 
 LaTeX Font Info:    Trying to load font information for TS1+phv on input line 8
-7.
+8.
 (/usr/share/texmf-dist/tex/latex/psnfss/ts1phv.fd
 File: ts1phv.fd 2020/03/25 scalable font definitions for TS1/phv.
 )
-LaTeX Font Info:    Calculating math sizes for size <9.5> on input line 87.
+LaTeX Font Info:    Calculating math sizes for size <9.5> on input line 88.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9.5> on input line 87.
+(Font)              <9.5> on input line 88.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6.64996> on input line 87.
+(Font)              <6.64996> on input line 88.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <4.75> on input line 87.
+(Font)              <4.75> on input line 88.
 
 
 LaTeX Font Warning: Font shape `U/stmry/m/n' in size <9.5> not available
-(Font)              size <9> substituted on input line 87.
+(Font)              size <9> substituted on input line 88.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 87--87
+Underfull \hbox (badness 10000) in paragraph at lines 88--88
 
  []
 
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <9.5> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 87.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 88.
 LaTeX Font Info:    Font shape `TS1/phv/m/it' in size <9.5> not available
-(Font)              Font shape `TS1/phv/m/sl' tried instead on input line 87.
+(Font)              Font shape `TS1/phv/m/sl' tried instead on input line 88.
 
-Underfull \hbox (badness 10000) in paragraph at lines 87--87
+Underfull \hbox (badness 10000) in paragraph at lines 88--88
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 87--87
+Underfull \hbox (badness 10000) in paragraph at lines 88--88
 
  []
 
@@ -2023,18 +2117,45 @@ Overfull \hbox (29.05273pt too wide) has occurred while \output is active
 [4
 
 ] (./main.toc
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
-0.
+
+[5
+
+]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3
+9.
  (/usr/share/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 20.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 39.
 
 
-[5
 
-])
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[6]
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[7]
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[8])
 \tf@toc=\write8
 \openout8 = `main.toc'.
 
@@ -2047,7 +2168,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[6] (./Introduction/introduction.tex
+[9]
+
+[10
+
+] (./Introduction/introduction.tex
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 6.
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -2056,58 +2181,58 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 6.
 
 
-LaTeX Warning: Citation `Bergmann2015-viatra' on page 7 undefined on input line
- 6.
-
-
-LaTeX Warning: Citation `Gonzalez2012-emf2csp' on page 7 undefined on input lin
+LaTeX Warning: Citation `Bergmann2015-viatra' on page 11 undefined on input lin
 e 6.
 
 
-LaTeX Warning: Citation `Jackson2002-alloy' on page 7 undefined on input line 6
-.
+LaTeX Warning: Citation `Gonzalez2012-emf2csp' on page 11 undefined on input li
+ne 6.
 
 
-LaTeX Warning: Citation `Prudhomme2022-choco' on page 7 undefined on input line
- 24.
+LaTeX Warning: Citation `Jackson2002-alloy' on page 11 undefined on input line 
+6.
 
 
-LaTeX Warning: Citation `Le_Calvar2021-solvers' on page 7 undefined on input li
-ne 39.
+LaTeX Warning: Citation `Prudhomme2022-choco' on page 11 undefined on input lin
+e 24.
 
 
-LaTeX Warning: Citation `jouault2008atl' on page 7 undefined on input line 70.
+LaTeX Warning: Citation `Le_Calvar2021-solvers' on page 11 undefined on input l
+ine 39.
 
 
-LaTeX Warning: Citation `Le_Calvar2019-atol' on page 7 undefined on input line 
-70.
-
-
-LaTeX Warning: Citation `Le_Calvar2021-solvers' on page 7 undefined on input li
-ne 70.
+LaTeX Warning: Citation `jouault2008atl' on page 11 undefined on input line 70.
 
 
 
-[7
+LaTeX Warning: Citation `Le_Calvar2019-atol' on page 11 undefined on input line
+ 70.
 
+
+LaTeX Warning: Citation `Le_Calvar2021-solvers' on page 11 undefined on input l
+ine 70.
+
+
+
+[11
 
 ]
 
-LaTeX Warning: Citation `Jackson2002-alloy' on page 8 undefined on input line 9
-5.
+LaTeX Warning: Citation `Jackson2002-alloy' on page 12 undefined on input line 
+95.
 
 
-LaTeX Warning: Citation `alloyMT' on page 8 undefined on input line 96.
+LaTeX Warning: Citation `alloyMT' on page 12 undefined on input line 96.
 
 
-LaTeX Warning: Citation `uml2alloy' on page 8 undefined on input line 96.
+LaTeX Warning: Citation `uml2alloy' on page 12 undefined on input line 96.
 
 
-LaTeX Warning: Citation `uml2alloy2uml' on page 8 undefined on input line 96.
+LaTeX Warning: Citation `uml2alloy2uml' on page 12 undefined on input line 96.
 
 
-LaTeX Warning: Citation `ferdjoukh_instantiation_2015' on page 8 undefined on i
-nput line 98.
+LaTeX Warning: Citation `ferdjoukh_instantiation_2015' on page 12 undefined on 
+input line 98.
 
 )
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -2121,7 +2246,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[8]
+[12]
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2130,40 +2255,30 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[9]
+[13]
 
-[10
+[14
 
 ] (./Context/context.tex
 Chapter 1.
 Package newfloat Info: Setting Plan B file extension to `lof'... on input line 
-2.
-(./Context/MDE/mde.tex
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 5
-.
- (/usr/share/texmf-dist/tex/latex/lm/ts1lmr.fd
-File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+17.
+(./Context/MDE/mde.tex (./Context/MDE/text/models.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[15
+
+
+] (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
-
-[11
-
-
-{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[12]
-<Articles/ICTAI2025/figures/metamodel.pdf, id=349, 172.7253pt x 41.1939pt>
-File: Articles/ICTAI2025/figures/metamodel.pdf Graphic file (type pdf)
-<use Articles/ICTAI2025/figures/metamodel.pdf>
-Package pdftex.def Info: Articles/ICTAI2025/figures/metamodel.pdf  used on inpu
-t line 61.
-(pdftex.def)             Requested size: 455.24411pt x 76.82864pt.
+(/usr/share/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2024/09/23 1.10c (Carsten Heinz)
+)
+Package hyperref Info: bookmark level for unknown listing defaults to 0 on inpu
+t line 57.
 
 
 
@@ -2173,26 +2288,14 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[13{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc} <./Articles/ICTAI20
-25/figures/metamodel.pdf>]
-<Articles/ICTAI2025/figures/model.pdf, id=369, 233.9139pt x 104.3097pt>
-File: Articles/ICTAI2025/figures/model.pdf Graphic file (type pdf)
-<use Articles/ICTAI2025/figures/model.pdf>
-Package pdftex.def Info: Articles/ICTAI2025/figures/model.pdf  used on input li
-ne 117.
-(pdftex.def)             Requested size: 455.24411pt x 169.80267pt.
+[16{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf-di
+st/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ma
+thsy.enc}]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[14 <./Articles/ICTAI2025/figures/model.pdf>]) (./Context/CP/cp.tex
-
-LaTeX Warning: Citation `HoeveK06' on page 15 undefined on input line 32.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 
@@ -2203,95 +2306,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[15{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf-dist/f
-onts/enc/dvips/lm/lm-mathsy.enc}]
-
-LaTeX Warning: Citation `beldiceanu2010global' on page 16 undefined on input li
-ne 46.
-
-
-LaTeX Warning: Citation `HoeveK06' on page 16 undefined on input line 46.
-
-
-LaTeX Warning: Command \textellipsis invalid in math mode on input line 72.
-
-
-LaTeX Warning: Command \textellipsis invalid in math mode on input line 72.
-
-
-LaTeX Warning: Citation `DBLP:conf/aaai/HentenryckC88' on page 16 undefined on 
-input line 72.
-
-
-LaTeX Warning: Citation `van1999opl' on page 16 undefined on input line 72.
-
-
-LaTeX Warning: Command \textellipsis invalid in math mode on input line 78.
-
-
-LaTeX Warning: Citation `pesant2004regular' on page 16 undefined on input line 
-78.
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[16]
-
-LaTeX Warning: Citation `beldiceanu2002sweep' on page 17 undefined on input lin
-e 83.
-
-
-LaTeX Warning: Citation `DBLP:conf/gcai/BeldiceanuCFLPP15' on page 17 undefined
- on input line 83.
-
-
-LaTeX Warning: Command \textellipsis invalid in math mode on input line 83.
-
-
-Package caption Warning: \label without proper reference on input line 122.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `tab:sort_stable' on page 17 undefined on input line 8
-6.
-
-
-LaTeX Warning: Command \textellipsis invalid in math mode on input line 95.
-
-
-LaTeX Warning: Command \textellipsis invalid in math mode on input line 95.
-
-
-LaTeX Warning: Command \textellipsis invalid in math mode on input line 95.
-
-
-LaTeX Warning: Citation `beldiceanu1994chip' on page 17 undefined on input line
- 96.
-
-
-LaTeX Warning: Citation `DBLP:journals/informs/MercierH08' on page 17 undefined
- on input line 96.
-
-
-LaTeX Warning: Citation `cumulative' on page 17 undefined on input line 96.
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[17{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]))
-(./Contributions/VAR/var.tex
+[17]
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2301,62 +2316,14 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [18]
-Chapter 2.
-
-LaTeX Font Warning: Font shape `T1/lmtt/bx/sc' undefined
-(Font)              using `T1/lmtt/bx/n' instead on input line 2.
-
-LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <24.88> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 2.
-
-Overfull \hbox (3.92543pt too wide) in paragraph at lines 6--7
-[]\T1/lmr/m/n/12 Originally, ATLc would as-sume that the last \T1/lmtt/m/n/12 A
-ttributeOrNavigationCallExp \T1/lmr/m/n/12 would
- []
-
-
-LaTeX Warning: Reference `sec:contrib2' on page 19 undefined on input line 13.
-
-(/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2024/09/23 1.10c listings language file
-)
-(/usr/share/texmf-dist/tex/latex/listings/lstlang2.sty
-File: lstlang2.sty 2024/09/23 1.10c listings language file
-)
-(/usr/share/texmf-dist/tex/latex/listings/lstlang3.sty
-File: lstlang3.sty 2024/09/23 1.10c listings language file
-)
-LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 43.
-LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-44.
-
-(/usr/share/texmf-dist/tex/latex/lm/ts1lmtt.fd
-File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-Package hyperref Info: bookmark level for unknown listing defaults to 0 on inpu
-t line 62.
-
-
-LaTeX Warning: Reference `lst:uc_ocl' on page 19 undefined on input line 62.
-
-
-LaTeX Warning: Reference `lst:uc_ocl' on page 19 undefined on input line 62.
-
-
-LaTeX Warning: Reference `lst:uc_ocl' on page 19 undefined on input line 73.
-
-
-
-[19
-
-
-]
-
-Package hyperref Warning: No autoref name for `listing' on input line 85.
-
-
-LaTeX Warning: Reference `lst:uc_ocl' on page 20 undefined on input line 85.
+! Undefined control sequence.
+l.198 ...ineocl{att} an attribute, and \inelineocl
+                                                  {ref} a reference to other...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
 
 
@@ -2367,41 +2334,25 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[20]
-
-Package hyperref Warning: No autoref name for `listing' on input line 105.
-
-<Articles/SAC2025/figures/ASTbasic.pdf, id=452, 295.1025pt x 406.3983pt>
-File: Articles/SAC2025/figures/ASTbasic.pdf Graphic file (type pdf)
-<use Articles/SAC2025/figures/ASTbasic.pdf>
-Package pdftex.def Info: Articles/SAC2025/figures/ASTbasic.pdf  used on input l
-ine 109.
-(pdftex.def)             Requested size: 364.19667pt x 501.55986pt.
-
-Package hyperref Warning: No autoref name for `listing' on input line 110.
+[19])
 
 
-Package hyperref Warning: No autoref name for `listing' on input line 110.
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-! Undefined control sequence.
-l.112     \Description
-                      [AST]{}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
+[20] (./Context/MDE/text/uml.tex
 
+LaTeX Warning: `h' float specifier changed to `ht'.
 
-Overfull \hbox (32.75935pt too wide) in paragraph at lines 117--126
-[]\T1/lmr/m/n/12 For in-stance, since the ref-er-ence be-tween \T1/lmtt/m/n/12 
-Task \T1/lmr/m/n/12 and \T1/lmtt/m/n/12 Stage \T1/lmr/m/n/12 is an-no-tated (\T
-1/lmtt/m/n/12 self.var('stage')\T1/lmr/m/n/12 ),
- []
-
-
-Package hyperref Warning: No autoref name for `listing' on input line 136.
-
+<Articles/ICTAI2025/figures/metamodel.pdf, id=802, 172.7253pt x 41.1939pt>
+File: Articles/ICTAI2025/figures/metamodel.pdf Graphic file (type pdf)
+<use Articles/ICTAI2025/figures/metamodel.pdf>
+Package pdftex.def Info: Articles/ICTAI2025/figures/metamodel.pdf  used on inpu
+t line 62.
+(pdftex.def)             Requested size: 455.24411pt x 108.57616pt.
 
 
 
@@ -2412,14 +2363,32 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [21]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 8
+0.
+ (/usr/share/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
 
-Package hyperref Warning: No autoref name for `listing' on input line 165.
 
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-Package hyperref Warning: No autoref name for `listing' on input line 198.
-
-
-Underfull \vbox (badness 6741) has occurred while \output is active []
+[22{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc} <./Articles/ICTAI2025/
+figures/metamodel.pdf>]
+<Articles/ICTAI2025/figures/model.pdf, id=828, 233.9139pt x 104.3097pt>
+File: Articles/ICTAI2025/figures/model.pdf Graphic file (type pdf)
+<use Articles/ICTAI2025/figures/model.pdf>
+Package pdftex.def Info: Articles/ICTAI2025/figures/model.pdf  used on input li
+ne 120.
+(pdftex.def)             Requested size: 455.24411pt x 203.01312pt.
+) (./Context/MDE/text/ocl.tex
+Overfull \hbox (4.7044pt too wide) in paragraph at lines 3--3
+[]\T1/lmr/bx/n/14.4 Query: get-ting and in-fer-ing ints and ob-jects from the m
+odel 
+ []
 
 
 
@@ -2430,32 +2399,22 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[22]
-
-Package hyperref Warning: No autoref name for `listing' on input line 220.
-
-<Articles/SAC2025/figures/ASTderive.pdf, id=498, 377.49028pt x 358.4592pt>
-File: Articles/SAC2025/figures/ASTderive.pdf Graphic file (type pdf)
-<use Articles/SAC2025/figures/ASTderive.pdf>
-Package pdftex.def Info: Articles/SAC2025/figures/ASTderive.pdf  used on input 
-line 228.
-(pdftex.def)             Requested size: 455.24411pt x 432.31485pt.
-
-Package hyperref Warning: No autoref name for `listing' on input line 229.
-
-
-Package hyperref Warning: No autoref name for `listing' on input line 229.
+[23 <./Articles/ICTAI2025/figures/model.pdf>]
+Overfull \hbox (3.17516pt too wide) in paragraph at lines 98--100
+\T1/lmr/bx/n/12 Topological Con-straint: \T1/lmtt/m/n/12 self.ref.prop > self.p
+rop \T1/lmr/m/n/12 Oth-er-wise re-ferred to as a Struc-
+ []
 
 ! Undefined control sequence.
-l.231     \Description
-                      [AST]{}
+l.101 ....\dots} is often shortened to \inelineocl
+                                                  {O.prop\dots}.
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-) (./Contributions/UMLCSP/umlcsp.tex
+)
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2464,101 +2423,124 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[23]
+[24] (./Context/MDE/text/modelsearch.tex
+<Context/MDE/figures/modelsearch.png, id=851, 488.82625pt x 371.3875pt>
+File: Context/MDE/figures/modelsearch.png Graphic file (type png)
+<use Context/MDE/figures/modelsearch.png>
+Package pdftex.def Info: Context/MDE/figures/modelsearch.png  used on input lin
+e 51.
+(pdftex.def)             Requested size: 455.24411pt x 345.8798pt.
 
-[24 <./Articles/SAC2025/figures/ASTbasic.pdf>]
 
-[25 <./Articles/SAC2025/figures/ASTderive.pdf>]
 
-[26
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[25]))
+Underfull \vbox (badness 7814) has occurred while \output is active []
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[26 <./Context/MDE/figures/modelsearch.png>]
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[27]
+Chapter 2.
+(./Context/CP/cp.tex
+
+LaTeX Warning: Citation `HoeveK06' on page 28 undefined on input line 39.
+
+
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 41.
+
+(./Context/CP/text/globals.tex
+
+LaTeX Warning: Citation `beldiceanu2010global' on page 28 undefined on input li
+ne 1.
+
+
+LaTeX Warning: Citation `HoeveK06' on page 28 undefined on input line 1.
+
+
+
+[28
 
 ]
-Chapter 3.
 
-Overfull \hbox (13.62671pt too wide) in paragraph at lines 11--23
-\T1/lmr/bx/n/12 A. En-cod-ing Prop-er-ties. \T1/lmr/m/n/12 The vari-ables rep-r
-e-sent the properties--attributes and references--
- []
+LaTeX Warning: Command \textellipsis invalid in math mode on input line 27.
 
 
-LaTeX Warning: Citation `coyle_towards_2025' on page 27 undefined on input line
- 34.
+LaTeX Warning: Command \textellipsis invalid in math mode on input line 27.
 
 
-
-[27
-
-]
-
-LaTeX Warning: Citation `coyle_towards_2025' on page 28 undefined on input line
- 71.
+LaTeX Warning: Citation `DBLP:conf/aaai/HentenryckC88' on page 29 undefined on 
+input line 27.
 
 
-LaTeX Warning: Reference `ssec:ctxt_cd' on page 28 undefined on input line 117.
+LaTeX Warning: Citation `van1999opl' on page 29 undefined on input line 27.
 
 
+LaTeX Warning: Command \textellipsis invalid in math mode on input line 33.
 
 
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[28]
-Overfull \hbox (2.74886pt too wide) in paragraph at lines 122--129
-[]\T1/lmr/m/n/12 Let $\OML/lmm/m/it/12 X \OT1/lmr/m/n/12 = \OMS/lmsy/m/n/12 f\O
-ML/lmm/m/it/12 x[]; ::; x[]\OMS/lmsy/m/n/12 g$ \T1/lmr/m/n/12 be the vari-able 
-ar-ray for a prop-erty in the ma-trix $\OT1/lmr/m/n/12 = \OML/lmm/m/it/12 Class
-:property$\T1/lmr/m/n/12 .
- []
+LaTeX Warning: Citation `pesant2004regular' on page 29 undefined on input line 
+33.
 
 
-LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 12
-9.
-
-LaTeX Font Info:    Calculating math sizes for size <> on input line 136.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <> on input line 136.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <0.7> on input line 136.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <0.5> on input line 136.
-
-LaTeX Font Warning: Font shape `U/stmry/m/n' in size <> not available
-(Font)              size <5> substituted on input line 136.
+LaTeX Warning: Citation `beldiceanu2002sweep' on page 29 undefined on input lin
+e 38.
 
 
-LaTeX Font Warning: Font shape `U/stmry/m/n' in size <0.7> not available
-(Font)              size <5> substituted on input line 136.
+LaTeX Warning: Citation `DBLP:conf/gcai/BeldiceanuCFLPP15' on page 29 undefined
+ on input line 38.
 
 
-LaTeX Font Warning: Font shape `U/stmry/m/n' in size <0.5> not available
-(Font)              size <5> substituted on input line 136.
-
-<Articles/ICTAI2025/figures/afd.pdf, id=567, 74.1972pt x 28.1853pt>
-File: Articles/ICTAI2025/figures/afd.pdf Graphic file (type pdf)
-<use Articles/ICTAI2025/figures/afd.pdf>
-Package pdftex.def Info: Articles/ICTAI2025/figures/afd.pdf  used on input line
- 145.
-(pdftex.def)             Requested size: 227.62206pt x 40.28218pt.
-
-LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 15
-5.
+LaTeX Warning: Command \textellipsis invalid in math mode on input line 38.
 
 
-LaTeX Font Warning: Command \small invalid in math mode on input line 167.
-
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 169.
-
-LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 17
-5.
+Package caption Warning: \label without proper reference on input line 774.
+See the caption package documentation for explanation.
 
 
-LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 18
-7.
+LaTeX Warning: Reference `tab:sort_stable' on page 29 undefined on input line 4
+1.
+
+
+LaTeX Warning: Command \textellipsis invalid in math mode on input line 50.
+
+
+LaTeX Warning: Command \textellipsis invalid in math mode on input line 50.
+
+
+LaTeX Warning: Command \textellipsis invalid in math mode on input line 50.
+
+
+LaTeX Warning: Citation `beldiceanu1994chip' on page 29 undefined on input line
+ 51.
+
+
+LaTeX Warning: Citation `DBLP:journals/informs/MercierH08' on page 29 undefined
+ on input line 51.
+
+
+LaTeX Warning: Citation `cumulative' on page 29 undefined on input line 51.
 
 
 
@@ -2569,8 +2551,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[29 <./Articles/ICTAI2025/figures/afd.pdf>])
-(./Contributions/OCLCSP/navCSP/navcsp.tex
+[29{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]))
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2580,7 +2561,697 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [30]
+Chapter 3.
+(./Context/SOTA/sota.tex
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <14.4> on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `superscript' on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 3.
+
+(./Context/SOTA/text/atlc.tex) (./Context/SOTA/text/alloy.tex
+
+[31
+
+]
+! Undefined control sequence.
+l.32         S :_1 [\{\Tuple
+                            {a_1},\Tuple{a_2}\},\{\Tuple{a_1},\Tuple{a_2}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.32         S :_1 [\{\Tuple{a_1},\Tuple
+                                        {a_2}\},\{\Tuple{a_1},\Tuple{a_2}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.32 ... :_1 [\{\Tuple{a_1},\Tuple{a_2}\},\{\Tuple
+                                                  {a_1},\Tuple{a_2}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.32 ...le{a_1},\Tuple{a_2}\},\{\Tuple{a_1},\Tuple
+                                                  {a_2}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.33         T :_1 [\{\Tuple
+                            {a_3},\Tuple{a_4}\},\{\Tuple{a_3},\Tuple{a_4}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.33         T :_1 [\{\Tuple{a_3},\Tuple
+                                        {a_4}\},\{\Tuple{a_3},\Tuple{a_4}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.33 ... :_1 [\{\Tuple{a_3},\Tuple{a_4}\},\{\Tuple
+                                                  {a_3},\Tuple{a_4}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.33 ...le{a_3},\Tuple{a_4}\},\{\Tuple{a_3},\Tuple
+                                                  {a_4}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.34         R :_2 [\{\},\{\Tuple
+                                 {a_1,a_3},\Tuple{a_1,a_4},\Tuple{a_2,a_3},\...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.34         R :_2 [\{\},\{\Tuple{a_1,a_3},\Tuple
+                                                 {a_1,a_4},\Tuple{a_2,a_3},\...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.34 ...},\{\Tuple{a_1,a_3},\Tuple{a_1,a_4},\Tuple
+                                                  {a_2,a_3},\Tuple{a_2,a_4}\...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.34 ..._3},\Tuple{a_1,a_4},\Tuple{a_2,a_3},\Tuple
+                                                  {a_2,a_4}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.44         S :_1 [\{\Tuple
+                            {a_1},\Tuple{a_2}\},\{\Tuple{a_1},\Tuple{a_2}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.44         S :_1 [\{\Tuple{a_1},\Tuple
+                                        {a_2}\},\{\Tuple{a_1},\Tuple{a_2}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.44 ... :_1 [\{\Tuple{a_1},\Tuple{a_2}\},\{\Tuple
+                                                  {a_1},\Tuple{a_2}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.44 ...le{a_1},\Tuple{a_2}\},\{\Tuple{a_1},\Tuple
+                                                  {a_2}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.45         T :_1 [\{\Tuple
+                            {a_3},\Tuple{a_4}\},\{\Tuple{a_3},\Tuple{a_4}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.45         T :_1 [\{\Tuple{a_3},\Tuple
+                                        {a_4}\},\{\Tuple{a_3},\Tuple{a_4}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.45 ... :_1 [\{\Tuple{a_3},\Tuple{a_4}\},\{\Tuple
+                                                  {a_3},\Tuple{a_4}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.45 ...le{a_3},\Tuple{a_4}\},\{\Tuple{a_3},\Tuple
+                                                  {a_4}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.46         I :_1 [\{\Tuple
+                            {-2},\Tuple{-1},\Tuple{0},\Tuple{1}\},\{\Tuple{-...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.46         I :_1 [\{\Tuple{-2},\Tuple
+                                       {-1},\Tuple{0},\Tuple{1}\},\{\Tuple{-...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.46         I :_1 [\{\Tuple{-2},\Tuple{-1},\Tuple
+                                                  {0},\Tuple{1}\},\{\Tuple{-...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.46 ... [\{\Tuple{-2},\Tuple{-1},\Tuple{0},\Tuple
+                                                  {1}\},\{\Tuple{-2},\Tuple{...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.46 ...,\Tuple{-1},\Tuple{0},\Tuple{1}\},\{\Tuple
+                                                  {-2},\Tuple{-1},\Tuple{0},...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.46 ...,\Tuple{0},\Tuple{1}\},\{\Tuple{-2},\Tuple
+                                                  {-1},\Tuple{0},\Tuple{1}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.46 ...\Tuple{1}\},\{\Tuple{-2},\Tuple{-1},\Tuple
+                                                  {0},\Tuple{1}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.46 ...},\{\Tuple{-2},\Tuple{-1},\Tuple{0},\Tuple
+                                                  {1}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.47         R :_2 [\{\},\{\Tuple
+                                 {a_1,a_3},\Tuple{a_1,a_4},\Tuple{a_2,a_3},\...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.47         R :_2 [\{\},\{\Tuple{a_1,a_3},\Tuple
+                                                 {a_1,a_4},\Tuple{a_2,a_3},\...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.47 ...},\{\Tuple{a_1,a_3},\Tuple{a_1,a_4},\Tuple
+                                                  {a_2,a_3},\Tuple{a_2,a_4}\...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.47 ..._3},\Tuple{a_1,a_4},\Tuple{a_2,a_3},\Tuple
+                                                  {a_2,a_4}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.48         SA :_2 [\{\},\{\Tuple
+                                  {a_1,1},\Tuple{a_1,-2},\Tuple{a_2,-1},\Tup...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.48         SA :_2 [\{\},\{\Tuple{a_1,1},\Tuple
+                                                {a_1,-2},\Tuple{a_2,-1},\Tup...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.48 ...\{\},\{\Tuple{a_1,1},\Tuple{a_1,-2},\Tuple
+                                                  {a_2,-1},\Tuple{a_2,0}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.48 ..._1,1},\Tuple{a_1,-2},\Tuple{a_2,-1},\Tuple
+                                                  {a_2,0}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.49         TA :_2 [\{\},\{\Tuple
+                                  {a_3,1},\Tuple{a_3,-2},\Tuple{a_4,-1},\Tup...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.49         TA :_2 [\{\},\{\Tuple{a_3,1},\Tuple
+                                                {a_3,-2},\Tuple{a_4,-1},\Tup...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.49 ...\{\},\{\Tuple{a_3,1},\Tuple{a_3,-2},\Tuple
+                                                  {a_4,-1},\Tuple{a_4,0}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.49 ..._3,1},\Tuple{a_3,-2},\Tuple{a_4,-1},\Tuple
+                                                  {a_4,0}\}]\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+) (./Context/SOTA/text/grimm.tex))) (./Contributions/VAR/var.tex
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[32]
 Chapter 4.
+
+LaTeX Font Warning: Font shape `T1/lmtt/bx/sc' undefined
+(Font)              using `T1/lmtt/bx/n' instead on input line 2.
+
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <24.88> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 2.
+(./Contributions/VAR/text/problem.tex
+<Contributions/VAR/figures/vizmm.png, id=911, 1252.68pt x 513.92pt>
+File: Contributions/VAR/figures/vizmm.png Graphic file (type png)
+<use Contributions/VAR/figures/vizmm.png>
+Package pdftex.def Info: Contributions/VAR/figures/vizmm.png  used on input lin
+e 15.
+(pdftex.def)             Requested size: 455.24411pt x 186.76761pt.
+
+Overfull \hbox (7.88112pt too wide) detected at line 27
+[]
+ []
+
+
+Overfull \hbox (14.05612pt too wide) detected at line 28
+[]
+ []
+
+
+
+[33
+
+
+]
+<Contributions/VAR/figures/schedulingmm.png, id=916, 2372.865pt x 517.935pt>
+File: Contributions/VAR/figures/schedulingmm.png Graphic file (type png)
+<use Contributions/VAR/figures/schedulingmm.png>
+Package pdftex.def Info: Contributions/VAR/figures/schedulingmm.png  used on in
+put line 44.
+(pdftex.def)             Requested size: 455.24411pt x 99.36493pt.
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[34 <./Contributions/VAR/figures/vizmm.png> <./Contributions/VAR/figures/schedu
+lingmm.png>]
+
+Package hyperref Warning: No autoref name for `listing' on input line 101.
+
+) (./Contributions/VAR/text/varOp.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[35]
+
+Package hyperref Warning: No autoref name for `listing' on input line 12.
+
+
+Package hyperref Warning: No autoref name for `listing' on input line 12.
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[36])
+Overfull \hbox (67.48917pt too wide) in paragraph at lines 152--16
+\T1/lmr/m/n/12 Variable prop-erty ac-cess is sourced from con-stant (non an-no-
+tated) queries, e.g. \T1/lmtt/m/n/12 self.prev.var(stage)\T1/lmr/m/n/12 .
+ []
+
+
+Overfull \hbox (166.93306pt too wide) in paragraph at lines 152--16
+\T1/lmr/m/n/12 Vari-able nav-i-ga-tion is sourced from a vari-able query. For e
+x-am-ple in: \T1/lmtt/m/n/12 self.var(stage).var(machines).characteristics
+ []
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[37] (./Contributions/VAR/text/refactoring.tex
+
+Package hyperref Warning: No autoref name for `listing' on input line 2.
+
+<Articles/SAC2025/figures/ASTbasic.pdf, id=953, 295.1025pt x 406.3983pt>
+File: Articles/SAC2025/figures/ASTbasic.pdf Graphic file (type pdf)
+<use Articles/SAC2025/figures/ASTbasic.pdf>
+Package pdftex.def Info: Articles/SAC2025/figures/ASTbasic.pdf  used on input l
+ine 6.
+(pdftex.def)             Requested size: 364.19667pt x 501.55986pt.
+
+Package hyperref Warning: No autoref name for `listing' on input line 7.
+
+
+Package hyperref Warning: No autoref name for `listing' on input line 7.
+
+! Undefined control sequence.
+l.9     \Description
+                    [AST]{}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (32.75935pt too wide) in paragraph at lines 14--23
+[]\T1/lmr/m/n/12 For in-stance, since the ref-er-ence be-tween \T1/lmtt/m/n/12 
+Task \T1/lmr/m/n/12 and \T1/lmtt/m/n/12 Stage \T1/lmr/m/n/12 is an-no-tated (\T
+1/lmtt/m/n/12 self.var('stage')\T1/lmr/m/n/12 ),
+ []
+
+
+Package hyperref Warning: No autoref name for `listing' on input line 33.
+
+
+Package hyperref Warning: No autoref name for `listing' on input line 63.
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[38] (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2024/09/23 1.10c listings language file
+)
+(/usr/share/texmf-dist/tex/latex/listings/lstlang2.sty
+File: lstlang2.sty 2024/09/23 1.10c listings language file
+)
+(/usr/share/texmf-dist/tex/latex/listings/lstlang3.sty
+File: lstlang3.sty 2024/09/23 1.10c listings language file
+)
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 74.
+
+
+Package hyperref Warning: No autoref name for `listing' on input line 96.
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[39]
+
+Package hyperref Warning: No autoref name for `listing' on input line 118.
+
+<Articles/SAC2025/figures/ASTderive.pdf, id=999, 377.49028pt x 358.4592pt>
+File: Articles/SAC2025/figures/ASTderive.pdf Graphic file (type pdf)
+<use Articles/SAC2025/figures/ASTderive.pdf>
+Package pdftex.def Info: Articles/SAC2025/figures/ASTderive.pdf  used on input 
+line 126.
+(pdftex.def)             Requested size: 455.24411pt x 432.31485pt.
+
+Package hyperref Warning: No autoref name for `listing' on input line 127.
+
+
+Package hyperref Warning: No autoref name for `listing' on input line 127.
+
+! Undefined control sequence.
+l.129     \Description
+                      [AST]{}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+)) (./Contributions/UMLCSP/umlcsp.tex
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[40]
+
+[41 <./Articles/SAC2025/figures/ASTbasic.pdf>]
+
+[42 <./Articles/SAC2025/figures/ASTderive.pdf>]
+Chapter 5.
+(./Contributions/UMLCSP/text/property.tex
+Overfull \hbox (13.62671pt too wide) in paragraph at lines 1--13
+\T1/lmr/bx/n/12 A. En-cod-ing Prop-er-ties. \T1/lmr/m/n/12 The vari-ables rep-r
+e-sent the properties--attributes and references--
+ []
+
+
+LaTeX Warning: Citation `coyle_towards_2025' on page 43 undefined on input line
+ 24.
+
+
+
+[43
+
+
+]
+
+LaTeX Warning: Citation `coyle_towards_2025' on page 44 undefined on input line
+ 57.
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[44]) (./Contributions/UMLCSP/text/referencetypes.tex)
+(./Contributions/UMLCSP/text/collectiontypes.tex
+
+LaTeX Warning: Reference `ssec:ctxt_cd' on page 45 undefined on input line 1.
+
+
+Overfull \hbox (2.74886pt too wide) in paragraph at lines 6--13
+[]\T1/lmr/m/n/12 Let $\OML/lmm/m/it/12 X \OT1/lmr/m/n/12 = \OMS/lmsy/m/n/12 f\O
+ML/lmm/m/it/12 x[]; ::; x[]\OMS/lmsy/m/n/12 g$ \T1/lmr/m/n/12 be the vari-able 
+ar-ray for a prop-erty in the ma-trix $\OT1/lmr/m/n/12 = \OML/lmm/m/it/12 Class
+:property$\T1/lmr/m/n/12 .
+ []
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[45]
+<Articles/ICTAI2025/figures/afd.pdf, id=1073, 74.1972pt x 28.1853pt>
+File: Articles/ICTAI2025/figures/afd.pdf Graphic file (type pdf)
+<use Articles/ICTAI2025/figures/afd.pdf>
+Package pdftex.def Info: Articles/ICTAI2025/figures/afd.pdf  used on input line
+ 29.
+(pdftex.def)             Requested size: 227.62206pt x 40.28218pt.
+
+
+LaTeX Font Warning: Command \small invalid in math mode on input line 51.
+
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10.95> on input line 53.
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[46 <./Articles/ICTAI2025/figures/afd.pdf>]))
+(./Contributions/OCLCSP/navCSP/navcsp.tex
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[47]
+
+[48
+
+]
+Chapter 6.
 (./Contributions/OCLCSP/navCSP/text/model.tex
 Overfull \hbox (15.39359pt too wide) in paragraph at lines 12--19
 \OML/lmm/m/it/12 dom\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 ptr[]\OT1/lmr/m/n/12 ) = 
@@ -2598,13 +3269,37 @@ LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 19
 LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 33
 .
 
+LaTeX Font Info:    Calculating math sizes for size <> on input line 41.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <> on input line 41.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <0.7> on input line 41.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <0.5> on input line 41.
+
+LaTeX Font Warning: Font shape `U/stmry/m/n' in size <> not available
+(Font)              size <5> substituted on input line 41.
 
 
-[31
+LaTeX Font Warning: Font shape `U/stmry/m/n' in size <0.7> not available
+(Font)              size <5> substituted on input line 41.
 
+
+LaTeX Font Warning: Font shape `U/stmry/m/n' in size <0.5> not available
+(Font)              size <5> substituted on input line 41.
+
+
+
+[49
 
 ]
-Underfull \vbox (badness 3138) has occurred while \output is active []
+
+LaTeX Warning: Reference `sec:contrib_type_casting' on page 50 undefined on inp
+ut line 65.
+
+
+LaTeX Warning: Reference `sec:contrib_type_casting' on page 50 undefined on inp
+ut line 73.
 
 
 
@@ -2615,7 +3310,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[32]
+[50]
 
 ! LaTeX Error: Something's wrong--perhaps a missing \item.
 
@@ -2637,7 +3332,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[33]
+[51]
 ! Undefined control sequence.
 l.127     \Description
                       [AST]{}
@@ -2656,474 +3351,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[34]
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[35])) (./Contributions/OCLCSP/oclcsp.tex
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[36]
-Chapter 5.
-(./Contributions/OCLCSP/Operations/typecasting.tex
-
-LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 38
-.
-
-
-
-[37
-
-
-]
-
-LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 65
-.
-
-
-LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 10
-6.
-
-
-Overfull \hbox (28.46703pt too wide) in paragraph at lines 113--115
-\T1/lmr/m/n/12 di-cat-ing which vari-ables in $\OML/lmm/m/it/12 X$ \T1/lmr/m/n/
-12 and $\OML/lmm/m/it/12 Y$ \T1/lmr/m/n/12 are equal to the dummy value $\OML/l
-mm/m/it/12 d$\T1/lmr/m/n/12 . The $[]\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 T; S; k\
-OT1/lmr/m/n/12 )$
- []
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[38]
-
-Package caption Warning: \label without proper reference on input line 122.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `tab:sort_stable' on page 39 undefined on input line 1
-17.
-
-
-LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 18
-6.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[39]
-<Articles/ICTAI2025/figures/cumulative.pdf, id=672, 323.28778pt x 233.9139pt>
-File: Articles/ICTAI2025/figures/cumulative.pdf Graphic file (type pdf)
-<use Articles/ICTAI2025/figures/cumulative.pdf>
-Package pdftex.def Info: Articles/ICTAI2025/figures/cumulative.pdf  used on inp
-ut line 223.
-(pdftex.def)             Requested size: 455.24411pt x 286.98984pt.
-
-
-LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 22
-9.
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[40]
-Overfull \hbox (6.31642pt too wide) in paragraph at lines 254--259
-\T1/lmr/bx/n/12 D. asOr-dered-Set(): []\T1/lmr/m/n/12 Con-sider the ex-pres-sio
-n \T1/lmtt/m/n/12 src.asOrderedSet()\T1/lmr/m/n/12 . The \T1/lmtt/m/n/12 asOrde
-redSet()
- []
-
-
-LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 25
-9.
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[41 <./Articles/ICTAI2025/figures/cumulative.pdf>]
-
-LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 33
-8.
-
-<Articles/ICTAI2025/figures/afn.pdf, id=704, 153.6942pt x 89.3739pt>
-File: Articles/ICTAI2025/figures/afn.pdf Graphic file (type pdf)
-<use Articles/ICTAI2025/figures/afn.pdf>
-Package pdftex.def Info: Articles/ICTAI2025/figures/afn.pdf  used on input line
- 356.
-(pdftex.def)             Requested size: 204.85846pt x 99.06117pt.
-)) (./Articles/First/paper.tex
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[42 <./Articles/ICTAI2025/figures/afn.pdf>]
-Chapter 6.
-
-
-[43
-
-
-]
-
-LaTeX Warning: Citation `favre_towards_2005' on page 44 undefined on input line
- 142.
-
-
-LaTeX Warning: Citation `kurtev_state_2008' on page 44 undefined on input line 
-143.
-
-
-LaTeX Warning: Citation `jouault_atl_2008' on page 44 undefined on input line 1
-43.
-
-
-LaTeX Warning: Citation `paige_use_2009' on page 44 undefined on input line 147
-.
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[44]
-
-LaTeX Warning: Citation `bezivin_need_2004' on page 45 undefined on input line 
-200.
-
-
-LaTeX Warning: Citation `petter_solving_2009' on page 45 undefined on input lin
-e 205.
-
-
-LaTeX Warning: Citation `lecalvar_coupling_2021' on page 45 undefined on input 
-line 205.
-
-
-LaTeX Warning: Citation `le_calvar_toward_2019' on page 45 undefined on input l
-ine 205.
-
-
-LaTeX Warning: Citation `horvath_dynamic_2012' on page 45 undefined on input li
-ne 205.
-
-
-LaTeX Warning: Citation `faunes_generating_2012' on page 45 undefined on input 
-line 205.
-
-
-LaTeX Warning: Citation `faunes_genetic-programming_2013' on page 45 undefined 
-on input line 205.
-
-
-LaTeX Warning: Citation `eisenberg_towards_2021' on page 45 undefined on input 
-line 205.
-
-
-LaTeX Warning: Citation `fleck_marrying_2015' on page 45 undefined on input lin
-e 205.
-
-
-Underfull \vbox (badness 3000) has occurred while \output is active []
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[45]
-
-LaTeX Warning: Citation `petter_solving_2009' on page 46 undefined on input lin
-e 281.
-
-
-LaTeX Warning: Citation `balogh_model_2009' on page 46 undefined on input line 
-281.
-
-
-LaTeX Warning: Citation `kessentini_model_2008' on page 46 undefined on input l
-ine 281.
-
-
-LaTeX Warning: Citation `kessentini_generating_2010' on page 46 undefined on in
-put line 281.
-
-
-LaTeX Warning: Citation `kessentini_search-based_2012' on page 46 undefined on 
-input line 281.
-
-
-LaTeX Warning: Citation `le_calvar_toward_2019' on page 46 undefined on input l
-ine 284.
-
-
-LaTeX Warning: Citation `petter_solving_2009' on page 46 undefined on input lin
-e 284.
-
-
-LaTeX Warning: Citation `horvath_dynamic_2012' on page 46 undefined on input li
-ne 284.
-
-
-LaTeX Warning: Citation `faunes_generating_2012' on page 46 undefined on input 
-line 290.
-
-
-LaTeX Warning: Citation `fatiregun_evolving_2004' on page 46 undefined on input
- line 290.
-
-
-LaTeX Warning: Citation `fatiregun_search_2003' on page 46 undefined on input l
-ine 290.
-
-
-LaTeX Warning: Citation `cooper_optimizing_1999' on page 46 undefined on input 
-line 290.
-
-
-LaTeX Warning: Citation `kulkarni_fast_nodate' on page 46 undefined on input li
-ne 290.
-
-
-LaTeX Warning: Citation `kessentini_model_2008' on page 46 undefined on input l
-ine 293.
-
-
-LaTeX Warning: Citation `kessentini_generating_2010' on page 46 undefined on in
-put line 293.
-
-
-LaTeX Warning: Citation `kessentini_search-based_2012' on page 46 undefined on 
-input line 293.
-
-
-LaTeX Warning: Citation `kessentini_generating_2010' on page 46 undefined on in
-put line 295.
-
-
-LaTeX Warning: Citation `kessentini_search-based_2012' on page 46 undefined on 
-input line 295.
-
-
-LaTeX Warning: Citation `eisenberg_towards_2021' on page 46 undefined on input 
-line 297.
-
-
-LaTeX Warning: Citation `ludovico_model_2020' on page 46 undefined on input lin
-e 297.
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[46]
-
-LaTeX Warning: Citation `burgueno_lstm-based_2019' on page 47 undefined on inpu
-t line 299.
-
-
-Underfull \hbox (badness 1194) in paragraph at lines 346--346
-[]\T1/lmr/m/n/12 Figure 6.2: |Ex-am-ple pat-tern
- []
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[47]
-
-LaTeX Warning: Citation `lecalvar_coupling_2021' on page 48 undefined on input 
-line 389.
-
-
-LaTeX Warning: Citation `burgueno_lstm-based_2019' on page 48 undefined on inpu
-t line 389.
-
-
-LaTeX Warning: Citation `petter_solving_2009' on page 48 undefined on input lin
-e 389.
-
-
-LaTeX Warning: Citation `eisenberg_towards_2021' on page 48 undefined on input 
-line 389.
-
-
-LaTeX Warning: Citation `favre_towards_2005' on page 48 undefined on input line
- 389.
-
-
-LaTeX Warning: Citation `muller_modeling_2012' on page 48 undefined on input li
-ne 389.
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[48]
-Overfull \hbox (17.22044pt too wide) in paragraph at lines 427--428
-\T1/lmr/m/n/12 models we have a trans-for-ma-tion spec-i-fi-ca-tion $\OML/lmm/m
-/it/12 MT$\T1/lmr/m/n/12 . How-ever at the model level-of-abstraction,
- []
-
-
-LaTeX Warning: Citation `faunes_generating_2012' on page 49 undefined on input 
-line 432.
-
-
-LaTeX Warning: Citation `faunes_genetic-programming_2013' on page 49 undefined 
-on input line 432.
-
-
-LaTeX Warning: Citation `burgueno_lstm-based_2019' on page 49 undefined on inpu
-t line 432.
-
-
-LaTeX Warning: Citation `eisenberg_towards_2021' on page 49 undefined on input 
-line 432.
-
-
-LaTeX Warning: Citation `fleck_marrying_2015' on page 49 undefined on input lin
-e 432.
-
-
-Underfull \hbox (badness 2617) in paragraph at lines 469--469
-[]\T1/lmr/m/n/12 Figure 6.4: |Trans-for-ma-tion Learn-ing
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[49]
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[50]
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[51]
-
-LaTeX Warning: Citation `kappel_model_2012' on page 52 undefined on input line 
-594.
-
-
-LaTeX Warning: Citation `boussaid_survey_2017' on page 52 undefined on input li
-ne 594.
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[52]
-
-LaTeX Warning: Citation `le_calvar_toward_2019' on page 53 undefined on input l
-ine 673.
-
-
-LaTeX Warning: Citation `lecalvar_coupling_2021' on page 53 undefined on input 
-line 673.
-
-
-LaTeX Warning: Citation `schatz_design-space_2010' on page 53 undefined on inpu
-t line 728.
-
-
-LaTeX Warning: Citation `petter_solving_2009' on page 53 undefined on input lin
-e 728.
-
-
-LaTeX Warning: Citation `petter_solving_2009' on page 53 undefined on input lin
-e 730.
-
-
+[52])) (./Contributions/OCLCSP/oclcsp.tex
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -3134,64 +3362,23 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [53]
 
-LaTeX Warning: Citation `petter_solving_2009' on page 54 undefined on input lin
-e 732.
+[54
+
+]
+Chapter 7.
+(./Contributions/OCLCSP/Operations/intbool.tex)
+(./Contributions/OCLCSP/Operations/typecasting.tex
+
+[55
+
+]
+
+LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 37
+.
 
 
-LaTeX Warning: Citation `horvath_dynamic_2012' on page 54 undefined on input li
-ne 751.
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[54]
-
-LaTeX Warning: Citation `fatiregun_search_2003' on page 55 undefined on input l
-ine 876.
-
-
-LaTeX Warning: Citation `fatiregun_evolving_2004' on page 55 undefined on input
- line 876.
-
-
-LaTeX Warning: Citation `cooper_optimizing_1999' on page 55 undefined on input 
-line 876.
-
-
-LaTeX Warning: Citation `kulkarni_fast_nodate' on page 55 undefined on input li
-ne 876.
-
-
-LaTeX Warning: Citation `cooper_optimizing_1999' on page 55 undefined on input 
-line 880.
-
-
-LaTeX Warning: Citation `eisenberg_towards_2021' on page 55 undefined on input 
-line 904.
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[55]
-
-LaTeX Warning: Citation `ludovico_model_2020' on page 56 undefined on input lin
-e 926.
-
-
-LaTeX Warning: Citation `fleck_marrying_2015' on page 56 undefined on input lin
-e 933.
+LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 64
+.
 
 
 
@@ -3204,27 +3391,24 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [56]
 
-LaTeX Warning: Citation `burgueno_lstm-based_2019' on page 57 undefined on inpu
-t line 964.
+LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 10
+5.
 
 
-LaTeX Warning: Citation `balogh_model_2009' on page 57 undefined on input line 
-982.
+Overfull \hbox (28.46703pt too wide) in paragraph at lines 112--114
+\T1/lmr/m/n/12 di-cat-ing which vari-ables in $\OML/lmm/m/it/12 X$ \T1/lmr/m/n/
+12 and $\OML/lmm/m/it/12 Y$ \T1/lmr/m/n/12 are equal to the dummy value $\OML/l
+mm/m/it/12 d$\T1/lmr/m/n/12 . The $[]\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 T; S; k\
+OT1/lmr/m/n/12 )$
+ []
 
 
-LaTeX Warning: Citation `varro_model_2006' on page 57 undefined on input line 9
-82.
+Package caption Warning: \label without proper reference on input line 774.
+See the caption package documentation for explanation.
 
 
-LaTeX Warning: Citation `faunes_generating_2012' on page 57 undefined on input 
-line 1006.
-
-
-LaTeX Warning: Citation `faunes_genetic-programming_2013' on page 57 undefined 
-on input line 1006.
-
-
-Underfull \vbox (badness 4792) has occurred while \output is active []
+LaTeX Warning: Reference `tab:sort_stable' on page 57 undefined on input line 1
+16.
 
 
 
@@ -3237,21 +3421,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [57]
 
-LaTeX Warning: Citation `kessentini_model_2008' on page 58 undefined on input l
-ine 1019.
+LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 18
+5.
 
-
-LaTeX Warning: Citation `kessentini_generating_2010' on page 58 undefined on in
-put line 1019.
-
-
-LaTeX Warning: Citation `kessentini_search-based_2012' on page 58 undefined on 
-input line 1019.
-
-
-LaTeX Warning: Citation `fleck_marrying_2015' on page 58 undefined on input lin
-e 1196.
-
+<Articles/ICTAI2025/figures/cumulative.pdf, id=1185, 323.28778pt x 233.9139pt>
+File: Articles/ICTAI2025/figures/cumulative.pdf Graphic file (type pdf)
+<use Articles/ICTAI2025/figures/cumulative.pdf>
+Package pdftex.def Info: Articles/ICTAI2025/figures/cumulative.pdf  used on inp
+ut line 222.
+(pdftex.def)             Requested size: 455.24411pt x 286.98984pt.
 
 
 
@@ -3262,18 +3440,20 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [58]
-Overfull \hbox (19.16075pt too wide) in paragraph at lines 1201--1201
-[]\T1/lmr/bx/n/14.4 Learning Con-straint Prob-lem Spec-i-fi-ca-tions for Model 
-Trans-
+
+LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 22
+8.
+
+
+Overfull \hbox (6.31642pt too wide) in paragraph at lines 253--258
+\T1/lmr/bx/n/12 D. asOr-dered-Set(): []\T1/lmr/m/n/12 Con-sider the ex-pres-sio
+n \T1/lmtt/m/n/12 src.asOrderedSet()\T1/lmr/m/n/12 . The \T1/lmtt/m/n/12 asOrde
+redSet()
  []
 
 
-LaTeX Warning: Citation `beldiceanu_acquiring_2022' on page 59 undefined on inp
-ut line 1205.
-
-
-LaTeX Warning: Citation `balogh_model_2009' on page 59 undefined on input line 
-1207.
+LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 25
+8.
 
 
 
@@ -3284,7 +3464,27 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[59]) (./Articles/SAC2025/sac2025.tex
+[59 <./Articles/ICTAI2025/figures/cumulative.pdf>]
+
+LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 33
+7.
+
+<Articles/ICTAI2025/figures/afn.pdf, id=1218, 153.6942pt x 89.3739pt>
+File: Articles/ICTAI2025/figures/afn.pdf Graphic file (type pdf)
+<use Articles/ICTAI2025/figures/afn.pdf>
+Package pdftex.def Info: Articles/ICTAI2025/figures/afn.pdf  used on input line
+ 355.
+(pdftex.def)             Requested size: 204.85846pt x 99.06117pt.
+) (./Contributions/OCLCSP/Operations/collection.tex)
+(./Contributions/OCLCSP/Operations/sequence.tex)
+(./Contributions/OCLCSP/Operations/set.tex)
+(./Contributions/OCLCSP/Operations/bag.tex)
+(./Contributions/OCLCSP/Operations/orderedset.tex)
+(./Contributions/OCLCSP/Operations/orderedset.tex))
+(./Articles/SAC2025/sac2025.tex
+Underfull \vbox (badness 2698) has occurred while \output is active []
+
+
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -3294,57 +3494,63 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [60]
-Chapter 7.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Warning: Citation `Bergmann2015-viatra' on page 61 undefined on input lin
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[61 <./Articles/ICTAI2025/figures/afn.pdf>]
+Overfull \vbox (622.58932pt too high) has occurred while \output is active []
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[62]
+Chapter 8.
+
+LaTeX Warning: Citation `Bergmann2015-viatra' on page 63 undefined on input lin
 e 28.
 
 
-LaTeX Warning: Citation `Gonzalez2012-emf2csp' on page 61 undefined on input li
+LaTeX Warning: Citation `Gonzalez2012-emf2csp' on page 63 undefined on input li
 ne 28.
 
 
-LaTeX Warning: Citation `Jackson2002-alloy' on page 61 undefined on input line 
+LaTeX Warning: Citation `Jackson2002-alloy' on page 63 undefined on input line 
 28.
 
 
-LaTeX Warning: Citation `Prudhomme2022-choco' on page 61 undefined on input lin
+LaTeX Warning: Citation `Prudhomme2022-choco' on page 63 undefined on input lin
 e 46.
 
 
-LaTeX Warning: Citation `Le_Calvar2021-solvers' on page 61 undefined on input l
+LaTeX Warning: Citation `Le_Calvar2021-solvers' on page 63 undefined on input l
 ine 61.
 
 
 
-[61
+[63
 
 
 ]
 
-LaTeX Warning: Reference `sec:motiv' on page 62 undefined on input line 82.
-
-
-LaTeX Warning: Reference `sec:contrib2' on page 62 undefined on input line 83.
-
-
-LaTeX Warning: Reference `sec:eval' on page 62 undefined on input line 89.
-
-
-LaTeX Warning: Reference `sec:disc' on page 62 undefined on input line 90.
-
-
-LaTeX Warning: Reference `sec:related' on page 62 undefined on input line 91.
-
-
-LaTeX Warning: Reference `sec:qed' on page 62 undefined on input line 92.
-
-
-LaTeX Warning: Citation `Koren1999-rms' on page 62 undefined on input line 118.
+LaTeX Warning: Citation `Koren1999-rms' on page 64 undefined on input line 118.
 
 
 
-LaTeX Warning: Citation `Wang2012-srms' on page 62 undefined on input line 119.
+LaTeX Warning: Citation `Wang2012-srms' on page 64 undefined on input line 119.
 
 
 
@@ -3359,7 +3565,7 @@ l.173 \end{outline}
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-<Articles/SAC2025/figures/uc_uml.pdf, id=885, 283.0575pt x 77.3289pt>
+<Articles/SAC2025/figures/uc_uml.pdf, id=1265, 283.0575pt x 77.3289pt>
 File: Articles/SAC2025/figures/uc_uml.pdf Graphic file (type pdf)
 <use Articles/SAC2025/figures/uc_uml.pdf>
 Package pdftex.def Info: Articles/SAC2025/figures/uc_uml.pdf  used on input lin
@@ -3375,14 +3581,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Reference `fig:uc_uml' on page 62 undefined on input line 183.
-
-
-LaTeX Warning: Citation `Wang2012-srms' on page 62 undefined on input line 183.
-
-
-
-LaTeX Warning: Citation `Wang2012-srms' on page 62 undefined on input line 211.
+LaTeX Warning: Citation `Wang2012-srms' on page 64 undefined on input line 183.
 
 
 
@@ -3394,18 +3593,19 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
 
-[62]
+[64]
 
-LaTeX Warning: Reference `fig:uc_uml' on page 63 undefined on input line 227.
-
-
-LaTeX Warning: Reference `lst:uc_ocl' on page 63 undefined on input line 231.
+LaTeX Warning: Citation `Wang2012-srms' on page 65 undefined on input line 211.
 
 
-LaTeX Warning: Reference `lst:uc_ocl' on page 63 undefined on input line 237.
+
+Package hyperref Warning: No autoref name for `listing' on input line 231.
 
 
-LaTeX Warning: Reference `lst:uc_ocl' on page 63 undefined on input line 240.
+Package hyperref Warning: No autoref name for `listing' on input line 237.
+
+
+Package hyperref Warning: No autoref name for `listing' on input line 240.
 
 
 
@@ -3416,7 +3616,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[63 <./Articles/SAC2025/figures/uc_uml.pdf>]
+[65 <./Articles/SAC2025/figures/uc_uml.pdf>]
 Overfull \hbox (7.00816pt too wide) in paragraph at lines 254--255
 \T1/lmr/m/n/12 stage where it is per-formed, and find all the ma-chines of that
  stage (\T1/lmtt/m/n/12 self.stage.machines\T1/lmr/m/n/12 ).
@@ -3430,9 +3630,6 @@ lmtt/m/n/12 m.characteristics\T1/lmr/m/n/12 )
  []
 
 
-LaTeX Warning: Reference `fig:uc_uml' on page 64 undefined on input line 256.
-
-
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -3441,16 +3638,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
 
-[64]
-
-LaTeX Warning: Reference `sec:contrib2' on page 65 undefined on input line 392.
-
-
-
-LaTeX Warning: Reference `lst:uc_ocl' on page 65 undefined on input line 441.
-
-
-LaTeX Warning: Reference `lst:uc_ocl' on page 65 undefined on input line 441.
+[66]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
@@ -3461,12 +3650,14 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[65]
+[67]
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
+423.
+ (/usr/share/texmf-dist/tex/latex/lm/ts1lmtt.fd
+File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
 
-LaTeX Warning: Reference `lst:uc_ocl' on page 66 undefined on input line 452.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Package hyperref Warning: No autoref name for `listing' on input line 452.
 
 
 
@@ -3477,12 +3668,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
 
-[66]
+[68]
 
 Package hyperref Warning: No autoref name for `listing' on input line 464.
 
 
-LaTeX Warning: Reference `lst:uc_ocl' on page 67 undefined on input line 464.
+Package hyperref Warning: No autoref name for `listing' on input line 464.
 
 
 Package hyperref Warning: No autoref name for `listing' on input line 484.
@@ -3516,7 +3707,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[67]
+[69]
 Overfull \hbox (32.75935pt too wide) in paragraph at lines 496--505
 []\T1/lmr/m/n/12 For in-stance, since the ref-er-ence be-tween \T1/lmtt/m/n/12 
 Task \T1/lmr/m/n/12 and \T1/lmtt/m/n/12 Stage \T1/lmr/m/n/12 is an-no-tated (\T
@@ -3533,6 +3724,9 @@ Package hyperref Warning: No autoref name for `listing' on input line 544.
 Package hyperref Warning: No autoref name for `listing' on input line 577.
 
 
+Underfull \vbox (badness 2717) has occurred while \output is active []
+
+
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -3541,7 +3735,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
 
-[68]
+[70]
 
 Package hyperref Warning: No autoref name for `listing' on input line 599.
 
@@ -3566,45 +3760,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (4.37828pt too wide) in paragraph at lines 673--673
-[]\T1/lmr/bx/n/17.28 Modeling An-no-tated OCL Con-straints us-ing Con-
- []
-
-
-LaTeX Warning: Reference `subsec:assoc' on page 69 undefined on input line 676.
-
-
-
-LaTeX Warning: Reference `subsec:expr' on page 69 undefined on input line 676.
-
-
-Underfull \vbox (badness 1028) has occurred while \output is active []
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[69]
-
-LaTeX Warning: Reference `fig:uc_uml' on page 70 undefined on input line 691.
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 25.2232pt, for example:
-(fancyhdr)                \setlength{\headheight}{25.2232pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
-
-[70]
-
-LaTeX Warning: Reference `fig:uc_uml' on page 71 undefined on input line 749.
+Underfull \vbox (badness 5175) has occurred while \output is active []
 
 
 
@@ -3616,19 +3772,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [71]
-Overfull \hbox (67.48917pt too wide) in paragraph at lines 800--803
-\T1/lmr/m/n/12 Variable prop-erty ac-cess is sourced from con-stant (non an-no-
-tated) queries, e.g. \T1/lmtt/m/n/12 self.prev.var(stage)\T1/lmr/m/n/12 .
+Overfull \hbox (4.37828pt too wide) in paragraph at lines 673--673
+[]\T1/lmr/bx/n/17.28 Modeling An-no-tated OCL Con-straints us-ing Con-
  []
 
-
-Overfull \hbox (166.93306pt too wide) in paragraph at lines 800--803
-\T1/lmr/m/n/12 Vari-able nav-i-ga-tion is sourced from a vari-able query. For e
-x-am-ple in: \T1/lmtt/m/n/12 self.var(stage).var(machines).characteristics
- []
-
-Package hyperref Info: bookmark level for unknown csp defaults to 0 on input li
-ne 925.
 
 
 
@@ -3640,9 +3787,37 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [72]
 
-LaTeX Warning: Reference `ssec:navCSPeval' on page 73 undefined on input line 9
-47.
 
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[73]
+Overfull \hbox (67.48917pt too wide) in paragraph at lines 800--803
+\T1/lmr/m/n/12 Variable prop-erty ac-cess is sourced from con-stant (non an-no-
+tated) queries, e.g. \T1/lmtt/m/n/12 self.prev.var(stage)\T1/lmr/m/n/12 .
+ []
+
+
+Overfull \hbox (166.93306pt too wide) in paragraph at lines 800--803
+\T1/lmr/m/n/12 Vari-able nav-i-ga-tion is sourced from a vari-able query. For e
+x-am-ple in: \T1/lmtt/m/n/12 self.var(stage).var(machines).characteristics
+ []
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 25.2232pt, for example:
+(fancyhdr)                \setlength{\headheight}{25.2232pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
+
+[74]
+Package hyperref Info: bookmark level for unknown csp defaults to 0 on input li
+ne 925.
 
 
 
@@ -3652,8 +3827,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[73]
-<Articles/SAC2025/figures/astcompilation.pdf, id=1041, 418.4433pt x 180.675pt>
+[75]
+<Articles/SAC2025/figures/astcompilation.pdf, id=1425, 418.4433pt x 180.675pt>
 File: Articles/SAC2025/figures/astcompilation.pdf Graphic file (type pdf)
 <use Articles/SAC2025/figures/astcompilation.pdf>
 Package pdftex.def Info: Articles/SAC2025/figures/astcompilation.pdf  used on i
@@ -3670,48 +3845,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Reference `fig:compilation' on page 74 undefined on input line 9
-72.
-
-
-LaTeX Warning: Reference `sssec:erefnav' on page 74 undefined on input line 972
-.
-
-
-LaTeX Warning: Reference `sssec:adjlistnav' on page 74 undefined on input line 
-974.
-
-
-LaTeX Warning: Reference `fig:compilation' on page 74 undefined on input line 9
-75.
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 25.2232pt, for example:
-(fancyhdr)                \setlength{\headheight}{25.2232pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
-
-[74]
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[75]
-! Undefined control sequence.
-l.1114     \Description
-                       [AST]{}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
+Underfull \vbox (badness 5359) has occurred while \output is active []
 
 
 
@@ -3724,15 +3858,6 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [76]
 
-LaTeX Warning: Citation `Wang2012-srms' on page 77 undefined on input line 1150
-.
-
-
-LaTeX Warning: Reference `tab:rms_results' on page 77 undefined on input line 1
-178.
-
-
-
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -3741,287 +3866,14 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [77]
-
-LaTeX Warning: Citation `Jackson2002-alloy' on page 78 undefined on input line 
-1232.
-
-
-LaTeX Warning: Citation `Torlak2007-kodkod' on page 78 undefined on input line 
-1232.
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 25.2232pt, for example:
-(fancyhdr)                \setlength{\headheight}{25.2232pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
-
-[78]
-
-LaTeX Warning: Citation `Le_Calvar2021-solvers' on page 79 undefined on input l
-ine 1245.
-
-
-Overfull \hbox (117.0541pt too wide) in paragraph at lines 1241--1246
-\T1/lmr/bx/n/12 Translating Full OCL. \T1/lmr/m/n/12 In this pa-per, we fo-cus 
-on the trans-la-tion for the OCL \T1/lmtt/m/n/12 NavigationOrAttributeCallExp
- []
-
-
-LaTeX Warning: Citation `Le_Calvar2021-solvers' on page 79 undefined on input l
-ine 1248.
-
-
-LaTeX Warning: Citation `Le_Calvar2019-atol' on page 79 undefined on input line
- 1248.
-
-
-LaTeX Warning: Citation `Le_Calvar2021-solvers' on page 79 undefined on input l
-ine 1273.
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[79]
-
-LaTeX Warning: Citation `Jackson2002-alloy' on page 80 undefined on input line 
-1290.
-
-
-LaTeX Warning: Citation `Torlak2007-kodkod' on page 80 undefined on input line 
-1294.
-
-
-LaTeX Warning: Citation `Bergmann2015-viatra' on page 80 undefined on input lin
-e 1302.
-
-
-LaTeX Warning: Citation `Horvath2009-cspm' on page 80 undefined on input line 1
-302.
-
-
-LaTeX Warning: Citation `Le_Calvar2019-atol' on page 80 undefined on input line
- 1308.
-
-) (./Articles/ICTAI2025/ictai2025.tex
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 25.2232pt, for example:
-(fancyhdr)                \setlength{\headheight}{25.2232pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
-
-[80]
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[81]
-
-[82]
-
-[83]
-
-[84 <./Articles/SAC2025/figures/astcompilation.pdf>]
-Chapter 8.
-
-LaTeX Warning: Citation `jouault2008atl' on page 85 undefined on input line 14.
-
-
-
-LaTeX Warning: Citation `Le_Calvar2019-atol' on page 85 undefined on input line
- 14.
-
-
-LaTeX Warning: Citation `Le_Calvar2021-solvers' on page 85 undefined on input l
-ine 14.
-
-
-
-[85
-
-
-]
-
-LaTeX Warning: Citation `Jackson2002-alloy' on page 86 undefined on input line 
-39.
-
-
-LaTeX Warning: Citation `alloyMT' on page 86 undefined on input line 40.
-
-
-LaTeX Warning: Citation `uml2alloy' on page 86 undefined on input line 40.
-
-
-LaTeX Warning: Citation `uml2alloy2uml' on page 86 undefined on input line 40.
-
-
-LaTeX Warning: Citation `ferdjoukh_instantiation_2015' on page 86 undefined on 
-input line 42.
-
-
-LaTeX Warning: Reference `sec:ctxt' on page 86 undefined on input line 53.
-
-
-LaTeX Warning: Reference `sec:contrib_encoding' on page 86 undefined on input l
-ine 54.
-
-
-LaTeX Warning: Reference `sec:tests' on page 86 undefined on input line 58.
-
-
-LaTeX Warning: Citation `HoeveK06' on page 86 undefined on input line 73.
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 25.2232pt, for example:
-(fancyhdr)                \setlength{\headheight}{25.2232pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
-
-[86]
-
-LaTeX Warning: Citation `beldiceanu2010global' on page 87 undefined on input li
-ne 87.
-
-
-LaTeX Warning: Citation `HoeveK06' on page 87 undefined on input line 87.
-
-
-LaTeX Warning: Command \textellipsis invalid in math mode on input line 113.
-
-
-LaTeX Warning: Command \textellipsis invalid in math mode on input line 113.
-
-
-LaTeX Warning: Citation `DBLP:conf/aaai/HentenryckC88' on page 87 undefined on 
-input line 113.
-
-
-LaTeX Warning: Citation `van1999opl' on page 87 undefined on input line 113.
-
-
-LaTeX Warning: Command \textellipsis invalid in math mode on input line 119.
-
-
-LaTeX Warning: Citation `pesant2004regular' on page 87 undefined on input line 
-119.
-
-
-LaTeX Warning: Citation `beldiceanu2002sweep' on page 87 undefined on input lin
-e 124.
-
-
-LaTeX Warning: Citation `DBLP:conf/gcai/BeldiceanuCFLPP15' on page 87 undefined
- on input line 124.
-
-
-LaTeX Warning: Command \textellipsis invalid in math mode on input line 124.
-
-
-Package caption Warning: \label without proper reference on input line 122.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `tab:sort_stable' on page 87 undefined on input line 1
-27.
-
-
-LaTeX Warning: Command \textellipsis invalid in math mode on input line 136.
-
-
-LaTeX Warning: Command \textellipsis invalid in math mode on input line 136.
-
-
-LaTeX Warning: Command \textellipsis invalid in math mode on input line 136.
-
-
-LaTeX Warning: Citation `beldiceanu1994chip' on page 87 undefined on input line
- 137.
-
-
-LaTeX Warning: Citation `DBLP:journals/informs/MercierH08' on page 87 undefined
- on input line 137.
-
-
-LaTeX Warning: Citation `cumulative' on page 87 undefined on input line 137.
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[87]
-File: Articles/ICTAI2025/figures/metamodel.pdf Graphic file (type pdf)
-<use Articles/ICTAI2025/figures/metamodel.pdf>
-Package pdftex.def Info: Articles/ICTAI2025/figures/metamodel.pdf  used on inpu
-t line 156.
-(pdftex.def)             Requested size: 455.24411pt x 76.82864pt.
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 25.2232pt, for example:
-(fancyhdr)                \setlength{\headheight}{25.2232pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
-
-[88]
-File: Articles/ICTAI2025/figures/model.pdf Graphic file (type pdf)
-<use Articles/ICTAI2025/figures/model.pdf>
-Package pdftex.def Info: Articles/ICTAI2025/figures/model.pdf  used on input li
-ne 212.
-(pdftex.def)             Requested size: 455.24411pt x 169.80267pt.
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[89]
-
-LaTeX Warning: Citation `Jackson2002-alloy' on page 90 undefined on input line 
-317.
-
-
-LaTeX Warning: Citation `Bergmann2015-viatra' on page 90 undefined on input lin
-e 317.
-
-
-LaTeX Warning: Citation `ViatraSolver' on page 90 undefined on input line 317.
-
-
-LaTeX Warning: Citation `uml2alloy' on page 90 undefined on input line 322.
-
-
-LaTeX Warning: Citation `uml2alloy2uml' on page 90 undefined on input line 322.
-
-
-
-LaTeX Warning: Citation `Torlak2007-kodkod' on page 90 undefined on input line 
-323.
+! Undefined control sequence.
+l.1114     \Description
+                       [AST]{}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -4035,18 +3887,316 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
 
+[78]
+
+LaTeX Warning: Citation `Wang2012-srms' on page 79 undefined on input line 1150
+.
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[79]
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 25.2232pt, for example:
+(fancyhdr)                \setlength{\headheight}{25.2232pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
+
+[80]
+
+LaTeX Warning: Citation `Jackson2002-alloy' on page 81 undefined on input line 
+1232.
+
+
+LaTeX Warning: Citation `Torlak2007-kodkod' on page 81 undefined on input line 
+1232.
+
+
+LaTeX Warning: Citation `Le_Calvar2021-solvers' on page 81 undefined on input l
+ine 1245.
+
+
+Overfull \hbox (117.0541pt too wide) in paragraph at lines 1241--1246
+\T1/lmr/bx/n/12 Translating Full OCL. \T1/lmr/m/n/12 In this pa-per, we fo-cus 
+on the trans-la-tion for the OCL \T1/lmtt/m/n/12 NavigationOrAttributeCallExp
+ []
+
+
+LaTeX Warning: Citation `Le_Calvar2021-solvers' on page 81 undefined on input l
+ine 1248.
+
+
+LaTeX Warning: Citation `Le_Calvar2019-atol' on page 81 undefined on input line
+ 1248.
+
+
+Underfull \vbox (badness 2435) has occurred while \output is active []
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[81]
+
+LaTeX Warning: Citation `Le_Calvar2021-solvers' on page 82 undefined on input l
+ine 1273.
+
+
+LaTeX Warning: Citation `Jackson2002-alloy' on page 82 undefined on input line 
+1290.
+
+
+LaTeX Warning: Citation `Torlak2007-kodkod' on page 82 undefined on input line 
+1294.
+
+
+LaTeX Warning: Citation `Bergmann2015-viatra' on page 82 undefined on input lin
+e 1302.
+
+
+LaTeX Warning: Citation `Horvath2009-cspm' on page 82 undefined on input line 1
+302.
+
+
+LaTeX Warning: Citation `Le_Calvar2019-atol' on page 82 undefined on input line
+ 1308.
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 25.2232pt, for example:
+(fancyhdr)                \setlength{\headheight}{25.2232pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
+
+[82]) (./Articles/ICTAI2025/ictai2025.tex
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[83]
+
+[84]
+
+[85]
+
+[86 <./Articles/SAC2025/figures/astcompilation.pdf>]
+Chapter 9.
+
+LaTeX Warning: Citation `jouault2008atl' on page 87 undefined on input line 14.
+
+
+
+LaTeX Warning: Citation `Le_Calvar2019-atol' on page 87 undefined on input line
+ 14.
+
+
+LaTeX Warning: Citation `Le_Calvar2021-solvers' on page 87 undefined on input l
+ine 14.
+
+
+
+[87
+
+
+]
+
+LaTeX Warning: Citation `Jackson2002-alloy' on page 88 undefined on input line 
+39.
+
+
+LaTeX Warning: Citation `alloyMT' on page 88 undefined on input line 40.
+
+
+LaTeX Warning: Citation `uml2alloy' on page 88 undefined on input line 40.
+
+
+LaTeX Warning: Citation `uml2alloy2uml' on page 88 undefined on input line 40.
+
+
+LaTeX Warning: Citation `ferdjoukh_instantiation_2015' on page 88 undefined on 
+input line 42.
+
+
+LaTeX Warning: Citation `HoeveK06' on page 88 undefined on input line 73.
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 25.2232pt, for example:
+(fancyhdr)                \setlength{\headheight}{25.2232pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
+
+[88]
+
+LaTeX Warning: Citation `beldiceanu2010global' on page 89 undefined on input li
+ne 87.
+
+
+LaTeX Warning: Citation `HoeveK06' on page 89 undefined on input line 87.
+
+
+LaTeX Warning: Command \textellipsis invalid in math mode on input line 113.
+
+
+LaTeX Warning: Command \textellipsis invalid in math mode on input line 113.
+
+
+LaTeX Warning: Citation `DBLP:conf/aaai/HentenryckC88' on page 89 undefined on 
+input line 113.
+
+
+LaTeX Warning: Citation `van1999opl' on page 89 undefined on input line 113.
+
+
+LaTeX Warning: Command \textellipsis invalid in math mode on input line 119.
+
+
+LaTeX Warning: Citation `pesant2004regular' on page 89 undefined on input line 
+119.
+
+
+LaTeX Warning: Citation `beldiceanu2002sweep' on page 89 undefined on input lin
+e 124.
+
+
+LaTeX Warning: Citation `DBLP:conf/gcai/BeldiceanuCFLPP15' on page 89 undefined
+ on input line 124.
+
+
+LaTeX Warning: Command \textellipsis invalid in math mode on input line 124.
+
+
+Package caption Warning: \label without proper reference on input line 774.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `tab:sort_stable' on page 89 undefined on input line 1
+27.
+
+
+LaTeX Warning: Command \textellipsis invalid in math mode on input line 136.
+
+
+LaTeX Warning: Command \textellipsis invalid in math mode on input line 136.
+
+
+LaTeX Warning: Command \textellipsis invalid in math mode on input line 136.
+
+
+LaTeX Warning: Citation `beldiceanu1994chip' on page 89 undefined on input line
+ 137.
+
+
+LaTeX Warning: Citation `DBLP:journals/informs/MercierH08' on page 89 undefined
+ on input line 137.
+
+
+LaTeX Warning: Citation `cumulative' on page 89 undefined on input line 137.
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[89]
+File: Articles/ICTAI2025/figures/metamodel.pdf Graphic file (type pdf)
+<use Articles/ICTAI2025/figures/metamodel.pdf>
+Package pdftex.def Info: Articles/ICTAI2025/figures/metamodel.pdf  used on inpu
+t line 156.
+(pdftex.def)             Requested size: 455.24411pt x 108.57616pt.
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 25.2232pt, for example:
+(fancyhdr)                \setlength{\headheight}{25.2232pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
+
 [90]
+File: Articles/ICTAI2025/figures/model.pdf Graphic file (type pdf)
+<use Articles/ICTAI2025/figures/model.pdf>
+Package pdftex.def Info: Articles/ICTAI2025/figures/model.pdf  used on input li
+ne 212.
+(pdftex.def)             Requested size: 455.24411pt x 203.01312pt.
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[91]
+
+LaTeX Warning: Citation `Jackson2002-alloy' on page 92 undefined on input line 
+317.
+
+
+LaTeX Warning: Citation `Bergmann2015-viatra' on page 92 undefined on input lin
+e 317.
+
+
+LaTeX Warning: Citation `ViatraSolver' on page 92 undefined on input line 317.
+
+
+LaTeX Warning: Citation `uml2alloy' on page 92 undefined on input line 322.
+
+
+LaTeX Warning: Citation `uml2alloy2uml' on page 92 undefined on input line 322.
+
+
+
+LaTeX Warning: Citation `Torlak2007-kodkod' on page 92 undefined on input line 
+323.
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 25.2232pt, for example:
+(fancyhdr)                \setlength{\headheight}{25.2232pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
+
+[92]
 Overfull \hbox (13.62671pt too wide) in paragraph at lines 338--351
 \T1/lmr/bx/n/12 A. En-cod-ing Prop-er-ties. \T1/lmr/m/n/12 The vari-ables rep-r
 e-sent the properties--attributes and references--
  []
 
 
-LaTeX Warning: Citation `coyle_towards_2025' on page 91 undefined on input line
+LaTeX Warning: Citation `coyle_towards_2025' on page 93 undefined on input line
  362.
 
 
-LaTeX Warning: Citation `coyle_towards_2025' on page 91 undefined on input line
+LaTeX Warning: Citation `coyle_towards_2025' on page 93 undefined on input line
  399.
 
 
@@ -4058,7 +4208,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[91]
+[93]
 Overfull \hbox (15.39359pt too wide) in paragraph at lines 452--459
 \OML/lmm/m/it/12 dom\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 ptr[]\OT1/lmr/m/n/12 ) = 
 \OMS/lmsy/m/n/12 f\OT1/lmr/m/n/12 1\OML/lmm/m/it/12 ::o\OMS/lmsy/m/n/12 g [ f\O
@@ -4080,14 +4230,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
 
-[92]
+[94]
 
 LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 47
 3.
-
-
-LaTeX Warning: Reference `ssec:ctxt_cd' on page 93 undefined on input line 560.
-
 
 
 
@@ -4098,7 +4244,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[93]
+[95]
 Overfull \hbox (2.74886pt too wide) in paragraph at lines 565--572
 []\T1/lmr/m/n/12 Let $\OML/lmm/m/it/12 X \OT1/lmr/m/n/12 = \OMS/lmsy/m/n/12 f\O
 ML/lmm/m/it/12 x[]; ::; x[]\OMS/lmsy/m/n/12 g$ \T1/lmr/m/n/12 be the vari-able 
@@ -4114,7 +4260,7 @@ File: Articles/ICTAI2025/figures/afd.pdf Graphic file (type pdf)
 <use Articles/ICTAI2025/figures/afd.pdf>
 Package pdftex.def Info: Articles/ICTAI2025/figures/afd.pdf  used on input line
  588.
-(pdftex.def)             Requested size: 227.62206pt x 40.28218pt.
+(pdftex.def)             Requested size: 227.62206pt x 86.47762pt.
 
 LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 59
 8.
@@ -4139,7 +4285,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
 
-[94]
+[96]
 
 LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 69
 0.
@@ -4153,7 +4299,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[95]
+[97]
 
 LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 71
 7.
@@ -4161,14 +4307,6 @@ LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 71
 
 LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 75
 8.
-
-
-Overfull \hbox (28.46703pt too wide) in paragraph at lines 765--767
-\T1/lmr/m/n/12 di-cat-ing which vari-ables in $\OML/lmm/m/it/12 X$ \T1/lmr/m/n/
-12 and $\OML/lmm/m/it/12 Y$ \T1/lmr/m/n/12 are equal to the dummy value $\OML/l
-mm/m/it/12 d$\T1/lmr/m/n/12 . The $[]\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 T; S; k\
-OT1/lmr/m/n/12 )$
- []
 
 
 
@@ -4179,21 +4317,25 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
 
-[96]
+[98]
+Overfull \hbox (28.46703pt too wide) in paragraph at lines 765--767
+\T1/lmr/m/n/12 di-cat-ing which vari-ables in $\OML/lmm/m/it/12 X$ \T1/lmr/m/n/
+12 and $\OML/lmm/m/it/12 Y$ \T1/lmr/m/n/12 are equal to the dummy value $\OML/l
+mm/m/it/12 d$\T1/lmr/m/n/12 . The $[]\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 T; S; k\
+OT1/lmr/m/n/12 )$
+ []
 
-Package caption Warning: \label without proper reference on input line 122.
+
+Package caption Warning: \label without proper reference on input line 774.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `tab:sort_stable' on page 97 undefined on input line 7
+LaTeX Warning: Reference `tab:sort_stable' on page 99 undefined on input line 7
 69.
 
 
 LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 83
 8.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
@@ -4204,12 +4346,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[97]
+[99]
 File: Articles/ICTAI2025/figures/cumulative.pdf Graphic file (type pdf)
 <use Articles/ICTAI2025/figures/cumulative.pdf>
 Package pdftex.def Info: Articles/ICTAI2025/figures/cumulative.pdf  used on inp
 ut line 875.
-(pdftex.def)             Requested size: 455.24411pt x 286.98984pt.
+(pdftex.def)             Requested size: 455.24411pt x 329.39389pt.
 
 
 LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 88
@@ -4224,7 +4366,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
 
-[98]
+[100]
 Overfull \hbox (6.31642pt too wide) in paragraph at lines 906--911
 \T1/lmr/bx/n/12 D. asOr-dered-Set(): []\T1/lmr/m/n/12 Con-sider the ex-pres-sio
 n \T1/lmtt/m/n/12 src.asOrderedSet()\T1/lmr/m/n/12 . The \T1/lmtt/m/n/12 asOrde
@@ -4244,7 +4386,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[99]
+[101]
 
 LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 99
 0.
@@ -4253,7 +4395,10 @@ File: Articles/ICTAI2025/figures/afn.pdf Graphic file (type pdf)
 <use Articles/ICTAI2025/figures/afn.pdf>
 Package pdftex.def Info: Articles/ICTAI2025/figures/afn.pdf  used on input line
  1008.
-(pdftex.def)             Requested size: 204.85846pt x 99.06117pt.
+(pdftex.def)             Requested size: 204.85846pt x 119.13034pt.
+
+Underfull \vbox (badness 2035) has occurred while \output is active []
+
 
 
 
@@ -4263,13 +4408,13 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
 
-[100]
-<Articles/ICTAI2025/figures/zooMM.pdf, id=1298, 252.945pt x 40.2303pt>
+[102]
+<Articles/ICTAI2025/figures/zooMM.pdf, id=1658, 252.945pt x 40.2303pt>
 File: Articles/ICTAI2025/figures/zooMM.pdf Graphic file (type pdf)
 <use Articles/ICTAI2025/figures/zooMM.pdf>
 Package pdftex.def Info: Articles/ICTAI2025/figures/zooMM.pdf  used on input li
 ne 1116.
-(pdftex.def)             Requested size: 455.24411pt x 36.27571pt.
+(pdftex.def)             Requested size: 455.24411pt x 72.4071pt.
 
 
 
@@ -4279,12 +4424,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[101 <./Articles/ICTAI2025/figures/zooMM.pdf>]
-
-LaTeX Warning: Reference `tab:experiment' on page 102 undefined on input line 1
-216.
-
-
+[103 <./Articles/ICTAI2025/figures/zooMM.pdf>]
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -4293,7 +4433,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
 
-[102])
+[104])
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -4302,17 +4442,17 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[103]
+[105]
 
-[104
+[106
 
 ] (./Conclusion/conclusion.tex
 
-LaTeX Warning: Citation 'Pierre1901' on page 105 undefined on input line 20.
+LaTeX Warning: Citation 'Pierre1901' on page 107 undefined on input line 20.
 
 
 
-[105
+[107
 
 ]
 LaTeX Font Info:    Trying to load font information for T1+lmss on input line 3
@@ -4321,28 +4461,28 @@ LaTeX Font Info:    Trying to load font information for T1+lmss on input line 3
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 
-[106])
+[108])
 
-[107]
+[109]
 
-[108
+[110
 
 ]
 
-Package biblatex Warning: Keyword 'primary' not found on input line 174.
+Package biblatex Warning: Keyword 'primary' not found on input line 164.
 
 
-LaTeX Warning: Empty bibliography on input line 174.
+LaTeX Warning: Empty bibliography on input line 164.
 
 
-Package biblatex Warning: Keyword 'secondary' not found on input line 177.
+Package biblatex Warning: Keyword 'secondary' not found on input line 167.
 
 
-LaTeX Warning: Empty bibliography on input line 177.
+LaTeX Warning: Empty bibliography on input line 167.
 
 
 
-[109
+[111
 
 
 ] (./Couverture-these/resume.tex
@@ -4389,22 +4529,16 @@ File: ./Couverture-these/logos-etablissements/IMTA.png Graphic file (type png)
 Package pdftex.def Info: ./Couverture-these/logos-etablissements/IMTA.png  used
  on input line 8.
 (pdftex.def)             Requested size: 95.17172pt x 56.90475pt.
-
-(/usr/share/texmf-dist/tex/generic/babel/locale/fr/babel-french.tex)
-Package babel Info: Importing data for french
-(babel)             from babel-fr.ini. Reported on input line 13.
-Package babel Info: Hyphen rules for 'french' set to \l@english
-(babel)             (\language0). Reported on input line 13.
-
-
-Package biblatex Warning: No localisation for language 'french' loaded.
-(biblatex)                Please rerun LaTeX to ensure languages can
-(biblatex)                be requested properly.
-
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 13.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <11> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 13.
+
+Overfull \vbox (9.9398pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (9.9398pt too high) has occurred while \output is active []
+
 
 
 (./Couverture-these/backcover_tikz.tex)
@@ -4412,11 +4546,11 @@ Overfull \hbox (1.76889pt too wide) has occurred while \output is active
 [][] 
  []
 
-[110
+[112
 
 
 ])
-runsystem(latexminted cleantemp  --timestamp 20251028114322 FAD58DE7366495DB465
+runsystem(latexminted cleantemp  --timestamp 20251127113832 FAD58DE7366495DB465
 0CFEFAC2FCD61)...executed safely (allowed).
 
  (./main.aux)
@@ -4436,16 +4570,10 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 LaTeX Warning: There were undefined references.
 
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were multiply-defined labels.
 
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: 513CCACA96BBDA3A0B1D058C60CECBA4;9057
-(rerunfilecheck)             After:  DBCD8D3F2C906AB843E848A7AD4F7025;14852.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: D5AFFB8BD2AF648DDDE628DD721663BD;22265.
 
 Package biblatex Warning: Please (re)run Biber on the file:
 (biblatex)                main
@@ -4456,13 +4584,13 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 57346 strings out of 475171
- 1283117 string characters out of 5767095
- 2497260 words of memory out of 5000000
- 78888 multiletter control sequences out of 15000+600000
- 823071 words of font info for 206 fonts, out of 8000000 for 9000
+ 57762 strings out of 475171
+ 1293750 string characters out of 5767095
+ 2522033 words of memory out of 5000000
+ 79185 multiletter control sequences out of 15000+600000
+ 834504 words of font info for 214 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 117i,18n,121p,1384b,2576s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 117i,18n,121p,1384b,2551s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf-dis
 t/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/lm
 /lmcsc10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/shar
@@ -4481,14 +4609,13 @@ y8.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/share/texm
 f-dist/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf-dist/fonts/type1/publ
 ic/lm/lmtt12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtt8.pfb></usr/s
 hare/texmf-dist/fonts/type1/public/lm/lmtti10.pfb></usr/share/texmf-dist/fonts/
-type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/pub
-lic/stmaryrd/stmary10.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8
-a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/te
-xmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on main.pdf (110 pages, 1245688 bytes).
+type1/public/stmaryrd/stmary10.pfb></usr/share/texmf-dist/fonts/type1/urw/helve
+tic/uhvb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr
+/share/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on main.pdf (112 pages, 1305296 bytes).
 PDF statistics:
- 1611 PDF objects out of 1728 (max. 8388607)
- 1341 compressed objects within 14 object streams
- 415 named destinations out of 1000 (max. 500000)
- 553 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1974 PDF objects out of 2073 (max. 8388607)
+ 1695 compressed objects within 17 object streams
+ 461 named destinations out of 1000 (max. 500000)
+ 1200 words of extra memory for PDF output out of 10000 (max. 10000000)
 

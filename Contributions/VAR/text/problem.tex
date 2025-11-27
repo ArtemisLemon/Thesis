@@ -1,0 +1,105 @@
+UML and OCL weren't originally designed for model search.
+ATLc found cases where it could work.
+Let's take the simple metamodel: 
+$$\inlineuml{Object}{\inlineumlprop{att}{Int}{0}{*}}$$ 
+$$\inlineocl{Object.att < 3}$$
+In the context of model validation this would be sufficient: given an instance of a model we can check it conforms to the metamodel.
+ATLc could use such a metamodel for model space exploration.
+However the ATLc specification makes the assumption that the last property access of queries designates the variables of the problem.
+From the point-of-view of the OCL AST, the highest \inlineoclast{NavigationOrAttributeCallExp}.   
+In this case \inlineocl{.att} from the end of query expression \inlineocl{Object.att}.
+
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 0 0 0},width=1\linewidth]{Contributions/VAR/figures/vizmm.png}
+    \caption{UML Instance Diagram as Model}
+    % \label{fig:model}
+\end{figure}
+Model Constraints:
+% $$\inlineocl{Rectagle.contains.forall(r|r.position[0] < Rectangle.position[0])}$$
+% $$\inlineocl{Rectagle.contains.forall(r|r.position[0] < Rectangle.position[0])}$$
+% $$\inlineocl{Rectagle.contains.forall(r|r.position[0]+r.dimension[0] < Rectangle.position[0]+Rectangle.dimension[0])}$$
+% $$\inlineocl{Rectagle.contains.forall(r|r.position[1]+r.dimension[1] < Rectangle.position[1]+Rectangle.dimension[1])}$$
+$$\inlineocl{Rectagle.contains.forall(r|}$$
+$$\inlineocl{r.position[0] < Rectangle.position[0]}$$
+$$\inlineocl{r.position[0] < Rectangle.position[0]}$$
+$$\inlineocl{r.position[0]+r.dimension[0] < Rectangle.position[0]+Rectangle.dimension[0]}$$
+$$\inlineocl{r.position[1]+r.dimension[1] < Rectangle.position[1]+Rectangle.dimension[1])}$$
+
+ATLc is comonly used to generate vizualisations.
+As part of a transformation specification, ATLc allows us add constraints to be added to the target model.
+Here the target metamodel is that of Rectangle containing text and other rectangles.
+The class specification declares Rectangle as the sole type of object, and delares their properties to be integer values: x,y position, hight and width.
+Additionally the Rectangle specification add a text attribute, containg the text displayed in the rectangle.
+The model constraints predicate on the positions and dimensions of contained rectagles and their containing rectagle.
+
+In this case, we can assume the variables are the last property access of the queries point to the variables.
+In ATLc this metamodel allows us to succintly describe a set of target models which would satisfy the user, and automatically choose one of them.
+If the user interacts with the graphical model, the metamodel desribes the limits of their inteactions, such as how much they can move or resize a rectangle. 
+
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 0 0 0},width=1\linewidth]{Contributions/VAR/figures/schedulingmm.png}
+    \caption{UML Instance Diagram as Model}
+    % \label{fig:model}
+\end{figure}
+$$\inlineocl{Session.requisite.forall(r|r.week.number < Session.week.number)}$$
+$$\inlineocl{Session.corequisite.forall(r|r.week.number = Session.week.number)}$$
+
+In \ytodo{this figure} we see an example metamodel for a schedule.
+We have as concepts sessions and weeks.
+Weeks are identified by a week number.
+Sessions are assigned to weeks, are have prerequisite sessions, and correcquisite sessions.
+
+We can transform models conforming to this metamodel into graphicals models conforming to the Rectangle metamodel, with the following transformation rules:
+$$\inlineocl{rule A from Week w to Rectangle r: r.contains <- B(w.sessions)}$$
+$$\inlineocl{rule B from Session s to Rectangle r: r.text <- s.name}$$
+
+Such a transformation allows the user to see the scheduling model and edit it.
+The user can click on a rectangle for a Session and drag it into a new rectangle representing a Week.
+This updates the links between Week and Session in the source model.
+Such an update can end up breaking one of the scheduling model constraints.
+
+In this example the top node of the queries is the \inlineocl{Week.number} property access.
+However, for this part of the problem, the variable 
+
+
+
+% However for model search some questions may still need to be answered:
+% in the case of instanciation \textit{how many objects should there be?},
+% and for repair or completion \textit{what properties can be changed?} or 
+% \textit{what properties need to be filled in?}.
+
+% All these questions can be translated into \textit{what properties need to be filled in?}.
+
+% Alloy and Grimm, which have a focus on model instanciation, 
+% provide a way to answer the first question as part of the search configuration.
+% For example, as part of an Alloy specification you could find: \inlinealloy{run \{\#Object = 5\}}, meaning we wish to instantiate models with upto 5 objects.
+% This defines a skeleton model to be filled in: the declared number of objects are instantiated with properties needing to be filled in.
+% Effectively making model instantiation a form of model completion, where \textit{all} the properties need to be filled in.
+
+% ATLc on the other hand focuses on model repair and completion.
+% One of the common applications of this tool is to transform a model into interactive visual represenations, allowing the user to make edits.
+% Coordinates for the visual elements generally being outside the context of the model, these would be searched for.
+% The models being visualy represented could also come with their own set of constraints.
+% The user can break the model with respect to these constraints when making their edits, requiring the model to be repaired.
+% The result of this method is we are generally provided with a skeleton model or a partial model.
+
+
+
+
+Since OCL was not originally designed for enforcing constraints, it does not include primitives to drive the search for a solution that satisfies the constraints, as typical CP languages do. 
+For instance, it does not include a way to define which properties of the model have to be considered as constants or variables, while trying to enforce the constraint. 
+Distinguishing variables from constants has a double importance, both for correctly modeling the CP problem, and for reducing its search space to a limited number of variables. 
+
+Note that the distinction of variables from constants can not be performed automatically in general, as it depends on the user intent. 
+% \ynote{
+% For instance, given a model with too many machines for a stage, to enforce the \texttt{StageSizeConstraint} the user may want to: 1) consider the list of machines for a stage (\texttt{self.machines}) as a constant and increase the variable \texttt{maxMachines}, or 2) consider \texttt{maxMachines} as a constant and remove some machines from the variable \texttt{self.machines}. 
+% }{
+For instance, in our use-case scenarios, we want to enforce the reference between \texttt{Task} and \texttt{Stage} to conform to \texttt{SameCharacteristicConstraint} of \autoref{lst:uc_ocl}.
+To do so we annotate the references for which information is missing, but for uses such as model repair, annotations can direct where to look for fixes in the model.
+For instance given a factory configuration which breaks \texttt{SameCharacteristicConstraint}, we could choose between fixes reassigning tasks, or reassigning machines, or both to stages.
+% }
+

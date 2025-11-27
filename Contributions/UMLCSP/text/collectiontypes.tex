@@ -1,0 +1,91 @@
+As described in Section \ref{ssec:ctxt_cd}, properties in class diagrams (e.g., Figure \ref{fig:metamodel}) can be annotated with collection types: \inlineocl{Sequence}, \inlineocl{Bag}, \inlineocl{Set}, or \inlineocl{OrderedSet}. These types can be enforced through constraint models to ensure consistency and reduce symmetries in the data..
+
+For \inlineocl{Sequence}, permutations of the same multiset (e.g., $\{1,1,2\}$) yield distinct sequences. However, in our encoding, sequences such as $\{1,2,d,1\}$ and $\{1,2,1,d\}$ are treated as equivalent, since they encode the same effective ordering of values (e.g., the position of the dummy value $d$ is ignored). To correctly model sequences, we impose an ordering where all dummy values are grouped at the end. 
+
+
+Let $X=\{x_1,..,x_p\}$ be the variable array for a property in the matrix $=Class.property$. The \inlineocl{Sequence} constraint is defined as: 
+%\begin{equation*}
+$\mathit{Sequence}(X) \iff \forall i \in [1,p[, (x_i=d)\Rightarrow (x_{i+1}=d) $. 
+%\end{equation*}
+This ensures dummy values appear only at the end. We reformulate it using the \texttt{regular} global constraint applied to a Boolean mask $S = \{s_1, \dots, s_p\}$:
+% where $s_i = \llbracket x_i \neq d \rrbracket$:
+%This constraint can be reformulated using the regular global constraints, defined over an array of boolean variables $S=\{s_1,...,s_p\}$ functionally dependent on $X$:
+\begin{equation}\label{csp:seq_X} 
+\mathit{Sequence}(X):
+\begin{cases}
+\mathit{regular}(S,\mathit{DFA})\\
+% \text{where}\; s_i=\llbracket x_i\neq d\rrbracket, i \in [1,p]\\
+s_i=\llbracket x_i\neq d\rrbracket\\
+\end{cases}
+\end{equation} 
+
+The automaton $\mathit{DFA}$ (Figure \ref{fig:afd}) accepts patterns of the form $1^*0^*$, ensuring non-dummy values precede dummy ones. %The mask $S$ enforces this structure without introducing search over dummy placements.
+Here, $S$ acts as a mask distinguishing actual values (1) from dummies (0) while avoiding symmetry.
+
+% Here we use a regular expression constraint defined by the automaton named $\mathit{DFA}$ illustrated in Figure \ref{fig:afd} which accepts words of the form $1^*0^*$.
+% The boolean array $S$ serves as a \emph{mask} for $X$, hiding the dummy value behind 0, and values behind 1.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 7 0 8},clip,width=0.5\linewidth]{Articles/ICTAI2025/figures/afd.pdf}
+    
+    \caption{DFA packing dummy values for instance variables}
+    \label{fig:afd}
+\end{figure}
+
+For the \inlineocl{Bag} and \inlineocl{Set} types, all permutations of values are considered equivalent. 
+To remove ordering symmetries, we sort the values in decreasing order, effectively pushing dummy values to the end:
+% When considering the types \inlineocl{Bag} and \inlineocl{Set}, all permutations of the values are equivalent.
+% To eliminate these symmetries we simply enforce that the values are sorted in decreasing order, which also pushes the dummy values to the end.
+\begin{equation}\label{csp:bag_X} 
+\mathit{Bag}(X):
+\begin{cases}
+\forall i\in[1,p[:x_i\geq x_{i+1}\\
+\end{cases}
+\end{equation}
+
+To model \inlineocl{Set}, we additionally enforce uniqueness among non-dummy values. Indeed, the sequence $\{d,d,d\}$ would be interpreted as an empty set. To this end, we define a relaxed variant of the \texttt{alldifferent} global constraint: 
+% $\mathit{alldifferent\_except\_d}(X) \\ \iff \forall \,i,j \,(i < j) \in [1,|X|], & \, (x_i \neq x_j) \, \vee \, (x_i=x_j=d)$
+% In the case of \inlineocl{Set} we also must enforce that all the values are different, however we don't want this to apply to the dummy value.
+% For instance $\{d,d,d\}$ would be interpreted as an empty set.
+%To do this we define a variation on $\mathit{alldifferent\_except\_0}$.
+\begin{equation*}\label{csp:alldiff_def} \small
+\begin{aligned}
+\mathit{alldifferent\_except\_d}(X) \\
+\iff \forall \,i,j \,(i < j) \in [1,|X|], & \, (x_i \neq x_j) \, \vee \, (x_i=x_j=d)
+\end{aligned}
+\end{equation*}
+
+
+\begin{equation}\label{csp:set_X} 
+\mathit{Set}(X):
+\begin{cases}
+\mathit{alldifferent\_except\_d}(X)\\
+\mathit{Bag}(X)
+% \forall i\in[1,p[:x_i\geq x_{i+1}\\
+\end{cases}
+\end{equation}
+
+For \inlineocl{OrderedSet}, both value order and uniqueness matter. We combine the constraints used for \inlineocl{Sequence} and \inlineocl{Set}: dummy values must be packed at the end, and non-dummy values must be pairwise distinct. Formally:
+% Finally for the type \inlineocl{OrderedSet} we reuse the constraints distinctive of \inlineocl{Sequence} and \inlineocl{Set}.
+% 
+\begin{equation}\label{csp:ordset_X} 
+\mathit{OrderedSet}(X):
+\begin{cases}
+\mathit{alldifferent\_except\_d}(X) \\%\, \wedge \, 
+\mathit{Sequence}(X)\\
+\end{cases}
+\end{equation}
+This ensures a well-formed sequence without repetitions, where dummy values are ignored in uniqueness checks and appear only at the end of the array.  These CP encodings ensure that model properties respect their specified UML and OCL collection types, enabling correct interpretation and reducing symmetry in instance generation.
+
+% \begin{table}
+% \centering
+% \begin{tabular}{|l|l|}
+% \hline
+%  Sequence & CSP \ref{csp:seq_X} \\ \hline
+%  Bag & CSP \ref{csp:bag_X} \\ \hline
+%  Set & $\geq$ \& All Different \\ \hline
+%  Ordered Set & DFA \& All Different \\ \hline
+% \end{tabular}
+%     \caption{Constraints used to enforce collection type constraints upon instance variables}
+%     \label{tab:prop_type_csp}
+% \end{table}

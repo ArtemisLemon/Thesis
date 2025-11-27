@@ -1,216 +1,35 @@
-\section{Model Driven Engineering}
+% \section{Model Driven Engineering}
 
-\subsection{Models}
-\begin{itemize}
-    \item models represent systems under study
-    \item models allow us to easily manipulate and learn properties of the system under study
-    \item table of definitions (cite)
-    \item EMF provides serialisation XMI
-    \item \textbf{figure:} graph or informal object diagram
-    \item \textbf{figure:} Table of data
-\end{itemize}
-\subsection{Metamodels}
-\begin{itemize}
-    \item metamodels model models
-    \item conformsTo relation
-    \item metamodel conformsTo self
-    \item \textbf{figure:} m0,m1,m2,m3 levels
-    \item domain specific languages
-    \item UML proposes metamodels: Class Diagram, Object Diagram
-    \item with a class diagram you can describe any UML metamodel, which is cool
-    \item EMF provides tools to model metamodels
-\end{itemize}
-\subsection{Model Queries \& Constraints}
-\begin{itemize}
-    \item language to describe queries on models
-    \item upon those queries we can apply constraints
-    \item OCL provides a language for this (cite)
-\end{itemize}
-\subsection{Model Transformations}
-\begin{itemize}
-    \item fundamental operation on models
-    \item specified between two metamodels
-    \item allows for collaboration between different experts
-    \item \textbf{figure:} model transformation
-    \item MT languages are commonly based on OCL queries
-    \item a property of a model resulting from a transformation, generally holds the result of an OCL query on the source model
-    \item EMF provides ATL, QVT, Viatra,.. (cite)
-\end{itemize}
-\subsection{Model Verification}
-\begin{itemize}
-    \item given a set of models we can verify them against a metamodel and model constraints
-    \item general use of model constraints
-    \item EMF provides EMF2CSP(cite) for validation
-\end{itemize}
-\subsection{Model Search}
-\begin{itemize}
-    \item kind of AI model transformation
-    \item Domain Space Exploration when part of a model transformation
-    \item given a metamodel and model constraints what are the possible models
-\end{itemize}
+Model Driven Engineering (MDE) has emerged as a central paradigm in software development. 
+It's history is intertwined with that of Object Oriented Programming (OOP). 
+Where the OOP paradigm can be summarised as \textit{everyting is an object}, MDE is similarly described as the paradigm where \textit{everyting is a model}. 
+Two of the longest standing actors are the Object Managament Group (OMG) which notably provides specifications for the Unified Modeling Language, and Eclipse providing the Eclipse Modeling Framework (EMF).
+EMF allows for the generation and testing of code using UML specifications, the design and use domain specific languages, and the manipulation of data by means of model transformation, among other things.
+More recent efforts include JetBrains' Meta Programing System (MPS) which focuses on providing tools to develop and use Domain Specific Languages.
 
-\subsection{Class Diagrams}
-% \smallskip
-% \noindent \label{ssec:ctxt_cd}
-\textbf{B. Class diagrams} identify concepts and their properties.
-In a family tree for instance, the core concept is Person, with attributes such as age and references such as parent  (or its inverse, child) to express relationships between people. 
-%a relation of the person such as \emph{parent} or it's opposite \emph{child} would be a reference type property, an example attribute would be age.
+Models are used because they are: cheaper, safer, easier to manipulate and learn from.
+For software development, software engineers build models of the desired software.
+Such models allow the engineers to quickly iterate and test their design, 
+but also serve as a language to communicate with the software developpers who will implement the software. 
+Beyond software development, models are similarly used: 
+scaled-down models of buildings are easier to make and iterate upon and can be used to communicate with stake holders,
+weather models provide forcasts which are crucial to farming,
+digital-twins allow for the monitoring and interaction with complex systems.
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[trim={0 12 0 0},width=1\linewidth]{Articles/ICTAI2025/figures/metamodel.pdf}
-    \caption{UML Class Diagram as Metamodel}
-    \label{fig:metamodel}
-\end{figure}
-Figure \ref{fig:metamodel} present a generic metamodel. It describes a class named \inlineocl{Object}, which has two properties: 
-\inlineocl{attribute}: a collection of integers, with at least one and at most $m$ elements, \inlineocl{reference}: a collection of up to $n$ references to other \inlineocl{Object} instances.
-%\inlineocl{reference} a collection of up to $n$ objects and \inlineocl{attribute} a collection of at least one and at most $m$ integers.
-These illustrate the two main types of properties in object-oriented modeling:
-Attributes, which store intrinsic data values (e.g., numbers or strings),
-References, which define relationships between objects in the model.
-%These are illustrative of the two types of object property : references and attributes.
-%References describe the relations across a graph of objects, whereas attributes colour the graph nodes.
+All of these efforts rely on the same theoretical foundations.
+We will focus on the EMF point of view, as our implementation is built upon EMF technologies.
+While these efforts have provided many tools, there are still some that require development.
 
-UML allows properties to be collections, and distinguishes four standard collection types, based on two dimensions: order and uniqueness.
-%Properties are generally collections of elements, and UML distinguishes between 4 concrete collection types: \inlineocl{Sequence}, \inlineocl{Bag}, \inlineocl{OrderedSet} and \inlineocl{Set}.
-%hese collection types exist at the intersection between two qualities: orderedness and uniqueness.
-\begin{itemize}
-    \item \inlineocl{Sequence}: ordered, allows duplicates -- e,g., [2,3,1,1],
-   % has ordered non-unique elements:\\ ~[2,3,1,1] has information about order such as \emph{3 before 1}, and repeated values.
-    \item \inlineocl{Bag}: unordered, allows duplicates -- e.g., [1,1,2,3], 
-    %has non-unique non-ordered elements:\\~[1,1,2,3] has repeated values but we've lost the order.
-    \item \inlineocl{Set}: unordered, unique elements only -- e.g., [1,2,3], 
-    %has unique non-ordered elements:\\~[1,2,3] has no order and no repeated values.
-    \item \inlineocl{OrderedSet}:  ordered, unique elements -- e.g., [2,3,1]. 
-    %has order across unique elements:\\ ~[2,3,1] has order but no repeating values.
-\end{itemize}
-\textcolor{black}{An important note is that \emph{ordered} doesn't pertain to the values.
-In [2,3,1,1]: 2 is the \emph{first} value, and 1 is the \emph{last} value. 
-}
-The intended collection type can be indicated in the class diagram using annotations such as \inlineocl{ordered}, \inlineocl{unique}, or \inlineocl{seq} (for sequences).
-%To indicate the collection type of a property in the class diagram, the properties can be annotated with the words \inlineocl{ordered}, \inlineocl{unordered}, \inlineocl{unique}, \inlineocl{ordered} or \inlineocl{seq} (for sequences).
-% In modeling tools like the Eclipse Modeling Framework (EMF), class diagrams can be used to automatically generate code. For example, the diagram in Figure \ref{fig:metamodel} could yield the following class definition in an object-oriented programming language:
-% %Within a framework such as the Eclipse Modeling Framework, these kinds of diagram can be used to generate code. For instance, from Figure \ref{fig:metamodel} we could generate a class description in an object-oriented programming language:
-% \begin{lstlisting}
-% class Object {  attribute : int[1..3]
-%                 reference : Object[0..2]}
-% \end{lstlisting}
-% Code generation includes not only class definitions but also methods (getters/setters) and factory mechanisms for instantiating objects and populating models from data sources (e.g., EMF's XMI serialization).
-%and generate getters, setters and factories to build these objects when loading data from an EMF model.
+\section{Fundamentals of Formal Modeling}
+\input{Context/MDE/text/models}
 
-\subsection{Object Diagrams}
-% \smallskip
-% \noindent \label{ssec:ctxt_id}
-\textbf{C. Object Diagrams}
-% Object diagrams 
-describe instances of the classes defined in a class diagram.
-%Object (or instance) diagrams show the data, as instances of the concepts described in a class diagram.
-For example, Figure~\ref{fig:model} shows an instance conforming to the class diagram in Figure~\ref{fig:metamodel}. It includes three objects, each identified by a unique ID (e.g., \inlineocl{o1}, \inlineocl{o2}, \inlineocl{o3}). For instance, object \inlineocl{o1} has as attribute a collection of 3 integers and is connected to other objects (e.g., \inlineocl{o2} and \inlineocl{o3}).
-% Similarly to class diagrams, EMF also supports the use of object diagrams to visually manipulate data instances. 
+\section{The Unified Modeling Language}
+\input{Context/MDE/text/uml}
 
-% which are the maximums allowed by our choice of $n=2$ and $m=3$.
+\section{The Object Constraint Language}
+\input{Context/MDE/text/ocl}
 
-% A family tree is an example of an instance diagram;
-% previously, we declared what concepts make up a family tree, but an actual family tree needs instances of related people.
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[trim={0 17 0 0},width=1\linewidth]{Articles/ICTAI2025/figures/model.pdf}
-    \caption{UML Instance Diagram as Model}
-    \label{fig:model}
-\end{figure}
-% In Figure \ref{fig:model} we see a model which conforms to the metamodel from Figure \ref{fig:metamodel}, for which we chose $n=2$ and $m=3$. This here shows objects of the type described by the class, and the values assigned to their properties.
-% % This instance will serve to illustrate the result of queries and the operations upon them.
-% In this model, \inlineocl{o2 : Object} is an instance of the \inlineocl{Object} class named \inlineocl{o2}, as attribute it has a collection of integers with a single value: 1000.
-% The object \inlineocl{o1} has as attribute a collection of 3 integers and is connected to both other objects, which are the maximums allowed by our choice of $n=2$ and $m=3$.
+\section{The Eclipse Modeling Framework}
 
-% These instances can be serialized using the XML Metadata Interchange (XMI) format.
-%Similarly to class diagrams, EMF allows us to use object diagrams to manipulate instances of data visually.
-%Such an instance would be serialized in the XML Metadate Interchange format.
-
-\subsection{Object Constraint Language}
-% \smallskip
-% \noindent \label{ssec:ctxt_ocl}
-\textbf{D. The Object Constraint Language}
-% The Object Constraint Language 
-(OCL) is a declarative language used to specify additional rules and constraints on UML models that 
-cannot be expressed using diagrams alone. It enables the formalization of conditions that instances of the model must satisfy, serving as a powerful complement to class and object diagrams.
-%%
-For example, in the context of a family tree, a constraint such as \emph{“a child must be younger than their parents”} cannot be represented directly in a class diagram. However, it can be expressed in OCL as follows:
-% The Object Constraint Language is used to express specifications that can't be illustrated with Class Diagrams.
-% Using OCL we can add more information about the form of a family tree than the class diagram can express.
-% For example \emph{a child is always younger than their parents} cannot be expressed in the class diagram, but using OCL we can write the following constraint: 
-% \inlineocl{context Person inv: self.parents.age.forall(a | a > self.age)}.
-\begin{lstlisting}
-context Person inv: 
-  self.parents.age.forall(a| a > self.age)
-\end{lstlisting}
-This constraint states that for every Person instance, all of their parents must be older. The \inlineocl{context} keyword specifies the class to which the constraint applies, and \inlineocl{inv} stands for \emph{invariant}, i.e., a condition that must always hold true. This invariant states that for every Person, the age of each parent must be greater than the person’s age. 
-%%
-OCL Supports \emph{navigation expressions} (e.g., \inlineocl{self.parents.age}) and \emph{collection operations} (e.g., \inlineocl{forall}, \inlineocl{exists}, \inlineocl{size}) that apply to attributes and references. 
-% Table \ref{tab:queries_tgt} shows how different OCL queries evaluate on a sample object model (cf. Figure \ref{fig:model}). 
-The expression \inlineocl{self} refers to the current object, \inlineocl{self.attribute} returns its attribute values, and \inlineocl{self.reference} retrieve related objects. Chained queries like \inlineocl{self.reference.attribute} retrieve the attributes of referenced objects.
-
-% loosly translating to: \emph{given any person, that person's parents' ages are all greater than that of the given person}.
-% The top of this expression defines its type and context: \inlineocl{context Person} means this applies to all objects of the \inlineocl{Person} class, and \inlineocl{inv} stands for \emph{invariant}, meaning a statement which is always true.
-% Among the sub-expressions of this constraint we find two queries: \inlineocl{self.age} the age of the given person, and \inlineocl{self.parents.age} the ages of their parents.
-% This means of querying the instance is core to the object constraint language.
-% \begin{table}[!t]
-% \centering
-% \begin{tabular}{|l|l|l|l|}
-% \hline
-% \textbf{expression * context} & \textbf{o1} & \textbf{o2} & \textbf{o3}\\ \hline
-% % self            & 1         & 2         & 3         \\ \hline
-% % self.attribute  & [-3,4,6]  & [1000]    & [-99,-33] \\ \hline
-% self.reference  & [3,   2]     & []        & [1]       \\ \hline
-% self.reference.attribute      &[-99,-33,1000]&[]&[-3,4,6]\\ \hline
-% \end{tabular}
-%     \caption{Results of queries (first column) on the instance from Figure \ref{fig:model}}
-%     \label{tab:queries_tgt}
-% \end{table}
-% \begin{table}
-% \centering
-% \begin{tabular}{|l|l|l|l|l|}
-% \hline
-% \textbf{expression * context} & \textbf{o1} & \textbf{o2} & \textbf{o3} & \textbf{o4} \\ \hline
-% self            & 1         & 2         & 3         & 4     \\ \hline
-% self.attribute  & [-3,4,6]  & [1000]    & [-99,-33] & []    \\ \hline
-% self.reference  & [3,2]     & []        & [1]       & []    \\ \hline
-% self.reference.attribute      &[-99,-33,1000]&[]&[-3,4,6]&[]\\ \hline
-% \end{tabular}
-%     \caption{Results of queries on the Instance}
-%     \label{tab:queries}
-% \end{table}
-% In Table \ref{tab:queries_tgt} we can see the results of some queries on the instance in Figure \ref{fig:model}.
-% Starting with the query \inlineocl{self}, we get the object for which the expression is being interpreted, or in our case an identifier for the object. 
-% The queries \inlineocl{self.attribute} and \inlineocl{self.reference} retrieve the information found in Figure \ref{fig:model} for each object.
-% For \inlineocl{self.reference} like \inlineocl{self}, we retrieve the identifier of the referenced objects.
-% And finally, we have the query \inlineocl{self.reference.attribute} that retrieves the attributes of the objects resulting from \inlineocl{self.reference}.
-
-OCL also supports a rich set of operations on primitive types and collections. Examples include: 
-\emph{Boolean expressions} (\inlineocl{forall}, \inlineocl{exists}, \inlineocl{not}, \inlineocl{and}, \inlineocl{or}), 
-\emph{Arithmetic and comparison} (\inlineocl{+}, \inlineocl{-}, \inlineocl{>}, \inlineocl{<}), and \emph{Collection operations} (\inlineocl{sum}, \inlineocl{size}, \inlineocl{includes}, \inlineocl{asSet}, \inlineocl{asSequence}, etc). Each collection type comes with its own operations and can be explicitly cast using operations like \inlineocl{asSet()}. 
-% \ytodo{OCL provides lots of operations}
-% OCL also provides operations, such as \inlineocl{forall} and \inlineocl{>} seen in the family tree constraint, but also integer and collection operations such as \inlineocl{sum}, \inlineocl{size}.
-% Each collection type also comes with their operations, and there are operations to cast a collection from one type to another.
-% \ytodo{put as example env}
-
-% The following example enforces that each cage contains animals of at most one species. This constraint involves casting the collection to a \inlineocl{Set} to eliminate duplicates, followed by a cardinality check on the resulting collection. To achieve this, the model is queried for the species of animals present in a given cage using \inlineocl{self.animals.species}. The result is then cast to a set to eliminate duplicates, and the constraint ensures that this set contains at most one element by checking \inlineocl{.asSet().size()<2}.
-% %a constraint on cages in a zoo using both collection type casting and an operation on the resulting collection to express a constraint: 
-% \begin{lstlisting}
-% context Cage inv:
-%   self.animals.species.asSet().size() < 2
-% \end{lstlisting}
-% The constraint requires that there be only one species of animal per cage.
-% To do so, it queries the model for the species found in a given cage: \inlineocl{self.animals.species}, and requires the result of that query, when interpreted as a set (eliminating values appearing multiple times) to have at most one element: \inlineocl{.asSet().size()<2}.
-
-Given an instance such as the one shown in Figure \ref{fig:model}, OCL is typically used to verify whether it satisfies the specified constraints. In this work, however, we aim to use OCL as a means to guide model search, thereby enabling the completion or correction of partial or inconsistent data. To this end, we propose an approach that reformulates OCL specifications as constraint satisfaction problems (CSPs). This paper focuses on how OCL’s collection typing, defined in the Class Diagram, and type casting operations can be modeled using global constraints over bounded domains.
-
-
-% Given an instance such as Figure \ref{fig:model}, OCL is normally used to verify it conforms to the additional constraints.
-% However, we wish to use this language to guide model search, allowing us to complete or fix data.
-% The method we propose here is to reformulate OCL operations using global constraints, and interpret instances and the OCL constraints upon them as constraint satisfaction problems.
-% This paper will show how we reformulate the collection typing specified in the Class Diagram and the type casting OCL operations, using global constraints on integers with bounded domains.
-% \ytodo{Motivation from here: if we want to verify or fix the data}
-% \ytodo{Motivation for this paper, we want to do this in the context of OCL types}
-% \ytodo{Converting types can also be useful when describing constraints}
-
+\section{Model Search}
+\input{Context/MDE/text/modelsearch}

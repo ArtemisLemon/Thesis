@@ -1,0 +1,102 @@
+\subsection{self: how ocl expressions are applied to object models}
+\subsection{Navigation: relation to the metamodel}
+\subsection{Query: getting and infering ints and objects from the model}
+\subsection{Constraint: constraining the model}
+
+
+% \section{The Object Constraint Language}
+% The Object Constraint Language 
+The Object Constraint Language (OCL) is a declarative language used to specify additional rules and constraints on UML models that 
+cannot be expressed using diagrams alone. It enables the formalization of conditions that instances of the model must satisfy, serving as a powerful complement to class and object diagrams.
+%%
+For example, in the context of a family tree, a constraint such as \emph{“a child must be younger than their parents”} cannot be represented directly in a class diagram. However, it can be expressed in OCL as follows:
+% The Object Constraint Language is used to express specifications that can't be illustrated with Class Diagrams.
+% Using OCL we can add more information about the form of a family tree than the class diagram can express.
+% For example \emph{a child is always younger than their parents} cannot be expressed in the class diagram, but using OCL we can write the following constraint: 
+% \inlineocl{context Person inv: self.parents.age.forall(a | a > self.age)}.
+\begin{lstlisting}
+context Person inv: 
+  self.parents.age.forall(a| a > self.age)
+\end{lstlisting}
+This constraint states that for every Person instance, all of their parents must be older. The \inlineocl{context} keyword specifies the class to which the constraint applies, and \inlineocl{inv} stands for \emph{invariant}, i.e., a condition that must always hold true. This invariant states that for every Person, the age of each parent must be greater than the person’s age. 
+%%
+OCL Supports \emph{navigation expressions} (e.g., \inlineocl{self.parents.age}) and \emph{collection operations} (e.g., \inlineocl{forall}, \inlineocl{exists}, \inlineocl{size}) that apply to attributes and references. 
+% Table \ref{tab:queries_tgt} shows how different OCL queries evaluate on a sample object model (cf. Figure \ref{fig:model}). 
+The expression \inlineocl{self} refers to the current object, \inlineocl{self.attribute} returns its attribute values, and \inlineocl{self.reference} retrieve related objects. Chained queries like \inlineocl{self.reference.attribute} retrieve the attributes of referenced objects.
+
+% loosly translating to: \emph{given any person, that person's parents' ages are all greater than that of the given person}.
+% The top of this expression defines its type and context: \inlineocl{context Person} means this applies to all objects of the \inlineocl{Person} class, and \inlineocl{inv} stands for \emph{invariant}, meaning a statement which is always true.
+% Among the sub-expressions of this constraint we find two queries: \inlineocl{self.age} the age of the given person, and \inlineocl{self.parents.age} the ages of their parents.
+% This means of querying the instance is core to the object constraint language.
+% \begin{table}[!t]
+% \centering
+% \begin{tabular}{|l|l|l|l|}
+% \hline
+% \textbf{expression * context} & \textbf{o1} & \textbf{o2} & \textbf{o3}\\ \hline
+% % self            & 1         & 2         & 3         \\ \hline
+% % self.attribute  & [-3,4,6]  & [1000]    & [-99,-33] \\ \hline
+% self.reference  & [3,   2]     & []        & [1]       \\ \hline
+% self.reference.attribute      &[-99,-33,1000]&[]&[-3,4,6]\\ \hline
+% \end{tabular}
+%     \caption{Results of queries (first column) on the instance from Figure \ref{fig:model}}
+%     \label{tab:queries_tgt}
+% \end{table}
+% \begin{table}
+% \centering
+% \begin{tabular}{|l|l|l|l|l|}
+% \hline
+% \textbf{expression * context} & \textbf{o1} & \textbf{o2} & \textbf{o3} & \textbf{o4} \\ \hline
+% self            & 1         & 2         & 3         & 4     \\ \hline
+% self.attribute  & [-3,4,6]  & [1000]    & [-99,-33] & []    \\ \hline
+% self.reference  & [3,2]     & []        & [1]       & []    \\ \hline
+% self.reference.attribute      &[-99,-33,1000]&[]&[-3,4,6]&[]\\ \hline
+% \end{tabular}
+%     \caption{Results of queries on the Instance}
+%     \label{tab:queries}
+% \end{table}
+% In Table \ref{tab:queries_tgt} we can see the results of some queries on the instance in Figure \ref{fig:model}.
+% Starting with the query \inlineocl{self}, we get the object for which the expression is being interpreted, or in our case an identifier for the object. 
+% The queries \inlineocl{self.attribute} and \inlineocl{self.reference} retrieve the information found in Figure \ref{fig:model} for each object.
+% For \inlineocl{self.reference} like \inlineocl{self}, we retrieve the identifier of the referenced objects.
+% And finally, we have the query \inlineocl{self.reference.attribute} that retrieves the attributes of the objects resulting from \inlineocl{self.reference}.
+
+OCL also supports a rich set of operations on primitive types and collections. Examples include: 
+\emph{Boolean expressions} (\inlineocl{forall}, \inlineocl{exists}, \inlineocl{not}, \inlineocl{and}, \inlineocl{or}), 
+\emph{Arithmetic and comparison} (\inlineocl{+}, \inlineocl{-}, \inlineocl{>}, \inlineocl{<}), and \emph{Collection operations} (\inlineocl{sum}, \inlineocl{size}, \inlineocl{includes}, \inlineocl{asSet}, \inlineocl{asSequence}, etc). Each collection type comes with its own operations and can be explicitly cast using operations like \inlineocl{asSet()}. 
+% \ytodo{OCL provides lots of operations}
+% OCL also provides operations, such as \inlineocl{forall} and \inlineocl{>} seen in the family tree constraint, but also integer and collection operations such as \inlineocl{sum}, \inlineocl{size}.
+% Each collection type also comes with their operations, and there are operations to cast a collection from one type to another.
+% \ytodo{put as example env}
+
+% The following example enforces that each cage contains animals of at most one species. This constraint involves casting the collection to a \inlineocl{Set} to eliminate duplicates, followed by a cardinality check on the resulting collection. To achieve this, the model is queried for the species of animals present in a given cage using \inlineocl{self.animals.species}. The result is then cast to a set to eliminate duplicates, and the constraint ensures that this set contains at most one element by checking \inlineocl{.asSet().size()<2}.
+% %a constraint on cages in a zoo using both collection type casting and an operation on the resulting collection to express a constraint: 
+% \begin{lstlisting}
+% context Cage inv:
+%   self.animals.species.asSet().size() < 2
+% \end{lstlisting}
+% The constraint requires that there be only one species of animal per cage.
+% To do so, it queries the model for the species found in a given cage: \inlineocl{self.animals.species}, and requires the result of that query, when interpreted as a set (eliminating values appearing multiple times) to have at most one element: \inlineocl{.asSet().size()<2}.
+
+Given an instance such as the one shown in Figure \ref{fig:model}, OCL is typically used to verify whether it satisfies the specified constraints. In this work, however, we aim to use OCL as a means to guide model search, thereby enabling the completion or correction of partial or inconsistent data. To this end, we propose an approach that reformulates OCL specifications as constraint satisfaction problems (CSPs). This paper focuses on how OCL’s collection typing, defined in the Class Diagram, and type casting operations can be modeled using global constraints over bounded domains.
+
+
+% Given an instance such as Figure \ref{fig:model}, OCL is normally used to verify it conforms to the additional constraints.
+% However, we wish to use this language to guide model search, allowing us to complete or fix data.
+% The method we propose here is to reformulate OCL operations using global constraints, and interpret instances and the OCL constraints upon them as constraint satisfaction problems.
+% This paper will show how we reformulate the collection typing specified in the Class Diagram and the type casting OCL operations, using global constraints on integers with bounded domains.
+% \ytodo{Motivation from here: if we want to verify or fix the data}
+% \ytodo{Motivation for this paper, we want to do this in the context of OCL types}
+% \ytodo{Converting types can also be useful when describing constraints}
+
+\noindent \textbf{Property Access:} \inlineocl{self.prop} \inlineoclast{NavigationOrAttributeCallExp}
+For the object designated by \inlineocl{self} retrieve the collection of values named \inlineocl{prop}.
+
+\noindent \textbf{Query Expression:} \inlineocl{self.ref.select(r | f(r)).prop}
+OCL expression resulting in a collection of integers or objects.
+Can be filtered, or merged with other queries.
+
+\noindent \textbf{Topological Constraint:} \inlineocl{self.ref.prop > self.prop}
+Otherwise referred to as a Structural Constraint, predicates over the relations between objects with respect to their properties.
+
+\noindent \textbf{Mini-OCL:} \inlineocl{context O inv : self.prop.\dots} is often shortened to \inelineocl{O.prop\dots}.
+We will encounter many small examples of model constraint, to save space we sometimes remove the conxtext declaration.

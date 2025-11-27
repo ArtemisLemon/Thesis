@@ -1,0 +1,77 @@
+% \subsection{Model Search}
+Tools such as EMF have a need for tools assisting in the modeling process.
+Model search is a powerful tool.
+
+One of the open questions in MDE is \textit{how to effectively find models that conform to a metamodel}.
+When the metamodel has model constraints the problem may become com.
+
+\subsection{Model Search}
+In \ytodo{cite Kleiner} there is a formal definition for model search.
+
+\noindent
+\textbf{Relaxed Metamodel}
+A relaxed metamodel is a metamodel for which a subset of the constraints are not enforced.
+These constraints include property cardinalities and model constraints.
+
+\noindent
+\textbf{Partial Model}
+A partial model conforms to a relaxed metamodel, and partially conforms to the metamodel which was relaxed.
+This generally means it is populated with Objects, but missing information on the values of referrences and attributes.
+$$\exists o \in \texttt{Object} | o\texttt{.prop} = \emptyset$$
+For a \inlineocl{Person}, this means not having their age, name, or know which other people they are related to.
+
+\noindent
+\textbf{Partially-conforms-to}
+The relation between a Partial Model and the metamodel which was relaxed.
+
+\noindent
+\textbf{Model Search}
+\begin{figure}[!ht]
+    \centering
+    % \begin{tikzpicture}
+    %     \coordinate [label=180:{partial model}] (PM) at (0,0);
+    %     \coordinate [label=0:{model}]  (M) at (10,0);
+    %     \coordinate [label=180:{relaxed metamodel}]  (RMM) at (0,4);
+    %     \coordinate [label=0:{metamodel}]  (MM) at (10,4);
+      
+    %       \fill (PM) circle (3pt);
+    %       \fill (M) circle (3pt);
+    %       \fill (MM) circle (3pt);
+    %       \fill (RMM) circle (3pt);
+          
+    %     \draw[->, shorten <= 5pt, shorten >= 5pt,] (MM) -- (RMM) node [midway,fill=white] {relaxation};
+    %     \draw[->, shorten <= 5pt, shorten >= 5pt,] (PM) -- (M) node [midway,fill=white] {model-search};
+    %     \draw[->, shorten <= 5pt, shorten >= 5pt,] (PM) -- (RMM) node [midway,fill=white] {conforms-to};
+    %     \draw[->, shorten <= 5pt, shorten >= 5pt,] (M) -- (MM) node [midway,fill=white] {conforms-to};
+    %     \draw[->, shorten <= 5pt, shorten >= 5pt,] (PM) -- (MM) node [midway,fill=white] {partially-conforms-to};
+    %     % \draw[->, shorten <= 5pt, shorten >= 5pt,] (M3) -- (M3) node [midway,fill=white] {conforms-to};
+    %     % \draw (1pt,\y cm) -- (-1pt,\y cm) node[anchor=east] {$\mathbf{\y}$};
+    %     % \path[->] (M3) edge [loop left] node {conforms-to} ();
+    % \end{tikzpicture}
+    \includegraphics[trim={0 0 0 0},width=1\linewidth]{Context/MDE/figures/modelsearch.png}
+    \caption{Model Search}
+    \label{fig:modelsearch}
+\end{figure}
+
+
+\subsection{Applications of Model Search}
+
+\noindent
+\textbf{Model Instantiation} is the process of generating a model that conforms to a metamodel.
+Generally this means providing a partial model, with all the object instances.
+The count of objects per class is often a parameter for model instanciation. 
+
+\noindent
+\textbf{Model Completion} is the process of taking a model with missing information and infering possible information. 
+Generally this means providing a partial model, with all the object instances and some immutable data for the objects.
+The missing data is the reason the model only partially conforms.
+
+\noindent
+\textbf{Model Repair} is the process of making a conforming model from a non-conforming model.
+Repairing a model using model search implies creating a partial model by removing information from the object properties.
+Automatically removing objects doesn't align with with our model repair use-cases, and is generally uncommon.
+
+\noindent
+\textbf{model space exploration}: classical model transformation tools associate one source model to one target model.
+Model space exploration involves transformations transformations towards sets of models.
+Domain Space Exploration describes a system of model transformations, model space exploration uses transformations over sets to model the system of model transformations.

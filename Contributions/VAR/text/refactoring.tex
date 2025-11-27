@@ -1,0 +1,190 @@
+\subsection{Annotation in the OCL Abstract Syntax Tree}
+The annotated OCL is parsed in the form of an AST. Given an instance model to solve for, each object will have their own instance of the AST, where \texttt{self} resolves to said object. \autoref{fig:uc_ocl_var_ast} shows the AST of \texttt{SameCharacteristicConstraint} from \autoref{lst:uc_ocl_var} Scenario S3. We show \texttt{var} annotations as dotted rectangles. 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\linewidth]{Articles/SAC2025/figures/ASTbasic.pdf}
+    \caption{AST of \texttt{SameCharacteristicConstraint} from \autoref{lst:uc_ocl_var} Scenario S1, S2 \& S3.}
+    %\label{fig:uc_ocl_var_ast}
+    \Description[AST]{}
+\end{figure}
+
+\autoref{fig:uc_ocl_var_ast} illustrates a key function of \texttt{var} annotations: they define the scope of the CP problem, i.e. a frontier between what can be simply evaluated by a standard OCL evaluator, and what needs to be translated and solved by CP. In \autoref{fig:uc_ocl_var_ast}, the scope defined by each \texttt{var} annotation is indicated by a dotted rounded rectangle. The \texttt{var} annotation requires everything \emph{inside} the corresponding scope to be translated to CP. 
+ 
+For instance, since the reference between \texttt{Task} and \texttt{Stage} is annotated (\texttt{self.var('stage')}), the result 
+% (meaning or location depending on your intuition) 
+of the \texttt{stage} \texttt{NavigationOrAttributeCallExp} needs to be found by the solver.
+% Therefore 
+All nodes in the scope of an annotated node will be in the CSP, 
+% \ynote{
+as what they resolve to depends on the solution the solver is searching for.
+% }{did I turn this into a riddle again?}
+Conversely, nodes that are not in the scope of any \texttt{var} annotation do not need to be translated to CP, making the CP problem smaller.
+
+The processing of the AST in \autoref{fig:uc_ocl_var_ast} (corresponding to Scenario S3) starts from the bottom: \texttt{self} is directly evaluated by standard OCL, as is \texttt{self.characteristics}.
+However we don't know the result of \texttt{self.stage}, which implies we don't know the result of \texttt{self.stage.machines}.
+% , even if from the context of a stage we may know \texttt{self.machines}.
+Above, we iterate on the unknown machines and for all of them: ask what their characteristics are, and if they include the characteristics of the task.
+% Essentially, 
+All these questions must also be answered by the solver, which means
+% To relate back to \autoref{fig:uc_ocl_var_ast}
+any node of the tree within the dotted box must be resolved by the solver. 
+
+In Scenario S2, \texttt{SameCharacteristicConstraint} from \autoref{lst:uc_ocl_var} has the same AST as in \autoref{fig:uc_ocl_var_ast}, but only the \texttt{machines} node is annotated as \texttt{var}. Hence, in this case the CP scope is smaller, since \texttt{self.stage} can be directly evaluated by OCL. 
+
+% \ynote{
+%All nodes above and including the lowest annotated as variable are in the box.
+% }{well in your figure the two node on the right are above annoted nodes and are not inside CSP}
+%The case of the \texttt{Task} to \texttt{Stage} reference being annotated as variable correspond to the larger box, while if only the reference from \texttt{Stage} to \texttt{Machine} is annotated, the solver deals with the smaller box.
+% Annotated \texttt{NavigationOrAttributeCallExp} also draw the border between the OCL engine and the CSP solver domains quite clearly.
+%The less nodes which must be resolved the smaller the CSP.
+
+%The most common keyword we can see here, and in many OCL expressions, is the \texttt{NavigationOrAttributeCallExp}.
+%It is the core of OCL's model navigation and property access, and the core of what we call queries and structural constraints.
+%It also has a large impact on the size of the problem.
+% If a task is possibly linked to $n$ stages, and those stages are each linked to $n'$ possible machines. 
+% There are ${S \choose n} * {M \choose n'}$ possible links from tasks to machines though stages.
+% Adding on top a query for characteristics, means ${S \choose n} * {M \choose n'} * {C \choose n"}$ possible query results.
+
+
+% Given two types of object $obj_A$, $obj_B$, and two properties: a reference from objects of type $obj_A$, $reference2B$, and a property of objects of type $obj_B$ $Bproperty$, we can make the following query:
+
+% $obj_A.reference2B.Bproperty$.
+
+% Alloy $\rightarrow$ Bool $\rightarrow$ SAT
+
+% us $\rightarrow$ Integers $\rightarrow$ propagation
+
+
+\subsection{Refactoring OCL Around Annotations}
+%\label{ssec:refactor}
+
+Given that everything above an annotated node of the AST is within the scope of the CSP, it's interesting to find strategies to reduce the scope as much as possible, as it results in a smaller CSP to solve.
+The annotated expressions of \autoref{lst:uc_ocl_var}, all have their annotations low in the tree \autoref{fig:uc_ocl_var_ast}.
+Ideally, all the annotations should be at the top of the tree.
+% Having cut the OCL into constant and variable sub-expressions, and modeled the query problem in CSP, we can try to rewrite the OCL to generate the simplest CSP.
+The semantics of the expression gives clues to refactor them, the expression requires that:
+\emph{All the machines connected to a task (via a stage), each individually match the task's characteristics}
+this is the same as requiring that:
+\emph{The set of machines that match the task, includes the set of machines connected to the task}.
+
+\begin{listing}[!t]
+\begin{lstlisting}[language=ocl,numbers=none]
+-- Scenario S1
+(*@\label{lst:ocl:var:derive:s}@*) context Task inv SameCharacteristicConstraint: 
+    inv: Stage.AllInstances()
+        ->select(s| 
+            s.machines.forall(c | c.characteristics
+                ->includesAll(self.characteristics))
+        ->includesAll(self.var(stage)))
+-- Scenario S2
+(*@\label{lst:ocl:var:derive:m}@*) context Task inv SameCharacteristicConstraint: 
+    inv: Machine.AllInstances()
+        ->select(m| m.characteristics
+            ->includesAll(self.characteristics)
+        ->includesAll(self.stage.var(machines)))
+-- Scenario S3
+(*@\label{lst:ocl:var:derive:sm}@*) context Task inv SameCharacteristicConstraint: 
+    inv: Machine.AllInstances()
+        ->select(m| m.characteristics
+            ->includesAll(self.characteristics)
+        ->includesAll(self.var(stage).var(machines)))
+\end{lstlisting}
+\caption{Annotated \texttt{SameCharacteristicConstraint} from \autoref{lst:uc_ocl_var} refactored around the annotations.} \label{lst:uc_ocl_derive}
+\end{listing}
+
+In \autoref{lst:uc_ocl_derive} we can see the result of this rewrite for all three scenarios.
+The beginning of the expressions are now constant queries, and search for all the suitable machines (or stages), here isolated as \texttt{sel}: 
+% $$\texttt{Class->AllInstances().select(...)}.$$
+$$\texttt{let sel = Class->AllInstances().select(...) in}$$
+At the end of the expression we state that selection must include the result of the variable query over the machines and/or stage of the task: 
+% $$\texttt{select(...)->includesAll(...)}$$
+$$\texttt{sel->includesAll(...)}$$
+
+% A CSP Model for the semantics of \emph{forall} with incoming AdjLink Variables is trivial.
+% $$(pointer_i \neq null) \rightarrow body(pointer_i)$$ where $body$ is the body of the forall applied to all the non null $pointer_i$ of the \texttt{AdjList}.
+% If all the CSP resulting from the compilation of OCL can handle null pointers as input, this model isn't even necessary, and it simply directs compilation.
+
+% It is possible to model \texttt{Forall} as part of a CSP based on \autoref{csp:nav}
+
+% However, in the case where the body isn't a variable expression, we can derive information ahead of solving (propagation and search). 
+% Because for a set of objects to satisfy an expression, that set of objects must be sub-set of the set of objects that satisfy the expression.
+% And we can determine ahead of solving the set of objects that satisfy the constant expression.
+% The outline of the strategy is to, forall objects of the source type (result of the variable expression), find if they satisfy the constant expression.
+% We then constraint the result of the variable query to be among the conforming objects.
+
+% This refactoring can be done systematically in OCL, as seen in \autoref{lst:uc_ocl_derive}, after which the compiler runs its normal course.
+
+In \autoref{fig:uc_ocl_derive_ast} we can see the AST resulting from the parsing of the expression of \autoref{lst:uc_ocl_derive} Scenarios 2 and 3.
+% \footnote{
+%More accurately, this AST results from the annotation of \texttt{machines} (\autoref{lst:ocl:var:derive:m}), or the annotation of \texttt{stage} and \texttt{machines} (\autoref{lst:ocl:var:derive:sm}).
+% When \texttt{stage} alone is annotated, the result of the machine navigation is added to the derived possibilities, which means the solver only resolves the inclusion directly on the problem variables.
+% }
+The AST is significantly different to the previous one, but most importantly, the number of nodes within the scope of the solver is greatly reduced, to just navigation and the top level constraint.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{Articles/SAC2025/figures/ASTderive.pdf}
+    \caption{AST of SameCharacterticConstraint from \autoref{lst:uc_ocl_derive} Scenario S2 \& S3}
+    \label{fig:uc_ocl_derive_ast}
+    \Description[AST]{}
+\end{figure}
+% \ytodo{This was originally done by hand with knowledge of the context, it seems generalisable but that's my next paper, please please accept this one so I can move on with my life}
+% \ynote{
+% This can be generalised to any constant expression, not just those body of a forall.
+% It requires a new OCL operation (implementable in OCL): \texttt{PowerSet()}.
+% Which simply takes the place of \texttt{AllInstances()}.
+% This might also find use in building a portfolio of models to further leverage parallelised solving tools. 
+% }{rewrite}
+The CSP now only models the inclusion.%, and only requires a single instance of \autoref{csp:nav} for each task, when both \texttt{stage} and \texttt{machines} are annotated.
+% One could also initialise the variables with the selected domains to the same effect.
+% Said domain of possible values is the result of the \texttt{select(...)}.
+
+We applied this strategy manually with knowledge of the context, but it is generalisable.
+In the case of any constant sub-expression applied to a variable query, it is possible to determine candidates, or candidate sets, for that sub-expression and enforce the result of the variable query to be among them.
+For example, for:
+\texttt{self.var(ref).attrib<3}
+we can find candidates which satisfy the constant sub-expression \texttt{.attrib<3}.
+This adds more computation ahead of building the CSP, but also allows us to leverage the OCL engine in cases where it's more efficient such as this one.
+% \noindent \texttt{context Task}
+
+% \noindent \texttt{task.stage.machines.characteristics.includesAll(task.characteristics)}
+
+% \smallskip \smallskip
+% \noindent \texttt{context Task:compatMachines : Machine}
+
+% \noindent \texttt{derive: Machines.AllInstances()->select(m | m.characteristics->includesAll(self.characteristics))}
+
+% \smallskip
+% \noindent \texttt{context Task}
+
+% \noindent \texttt{inv: self.compatMachines->includesAll(self.stage.machines)}
+
+% \section{Implementation}
+
+% \begin{listing}
+% \begin{lstlisting}[language=java]
+% IntVar[] navCSP(IntVar[] source, IntVar[][] property, IntVar dummy){
+% int n = source.length;
+% int nn = property[0].length;
+% int nnn = n*nn;
+% IntVar[] out = m.intVarArray(nnn,MIN_VALUE,MAX_VALUE);
+
+% IntVar[] dummies = new IntVar[nn]; 
+% for(int i=0;i<nn;i++) dummies[i] = dummy;
+% if(dummy.getValue()==0) 
+%     IntVar[] table = concat(dummies,flatten(property));
+% else 
+%     IntVar[] table = concat(flatten(property),dummies); 
+
+% int k=0;
+% for(int i=0; i<n;i++) for(int j=0;j<nn;j++){
+%     IntVar pointer = source[i].mul(nn).add(j).intVar();
+%     m.element(out[k++], table, pointer).post();
+% }
+
+% return out;}
+% \end{lstlisting}
+% \caption{navCSP implementation using Choco Solver}
+% \label{lst:navchoco}
+% \end{listing}
+

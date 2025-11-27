@@ -1,0 +1,94 @@
+\textbf{A. Encoding Properties.}
+% \ytodo{remind that properties are the generalisation of attribute and reference}
+The variables represent the properties--attributes and references--of the objects in the instance.
+Each class property is encoded as a matrix of integer variables, denoted $Class.property$. 
+Each row in this matrix corresponds to one object of the class; for example, the $i$-th row is noted as $Class_i.property$ where $i \in [1, o]$ and $o = |Class|$ is the number of objects of that class. The number of columns $p$ in this table is derived from the property's cardinality, which is given by $n$ and $m$ from Figure~\ref{fig:metamodel}.
+% The variables in our CSP represent the properties--attributes and references--of the objects of an instance.
+% A property of a class is encoded as a matrix of integer variables $Class.property$.
+% For each of the objects of the class, there is a row in the table,
+% an array of integer variables we note $Class_{i}.property$ where $i\in[1,o]$ identifies the object and $o=|Class|$, the count of the objects of the class.
+% The number of columns in the table depends on the number of variables $p$ encoding the property.
+% The value of $p$ is found in the class diagram, $n$ and $m$ from Figure \ref{fig:metamodel}.
+% and we can identify an individual integer variable of the property $Class_o.property_m$.
+$$\mathit{Class.property} = \{x_{11},...,x_{op}\}$$
+$$\forall x \in Class.property,\;domain(x) = \{d\}\cup\{lb..ub\}$$
+% \begin{equation}\label{csp:seq_X2Y}
+% Class.property
+% \begin{cases}
+% \end{cases}
+% \end{equation}
+Each property variable $x_{ij}$ in the matrix has a domain defined by a lower bound $lb$, an upper bound $ub$, and a special dummy value $d$, where we set $d = lb - 1$. The property type, e.g., reference or attribute, determines the specific domain bounds.
+Attributes with an integer type may require large ranges, making domain enumeration impractical. This limits our ability to use certain global constraints like \inlinecstr{global\_cardinality} constraint, which counts the occurrences of domain values and therefore require finite, reasonably small domains.
+\textcolor{black}{
+By default we chose a 16-bit range for these values: $lb=-32768$ and $ub=32767$, meaning $d=-32769$, but these bounds can be refined by annotating the model accordingly\cite{coyle_towards_2025}.
+}
+%%
+For reference properties, the domain is defined as $\{1, \ldots, o\} \cup \{nullptr\}$, where $o$ is the number of instances of the target class. 
+These variables, named \texttt{ptr}, acts as pointers: values in $[1, o]$ identify object rows, and $0$ (i.e., dummy value \emph{nullptr}) denotes the absence of a reference. To support \emph{nullptr}, an extra row is added to each table to represent a dummy object.
+
+% The domain of property variables (such as $x_{ij}$) has three important values: a lower bound $lb$, an upper bound $ub$, and a dummy value $d$.
+% A natural choice is $d=lb-1$.
+% Properties of objects come in two types as discussed in Section \ref{ssec:ctxt_cd}, either a reference or an attribute.
+% The choice of $lb$ and $ub$ depends on the type of property.
+% Integer type attributes can require a large range between lowest and highest possible value that isn't practical to enumerate.
+% This will reveal itself as a constraint on our reformulations of OCL operations into global constraints, as they cannot rely on globals such as \inlinecstr{global\_cardinality}, which counts the occurrences of the values in the domain.
+% % \ytodo{note the domain of attributes being large, we focus on reformulations dependent on the number of variables, not the number of values}
+% In the case the table encodes a reference property, the domain can be set to $\{1..o\}\cup \{nullptr\}$ where $o$ is the number of  instances of the class, and generally name such variables $\mathit{ptr}$ for \emph{pointer}.
+% The range $[1,o]$ identifies objects, and 0 is the dummy value that we call \emph{nullptr}.
+% These variables therefore also identify rows in the $Class.property$ tables, and to handle the case of \emph{nullptr} we add a row for a \emph{dummy object}.
+\begin{table}[!t]
+\centering
+\begin{tabular}{|lrrr|l|lrr|}
+\cline{1-4} \cline{6-8}
+\multicolumn{4}{|l|}{\textbf{Object.attribute}}                                                                    &  & \multicolumn{3}{l|}{\textbf{Object.reference}}                                   \\ \cline{1-4} \cline{6-8} 
+\multicolumn{1}{|l|}{\textbf{$Object_i$}} & \multicolumn{3}{l|}{\textbf{attribute}}                                     &  & \multicolumn{1}{l|}{\textbf{$Object_i$}} & \multicolumn{2}{l|}{\textbf{reference}}    \\ \cline{1-4} \cline{6-8} 
+\multicolumn{1}{|l|}{\textbf{0}}    & \multicolumn{1}{r|}{d}         & \multicolumn{1}{r|}{d}         & d         &  & \multicolumn{1}{l|}{\textbf{0}}    & \multicolumn{1}{r|}{nullptr}         & nullptr         \\ \cline{1-4} \cline{6-8} 
+\multicolumn{1}{|l|}{\textbf{1}}    & \multicolumn{1}{r|}{-3}        & \multicolumn{1}{r|}{4}         & 6         &  & \multicolumn{1}{l|}{\textbf{1}}    & \multicolumn{1}{r|}{3}         & 2         \\ \cline{1-4} \cline{6-8} 
+\multicolumn{1}{|l|}{\textbf{2}}    & \multicolumn{1}{r|}{1000}      & \multicolumn{1}{r|}{$a_{22}$} & $a_{23}$ &  & \multicolumn{1}{l|}{\textbf{2}}    & \multicolumn{1}{r|}{$ptr_{21}$} & $ptr_{22}$ \\ \cline{1-4} \cline{6-8} 
+\multicolumn{1}{|l|}{\textbf{3}}    & \multicolumn{1}{r|}{-99}       & \multicolumn{1}{r|}{-33}       & $a_{33}$ &  & \multicolumn{1}{l|}{\textbf{3}}    & \multicolumn{1}{r|}{1}         & $ptr_{32}$ \\ \cline{1-4} \cline{6-8} 
+% \multicolumn{1}{|l|}{\textbf{4}}    & \multicolumn{1}{r|}{$a_{41}$} & \multicolumn{1}{r|}{$a_{42}$} & $a_{43}$ &  & \multicolumn{1}{l|}{\textbf{4}}    & \multicolumn{1}{r|}{$ptr_{40}$} & $ptr_{41}$ \\ \cline{1-4} \cline{6-8} 
+\end{tabular} 
+    \caption{Encoding of the instance from Figure \ref{fig:model} as tables of integer variables}
+    \label{tab:encoding}
+\end{table}
+Table~\ref{tab:encoding} shows the encoding of the instance from Figure~\ref{fig:model}, assuming $n=2$ and $m=3$ from the metamodel in Figure~\ref{fig:metamodel}. The left side represents attributes, while the right side represents references. Each object (plus one \emph{dummy object}) gets a row. The attribute variables $a_{ij}$ are assigned the domain $\{lb, \ldots, ub\} \cup \{d\}$, and reference variables $ptr_{ij}$ are assigned the domain $\{1, \ldots, o\} \cup \{nullptr\}$ with $o=3$.
+
+Model construction proceeds in two steps. First, we create matrices of variables with their full domains. Second, we instantiate some of these variables using data from the actual instance. In our current setting, we assign the exact values from the instance. Variables that remain uninstantiated may either be assigned dummy values or left free to explore during search, depending on the objective of the analysis.
+To choose between these behaviors and to reduce the size of the CSP, in previous work we've proposed an annotation system for OCL \cite{coyle_towards_2025}, which allows the user to identify variables. 
+These annotations split the OCL expressions into parts which can be dispatched between our CP interpretation, and that of a standard interpreter.
+This reduces the scope and size of the CSP, notably in terms of modeled properties. 
+
+
+% In Table \ref{tab:encoding} we can see the encoding resulting from the instance in Figure \ref{fig:model}, and the metamodel in Figure \ref{fig:metamodel} with $n=2$ and $m=3$.
+% On the left we have the table encoding the attribute \inlineocl{attribute} of our objects of type \inlineocl{Object}, and on the right the table encoding the references.
+% The number of columns is defined by $n$ and $m$, the choices of cardinality for these properties. 
+% For each object there is a row in the table, and an additional row for the \emph{dummy object}.
+% Building these tables in done in two steps, first the integer variable matrices are built. 
+% The attribute variables $a_{ij}$ are given the domain $\{lb..ub\}\cup \{d\}$,
+% and the reference variables $ptr_{ij}$ are given the domain $\{1..o\}\cup \{nullptr\}$ with $o=|Object|=3$.
+% In a second phase, some variables are instantiated using the data from the instance.
+% Here we instantiate them to the exact values found in the instance, but one could widen the domain allowing for small changes to be allowed.
+% The remaining variables can be instantiated to their associated dummy value, allowing us to verify the model.
+% Otherwise, such as here, they can be left with a whole domain, allowing us to try completing the model.
+% To choose between these behaviors we intend to annotate the OCL as seen in \ytodo{cite previous work}.
+% These variables are key to the problem, and will be the primary variables we test possible values for during search.
+
+\subsection{Encoding References}
+References are a special case of property, with a grately restricted domain.
+The values in the domain of pointer variables identify rows of property tables.
+The domain of relation variables is generally small enough to be enumerated.
+Therefore, we give them accompanying variables counting the occurrences for each value of the domain.
+
+\begin{equation}
+\begin{cases}
+\forall Class_o.ref \in Class.reference\\
+\implies gcc(Class_o.ref, Class_o.refOcc)
+\end{cases}
+\end{equation}
+
+
+$$Class.ref = \{r_{00},...,r_{nm}\}$$
+$$Class.refOcc = \{occ_{00},...,occ_{nm}\}$$
+$$\forall r \in Class.ref,\;domain(r) = \{0..n'\}$$
+$$\forall occ \in Class.refOcc,\;domain(occ) = \{0..m\}$$
+$$\forall n :object \in Class,\; gcc(Class_o.ref, Class_o.refOcc)$$

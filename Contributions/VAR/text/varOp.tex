@@ -1,0 +1,154 @@
+\subsection{Base Syntax}
+To allow users to explicitly denote properties (attributes or references) in an OCL expression as variables (variable attributes or variable references), 
+we propose the \texttt{var()} operator with the following syntax:
+$$\texttt{source.var('property')}$$ 
+where \texttt{source} identifies the objects resulting from the
+prior sub-expression,
+\texttt{property} is the name of one of the attributes or references of the objects. 
+
+% and \texttt{flag} is an optional argument used to specify the encoding of variables. %for which parameters might required additional arguments.
+% The required and first argument is always the property of the source class to be added to the problem.
+% Additional arguments can be used to choose the encoding of the variable.
+In \autoref{lst:uc_ocl_var} we apply the operator to \texttt{SameCharacteristicConstraint} in \autoref{lst:uc_ocl} for each one of our three scenarios, defining the properties that we consider as variables for that scenario. All properties that are not included in a \texttt{var()} operation call are considered constant.
+
+% \ynote{Notice that we do not extend the OCL syntax, but we design the syntax for \texttt{var()} as a normal OCL operation, included in a specific library. On one side this allows us to reuse existing tooling for OCL with no adaptation. On the other side, while checking the constraint, we consider \texttt{var()} simply as a reflective navigation of the specified \texttt{property} (similarly to \texttt{refGetValue} in ATL/OCL\footnote{\url{https://wiki.eclipse.org/ATL/User\_Guide\_-\_The\_ATL\_Language\#OclAny_operations}}). Hence, for an OCL checker, the constraints in \autoref{lst:uc_ocl_var} are equivalent to the constraints in \autoref{lst:uc_ocl}.
+% }{
+Notice that our in-language solution does not extend the syntax of the OCL language, but we add an operation to the OCL library: \texttt{var(propertyName: string) : OclAny}. 
+When the OCL constraint is simply checked over a given model (and not enforced), the \texttt{var} operation simply returns the value of the named property (as a reflective navigation).\footnote{Look at getRefValue from ATL/OCL for a similar reflective operation \url{https://wiki.eclipse.org/ATL/User\_Guide\_-\_The\_ATL\_Language\#OclAny_operations}}
+Whereas, if one wants to enforce OCL, \texttt{var} is used as a hint to build the corresponding CSP.
+% }
+
+\subsection{Parameters to guide modeling and and search}
+We can add extra parameters to \texttt{var} to drive CP modeling, e.g. for bounding the domain for a property, or choosing a specific CSP encoding among the ones presented in the next section. 
+% In future work we plan to add other parameters to guide model repair, by describing how much we can change properties in order to fix the model.
+\begin{itemize}
+    \item \textbf{max\_card} allows a user to set the maximum number of elements in the property. Required if a property's max cardinality is set to infinite.
+    \item \textbf{min\_card} allows a user to set the minimum number of elements in the property.
+    \item \textbf{lb} allows a user to set a lower bound for the domain of the variables encoding the property.
+    \item \textbf{ub} allows a user to set an upper bound for the domain of the variables encoding the property.
+    \item \textbf{enumerate-domain} applies an encoding which enumerates the domain, allowing for additional filtering models.
+    \item \textbf{branch-priority} make the solver prefer to branch off these variables.
+    \item \textbf{branch-max} make the solver prefer to try large values for these variables.
+    \item \textbf{branch-min} make the solver prefer to try small values for these variables.
+    \item \textbf{fill} allows a user to preserve the values that may already be present for the property.
+    \item \textbf{temp} guides model repair, positive temperatures allow for values to change, negative values allow for values to resist change.
+\end{itemize}
+
+% \ynote{In our metamodel to-many cardinalities are unbounded, but an upper-bound is required for our model (based on Adjacency lists) to be finite. For example, if we want to bound the number of links between stages and machines to N' with such an annotation, we'd write to the effect of:
+% }{when you talk about bounds, you could explain that we need to bound the cardinality of relations because CSP requires users to define all variables before solving and because it helps. I find this § a bit strange and out of order because you talk about adjacency list which is a detail of the encoding that you did not present yet. Maybe this part could be ignored for now and brought back when you present the encoding (and I'm still not a huge fan of this notation)
+% }
+% $$\texttt{stage.var('machines', 'AdjList', N')}$$
+
+Note that, alternatively, users can also annotate the variable references in the metamodel, instead of the constraints. In this case, we can always statically translate such variable annotations on metamodels into the variable annotations on constraints discussed here.
+
+%As we usually choose the variables when writing the constraints, we opted for the annotation proposed here. 
+
+
+
+
+
+
+% \section{Denoting CP Variables in OCL Expressions}%\label{sec:contrib}%\label{ssec:varop}
+
+% In this section we describe the first step of the methodology we propose, i.e. a method to select what parts of UML and OCL to model in CP.
+% In a second step, described in Section~\ref{sec:contrib2}, the resulting annotated OCL will be translated to a CP model. 
+%how to model what one could see as the core of OCL expressions and especially 
+%how to model OCL expressions including structural constraints; %, i.e. \texttt{NavigationOrAttributeCallExp}; 
+%3)
+% Which we may call \texttt{PropertyCallExp} or property access for brevity.
+%how to refactor OCL expressions, to make the CSP smaller and faster to solve.
+
+% \ynote{Our first contribution, the annotation of OCL, allows us to split the task of resolving OCL keywords between standard OCL engines, and CSP solvers.}{
+% What we have is a way to split an OCL expression between a part that can be interpreted like normal OCL and a part that must be enforced by a constraint solver.
+% }
+
+% The second contribution,
+% \ynote{Theo: we have a generic CSP encoding for navigation across variable references in OCL expression}{
+% is a CSP model for the OCL AST Object \texttt{NavigationOrAttributeCallExp}, which is prevalent across OCL problems, as it provides the core of OCL model querying, and directly impact the size of all CSPs - modeling OCL expressions - using integers as we do.}
+
+% \ynote{And third, with solving complexity in mind, we provide a method for rewriting OCL expressions with properties annotated as variable. To derive information before building the CSP, resulting in smaller search spaces.}{
+% I'd say we have a way to rewrite some OCL expressions to make them easier to solve
+% }
+
+
+
+% In the problems described with the UML of \autoref{fig:uc_uml} and \autoref{lst:uc_ocl_var}, our variables are the references from task to stage, and from stage to machines.
+
+% In this paper the variables represent the relations between objects.
+
+% \begin{listing}
+% % (*@\label{lst:ocl:var:prev}@*) context Task inv PrecedenceConstraint:
+% %     self.var('stage') >= self.prev.var('stage')
+%     \begin{lstlisting}[language=ocl, numbers=none]
+% -- Scenario S1
+% (*@\label{lst:ocl:var:char:s}@*) context Task inv SameCharacteristicConstraint:
+%     self.var('stage').machines
+%         ->forall(m | m.characteristics
+%             ->includesAll(self.characteristics))
+% -- Scenario S2
+% (*@\label{lst:ocl:var:char:m}@*) context Task inv SameCharacteristicConstraint:
+%     self.stage.var('machines')
+%         ->forall(m | m.characteristics
+%             ->includesAll(self.characteristics))
+% -- Scenario S3
+% (*@\label{lst:ocl:var:char:sm}@*) context Task inv SameCharacteristicConstraint:
+%     self.var('stage').var('machines')
+%         ->forall(m | m.characteristics
+%             ->includesAll(self.characteristics)) 
+% \end{lstlisting}
+% % --     self.stages.machines->sum(m | m.cost).weak("<", self.budget.value)
+% % (* context Object def: 
+% %     var(property: String) =
+% %     self.eGet(property) *)
+% \caption{Denoting variables in \texttt{SameCharacteristicConstraint} from \autoref{lst:uc_ocl} using \texttt{.var()} in accordance with the three scenarios.} %\label{lst:uc_ocl_var}
+% \end{listing}
+
+
+% \noindent \textbf{Reference:} exists between two Classes;
+% can be seen as the lines in a class diagram such as \autoref{fig:uc_uml}.
+% An example from our use-case, is the references between \texttt{Task} and \texttt{Stage}.
+% Here our references are only navigable one way.
+% % , the direction of which is given named association end.
+% % These associations can be annotated as variable.
+% For an object diagram or an instance, reference instances are called \textbf{links}.
+% %\noindent \textbf{Reference} or association end,
+% %is where we find the name and cardinality of our associations.
+% %For example, in our use-case: objects of type \texttt{Task} each have a to-one reference to the class \texttt{Stage} named \texttt{stage}, and
+% %objects of type \texttt{Stage} each have a to-many reference to the class \texttt{Machines} named \texttt{machines}.
+% % Two references can be opposite ends of an association, but not seen in this paper.
+% References in an EMF instance, are instantiated as objects of the type EReference.
+
+% \noindent \textbf{Variable Reference:}
+% these imply adding variables and possibly constraints to the UML CSP.
+% % These may also be referred to as the problem variables in the context of our CSPs.
+% Non-annotated references will be called constant.
+% From annotation of the OCL we infer which references are variable.
+% From the expression \texttt{self.var(stage).var(machines)}, we can determine that for \texttt{Task} the reference \texttt{stage} is variable, and for \texttt{Stage} the reference \texttt{machines} is variable.
+% This is the bridge between the model instance and the CSP, when we find a structure in the CSP, we will update these references.
+
+\subsection{Vocabulary for Annotated Expressions}
+\noindent \textbf{Variable Property:}
+these imply adding variables and possibly constraints to the UML CSP.
+% These may also be referred to as the problem variables in the context of our CSPs.
+Non-annotated properties will be called constant.
+From annotation of the OCL we infer which properties are variable.
+% From the expression \texttt{self.var(stage).var(machines)}, we can determine that for \texttt{Task} the reference \texttt{stage} is variable, and for \texttt{Stage} the reference \texttt{machines} is variable.
+This is the bridge between the model instance and the CSP, when we find a structure in the CSP, we will update these references.
+
+\noindent \textbf{Variable Expression:} if an OCL expression has an annotation, it is referred to as variable. If it has none we call it constant. Expressions can be decomposed into sub-expressions, and variable expressions can be decomposed into variable and constant sub-expressions.
+A particular type of expression is the query, which in this paper are the primary sub-expressions of structural constraints.
+
+% \noindent \textbf{Variable Query:} The sub-expression of a query for which the source is annotated or a variable query.  
+% Non-annotated OCL (sub-)queries will be referred to as Constant.
+% For example, in the precedence constraint from \autoref{lst:uc_ocl_var} \autoref{lst:ocl:var:prev}, we have two variable queries as branches of the structural constraint: \texttt{self.var('stage')} and \texttt{self.prev.var('stage')}, the latter has a constant sub-query \texttt{self.prev} as source to the variable sub-query.
+% \ytodo{Variable Property Access vs Variable Navigation}
+
+\noindent \textbf{Variable Query:}
+variable queries are similarly any annotated query expression, but can be divided into two main parts: 
+\begin{enumerate}
+    \item \emph{variable property access}: \texttt{src.var(prop)} 
+    \item \emph{variable navigation}: \texttt{.var(src).prop}.
+\end{enumerate}
+Variable property access is sourced from constant (non annotated) queries, e.g. \texttt{self.prev.var(stage)}.
+Variable navigation is sourced from a variable query. 
+For example in: \texttt{self.var(stage).var(machines).characteristics} machines and characteristics are reached through variable navigations, the first being from \texttt{Stage} to \texttt{Machines}, the second from \texttt{Machines} to \texttt{Characteristics} .

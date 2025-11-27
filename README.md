@@ -1,3 +1,15 @@
+# Object Oriented Constraint Programming
+
+This repo is based on that of the College Doctoral de Bretagne
+
+Folders in ./ and ./Contributions/ represent Chapters
+Each Chapter Folder has a main .tex file, and two sub-folders:
+- text
+- figures
+
+
+
+
 # ![(French flag)](https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/50px-Flag_of_France.svg.png) Modèle de thèse Collège Doctoral de Bretagne
 
 *Explications en français*

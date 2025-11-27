@@ -2,8 +2,8 @@
 \chapter{Towards Enforcing Structural OCL Constraints using Constraint Programming}
 
 \section{Introduction} 
-\label{sec:intro}
-% \ytodo{with \autoref{sec:motiv} 1 1/2 pages}
+\label{sec:sac2025:intro}
+% \ytodo{with \autoref{sec:sac2025:motiv} 1 1/2 pages}
 %\begin{outline}
 % \1 OCL is the most common constraint language in MDE. 
 % \1 While it is designed to verify constraints, several problems in MDE require from a way to enforce constraints: Model repairing \mtodo{cite}, model generation \mtodo{cite}, model completion \mtodo{cite}, design space exploration \mtodo{cite}
@@ -79,17 +79,17 @@ we describe a general CP pattern for enforcing annotated structural OCL constrai
 % 3) a strategy to refactor the OCL around the annotations.
 To evaluate the effectiveness of the method, we discuss the size of the Constraint Satisfaction Problems (CSPs) it produces, and the resolution time in some examples.
 
-The paper is structured as follows. In \autoref{sec:motiv} we present a problem on a UML model as our running case. In \autoref{sec:contrib} we describe how we annotate CP variables in OCL.  
-In \autoref{sec:contrib2} we show how we model the annotated UML and OCL problem as a CSP.
-% In \autoref{sec:contrib} we present our contributions. a standard for identifying OCL variables to give to solvers,
+The paper is structured as follows. In \autoref{sec:sac2025:motiv} we present a problem on a UML model as our running case. In \autoref{sec:sac2025:contrib} we describe how we annotate CP variables in OCL.  
+In \autoref{sec:sac2025:contrib2} we show how we model the annotated UML and OCL problem as a CSP.
+% In \autoref{sec:sac2025:contrib} we present our contributions. a standard for identifying OCL variables to give to solvers,
 % a general solution for modeling queries involving variable references and/or attributes (in the context of references as sequences),
 % some csps for some OCL keywords (in the context of references as sequences),
 % and the procedure to build these specific query CSPs.
-% In \autoref{sec:impl} we describe our implementation over the ATLc flavor of OCL.
-In \autoref{sec:eval} we determine the size and performance of the resulting CP model.
-In \autoref{sec:disc} we discuss limitations and future work.
-In \autoref{sec:related} we look at related work.
-Finally, we conclude in \autoref{sec:qed}.
+% In \autoref{sec:sac2025:impl} we describe our implementation over the ATLc flavor of OCL.
+In \autoref{sec:sac2025:eval} we determine the size and performance of the resulting CP model.
+In \autoref{sec:sac2025:disc} we discuss limitations and future work.
+In \autoref{sec:sac2025:related} we look at related work.
+Finally, we conclude in \autoref{sec:sac2025:qed}.
 
 % \section{Definitions/preliminaries}
 
@@ -101,8 +101,8 @@ Finally, we conclude in \autoref{sec:qed}.
 %     \2 Link <-> Reference
 % \end{outline}
 
-\section{Background and Running Case} \label{sec:motiv} 
-% \ytodo{with \autoref{sec:intro} 1 1/2 pages}
+\section{Background and Running Case} \label{sec:sac2025:motiv} 
+% \ytodo{with \autoref{sec:sac2025:intro} 1 1/2 pages}
 
 % \begin{outline}
 %     \1 Size of problem $10^{80}$
@@ -265,7 +265,7 @@ We will consider these constraints in the following three scenarios.
 \end{description}
 %To identify these different scenarios
 % , possibly with additional information to model the problem.
-%we propose annotations in the OCL, described in \autoref{ssec:varop}.
+%we propose annotations in the OCL, described in \autoref{ssec:sac2025:varop}.
 % \ynote{
 % In the larger scope of our work, the OCL is written as part of an ATL transformation, and work under the assumption a variety of transformations can/will be applied to a model.
 % % In the context of model exploration, we often have to find new information, such as the position of an object instance in a graphical user interface resulting from a transformation.
@@ -334,7 +334,7 @@ We will consider these constraints in the following three scenarios.
 
 % With a generate and test strategy, randomly associating tasks to a stage, and machines to a stage, and checking for solutions, there would be at most $S^{T+M}$ tests, in other words there are around $2.10^{40}$ possible graphs.
 
-\subsection{Constraint Programming} \label{ssec: csp_intro}
+\subsection{Constraint Programming} \label{ssec:sac2025: csp_intro}
 % \stodo{
 % TODO: Introduce the CP modelling, global constraints, why GC ? 
 % }
@@ -386,10 +386,10 @@ Global constraints spanning a large number of variables allows one to leverage p
 The application of propagation to the problem of OCL is our fundamental difference to much of the related work.
 To apply it to OCL we need a systematic way to model OCL expressions using gobal constraints, and particularly to model OCL query expressions.
 
-\section{Denoting CP Variables in OCL Expressions}\label{sec:contrib}\label{ssec:varop}
+\section{Denoting CP Variables in OCL Expressions}\label{sec:sac2025:contrib}\label{ssec:sac2025:varop}
 
 In this section we describe the first step of the methodology we propose, i.e. a method to select what parts of UML and OCL to model in CP.
-In a second step, described in Section~\ref{sec:contrib2}, the resulting annotated OCL will be translated to a CP model. 
+In a second step, described in Section~\ref{sec:sac2025:contrib2}, the resulting annotated OCL will be translated to a CP model. 
 %how to model what one could see as the core of OCL expressions and especially 
 %how to model OCL expressions including structural constraints; %, i.e. \texttt{NavigationOrAttributeCallExp}; 
 %3)
@@ -538,7 +538,7 @@ In Scenario S2, \texttt{SameCharacteristicConstraint} from \autoref{lst:uc_ocl_v
 % us $\rightarrow$ Integers $\rightarrow$ propagation
 
 \subsection{Refactoring OCL Around Annotations}
-\label{ssec:refactor}
+\label{ssec:sac2025:refactor}
 
 Given that everything above an annotated node of the AST is within the scope of the CSP, it's interesting to find strategies to reduce the scope as much as possible, as it results in a smaller CSP to solve.
 The annotated expressions of \autoref{lst:uc_ocl_var}, all have their annotations low in the tree \autoref{fig:uc_ocl_var_ast}.
@@ -671,12 +671,12 @@ This adds more computation ahead of building the CSP, but also allows us to leve
 
 
 \section{Modeling Annotated OCL Constraints using Constraint Programming}
-\label{sec:contrib2}
+\label{sec:sac2025:contrib2}
 
-To enforce OCL constraints on existing model instances using CP, we must encode parts of the model instances as CSP variables and constraints (\autoref{subsec:assoc}), and then encode the OCL using additional CSPs on the variables of the model instances (\autoref{subsec:expr}). 
+To enforce OCL constraints on existing model instances using CP, we must encode parts of the model instances as CSP variables and constraints (\autoref{subsec:sac2025:assoc}), and then encode the OCL using additional CSPs on the variables of the model instances (\autoref{subsec:sac2025:expr}). 
 
 \subsection{References in CP}
-\label{subsec:assoc}
+\label{subsec:sac2025:assoc}
 
 There are two main families of CSP, those using booleans, and those using integers.
 Both of these can be used to model our problem.
@@ -758,7 +758,7 @@ The row numbers of these tables are the actual domains of pointer variables.
 % In this paper we will be focusing on integers variables representing pointers to objects, and using off-the-shelf solvers to find conforming models.
 
 \subsection{OCL Expressions in CP}
-\label{subsec:expr}
+\label{subsec:sac2025:expr}
 With annotated references, navigation and querying become part of the CSP.
 Given an OCL query expression such as \texttt{self.var(stage).machines}, if the CSP must determine which \texttt{Stage} is associated to a \texttt{Task}, it will also determine the set of \texttt{Machine} associated to the \texttt{Task} through the \texttt{Stage}.
 
@@ -841,7 +841,7 @@ For example in: \texttt{self.var(stage).var(machines).characteristics} machines 
 
 
 \subsubsection{\texttt{NavigationOrAttributeCallExp} on \texttt{EReference}}
-\label{sssec:erefnav}
+\label{sssec:sac2025:erefnav}
 
 When annotated, there are now two contexts in which this OCL object can be parsed, here, the simple case when the source is an expression with no var annotation, a constant query, such as:
 \texttt{self.var(prop)}
@@ -861,7 +861,7 @@ Or between the EAttributes and regular integer variables in the case of attribut
 % \end{figure}
 
 \subsubsection{\texttt{NavigationOrAttributeCallExp} on \texttt{AdjList}}
-\label{sssec:adjlistnav}
+\label{sssec:sac2025:adjlistnav}
 
 % \begin{outline}
 %     \1 Using element on integers
@@ -944,7 +944,7 @@ To copy a problem variable to an intermediate variable, the element constraint i
 Hence, for every intermediate variable modeling this node of the query, there is an element constraint, and pointer arithmetic.
 Together we call them \emph{query atoms}.
 % By copied, we mean the domains of the intermediate variables are reduced to the property domains of the properties possibly pointed to.
-In \autoref{ssec:navCSPeval} we will count the number of query atoms to evaluate the query model.
+In \autoref{ssec:sac2025:navCSPeval} we will count the number of query atoms to evaluate the query model.
 % \ytodo{more?}
 % and the out going $src.pointer_i.property_j \in IntVar[]$ will be populated by $z$.
 % Naturally this means one element constraint per variable in the $IntVar[]$.
@@ -969,15 +969,15 @@ In Scenario S3 this means mapping \texttt{EReference} to \texttt{AdjList}, for t
     \Description[AST]{}
 \end{figure}
 
-To build the OCL CSP, for each \texttt{Task} we start from the bottom of its tree, upon reaching an annotated node, we get the UML CSP variables modeling that property, the \texttt{variable property access} in \autoref{fig:compilation} described in \autoref{sssec:erefnav}.
+To build the OCL CSP, for each \texttt{Task} we start from the bottom of its tree, upon reaching an annotated node, we get the UML CSP variables modeling that property, the \texttt{variable property access} in \autoref{fig:compilation} described in \autoref{sssec:sac2025:erefnav}.
 In this case the accessed property is a reference, allowing us to navigate further.
-Navigating from a variable reference modeled with pointers means using \autoref{csp:nav} described in \autoref{sssec:adjlistnav}.
+Navigating from a variable reference modeled with pointers means using \autoref{csp:nav} described in \autoref{sssec:sac2025:adjlistnav}.
 We can see it applied in \autoref{fig:compilation} modeling the \texttt{variable navigation} node.
 Finally at the very top of this tree, we have \texttt{includesAll}, which we model here using the member constraint, which constrains a variable to be within a certain domain.
 % This constraint generally implies a single propagation.
 
 \section{Evaluation}
-\label{sec:eval}
+\label{sec:sac2025:eval}
 
 In order to evaluate the performance of the method we propose the following metrics: counts of variables and constraints and solving times.
 The number of problem variables generated depends on the number of objects and the number of pointer variables in the \texttt{AdjList} variables of the UML CSP.
@@ -985,7 +985,7 @@ The number of intermediate variables will depend on the number of problem variab
 
 
 \subsection{NavCSP}
-\label{ssec:navCSPeval}
+\label{ssec:sac2025:navCSPeval}
 Navigating a model adds a great deal of complexity.
 The pointer navigation \autoref{csp:nav} is the greatest factor in that complexity.
 It takes effect in variable query expressions such as:
@@ -1193,7 +1193,7 @@ Finally for times, we can see this problem is trivial for the solver.
 Most of the time taken is to build the model.
 
 \section{Limitations and Future Work}
-\label{sec:disc}
+\label{sec:sac2025:disc}
 % \ynote{
 % \subsection{Annotated OCL as a Language for Solver Collaboration}
 % \texttt{stage.var('machines', 'Choco').var('powerSetting', 'Cassowary')}
@@ -1232,7 +1232,7 @@ Graph density is also an interesting dimension.
 Additionally the complete evaluation for this method requires comparisons to Alloy \cite{Jackson2002-alloy} as it applies SAT techniques \cite{Torlak2007-kodkod} for model finding.
 
 \noindent \textbf{Automation of the Refactoring.} 
-As hinted as in \autoref{ssec:refactor}, some OCL refactoring seems to be systematically applicable.
+As hinted as in \autoref{ssec:sac2025:refactor}, some OCL refactoring seems to be systematically applicable.
 However it does require more computation ahead of building the CSP.
 This method needs to be formalised and the pre-computation tested for efficiency gains.
 For our use case, the pre-computation around \texttt{forall} was trivial, but allowed for instant solving times.
@@ -1259,7 +1259,7 @@ The greater objective of this work is to add to the ATLc compiler, and use it's 
 
 
 
-\section{Related Work} \label{sec:related}
+\section{Related Work} \label{sec:sac2025:related}
 
 % \begin{outline}
 %     \1 ATLc
@@ -1326,8 +1326,8 @@ Alleviating the constraint solver, and leveraging the efficiency of the transfor
 
 % \mtodo{ok but you must explain where the current work is better than all the others!}
 
-\section{Conclusion}\label{sec:qed} 
-% \ytodo{1 page with \autoref{sec:related}}
+\section{Conclusion}\label{sec:sac2025:qed} 
+% \ytodo{1 page with \autoref{sec:sac2025:related}}
 
 %\begin{outline}
 % \1 Having solved navigation

@@ -1,4 +1,11 @@
-\section{Constraint Programming}
+
+% \section{Exact and Explainable Artificial Intelligence}
+
+% \section{Exact and Explainable Artificial Intelligence}
+
+
+
+% \section{Constraint Programming}
 
 % \subsection{Symbolic AI}
 % \begin{itemize}
@@ -19,106 +26,32 @@
 % \end{itemize}
 
 % \subsection{Constraint Programming}
-\begin{itemize}
-    \item a CP model = CSP (avoid confusion with MDE Model)
-    \item CSP + Propagation + Search
-    \item CSP = V,D,C
-    \item global constraints: modeling and propagation
-    \item problem variables, intermediate variables and search
-    \item reification: constraints as variables
-    \item notable global constraint for this paper: element, gcc, stable keysort, regular
-\end{itemize}
+% \begin{itemize}
+%     \item a CP model = CSP (avoid confusion with MDE Model)
+%     \item CSP + Propagation + Search
+%     \item CSP = V,D,C
+%     \item global constraints: modeling and propagation
+%     \item problem variables, intermediate variables and search
+%     \item reification: constraints as variables
+%     \item notable global constraint for this paper: element, gcc, stable keysort, regular
+% \end{itemize}
 
 \textbf{Constraint Programming} \cite{HoeveK06} is a powerful paradigm that offers a generic and modular approach to modeling and solving combinatorial problems.
+
+\subsection{Constraint Satisfaction Problems}
 A CP model consists of a set of variables $X=\{x_1,\ldots, x_n\}$, a set of domains $\mathcal{D}$ mapping each variable $x_i\in X$ to a finite set of possible values $dom(x_i)$, and a set of constraints $\mathcal{C}$ on $X$, where each constraint $c$ defines a set of values that a subset of variables $X(c)$ can take. 
 %%
 Domains can be either bounded, defined as an interval $\{lb..ub\}$, or enumerated, explicitly listing all possible values (e.g., ${1, 10, 100, 1000}$). This distinction impacts the choice of constraints: for instance, the global cardinality constraint is more effective with enumerated domains. 
 %%
 An assignment on a set $Y \subseteq X$ of variables is a mapping from variables in $Y$ to values in their domains. A solution is an assignment on $X$ satisfying all constraints. 
 
+\subsection{Global Constraints}
+\input{Context/CP/text/globals}
+
 \subsection{CP Solvers}
 \textbf{CP solvers} use backtracking search to explore the search space of partial assignments. The main concept used to speed up the search is constraint propagation by {\it filtering algorithms}. 
 At each assignment, constraint filtering algorithms prune
 the search space by enforcing local consistency properties like {\it domain consistency} (a.k.a., {\it Generalized Arc Consistency} (GAC)). A constraint $c$ on $X(c)$ is domain consistent, if and only if, for every  $x_i \in X(c)$ and every
-$v \in dom(x_i)$, there is an assignment satisfying $c$ such that $(x_i = v)$. 
+$v \in dom(x_i)$, there is an assignment satisfying $c$ such that $(x_i = v)$.
 
-\subsection{Global Constraints}
-\textbf{Global constraints} provide shorthand to often-used combinatorial substructures. More precisely, a global constraint is a constraint that captures a relationship between several variables~\cite{beldiceanu2010global, HoeveK06}, for which an efficient filtering algorithm is proposed to prune the search tree. In other words, the ``global" qualification of the constraint is due to the efficiency of its filtering algorithm, and its capacity to filter any value that is not globally consistent relative to the constraint in question.
-Global constraints are thus a key component to solving complex problems efficiently with CP.
-% An exercise in constraint programming can be described as having three parts: a constraint satisfaction problem, algorithms to filter for possible values given the constraints, and heuristics to search the space of what is possible.
-% At the intersection of CP modeling and filtration algorithms we have global constraints.
-% Global constraints, such as \emph{alldifferent}, predicate over any number of variables and may have readily available implementations for their filtration algorithms, such as those provided by the Choco solver \ytodo{cite}.
-% This allows users who can model their problem in terms of global constraints to leverage state-of-the-art algorithms to narrow the search space.
-% % The user therefore can focus on modeling the problem and orchestrating the search for solutions. 
-% A CP model, also referred to as a Constraint Satisfaction Problem (CSP), is formally described as a tuple $<\mathcal{V},\mathcal{D},\mathcal{C}>$, where:
-% \begin{itemize}
-%     \item $\mathcal{V}$ is a finite set of variables.
-%     \item $\mathcal{D}$ is a set of finite domains for the variables.
-%     \item $\mathcal{C}$ is a finite set of constraints upon the variables. 
-% \end{itemize}
-% The domain of an integer variable $v$ is can be described by a lower bound $lb$ and an upper bound $ub$: $domain(v)=[lb,ub]$, in which case the domain is said to be \emph{bounded}.
-% However, in some cases we can list the possible values of an integer: $domain(v)=\{1,10,100,1000\}$, in which case the domain is said to be \emph{enumerated}.
-% This difference can have a significant impact on the constraint models, for example constraints such as \emph{the global cardinality constraint} are better suited to enumerated domains.
-% During search, \emph{problem variables} are enumerated upon, meaning we test their possible values in search of a solution.
-% This also means all other variables must be functionally dependent on the \emph{problem variables}
-% Testing a value for a variable means we can re-run the filtering algorithms, to narrow the choice of values for the next variable.
-% Search strategies generally try to choose the best variable to test, and the best value to test it with.
-Some notable examples of global constraints used in this paper are:
-\begin{itemize}
-    \item 
-    \textcolor{black}{
-    Element is useful when \emph{"selecting a variable from a list"} is part of the problem.
-    }
-    Let $X=[x_1,…,x_n]$ be an array of integer variables, $z \in \{1,…,n\}$ be an integer variable representing the index, and $y$ be an integer variable representing the selected value. \inlinecstr{element}{y,X,z}~\cite{DBLP:conf/aaai/HentenryckC88,van1999opl} holds iff $y=x_z$ and $1\leq z \leq n$, this means that   variable $y$ is constrained to take the value of the $z$-th element of array $X$.
-    
-    \item 
-    \textcolor{black}{
-    Regular expression constraints are very expressive when describing sequences of variables, and offers powerful filtering.
-    }
-    Let $X=[x_1,…,x_n]$ be an array of integer variables and $A$ be a finite automaton. \inlinecstr{regular}{X, A}~\cite{pesant2004regular} enforces that the sequence of values in $X$ must form a valid word in the language recognized by the automaton $A$. 
-    
-    % \item Let $X=[x_1,…,x_n]$ be an array of integer variables, and $Y=[y_1,…,y_n]$ be the the sorted version of $X$, and $P=[p_1,…,p_n]$ be an array of integer variables representing a permutation of $\{1,…,n\}$. \inlinecstr{sort\_permutation}{X,Y,P} holds iff (1) $x_i=y_{p_i},  \forall i \in \{1,…,n\}$, (2) $P$ is a permutation of $\{1,…,n\}$, and (3) $y_1\leq y_2\leq …\leq y_n$ \ytodo{cite}. 
-    %iff \ytodo{cite} this constraint holds true if $x_i=y_{p_i}$ and $p_i\neq p_j$, meaning the $x_i$ and $y_i$ are a permutation described by $p_i$, and $y_i\leq y_{i+1}$ meaning the $y_i$ are sorted.
-    
-    \item The \inlinecstr{stable\_keysort}{X,Y,z}~\cite{beldiceanu2002sweep,DBLP:conf/gcai/BeldiceanuCFLPP15} defined over two matrices of integer variables holds iff (1) there exists a permutation $\pi$ s.t. each row $y_k$ of $Y$ is equal to the row $x_{\pi(k)}$ of $X$ ($k \in \{1,…,i\}$); (2) the sequence of rows in $Y$, truncated to the first $z$ columns, is lexicographically non-decreasing; 
-    %i.e., $\forall k \in \{1,\ldots,i-1\},(y_{k1},…,y_{kz})\leq_{lex}(y_{(k+1)1},\ldots,y_{(k+1)}z)$; 
-    (3) if two rows in $X$ have equal key values for the first $z$ columns, then their relative order in $Y$ must match their original order in $X$.
-    \textcolor{black}{Table \ref{tab:sort_stable} illustrates with an instance that satisfied this constraint.}
-    % The permutation can be applied to other arrays of integer variables, which allows us to sort table rows with respect to a column, giving us the constraint \inlinecstr{stable\_keysort}{x_{11},..,x_{ij},y_{11},..,y_{ij},z}, where $z\leq i$ is the number of columns in the key lexicographically sorted upon\ytodo{cite}.
-    % \item \inlinecstr{sort}{x_1,..,x_n,y_1,..,y_n} \ytodo{cite and define}
-    
-    \item 
-    Cumulative is generally used for scheduling tasks defined by their start time, duration and resource usage: $<s_i,d_i,r_i>$.
-    \textcolor{black}{
-    It requires that at any instant $t$ of the schedule, the summation of the amount of resource $r$ of the tasks that overlap $t$, does not exceed the upper limit $C$. The values of $t$ range from: $a$ the earliest possible start time $s_i$, to $b$ the latest possible end time $s_j+d_j$.
-    }
-    Let $S=[s_1,…,s_n]$ be the start times of $n$ tasks, $D=[d_1,…,d_n]$ their durations, $R=[r_1,…,r_n]$ their resource demands, and $C$ the total capacity of the resource (a constant). %$E=[e_1,…,e_n]$ their end times, where $e_i=s_i+d_i$, 
-    \inlinecstr{cumulative}{S,D,R,C}~\cite{beldiceanu1994chip,DBLP:journals/informs/MercierH08} holds iff $\forall t \in [a,b], \sum_{ i | s_i\leq t < s_{i}+d_i} r_i \leq R$ \cite{cumulative}.
-    where $a = min(s_0,..,s_n)$ and $b = max(s_0+d_0,..,s_n+d_n)$,
-    %this constraint holds true if $\sum_{j/s_j\leq i \leq s_{j}+d_j-1} r_j \leq R,\forall i\in[a,b]$ where $a$ is the lowest possible value for $s_j$ and $b$ the highest possible value for $s_j+d_j$.
-    % \item \inlinecstr{element}{y,X,z} \ytodo{cite and define}
-    % \item \inlinecstr{regular}{X, Y} \ytodo{cite and define}
-    % \item \inlinecstr{sort}{X,Y} \ytodo{cite and define}
-    % \item \inlinecstr{sort\_permutation}{X,Y,P} \ytodo{cite and define}
-    % \item \inlinecstr{cumulative}{T,h} \ytodo{cite and define}
-\end{itemize}
-
-\subsubsection{Propagation}
-%Here we can look at both propagation, and how the element constraint passes information between our variables.
-Propagation for a constraint is the action of updating the domains of the variables bound by that constraint.
-When solving, propagations will generally run when the domain of one of the variables bound by the constraint is updated.
-% , propagating the information across the model.
-
-For instance, let $y=\{0,1\},x_0=\{0\},x_1=\{2,5\}, z=\{-10..10\}$ be the domains of the variables given to the element constraint.
-% (\mnote{z has all possible integer values}{in the previous section it's written that z must have finite domain}). 
-The element constraint's propagator can update the domain of $z$ to $\{0,2,5\}$.
-The meaning of this propagation is, the possible values for $z$ are a subset of the union of possibilities for $x_y$, here the union of $x_0$ and $x_1$.
-If during another constraint's propagation, or during search, 0 is removed from the domain of $z$, such that $z=\{2,5\}$, the element constraint can update the domain of $y$ to just $\{1\}$.
-Here, because the domains of $x_0$ and $z$ are disjoint, then $z$ can not be equal to $x_0$, hence the element constraint propagation can remove 0 from the domain of $y$.
-%From here-on we have $y=1,z=x_1$.
-Finally, if the element constraint is given the following variable instances: $y=0, x_0=0, z=2$, propagation for the constraint would tell us it is not satisfiable, and serve as a counter proof in model validation.
-
-Propagation is one of the fundamental pillars of constraint programming, along with modeling and search.
-Global constraints spanning a large number of variables allows one to leverage propagation to the fullest.
-The application of propagation to the problem of OCL is our fundamental difference to much of the related work.
-To apply it to OCL we need a systematic way to model OCL expressions using gobal constraints, and particularly to model OCL query expressions.
+\subsection{Boolean Satisfiability}

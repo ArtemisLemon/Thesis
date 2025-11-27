@@ -1,4 +1,3 @@
-\section{CP Models for OCL Collection Type Casting Operations}\label{sec:contrib_type_casting}
 
 To illustrate OCL type casting, consider the following invariant, taken from the Zoo Model used in the experimentation:
 %To illustrate what happens during OCL type casting, let's take another look at our zoo constraint: 
@@ -15,7 +14,7 @@ Let $X = \{x_1,...,x_z\}$ be the array of variables modeling the values of \inli
 % Because we cannot foresee how many of the variables encoding the set will preserve their value from the bag, the resulting array is of the same size.
 % \ytodo{We don't know values, we model based on number of variables encoding the expressions.}
 
-% \subsection{asBag()}
+\subsection{asBag()}
 \smallskip
 \noindent
 \textbf{A. asBag():}
@@ -49,7 +48,7 @@ $\reverse{Y}$ denotes the reverse of $Y$, used to enforce descending order.
 % For instance if $X=\{x_1,x_2\}$ then $\reverse{X}=\{x_2,x_1\}$.
 % This allows us to use \inlinecstr{sort}{X,Y} for a descending order.
 
-% \subsection{asSet()}
+\subsection{asSet()}
 \smallskip
 \noindent
 \textbf{B. asSet():}
@@ -61,7 +60,7 @@ Consider the expression \inlineocl{src.asSet()}. The \inlineocl{asSet()} operati
 % Let $Y = \{y_1,...,y_z\}$ be the variables representing \inlineocl{src.asSet()}.
 % For example given an instantiated array of variables such as $X=\{1,2,1,d\}$, \inlineocl{asSet} returns the array $Y=\{2,1,d,d\}$.
 % All values of $X$ appear in $Y$ once, and the only permutation allowed is that in descending order.
-% \vspace{-0.3cm}
+% 
 \begin{equation}\label{csp:set_XY} \footnotesize
 asSet(X,Y) :
 \begin{cases} 
@@ -95,7 +94,7 @@ To support cases where all positions in $Y$ are filled with unique values, we ap
 % In the case the source is full and all values are different, such as \{2,3,1,4\} the dummy value has no place in the result \{4,3,2,1\}, so we reserve a place for it $Y'=Y\;d$.
 % The element constraint is then applied using the determined positions $p_i$, and the arrays with the added dummy values $X'$ and $Y'$.
 
-% \subsection{asSequence()}
+\subsection{asSequence()}
 \smallskip
 \noindent
 \textbf{C. asSequence():}
@@ -133,7 +132,7 @@ This ensures that all 0s (non-dummy values) appear before all 1s (dummy values),
 4 & \cellcolor{dummyred}1 & \cellcolor{dummyred}d & 2 & \cellcolor{dummyred}1 & \cellcolor{dummyred}d \\
 5 & \cellcolor{normalgreen}0 & \cellcolor{normalgreen}1 & 4 & \cellcolor{dummyred}1 & \cellcolor{dummyred}d \\
 \hline
-\end{tabular} \vspace{0.5em}
+\end{tabular} 
 \caption{Example of \texttt{asSequence()} transformation using stable sort. Dummy values are in red.}
 \end{table}
 
@@ -249,7 +248,7 @@ asSeq_{y2x}(X,Y)\\
 % The white area left available, is where we schedule the tasks from $X$.
 % Each variable $x_i$ of $X$ gets a task, starting at $x_i$, lasting 1 unit of time as a variable holds 1 value, and 1 unit high as it take one spot in the list. 
 % Additionally, we show how the tasks representing $X$ would fit in the solution to the cumulative constraint.
-% \subsection{asOrderedSet()}
+\subsection{asOrderedSet()}
 \smallskip
 \noindent
 \textbf{D. asOrderedSet():}
@@ -322,7 +321,7 @@ Given $X=\{2,1,2,3\}$, sorting yields $S=\{1,2,2,3\}$, filtering gives $T=\{1,2,
 % \end{aligned}
 % \end{equation*}
 
-% \subsection{Filtering Dummy Values in OCL Collection Operations}
+\subsection{Filtering Dummy Values in OCL Collection Operations}
 \smallskip
 \noindent 
 \label{ssec:as_0}
