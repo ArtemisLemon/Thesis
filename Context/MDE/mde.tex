@@ -2,23 +2,23 @@
 
 Model Driven Engineering (MDE) has emerged as a central paradigm in software development. 
 It's history is intertwined with that of Object Oriented Programming (OOP). 
-Where the OOP paradigm can be summarised as \textit{everyting is an object}, MDE is similarly described as the paradigm where \textit{everyting is a model}. 
-Two of the longest standing actors are the Object Managament Group (OMG) which notably provides specifications for the Unified Modeling Language, and Eclipse providing the Eclipse Modeling Framework (EMF).
-EMF allows for the generation and testing of code using UML specifications, the design and use domain specific languages, and the manipulation of data by means of model transformation, among other things.
-More recent efforts include JetBrains' Meta Programing System (MPS) which focuses on providing tools to develop and use Domain Specific Languages.
+Where the OOP paradigm can be summarized as \textit{everything is an object}, MDE is similarly described as the paradigm where \textit{everything is a model}. 
+Two of the longest standing actors are the Object Management Group (OMG) which notably provides specifications for both the Unified Modeling Language and the Object Constraint Language, and Eclipse providing the Eclipse Modeling Framework (EMF).
+EMF allows for the generation and testing of code using UML specifications, the design and use domain specific languages, and the manipulation of data by means of model transformation.
+More recent efforts include JetBrains' Meta Programming System (MPS) which focuses on providing tools to develop and use Domain Specific Languages.
 
 Models are used because they are: cheaper, safer, easier to manipulate and learn from.
 For software development, software engineers build models of the desired software.
 Such models allow the engineers to quickly iterate and test their design, 
-but also serve as a language to communicate with the software developpers who will implement the software. 
+but also serve as a language to communicate with the software developers who will implement the software. 
 Beyond software development, models are similarly used: 
 scaled-down models of buildings are easier to make and iterate upon and can be used to communicate with stake holders,
-weather models provide forcasts which are crucial to farming,
+weather models provide forecasts which are crucial to farming,
 digital-twins allow for the monitoring and interaction with complex systems.
 
-All of these efforts rely on the same theoretical foundations.
-We will focus on the EMF point of view, as our implementation is built upon EMF technologies.
-While these efforts have provided many tools, there are still some that require development.
+All of these efforts rely on the same theoretical foundations, which is outlined in the first section.
+In the following sections we'll present the modeling languages UML and OCL.
+We'll then present the state-of-the-art for MDE, and the tools we are building upon.
 
 \section{Fundamentals of Formal Modeling}
 \input{Context/MDE/text/models}
@@ -29,7 +29,13 @@ While these efforts have provided many tools, there are still some that require 
 \section{The Object Constraint Language}
 \input{Context/MDE/text/ocl}
 
-\section{The Eclipse Modeling Framework}
+\section{EMF and ATL: State-of-the-Art}
+\input{Context/MDE/text/emf}
+\input{Context/MDE/text/atl}
 
-\section{Model Search}
-\input{Context/MDE/text/modelsearch}
+\section{Examples of Metamodels used in this Thesis}
+\input{Context/MDE/text/exampleModels/generic}
+\input{Context/MDE/text/exampleModels/gui}
+\input{Context/MDE/text/exampleModels/rms}
+\input{Context/MDE/text/exampleModels/zoo}
+\input{Context/MDE/text/exampleModels/schedule}

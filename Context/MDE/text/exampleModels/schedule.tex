@@ -1,0 +1,15 @@
+\newpage
+\subsection{Scheduling Example}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 0 0 0},width=1\linewidth]{Contributions/VAR/figures/schedulingmm.png}
+    \caption{UML Instance Diagram as Model}
+    % \label{fig:model}
+\end{figure}
+$$\inlineocl{Session.requisite.forall(r|r.week.number < Session.week.number)}$$
+$$\inlineocl{Session.corequisite.forall(r|r.week.number = Session.week.number)}$$
+
+In \ytodo{this figure} we see an example metamodel for a schedule.
+We have as concepts sessions and weeks.
+Weeks are identified by a week number.
+Sessions are assigned to weeks, and have prerequisite sessions that must be done during a prior week, and correcquisite sessions which must be done the same week.

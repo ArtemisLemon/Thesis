@@ -1,0 +1,51 @@
+\newpage
+\subsection{Reconfigurable Manufacturing Example}
+\begin{figure}[t]
+    \includegraphics[trim={0 0 0 0},scale=0.8]{Articles/SAC2025/figures/uc_uml.pdf}
+    \caption{Class Diagram for RMS Task constraints} \label{fig:uc_uml}
+    \Description[class diagram of RMS]{}
+\end{figure}
+
+This figure uses a class diagram to describe the concepts of an RMS, and how they relate (inspired by~\cite{Wang2012-srms}). In this figure, we focus on the graph structure of the model (classes and references among them), omitting attributes. We use the class diagram flavor from the Eclipse Modeling Framework (EMF)\footnote{\url{https://eclipse.dev/modeling/emf/}}, that connects classes by unidirectional \emph{references}, instead of bidirectional \emph{associations}. 
+
+% \footnote{In the use case we're taking inspiration from, all the machines had the same characteristics. We chose an arbitrary number of characteristics to illustrate possible sizes of the resulting CSPs.}
+%From it we take 
+%the number of stages and tasks to get information about problem sizes, 
+%the task precedence tree,
+%and an estimate number of machines.
+% Larger than the number of stages, smaller than the number of machines.
+% equal to the max cardinality of our problem. 
+% \ttodo{last two sentences read weird ?}
+% \ttodo{I don't understand last part of this sentence}
+% Because of the constant nature of the relations linking tasks, machines and characteristics, the optimal implementation doesn't ask the CP solver to compute those matches. 
+% In light of this, for our particular use case,  the number of characteristics doesn't have to effect the final size of the CSP. 
+% \ttodo{werll, this could be rewritten in a simpler way}
+
+The two main components of a reconfigurable manufacturing system are stages, and machines which are organised into stages.
+% Stages have three properties of which two are attributes (stageId and maxMachines) and one is a containment reference to machines.
+% Stages are totally ordered and have a numeric label to materialise it, the stageID.
+% Common practice in RMS is to label them 10, 20, and so on.
+% Thus we represent it as an attribute.
+% Additionally, each stage has a maximum number of machines.
+A \texttt{Machine}'s property is its relation to a set of \texttt{Characteristics}.
+% and for each machine a cost attribute.
+% All the machines of a stage must share the same characteristics.
+Objects of type \texttt{Task} are partially ordered, as expressed by the \texttt{prev} reference.
+%, this order introduces precedence constraints, not addressed here.
+% modeled by the prev reference.
+% Which  to our problem.
+Tasks have two other properties: a reference to a \texttt{Stage} (allocating the task to that stage), and a reference to characteristics (i.e., the machine characteristics needed to perform the task). Similarly to the example in \cite{Wang2012-srms}, tasks and machines can be linked to any number of characteristics.
+
+\subsubsection {OCL Constraints for RMS}
+
+\begin{listing}
+\begin{lstlisting}[language=ocl]
+context Task inv SameCharacteristicConstraint: 
+    self.stage.machines.forall(m | m.characteristics
+        ->includesAll(self.characteristics)) 
+
+context Task inv PrecedenceConstraint: 
+    self.stage.stageNum >= self.prev.stage.stageNum
+\end{lstlisting}
+\caption{RMS Task constraints in OCL.} \label{lst:uc_ocl}
+\end{listing}

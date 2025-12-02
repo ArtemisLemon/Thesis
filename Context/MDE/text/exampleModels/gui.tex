@@ -1,0 +1,25 @@
+\newpage
+\subsection{Graphical User-Interface Example}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 0 0 0},width=1\linewidth]{Contributions/VAR/figures/vizmm.png}
+    \caption{UML Instance Diagram as Model}
+    % \label{fig:model}
+\end{figure}
+Model Constraints:
+% $$\inlineocl{Rectagle.contains.forall(r|r.position[0] < Rectangle.position[0])}$$
+% $$\inlineocl{Rectagle.contains.forall(r|r.position[0] < Rectangle.position[0])}$$
+% $$\inlineocl{Rectagle.contains.forall(r|r.position[0]+r.dimension[0] < Rectangle.position[0]+Rectangle.dimension[0])}$$
+% $$\inlineocl{Rectagle.contains.forall(r|r.position[1]+r.dimension[1] < Rectangle.position[1]+Rectangle.dimension[1])}$$
+$$\inlineocl{Rectangle.contains.forall(r|}$$
+$$\inlineocl{r.position[0] < Rectangle.position[0]}$$
+$$\inlineocl{r.position[0] < Rectangle.position[0]}$$
+$$\inlineocl{r.position[0]+r.dimension[0] < Rectangle.position[0]+Rectangle.dimension[0]}$$
+$$\inlineocl{r.position[1]+r.dimension[1] < Rectangle.position[1]+Rectangle.dimension[1])}$$
+
+This metamodel serves as a simplification of a graphical user interface.
+The GUI is made up of rectanglular shapes contained within one another (windows, widgets, buttons, etc..).
+
+The class specification declares Rectangle as the sole type of object, and delares their properties to be integer values: x,y position, hight and width.
+Additionally the Rectangle specification add a text attribute, containg the text displayed in the rectangle.
+The model constraints predicate on the positions and dimensions of contained rectagles and their containing rectagle.

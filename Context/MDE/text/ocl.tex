@@ -1,13 +1,56 @@
-\subsection{self: how ocl expressions are applied to object models}
-\subsection{Navigation: relation to the metamodel}
+The Object Constraint Language (OCL) is a declarative language used to specify additional rules and constraints on UML models that 
+cannot be expressed using diagrams alone. 
+It enables the formalization of conditions that instances of the model must satisfy, serving as a powerful complement to class and object diagrams.
+
+OCL is designed to be easy to read an write.
+
+\subsection{Quick introduction to OCL}
+\subsubsection{self: how ocl expressions are applied to object models}
+\begin{lstlisting}
+  context Person inv: 
+    self
+\end{lstlisting}
+In this listing we see a minimal OCL expression. 
+This expression identifies the context for the constraint \inlineocl{context Person}.
+Contraints in OCL are called \textit{invariants}, and noted \inlineocl{inv}.
+These constraints are applied to every object within the context.
+The objects appear in the expressions using the keyword \inlineocl{self}.
+
+\begin{lstlisting}
+  context Task inv: 
+    Machine.allInstances()
+\end{lstlisting}
+We can also access all the object of a class from within a context of another class.
+This returns a collection of objects that can be iterated upon.
+This example uses the RMS example: from within the context of this invariant on tasks, we predicate using all the 
+
+For brevity, we simplify this part of these expressions to just the class name.
+
+
+\subsubsection{Navigation: relation to the metamodel}
+OCL provides language to navigate the model and retrieve it's information.
+
+\noindent
+\textbf{Property Access}
+OCL uses a \inlineocl{.property} notation for property access.
+
+For example to access the age and the parents of a person, in ocl you can write.
+$$\inlineocl{Person.age}$$
+$$\inlineocl{Person.parents}$$
+
+\noindent
+\textbf{Navigation}
+A property access applied to a reference results in a collection of objects.
+
+
+$$\inlineocl{self.ref.ref.ref.att}$$
 \subsection{Query: getting and infering ints and objects from the model}
 \subsection{Constraint: constraining the model}
 
 
 % \section{The Object Constraint Language}
 % The Object Constraint Language 
-The Object Constraint Language (OCL) is a declarative language used to specify additional rules and constraints on UML models that 
-cannot be expressed using diagrams alone. It enables the formalization of conditions that instances of the model must satisfy, serving as a powerful complement to class and object diagrams.
+
 %%
 For example, in the context of a family tree, a constraint such as \emph{“a child must be younger than their parents”} cannot be represented directly in a class diagram. However, it can be expressed in OCL as follows:
 % The Object Constraint Language is used to express specifications that can't be illustrated with Class Diagrams.

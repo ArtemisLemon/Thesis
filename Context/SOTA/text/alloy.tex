@@ -5,26 +5,61 @@
     \item SAT solver (SAT4J default)
 \end{outline}
 
-Alloy is a language, and the framework around it.
+Alloy provides a framework for modeling problems and solving them using \textit{off-the-shelf} SAT solvers.
+The alloy language is inspired by the Z modeling language and the Object Constraint Language.
+It provides both a means to specifiy class models and model constraints.
 
+\subsubsection{Alloy Language}
+\begin{listing}[!h]
+    \begin{lstlisting}[language=xml]
+sig Species {}
 
-% \section{Kodkod}
-% \subsection{Relational First Order Logic}
-\begin{itemize}
-    \item Propositional Logic: $((p \rightarrow q) \wedge p) \Rightarrow q$
-    \item First Order Logic: $((px \rightarrow qx) \wedge pa_1) \Rightarrow qa_1$
-    % \item First Order Relational Logic: $(((Sx \wedge Rxy) \rightarrow Ty) \wedge Sa_1\wedge Ra_1a_2)\Rightarrow Ta_2$
-    \item First Order Relational Logic: $\forall x (Sx \rightarrow \exists! y (Rxy \wedge Ty))$
-\end{itemize}
+sig Animal {
+    cage: one Cage,
+    species: one Species
+}
 
-% \begin{listing}
+sig Cage {
+    capacity: Int,
+    animals: seq Animal
+//	animals: set Animal
+}{
+    #animals <= capacity
+    #animals.species.elems <2
+//	one animals.species
+}     
+    \end{lstlisting}
+    \caption{Minimal Object Model in the XMI-like format}
+\end{listing}
+In this listing we see our example zoo model.
+In alloy a class can be modeled using signatures.
+We can see, signatures are similarly named lists of properties.
+Properties are similarly typed using primitives for attributes, and other signatures for references. 
+Properties in alloy hold a single value by default, but can declared to be a collection, such as set and sequence. 
+Signatures can also be used as the context for model constraints.
+This is similar to how contraints are defined using OCL.
+
+\subsubsection{Kodkod}
+Kodkod is an API to model relational first order logic problems and translate them to Conjunctive Normal Form (CNF) model.
+Alloy uses this API to translate models for solving with SAT solvers.
+
+% % \section{Kodkod}
+% % \subsection{Relational First Order Logic}
+% \begin{itemize}
+%     \item Propositional Logic: $((p \rightarrow q) \wedge p) \Rightarrow q$
+%     \item First Order Logic: $((px \rightarrow qx) \wedge pa_1) \Rightarrow qa_1$
+%     % \item First Order Relational Logic: $(((Sx \wedge Rxy) \rightarrow Ty) \wedge Sa_1\wedge Ra_1a_2)\Rightarrow Ta_2$
+%     \item First Order Relational Logic: $\forall x (Sx \rightarrow \exists! y (Rxy \wedge Ty))$
+% \end{itemize}
+
+\begin{listing}
 \begin{lstlisting}
 sig S {R : one T}
 sig T {}
 run {#S=2 #T=2}
 \end{lstlisting}
-% \caption{Simple Alloy model, with two related concepts, with two instances each}
-% \end{listing}
+\caption{Simple Alloy model, with two related concepts, with two instances each}
+\end{listing}
 
 \begin{equation}\label{eq:RFOL:base}
     \begin{aligned}
@@ -35,19 +70,19 @@ run {#S=2 #T=2}
         \forall s \in S : \vert R.s\vert = 1
     \end{aligned}
 \end{equation}
-% \subsection{Satisfiability Modulo Theories}
-% \subsubsection{SMT}
-% \subsubsection{Applied to Relational First Order Logic}
-\begin{equation}\label{eq:RFOL:base}
-    \begin{aligned}
-        \{a_1,a_2,a_3,a_4,-2,-1,0,1\}\\
-        S :_1 [\{\Tuple{a_1},\Tuple{a_2}\},\{\Tuple{a_1},\Tuple{a_2}\}]\\
-        T :_1 [\{\Tuple{a_3},\Tuple{a_4}\},\{\Tuple{a_3},\Tuple{a_4}\}]\\
-        I :_1 [\{\Tuple{-2},\Tuple{-1},\Tuple{0},\Tuple{1}\},\{\Tuple{-2},\Tuple{-1},\Tuple{0},\Tuple{1}\}]\\
-        R :_2 [\{\},\{\Tuple{a_1,a_3},\Tuple{a_1,a_4},\Tuple{a_2,a_3},\Tuple{a_2,a_4}\}]\\
-        SA :_2 [\{\},\{\Tuple{a_1,1},\Tuple{a_1,-2},\Tuple{a_2,-1},\Tuple{a_2,0}\}]\\
-        TA :_2 [\{\},\{\Tuple{a_3,1},\Tuple{a_3,-2},\Tuple{a_4,-1},\Tuple{a_4,0}\}]\\
-        \forall s \in S : \vert R.s\vert = 1\\
-        \forall t \in T : t.A \geq 0
-    \end{aligned}
-\end{equation}
+% % \subsection{Satisfiability Modulo Theories}
+% % \subsubsection{SMT}
+% % \subsubsection{Applied to Relational First Order Logic}
+% \begin{equation}\label{eq:RFOL:base}
+%     \begin{aligned}
+%         \{a_1,a_2,a_3,a_4,-2,-1,0,1\}\\
+%         S :_1 [\{\Tuple{a_1},\Tuple{a_2}\},\{\Tuple{a_1},\Tuple{a_2}\}]\\
+%         T :_1 [\{\Tuple{a_3},\Tuple{a_4}\},\{\Tuple{a_3},\Tuple{a_4}\}]\\
+%         I :_1 [\{\Tuple{-2},\Tuple{-1},\Tuple{0},\Tuple{1}\},\{\Tuple{-2},\Tuple{-1},\Tuple{0},\Tuple{1}\}]\\
+%         R :_2 [\{\},\{\Tuple{a_1,a_3},\Tuple{a_1,a_4},\Tuple{a_2,a_3},\Tuple{a_2,a_4}\}]\\
+%         SA :_2 [\{\},\{\Tuple{a_1,1},\Tuple{a_1,-2},\Tuple{a_2,-1},\Tuple{a_2,0}\}]\\
+%         TA :_2 [\{\},\{\Tuple{a_3,1},\Tuple{a_3,-2},\Tuple{a_4,-1},\Tuple{a_4,0}\}]\\
+%         \forall s \in S : \vert R.s\vert = 1\\
+%         \forall t \in T : t.A \geq 0
+%     \end{aligned}
+% \end{equation}

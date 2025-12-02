@@ -1,0 +1,65 @@
+\subsection{Eclipse Modeling Framework}
+The Eclipse Modeling Framework is a suite of tools for the Eclipse ecosystem, allowing users design data structures, manipulate structured data and generate code.
+% At it's core EMF provides an implementation of Essential MOF (EMOF).
+% EMOF is also a description of EMF's implementation of Complete MOF.
+% EMF provides a specification for Ecore.
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[trim={0 0 0 0},width=1\linewidth]{Context/MDE/figures/emf.png}
+  \caption{Using the Eclipse Modeling Framework to edit an Ecore metamodel using a Class Diagram editing tool}
+  \label{fig:modelsearch}
+\end{figure}
+In this screenshot we can EMF being used to create a Class Diagram to design a zoo application.
+From this metamodel, we'll be able to generate a tool to edit object models representing instances, and serialize them in XMI files.
+
+
+\noindent
+\textbf{XMI} XML Metadata Interchange, a file format specified by OMG for the serialization of MOF Models.
+EMF provides tools to load and save models from and to XMI files.
+% EMF provides tools to visualize and manipulate these models.
+Loading an XMI model into and EMF editor generally requires the Ecore metamodel it conforms to, and generates EObjects which can be manipulated.
+\begin{listing}[!h]
+  \begin{lstlisting}[language=xml]
+  <Model>  
+      <object att="information one" ref="//@object.1"/>
+      <object att="information two" ref="//@object.0"/>
+  </Model>
+  \end{lstlisting}
+  \caption{Minimal Object Model in the XMI format}
+\end{listing}
+In this listing we see a simple model, with two linked objects, each object holds some information.
+% It is specified in an XML-like markup language called XML Metadata Interchange.
+% XMI is the standard for serialising MOF models.
+
+
+\noindent
+\textbf{Ecore} is the EMF format for class models (metamodels).
+Ecore is an XML-like language based on XMI.
+% Ecore allows for Class Specifications.
+% Ecore can also include OCL expressions, however they can also be provided in a simple text file.
+Loading an Ecore file entails instantiating EObjects of type EClasses, EAttributes and EReferences corresponding to the classes of the class model and their properties, and generating code to manipulate them and their corresponding objects.
+EMF provides tools so visualize these metamodels as Class Diagrams.
+
+
+\noindent
+\textbf{EObject} java interface representing objects.
+Provides access to the EClass it conforms to.
+Provides access to the information via \textit{getters} and \textit{setters}, and the EReference or EAtrribute representing the class property.
+
+\noindent
+\textbf{EClass} java interface representing classes.
+EClasses provide access to the properties.
+
+\noindent
+\textbf{EReference} java interface representing properties of type reference.
+Provides access to the name, type, and collection cardinality.
+
+\noindent
+\textbf{EAttribute} java interface representing properties of type attribute.
+Provides access to the name, type, and collection cardinality.
+
+% \noindent
+% \textbf{Model Validation} One of the core features when building models using EMF.
+% EMF can validate conformity between a model (XMI file) and metamodel (Ecore and optionally OCL files). 
+% As a user builds a model using EMF tools, they can validate that model against the metamodel.

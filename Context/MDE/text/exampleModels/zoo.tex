@@ -1,0 +1,14 @@
+\newpage
+\subsection{Zoo Example}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 0 0 0},width=1\linewidth]{Articles/ICTAI2025/figures/zooMM.pdf}
+    \caption{Zoo Metamodel}
+\end{figure}
+\begin{lstlisting}
+    context Cage inv:
+        self.animals.species.asSet().size() < 2
+    and self.animals.species.space.sum() <= self.capacity
+\end{lstlisting}
+
+In this example we have a simple metamodel for a Zoo.
