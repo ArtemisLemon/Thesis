@@ -5,10 +5,10 @@ It enables the formalization of conditions that instances of the model must sati
 OCL is designed to be easy to read an write.
 
 \subsection{Quick introduction to OCL}
-\subsubsection{self: how ocl expressions are applied to object models}
+\subsubsection{self: how ocl expressions are applied to the objects in object models}
 \begin{lstlisting}
   context Person inv: 
-    self
+    self=self
 \end{lstlisting}
 In this listing we see a minimal OCL expression. 
 This expression identifies the context for the constraint \inlineocl{context Person}.
@@ -18,14 +18,17 @@ The objects appear in the expressions using the keyword \inlineocl{self}.
 
 \begin{lstlisting}
   context Task inv: 
-    Machine.allInstances()
+    Task.allInstances().includes(self)
 \end{lstlisting}
-We can also access all the object of a class from within a context of another class.
+We can also access all the object of a class from within a context of any class.
 This returns a collection of objects that can be iterated upon.
 This example uses the RMS example: from within the context of this invariant on tasks, we predicate using all the 
 
 For brevity, we simplify this part of these expressions to just the class name.
 
+\subsubsection{Building OCL expressions by chaining operations}
+$$source.operation(arguments)$$
+OCL operations generally are applied to OCL expressions, which we call source, which can be understood as the first argument for the operation.
 
 \subsubsection{Navigation: relation to the metamodel}
 OCL provides language to navigate the model and retrieve it's information.
@@ -42,10 +45,15 @@ $$\inlineocl{Person.parents}$$
 \textbf{Navigation}
 A property access applied to a reference results in a collection of objects.
 
-
 $$\inlineocl{self.ref.ref.ref.att}$$
-\subsection{Query: getting and infering ints and objects from the model}
-\subsection{Constraint: constraining the model}
+
+\subsubsection{Query: getting and infering ints and objects from the model}
+
+\noindent \textbf{Query Expression:} \inlineocl{self.ref.select(r | predicate(r)).prop.sum()}
+OCL expression resulting in a collection of integers or objects.
+Can be filtered, or merged with other queries.
+
+\subsubsection{Constraint: constraining the model}
 
 
 % \section{The Object Constraint Language}
@@ -131,15 +139,12 @@ Given an instance such as the one shown in Figure \ref{fig:model}, OCL is typica
 % \ytodo{Motivation for this paper, we want to do this in the context of OCL types}
 % \ytodo{Converting types can also be useful when describing constraints}
 
-\noindent \textbf{Property Access:} \inlineocl{self.prop} \inlineoclast{NavigationOrAttributeCallExp}
-For the object designated by \inlineocl{self} retrieve the collection of values named \inlineocl{prop}.
+% \noindent \textbf{Property Access:} \inlineocl{self.prop} \inlineoclast{NavigationOrAttributeCallExp}
+% For the object designated by \inlineocl{self} retrieve the collection of values named \inlineocl{prop}.
 
-\noindent \textbf{Query Expression:} \inlineocl{self.ref.select(r | f(r)).prop}
-OCL expression resulting in a collection of integers or objects.
-Can be filtered, or merged with other queries.
 
 \noindent \textbf{Topological Constraint:} \inlineocl{self.ref.prop > self.prop}
 Otherwise referred to as a Structural Constraint, predicates over the relations between objects with respect to their properties.
 
-\noindent \textbf{Mini-OCL:} \inlineocl{context O inv : self.prop.\dots} is often shortened to \inelineocl{O.prop\dots}.
-We will encounter many small examples of model constraint, to save space we sometimes remove the conxtext declaration.
+% \noindent \textbf{Mini-OCL:} \inlineocl{context O inv : self.prop.\dots} is often shortened to \inelineocl{O.prop\dots}.
+% We will encounter many small examples of model constraint, to save space we sometimes remove the conxtext declaration.
