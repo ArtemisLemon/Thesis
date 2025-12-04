@@ -2,9 +2,17 @@ The Object Constraint Language (OCL) is a declarative language used to specify a
 cannot be expressed using diagrams alone. 
 It enables the formalization of conditions that instances of the model must satisfy, serving as a powerful complement to class and object diagrams.
 
-OCL is designed to be easy to read an write.
+Given an instance such as the one shown in Figure \ref{fig:model}, OCL is typically used to verify whether it satisfies the specified constraints. In this work, however, we aim to use OCL as a means to guide model search, thereby enabling the completion or correction of partial or inconsistent data. To this end, we propose an approach that reformulates OCL specifications as constraint satisfaction problems (CSPs). This paper focuses on how OCL’s collection typing, defined in the Class Diagram, and type casting operations can be modeled using global constraints over bounded domains.
+
 
 \subsection{Quick introduction to OCL}
+OCL is designed to be easy to read an write. 
+In this subsection we'll build a simple expression which applies to all people: \textit{everyone is younger than their parents}.
+For this we'll be using the following class model:
+$$\inlineumlclass{Person}{\inlineumlprop{age}{Int}{1}{1}, \inlineumlprop{children}{Person}{0}{*}}$$
+And modeling the constraint:
+$$\forall p,q \in \texttt{Person}, p \in q\texttt{.children} \implies p\texttt{.age} < q\texttt{.age}$$
+
 \subsubsection{self: how ocl expressions are applied to the objects in object models}
 \begin{lstlisting}
   context Person inv: 
@@ -17,37 +25,48 @@ These constraints are applied to every object within the context.
 The objects appear in the expressions using the keyword \inlineocl{self}.
 
 \begin{lstlisting}
-  context Task inv: 
-    Task.allInstances().includes(self)
+  context Person inv: 
+    Person.allInstances().includes(self)
 \end{lstlisting}
-We can also access all the object of a class from within a context of any class.
+We can also access all the object of a class from within a context of any class using \inlineocl{allInstances()} applied to a class name, such as here \inlineocl{Person}.
 This returns a collection of objects that can be iterated upon.
-This example uses the RMS example: from within the context of this invariant on tasks, we predicate using all the 
+Here from the context of a single person, we have access to the whole collection of people from the instance.
+Naturally, the person designated by \inlineocl{self} is included. 
+
+% This example uses the RMS example: from within the context of this invariant on tasks, we predicate using all the 
 
 For brevity, we simplify this part of these expressions to just the class name.
 
 \subsubsection{Building OCL expressions by chaining operations}
+Now that we have access to the objects of the model, we can start writing expressions to describe our constraint upon them.
+OCL expressions a built using function composition.
+
 $$source.operation(arguments)$$
-OCL operations generally are applied to OCL expressions, which we call source, which can be understood as the first argument for the operation.
+OCL operations generally are applied to \textit{source} OCL expressions, which can be understood as the first argument for the operation.
+Operation arguments generally take the form of OCL expressions.
 
 \subsubsection{Navigation: relation to the metamodel}
+The primary operation on object models, is accessing their properties, and navigating the graph of objects. 
 OCL provides language to navigate the model and retrieve it's information.
 
 \noindent
 \textbf{Property Access}
 OCL uses a \inlineocl{.property} notation for property access.
 
-For example to access the age and the parents of a person, in ocl you can write.
-$$\inlineocl{Person.age}$$
-$$\inlineocl{Person.parents}$$
+For example to access the age and the children of a person, in ocl you would write.
+$$\inlineocl{self.age}$$
+$$\inlineocl{self.children}$$
 
 \noindent
 \textbf{Navigation}
-A property access applied to a reference results in a collection of objects.
 
-$$\inlineocl{self.ref.ref.ref.att}$$
+To access the parents' age, we need to navigate away from the object designated \inlineocl{self}, to the objects representing their parents, and access their age attribute. 
+
+In the general case, if the source expression results in a collection of objects, we can navigate their references to a new collection of objects and access their properties.
+$$\inlineocl{source.prop}$$
 
 \subsubsection{Query: getting and infering ints and objects from the model}
+Some of the operations will allow us to manipulate collections of objects, such as filtering them or combining them, or summing their attributes.
 
 \noindent \textbf{Query Expression:} \inlineocl{self.ref.select(r | predicate(r)).prop.sum()}
 OCL expression resulting in a collection of integers or objects.
@@ -67,9 +86,9 @@ For example, in the context of a family tree, a constraint such as \emph{“a ch
 % \inlineocl{context Person inv: self.parents.age.forall(a | a > self.age)}.
 \begin{lstlisting}
 context Person inv: 
-  self.parents.age.forall(a| a > self.age)
+  self.children.age.forall(a| a < self.age)
 \end{lstlisting}
-This constraint states that for every Person instance, all of their parents must be older. The \inlineocl{context} keyword specifies the class to which the constraint applies, and \inlineocl{inv} stands for \emph{invariant}, i.e., a condition that must always hold true. This invariant states that for every Person, the age of each parent must be greater than the person’s age. 
+This constraint states that for every Person instance, all of their children must be younger. The \inlineocl{context} keyword specifies the class to which the constraint applies, and \inlineocl{inv} stands for \emph{invariant}, i.e., a condition that must always hold true. This invariant states that for every Person, the age of each parent must be greater than the person’s age. 
 %%
 OCL Supports \emph{navigation expressions} (e.g., \inlineocl{self.parents.age}) and \emph{collection operations} (e.g., \inlineocl{forall}, \inlineocl{exists}, \inlineocl{size}) that apply to attributes and references. 
 % Table \ref{tab:queries_tgt} shows how different OCL queries evaluate on a sample object model (cf. Figure \ref{fig:model}). 
@@ -113,7 +132,15 @@ The expression \inlineocl{self} refers to the current object, \inlineocl{self.at
 
 OCL also supports a rich set of operations on primitive types and collections. Examples include: 
 \emph{Boolean expressions} (\inlineocl{forall}, \inlineocl{exists}, \inlineocl{not}, \inlineocl{and}, \inlineocl{or}), 
-\emph{Arithmetic and comparison} (\inlineocl{+}, \inlineocl{-}, \inlineocl{>}, \inlineocl{<}), and \emph{Collection operations} (\inlineocl{sum}, \inlineocl{size}, \inlineocl{includes}, \inlineocl{asSet}, \inlineocl{asSequence}, etc). Each collection type comes with its own operations and can be explicitly cast using operations like \inlineocl{asSet()}. 
+\emph{Arithmetic and comparison} (\inlineocl{+}, \inlineocl{-}, \inlineocl{>}, \inlineocl{<}), and \emph{Collection operations} (\inlineocl{sum}, \inlineocl{size}, \inlineocl{includes}, \inlineocl{asSet}, \inlineocl{asSequence}, etc). Each collection type comes with its own operations and can be explicitly cast using operations like \inlineocl{asSet()}.
+
+\noindent \textbf{Constraint Expression:} any expression that resolves to a single boolean.
+
+\noindent \textbf{Enforced Constraint:} any expression that must resolve to True.
+
+\noindent \textbf{Topological Constraint:} \inlineocl{self.ref.prop > self.prop}
+Otherwise referred to as a Structural Constraint, predicates over the relations between objects with respect to their properties.
+
 % \ytodo{OCL provides lots of operations}
 % OCL also provides operations, such as \inlineocl{forall} and \inlineocl{>} seen in the family tree constraint, but also integer and collection operations such as \inlineocl{sum}, \inlineocl{size}.
 % Each collection type also comes with their operations, and there are operations to cast a collection from one type to another.
@@ -128,8 +155,6 @@ OCL also supports a rich set of operations on primitive types and collections. E
 % The constraint requires that there be only one species of animal per cage.
 % To do so, it queries the model for the species found in a given cage: \inlineocl{self.animals.species}, and requires the result of that query, when interpreted as a set (eliminating values appearing multiple times) to have at most one element: \inlineocl{.asSet().size()<2}.
 
-Given an instance such as the one shown in Figure \ref{fig:model}, OCL is typically used to verify whether it satisfies the specified constraints. In this work, however, we aim to use OCL as a means to guide model search, thereby enabling the completion or correction of partial or inconsistent data. To this end, we propose an approach that reformulates OCL specifications as constraint satisfaction problems (CSPs). This paper focuses on how OCL’s collection typing, defined in the Class Diagram, and type casting operations can be modeled using global constraints over bounded domains.
-
 
 % Given an instance such as Figure \ref{fig:model}, OCL is normally used to verify it conforms to the additional constraints.
 % However, we wish to use this language to guide model search, allowing us to complete or fix data.
@@ -143,8 +168,42 @@ Given an instance such as the one shown in Figure \ref{fig:model}, OCL is typica
 % For the object designated by \inlineocl{self} retrieve the collection of values named \inlineocl{prop}.
 
 
-\noindent \textbf{Topological Constraint:} \inlineocl{self.ref.prop > self.prop}
-Otherwise referred to as a Structural Constraint, predicates over the relations between objects with respect to their properties.
+
 
 % \noindent \textbf{Mini-OCL:} \inlineocl{context O inv : self.prop.\dots} is often shortened to \inelineocl{O.prop\dots}.
 % We will encounter many small examples of model constraint, to save space we sometimes remove the conxtext declaration.
+
+\subsection{Typing OCL Expressions}
+In this theses we will be mainly focusing expressions which resolve to a CollectionType and the Integer and Boolean PrimitiveType.
+We will also have some cases of Class type, notable when handling \inlineocl{Person} in the expression \inlineocl{Person.allInstances()}
+We will also have to manage InvalidType and VoidType.
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[trim={0 0 0 0},width=1\linewidth]{Context/MDE/figures/oclType.png}
+  \caption{OCL Types}
+  % \label{fig:model}
+\end{figure}
+
+\subsection{OCL Expression Metamodel}
+OCL being a domain specific language in the model driven ecosystem, we naturally have a class diagram modeling the language.
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[trim={0 0 0 0},width=1\linewidth]{Context/MDE/figures/oclExpressionMM.png}
+  \caption{OCL Expression Metamodel (simplified)}
+  % \label{fig:model}
+\end{figure}
+As previously stated, all OCL expressions are typed, hence they all inherit from the concept of \inlineocl{TypedElement}.
+In this thesis we'll many be focusing on \inlineocl{OperationCallExp} which are of type \inlineocl{CallExp}.
+For this we will have to consider \inlineocl{VariableExp}.
+
+
+\subsection{OCL Operations summary}
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[trim={0 0 0 0},width=1\linewidth]{Context/MDE/figures/oclcheatsheet.png}
+  \caption{snippet from the OCL Cheat Sheet provided by eScribis}
+  % \label{fig:model}
+\end{figure}
+This cheat sheet outlines all the available OCL expressions, organized by the types the can be applied to.

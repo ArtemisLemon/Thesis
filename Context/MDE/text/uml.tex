@@ -63,7 +63,11 @@ In a family tree for instance, the core concept is Person, with attributes such 
     \caption{UML Class Diagram as Metamodel}
     \label{fig:metamodel}
 \end{figure}
-Figure \ref{fig:metamodel} present a generic metamodel. It describes a class named \inlineocl{Object}, which has two properties: 
+In this figure we see a rectangle with a title, which represents a class.
+In the rectangle beneath the title, we find a list of attribute properties.
+From the rectangle to itself, we see an arrow representing the reference property.
+Here we present a generic metamodel.
+It describes a class named \inlineocl{Object}, which has two properties: 
 \inlineocl{attribute}: a collection of integers, with at least one and at most $m$ elements, \inlineocl{reference}: a collection of up to $n$ references to other \inlineocl{Object} instances.
 %\inlineocl{reference} a collection of up to $n$ objects and \inlineocl{attribute} a collection of at least one and at most $m$ integers.
 These illustrate the two main types of properties in object-oriented modeling:
@@ -103,6 +107,16 @@ The intended collection type can be indicated in the class diagram using annotat
 % \subsection{Object Diagrams}
 % \smallskip
 % \noindent \label{ssec:ctxt_id}
+\subsubsection{UML Reference Types}
+UML also gives us different kinds of relations between objects, notably containment relations and and opposite relations.
+
+\noindent \textbf{Opposite} 
+The opposite of \textit{child-of} for instance, is \textit{parent-of}.
+Sometimes references may need to be one-way for encapsulation.
+
+\noindent \textbf{Containment} means that the \textit{contained} object is only related to one \textit{container} object through this instance of the relation.
+
+
 
 \subsection{Object Diagrams}
 % Object diagrams 
@@ -121,10 +135,14 @@ For example, Figure~\ref{fig:model} shows an instance conforming to the class di
     \caption{UML Instance Diagram as Model}
     \label{fig:model}
 \end{figure}
-% In Figure \ref{fig:model} we see a model which conforms to the metamodel from Figure \ref{fig:metamodel}, for which we chose $n=2$ and $m=3$. This here shows objects of the type described by the class, and the values assigned to their properties.
-% % This instance will serve to illustrate the result of queries and the operations upon them.
-% In this model, \inlineocl{o2 : Object} is an instance of the \inlineocl{Object} class named \inlineocl{o2}, as attribute it has a collection of integers with a single value: 1000.
-% The object \inlineocl{o1} has as attribute a collection of 3 integers and is connected to both other objects, which are the maximums allowed by our choice of $n=2$ and $m=3$.
+This diagram is also built from rectangles and lines connecting them.
+Here each rectangle represents an object, and the title area is used to give the \texttt{:Type} and optionally a name.
+Below the title area, we again use the rectangle to list the attributes and the information associated.
+The arrows between the rectangles represent instances of the references between objects.
+In Figure \ref{fig:model} we see a model which conforms to the metamodel from Figure \ref{fig:metamodel}, for which we chose $n=2$ and $m=3$. This here shows objects of the type described by the class, and the values assigned to their properties.
+% This instance will serve to illustrate the result of queries and the operations upon them.
+In this model, \inlineocl{o2 : Object} is an instance of the \inlineocl{Object} class named \inlineocl{o2}, as attribute it has a collection of integers with a single value: 1000.
+The object \inlineocl{o1} has as attribute a collection of 3 integers and is connected to both other objects, which are the maximums allowed by our choice of $n=2$ and $m=3$.
 
 % These instances can be serialized using the XML Metadata Interchange (XMI) format.
 %Similarly to class diagrams, EMF allows us to use object diagrams to manipulate instances of data visually.

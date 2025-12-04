@@ -12,4 +12,6 @@ These illustrate the two main types of properties in object-oriented modeling:
 Attributes, which store intrinsic data values (e.g., numbers or strings),
 References, which define relationships between objects in the model.
 
-This example presents a generic metamodel and model.
+This example presents a generic metamodel and model. We'll sometimes color it using the \inlineocl{Person} example:
+$$\inlineumlclass{Person}{\inlineumlprop{age}{Int}{1}{1}, \inlineumlprop{children}{Person}{0}{*}}$$
+$$\forall p,q \in \texttt{Person}, p \in q\texttt{.children} \implies p\texttt{.age} < q\texttt{.age}$$

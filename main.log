@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.8.31)  3 DEC 2025 13:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.8.31)  4 DEC 2025 11:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1749,9 +1749,9 @@ LaTeX Warning: Label `fig:modelsearch' multiply defined.
 
 (/usr/share/texmf-dist/tex/generic/babel/locale/fr/babel-french.tex)
 Package babel Info: Importing data for french
-(babel)             from babel-fr.ini. Reported on input line 249.
+(babel)             from babel-fr.ini. Reported on input line 258.
 Package babel Info: Hyphen rules for 'french' set to \l@english
-(babel)             (\language0). Reported on input line 249.
+(babel)             (\language0). Reported on input line 258.
 )
 \openout1 = `main.aux'.
 
@@ -1920,7 +1920,7 @@ LaTeX Font Info:    Trying to load font information for U+stmry on input line 8
 8.
 
 (/usr/share/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
-<./Couverture-these/ecoles-doctorales/SPIN/logo.png, id=453, 584.9052pt x 185.2
+<./Couverture-these/ecoles-doctorales/SPIN/logo.png, id=457, 584.9052pt x 185.2
 521pt>
 File: ./Couverture-these/ecoles-doctorales/SPIN/logo.png Graphic file (type png
 )
@@ -1928,7 +1928,7 @@ File: ./Couverture-these/ecoles-doctorales/SPIN/logo.png Graphic file (type png
 Package pdftex.def Info: ./Couverture-these/ecoles-doctorales/SPIN/logo.png  us
 ed on input line 88.
 (pdftex.def)             Requested size: 179.66762pt x 56.9055pt.
-<./Couverture-these/logos-etablissements/IMTA.png, id=455, 462.528pt x 276.5532
+<./Couverture-these/logos-etablissements/IMTA.png, id=459, 462.528pt x 276.5532
 pt>
 File: ./Couverture-these/logos-etablissements/IMTA.png Graphic file (type png)
 <use ./Couverture-these/logos-etablissements/IMTA.png>
@@ -2044,12 +2044,12 @@ Overfull \hbox (29.05273pt too wide) has occurred while \output is active
 
 ]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 5
-1.
+7.
  (/usr/share/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 51.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 57.
 
 
 
@@ -2199,9 +2199,6 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \vbox (badness 3029) has occurred while \output is active []
-
-
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2230,7 +2227,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [17]
 ! Undefined control sequence.
-l.249 ...ineocl{att} an attribute, and \inelineocl
+l.248 ...ineocl{att} an attribute, and \inelineocl
                                                   {ref} a reference to other...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2260,7 +2257,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [19]
-<Articles/ICTAI2025/figures/metamodel.pdf, id=696, 172.7253pt x 41.1939pt>
+<Articles/ICTAI2025/figures/metamodel.pdf, id=702, 172.7253pt x 41.1939pt>
 File: Articles/ICTAI2025/figures/metamodel.pdf Graphic file (type pdf)
 <use Articles/ICTAI2025/figures/metamodel.pdf>
 Package pdftex.def Info: Articles/ICTAI2025/figures/metamodel.pdf  used on inpu
@@ -2277,18 +2274,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [20]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 8
-0.
+4.
  (/usr/share/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-<Articles/ICTAI2025/figures/model.pdf, id=706, 233.9139pt x 104.3097pt>
-File: Articles/ICTAI2025/figures/model.pdf Graphic file (type pdf)
-<use Articles/ICTAI2025/figures/model.pdf>
-Package pdftex.def Info: Articles/ICTAI2025/figures/model.pdf  used on input li
-ne 120.
-(pdftex.def)             Requested size: 455.24411pt x 203.01312pt.
-)
-(./Context/MDE/text/ocl.tex
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2299,6 +2288,16 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [21{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc} <./Articles/ICTAI2025/
 figures/metamodel.pdf>]
+<Articles/ICTAI2025/figures/model.pdf, id=726, 233.9139pt x 104.3097pt>
+File: Articles/ICTAI2025/figures/model.pdf Graphic file (type pdf)
+<use Articles/ICTAI2025/figures/model.pdf>
+Package pdftex.def Info: Articles/ICTAI2025/figures/model.pdf  used on input li
+ne 134.
+(pdftex.def)             Requested size: 455.24411pt x 203.01312pt.
+) (./Context/MDE/text/ocl.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2317,13 +2316,62 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [23]
-Overfull \hbox (3.17516pt too wide) in paragraph at lines 143--145
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[24]
+Overfull \hbox (3.17516pt too wide) in paragraph at lines 141--143
 \T1/lmr/bx/n/12 Topological Con-straint: \T1/lmtt/m/n/12 self.ref.prop > self.p
 rop \T1/lmr/m/n/12 Oth-er-wise re-ferred to as a Struc-
  []
 
-) (./Context/MDE/text/emf.tex
-<Context/MDE/figures/emf.png, id=753, 1557.82pt x 951.555pt>
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[25]
+<Context/MDE/figures/oclType.png, id=771, 1114.1625pt x 670.505pt>
+File: Context/MDE/figures/oclType.png Graphic file (type png)
+<use Context/MDE/figures/oclType.png>
+Package pdftex.def Info: Context/MDE/figures/oclType.png  used on input line 18
+3.
+(pdftex.def)             Requested size: 455.24411pt x 273.96758pt.
+<Context/MDE/figures/oclExpressionMM.png, id=772, 1241.63875pt x 736.7525pt>
+File: Context/MDE/figures/oclExpressionMM.png Graphic file (type png)
+<use Context/MDE/figures/oclExpressionMM.png>
+Package pdftex.def Info: Context/MDE/figures/oclExpressionMM.png  used on input
+ line 193.
+(pdftex.def)             Requested size: 455.24411pt x 270.12093pt.
+<Context/MDE/figures/oclcheatsheet.png, id=773, 960.58875pt x 825.0825pt>
+File: Context/MDE/figures/oclcheatsheet.png Graphic file (type png)
+<use Context/MDE/figures/oclcheatsheet.png>
+Package pdftex.def Info: Context/MDE/figures/oclcheatsheet.png  used on input l
+ine 205.
+(pdftex.def)             Requested size: 455.24411pt x 391.02438pt.
+)
+Underfull \vbox (badness 4001) has occurred while \output is active []
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[26 <./Context/MDE/figures/oclType.png>] (./Context/MDE/text/emf.tex
+<Context/MDE/figures/emf.png, id=780, 1557.82pt x 951.555pt>
 File: Context/MDE/figures/emf.png Graphic file (type png)
 <use Context/MDE/figures/emf.png>
 Package pdftex.def Info: Context/MDE/figures/emf.png  used on input line 9.
@@ -2339,9 +2387,14 @@ Package hyperref Info: bookmark level for unknown listing defaults to 0 on inpu
 t line 29.
 
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
 
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
+[27 <./Context/MDE/figures/oclExpressionMM.png>]
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2350,7 +2403,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[24]
+[28 <./Context/MDE/figures/oclcheatsheet.png>]) (./Context/MDE/text/atl.tex
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2359,7 +2412,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[25 <./Context/MDE/figures/emf.png>]) (./Context/MDE/text/atl.tex)
+[29 <./Context/MDE/figures/emf.png>])
 (./Context/MDE/text/exampleModels/generic.tex
 
 
@@ -2369,7 +2422,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[26]
+[30]
 File: Articles/ICTAI2025/figures/metamodel.pdf Graphic file (type pdf)
 <use Articles/ICTAI2025/figures/metamodel.pdf>
 Package pdftex.def Info: Articles/ICTAI2025/figures/metamodel.pdf  used on inpu
@@ -2384,8 +2437,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[27]
-<Contributions/VAR/figures/vizmm.png, id=779, 1252.68pt x 513.92pt>
+[31]
+<Contributions/VAR/figures/vizmm.png, id=813, 1252.68pt x 513.92pt>
 File: Contributions/VAR/figures/vizmm.png Graphic file (type png)
 <use Contributions/VAR/figures/vizmm.png>
 Package pdftex.def Info: Contributions/VAR/figures/vizmm.png  used on input lin
@@ -2410,8 +2463,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[28 <./Contributions/VAR/figures/vizmm.png>]
-<Articles/SAC2025/figures/uc_uml.pdf, id=787, 283.0575pt x 77.3289pt>
+[32 <./Contributions/VAR/figures/vizmm.png>]
+<Articles/SAC2025/figures/uc_uml.pdf, id=820, 283.0575pt x 77.3289pt>
 File: Articles/SAC2025/figures/uc_uml.pdf Graphic file (type pdf)
 <use Articles/SAC2025/figures/uc_uml.pdf>
 Package pdftex.def Info: Articles/SAC2025/figures/uc_uml.pdf  used on input lin
@@ -2428,10 +2481,10 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Citation `Wang2012-srms' on page 29 undefined on input line 9.
+LaTeX Warning: Citation `Wang2012-srms' on page 33 undefined on input line 9.
 
 
-LaTeX Warning: Citation `Wang2012-srms' on page 29 undefined on input line 37.
+LaTeX Warning: Citation `Wang2012-srms' on page 33 undefined on input line 37.
 
 (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
@@ -2454,8 +2507,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[29 <./Articles/SAC2025/figures/uc_uml.pdf>]
-<Articles/ICTAI2025/figures/zooMM.pdf, id=813, 252.945pt x 40.2303pt>
+[33 <./Articles/SAC2025/figures/uc_uml.pdf>]
+<Articles/ICTAI2025/figures/zooMM.pdf, id=846, 252.945pt x 40.2303pt>
 File: Articles/ICTAI2025/figures/zooMM.pdf Graphic file (type pdf)
 <use Articles/ICTAI2025/figures/zooMM.pdf>
 Package pdftex.def Info: Articles/ICTAI2025/figures/zooMM.pdf  used on input li
@@ -2471,8 +2524,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[30 <./Articles/ICTAI2025/figures/zooMM.pdf>]
-<Contributions/VAR/figures/schedulingmm.png, id=832, 2372.865pt x 517.935pt>
+[34 <./Articles/ICTAI2025/figures/zooMM.pdf>]
+<Contributions/VAR/figures/schedulingmm.png, id=865, 2372.865pt x 517.935pt>
 File: Contributions/VAR/figures/schedulingmm.png Graphic file (type png)
 <use Contributions/VAR/figures/schedulingmm.png>
 Package pdftex.def Info: Contributions/VAR/figures/schedulingmm.png  used on in
@@ -2487,11 +2540,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[31 <./Contributions/VAR/figures/schedulingmm.png>]
+[35 <./Contributions/VAR/figures/schedulingmm.png>]
 Chapter 2.
 (./Context/CP/cp.tex
 
-LaTeX Warning: Citation `HoeveK06' on page 32 undefined on input line 39.
+LaTeX Warning: Citation `HoeveK06' on page 36 undefined on input line 39.
 
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
@@ -2499,15 +2552,15 @@ Package hyperref Warning: Difference (2) between bookmark levels is greater
 
 (./Context/CP/text/globals.tex
 
-LaTeX Warning: Citation `beldiceanu2010global' on page 32 undefined on input li
+LaTeX Warning: Citation `beldiceanu2010global' on page 36 undefined on input li
 ne 1.
 
 
-LaTeX Warning: Citation `HoeveK06' on page 32 undefined on input line 1.
+LaTeX Warning: Citation `HoeveK06' on page 36 undefined on input line 1.
 
 
 
-[32
+[36
 
 ]
 
@@ -2517,25 +2570,25 @@ LaTeX Warning: Command \textellipsis invalid in math mode on input line 27.
 LaTeX Warning: Command \textellipsis invalid in math mode on input line 27.
 
 
-LaTeX Warning: Citation `DBLP:conf/aaai/HentenryckC88' on page 33 undefined on 
+LaTeX Warning: Citation `DBLP:conf/aaai/HentenryckC88' on page 37 undefined on 
 input line 27.
 
 
-LaTeX Warning: Citation `van1999opl' on page 33 undefined on input line 27.
+LaTeX Warning: Citation `van1999opl' on page 37 undefined on input line 27.
 
 
 LaTeX Warning: Command \textellipsis invalid in math mode on input line 33.
 
 
-LaTeX Warning: Citation `pesant2004regular' on page 33 undefined on input line 
+LaTeX Warning: Citation `pesant2004regular' on page 37 undefined on input line 
 33.
 
 
-LaTeX Warning: Citation `beldiceanu2002sweep' on page 33 undefined on input lin
+LaTeX Warning: Citation `beldiceanu2002sweep' on page 37 undefined on input lin
 e 38.
 
 
-LaTeX Warning: Citation `DBLP:conf/gcai/BeldiceanuCFLPP15' on page 33 undefined
+LaTeX Warning: Citation `DBLP:conf/gcai/BeldiceanuCFLPP15' on page 37 undefined
  on input line 38.
 
 
@@ -2546,7 +2599,7 @@ Package caption Warning: \label without proper reference on input line 121.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `tab:sort_stable' on page 33 undefined on input line 4
+LaTeX Warning: Reference `tab:sort_stable' on page 37 undefined on input line 4
 1.
 
 
@@ -2559,15 +2612,15 @@ LaTeX Warning: Command \textellipsis invalid in math mode on input line 50.
 LaTeX Warning: Command \textellipsis invalid in math mode on input line 50.
 
 
-LaTeX Warning: Citation `beldiceanu1994chip' on page 33 undefined on input line
+LaTeX Warning: Citation `beldiceanu1994chip' on page 37 undefined on input line
  51.
 
 
-LaTeX Warning: Citation `DBLP:journals/informs/MercierH08' on page 33 undefined
+LaTeX Warning: Citation `DBLP:journals/informs/MercierH08' on page 37 undefined
  on input line 51.
 
 
-LaTeX Warning: Citation `cumulative' on page 33 undefined on input line 51.
+LaTeX Warning: Citation `cumulative' on page 37 undefined on input line 51.
 
 
 
@@ -2578,7 +2631,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[33{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]))
+[37{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]))
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2587,14 +2640,14 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[34]
+[38]
 Chapter 3.
 (./Context/SOTA/sota.tex (./Context/MDE/text/modelsearch.tex
 
-[35
+[39
 
 ]
-<Context/MDE/figures/modelsearch.png, id=864, 488.82625pt x 371.3875pt>
+<Context/MDE/figures/modelsearch.png, id=897, 488.82625pt x 371.3875pt>
 File: Context/MDE/figures/modelsearch.png Graphic file (type png)
 <use Context/MDE/figures/modelsearch.png>
 Package pdftex.def Info: Context/MDE/figures/modelsearch.png  used on input lin
@@ -2609,7 +2662,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
 
-[36 <./Context/MDE/figures/modelsearch.png>])
+[40 <./Context/MDE/figures/modelsearch.png>])
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <14.4> on input line 5.
 
@@ -2634,7 +2687,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[37]
+[41]
 ! Undefined control sequence.
 l.67         S :_1 [\{\Tuple
                             {a_1},\Tuple{a_2}\},\{\Tuple{a_1},\Tuple{a_2}\}]\\
@@ -2752,7 +2805,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-13.2232pt}.
 
-[38]) (./Context/SOTA/text/grimm.tex))) (./Contributions/VAR/var.tex
+[42]) (./Context/SOTA/text/grimm.tex))) (./Contributions/VAR/var.tex
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2761,9 +2814,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[39]
+[43]
 
-[40
+[44
 
 ]
 Chapter 4.
@@ -2791,7 +2844,7 @@ Overfull \hbox (14.05612pt too wide) detected at line 28
 
 
 
-[41
+[45
 
 ]
 File: Contributions/VAR/figures/schedulingmm.png Graphic file (type png)
@@ -2808,7 +2861,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[42]
+[46]
 
 Package hyperref Warning: No autoref name for `listing' on input line 101.
 
@@ -2824,9 +2877,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[43]
+[47]
 
-LaTeX Warning: Reference `lst:uc_ocl_var' on page 44 undefined on input line 12
+LaTeX Warning: Reference `lst:uc_ocl_var' on page 48 undefined on input line 12
 .
 
 
@@ -2841,7 +2894,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[44])
+[48])
 Overfull \hbox (67.48917pt too wide) in paragraph at lines 152--16
 \T1/lmr/m/n/12 Variable prop-erty ac-cess is sourced from con-stant (non an-no-
 tated) queries, e.g. \T1/lmtt/m/n/12 self.prev.var(stage)\T1/lmr/m/n/12 .
@@ -2862,27 +2915,27 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[45] (./Contributions/VAR/text/refactoring.tex
+[49] (./Contributions/VAR/text/refactoring.tex
 
-LaTeX Warning: Reference `fig:uc_ocl_var_ast' on page 46 undefined on input lin
+LaTeX Warning: Reference `fig:uc_ocl_var_ast' on page 50 undefined on input lin
 e 2.
 
 
-LaTeX Warning: Reference `lst:uc_ocl_var' on page 46 undefined on input line 2.
+LaTeX Warning: Reference `lst:uc_ocl_var' on page 50 undefined on input line 2.
 
 
-<Articles/SAC2025/figures/ASTbasic.pdf, id=956, 295.1025pt x 406.3983pt>
+<Articles/SAC2025/figures/ASTbasic.pdf, id=989, 295.1025pt x 406.3983pt>
 File: Articles/SAC2025/figures/ASTbasic.pdf Graphic file (type pdf)
 <use Articles/SAC2025/figures/ASTbasic.pdf>
 Package pdftex.def Info: Articles/SAC2025/figures/ASTbasic.pdf  used on input l
 ine 6.
 (pdftex.def)             Requested size: 364.19667pt x 501.55986pt.
 
-LaTeX Warning: Reference `lst:uc_ocl_var' on page 46 undefined on input line 7.
+LaTeX Warning: Reference `lst:uc_ocl_var' on page 50 undefined on input line 7.
 
 
 
-LaTeX Warning: Reference `lst:uc_ocl_var' on page 46 undefined on input line 7.
+LaTeX Warning: Reference `lst:uc_ocl_var' on page 50 undefined on input line 7.
 
 
 ! Undefined control sequence.
@@ -2895,11 +2948,11 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Reference `fig:uc_ocl_var_ast' on page 46 undefined on input lin
+LaTeX Warning: Reference `fig:uc_ocl_var_ast' on page 50 undefined on input lin
 e 12.
 
 
-LaTeX Warning: Reference `fig:uc_ocl_var_ast' on page 46 undefined on input lin
+LaTeX Warning: Reference `fig:uc_ocl_var_ast' on page 50 undefined on input lin
 e 12.
 
 
@@ -2910,23 +2963,23 @@ Task \T1/lmr/m/n/12 and \T1/lmtt/m/n/12 Stage \T1/lmr/m/n/12 is an-no-tated (\T
  []
 
 
-LaTeX Warning: Reference `fig:uc_ocl_var_ast' on page 46 undefined on input lin
+LaTeX Warning: Reference `fig:uc_ocl_var_ast' on page 50 undefined on input lin
 e 24.
 
 
-LaTeX Warning: Reference `lst:uc_ocl_var' on page 46 undefined on input line 33
+LaTeX Warning: Reference `lst:uc_ocl_var' on page 50 undefined on input line 33
 .
 
 
-LaTeX Warning: Reference `fig:uc_ocl_var_ast' on page 46 undefined on input lin
+LaTeX Warning: Reference `fig:uc_ocl_var_ast' on page 50 undefined on input lin
 e 33.
 
 
-LaTeX Warning: Reference `lst:uc_ocl_var' on page 46 undefined on input line 63
+LaTeX Warning: Reference `lst:uc_ocl_var' on page 50 undefined on input line 63
 .
 
 
-LaTeX Warning: Reference `fig:uc_ocl_var_ast' on page 46 undefined on input lin
+LaTeX Warning: Reference `fig:uc_ocl_var_ast' on page 50 undefined on input lin
 e 63.
 
 
@@ -2938,13 +2991,13 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[46]
+[50]
 
-LaTeX Warning: Reference `lst:uc_ocl_var' on page 47 undefined on input line 93
+LaTeX Warning: Reference `lst:uc_ocl_var' on page 51 undefined on input line 93
 .
 
 
-LaTeX Warning: Reference `lst:uc_ocl_var' on page 47 undefined on input line 93
+LaTeX Warning: Reference `lst:uc_ocl_var' on page 51 undefined on input line 93
 .
 
 
@@ -2959,11 +3012,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[47]
+[51]
 
 Package hyperref Warning: No autoref name for `listing' on input line 118.
 
-<Articles/SAC2025/figures/ASTderive.pdf, id=989, 377.49028pt x 358.4592pt>
+<Articles/SAC2025/figures/ASTderive.pdf, id=1023, 377.49028pt x 358.4592pt>
 File: Articles/SAC2025/figures/ASTderive.pdf Graphic file (type pdf)
 <use Articles/SAC2025/figures/ASTderive.pdf>
 Package pdftex.def Info: Articles/SAC2025/figures/ASTderive.pdf  used on input 
@@ -2993,11 +3046,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[48]
+[52]
 
-[49 <./Articles/SAC2025/figures/ASTbasic.pdf>]
+[53 <./Articles/SAC2025/figures/ASTbasic.pdf>]
 
-[50 <./Articles/SAC2025/figures/ASTderive.pdf>]
+[54 <./Articles/SAC2025/figures/ASTderive.pdf>]
 Chapter 5.
 (./Contributions/UMLCSP/text/property.tex
 Overfull \hbox (13.62671pt too wide) in paragraph at lines 1--13
@@ -3006,17 +3059,17 @@ e-sent the properties--attributes and references--
  []
 
 
-LaTeX Warning: Citation `coyle_towards_2025' on page 51 undefined on input line
+LaTeX Warning: Citation `coyle_towards_2025' on page 55 undefined on input line
  24.
 
 
 
-[51
+[55
 
 
 ]
 
-LaTeX Warning: Citation `coyle_towards_2025' on page 52 undefined on input line
+LaTeX Warning: Citation `coyle_towards_2025' on page 56 undefined on input line
  57.
 
 
@@ -3028,10 +3081,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[52]) (./Contributions/UMLCSP/text/referencetypes.tex)
+[56]) (./Contributions/UMLCSP/text/referencetypes.tex)
 (./Contributions/UMLCSP/text/collectiontypes.tex
 
-LaTeX Warning: Reference `ssec:ctxt_cd' on page 53 undefined on input line 1.
+LaTeX Warning: Reference `ssec:ctxt_cd' on page 57 undefined on input line 1.
 
 
 Overfull \hbox (2.74886pt too wide) in paragraph at lines 6--13
@@ -3050,8 +3103,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[53]
-<Articles/ICTAI2025/figures/afd.pdf, id=1062, 74.1972pt x 28.1853pt>
+[57]
+<Articles/ICTAI2025/figures/afd.pdf, id=1094, 74.1972pt x 28.1853pt>
 File: Articles/ICTAI2025/figures/afd.pdf Graphic file (type pdf)
 <use Articles/ICTAI2025/figures/afd.pdf>
 Package pdftex.def Info: Articles/ICTAI2025/figures/afd.pdf  used on input line
@@ -3072,7 +3125,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[54 <./Articles/ICTAI2025/figures/afd.pdf>]))
+[58 <./Articles/ICTAI2025/figures/afd.pdf>]))
 (./Contributions/OCLCSP/navCSP/navcsp.tex
 
 
@@ -3082,9 +3135,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[55]
+[59]
 
-[56
+[60
 
 ]
 Chapter 6.
@@ -3126,15 +3179,15 @@ LaTeX Font Warning: Font shape `U/stmry/m/n' in size <0.5> not available
 
 
 
-[57
+[61
 
 ]
 
-LaTeX Warning: Reference `sec:contrib_type_casting' on page 58 undefined on inp
+LaTeX Warning: Reference `sec:contrib_type_casting' on page 62 undefined on inp
 ut line 65.
 
 
-LaTeX Warning: Reference `sec:contrib_type_casting' on page 58 undefined on inp
+LaTeX Warning: Reference `sec:contrib_type_casting' on page 62 undefined on inp
 ut line 73.
 
 
@@ -3146,7 +3199,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[58]
+[62]
 
 ! LaTeX Error: Something's wrong--perhaps a missing \item.
 
@@ -3168,7 +3221,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[59]
+[63]
 ! Undefined control sequence.
 l.127     \Description
                       [AST]{}
@@ -3187,7 +3240,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[60])) (./Contributions/OCLCSP/oclcsp.tex
+[64])) (./Contributions/OCLCSP/oclcsp.tex
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -3196,16 +3249,16 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[61]
+[65]
 
-[62
+[66
 
 ]
 Chapter 7.
 (./Contributions/OCLCSP/Operations/intbool.tex)
 (./Contributions/OCLCSP/Operations/typecasting.tex
 
-[63
+[67
 
 ]
 
@@ -3225,7 +3278,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[64]
+[68]
 
 LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 10
 5.
@@ -3243,7 +3296,7 @@ Package caption Warning: \label without proper reference on input line 121.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `tab:sort_stable' on page 65 undefined on input line 1
+LaTeX Warning: Reference `tab:sort_stable' on page 69 undefined on input line 1
 16.
 
 
@@ -3255,12 +3308,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[65]
+[69]
 
 LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 18
 5.
 
-<Articles/ICTAI2025/figures/cumulative.pdf, id=1171, 323.28778pt x 233.9139pt>
+<Articles/ICTAI2025/figures/cumulative.pdf, id=1201, 323.28778pt x 233.9139pt>
 File: Articles/ICTAI2025/figures/cumulative.pdf Graphic file (type pdf)
 <use Articles/ICTAI2025/figures/cumulative.pdf>
 Package pdftex.def Info: Articles/ICTAI2025/figures/cumulative.pdf  used on inp
@@ -3275,7 +3328,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[66]
+[70]
 
 LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 22
 8.
@@ -3300,12 +3353,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[67 <./Articles/ICTAI2025/figures/cumulative.pdf>]
+[71 <./Articles/ICTAI2025/figures/cumulative.pdf>]
 
 LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 33
 7.
 
-<Articles/ICTAI2025/figures/afn.pdf, id=1204, 153.6942pt x 89.3739pt>
+<Articles/ICTAI2025/figures/afn.pdf, id=1232, 153.6942pt x 89.3739pt>
 File: Articles/ICTAI2025/figures/afn.pdf Graphic file (type pdf)
 <use Articles/ICTAI2025/figures/afn.pdf>
 Package pdftex.def Info: Articles/ICTAI2025/figures/afn.pdf  used on input line
@@ -3328,7 +3381,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[68]
+[72]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -3340,7 +3393,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[69 <./Articles/ICTAI2025/figures/afn.pdf>]
+[73 <./Articles/ICTAI2025/figures/afn.pdf>]
 Overfull \vbox (622.58932pt too high) has occurred while \output is active []
 
 
@@ -3352,13 +3405,13 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[70] (./Conclusion/conclusion.tex
+[74] (./Conclusion/conclusion.tex
 
-LaTeX Warning: Citation 'Pierre1901' on page 71 undefined on input line 20.
+LaTeX Warning: Citation 'Pierre1901' on page 75 undefined on input line 20.
 
 
 
-[71
+[75
 
 
 ]
@@ -3368,11 +3421,11 @@ LaTeX Font Info:    Trying to load font information for T1+lmss on input line 3
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 
-[72])
+[76])
 
-[73]
+[77]
 
-[74
+[78
 
 ]
 
@@ -3389,7 +3442,7 @@ LaTeX Warning: Empty bibliography on input line 167.
 
 
 
-[75
+[79
 
 
 ] (./Couverture-these/resume.tex
@@ -3453,7 +3506,7 @@ Overfull \hbox (1.76889pt too wide) has occurred while \output is active
 [][] 
  []
 
-[76
+[80
 
 
 ])
@@ -3461,7 +3514,7 @@ Overfull \hbox (1.76889pt too wide) has occurred while \output is active
 Package caption Warning: Unused \captionsetup[csp] on input line 12.
 See the caption package documentation for explanation.
 
-runsystem(latexminted cleantemp  --timestamp 20251203130939 FAD58DE7366495DB465
+runsystem(latexminted cleantemp  --timestamp 20251204112500 FAD58DE7366495DB465
 0CFEFAC2FCD61)...executed safely (allowed).
 
 (./main.aux)
@@ -3483,14 +3536,8 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: FDFB6665E9A0CBF328D45B00EC35DC1C;18139
-(rerunfilecheck)             After:  860FA29DC741D652D996D5C366BA861C;17512.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: 83BD301D1B3CFEA5F6AD8DF2AFBB5524;18059.
 
 Package biblatex Warning: Please (re)run Biber on the file:
 (biblatex)                main
@@ -3501,78 +3548,38 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 57580 strings out of 475171
- 1291775 string characters out of 5767095
+ 57605 strings out of 475171
+ 1292698 string characters out of 5767095
  2519336 words of memory out of 5000000
- 79110 multiletter control sequences out of 15000+600000
+ 79132 multiletter control sequences out of 15000+600000
  796273 words of font info for 201 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  117i,17n,121p,1384b,2551s stack positions out of 10000i,1000n,20000p,200000b,200000s
-
-pdfTeX warning (dest): name{figure.caption.47} has been referenced but does not
- exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{figure.caption.46} has been referenced but does not
- exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{figure.caption.43} has been referenced but does not
- exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{table.caption.38} has been referenced but does not 
-exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{table.caption.45} has been referenced but does not 
-exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{section*.50} has been referenced but does not exist
-, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{section*.49} has been referenced but does not exist
-, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{chapter*.48} has been referenced but does not exist
-, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{subsection.1.3.3} has been referenced but does not 
-exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{subsection.1.3.2} has been referenced but does not 
-exist, replaced by a fixed one
-
-</usr/share/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf-dist/
-fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/l
-mcsc10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/share/
-texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf-dist/fonts/type1/
-public/lm/lmmi12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></u
-sr/share/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/share/texmf-dist/font
-s/type1/public/lm/lmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi8.
-pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf-di
-st/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf-dist/fonts/type1/public/lm
-/lmr7.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/share/tex
-mf-dist/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf-dist/fonts/type1/pub
-lic/lm/lmri12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></u
-sr/share/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf-dist/fon
-ts/type1/public/lm/lmsy7.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmsy8
-.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/share/texmf-
-dist/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf-dist/fonts/type1/public
-/lm/lmtt12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtt8.pfb></usr/sha
-re/texmf-dist/fonts/type1/public/lm/lmtti10.pfb></usr/share/texmf-dist/fonts/ty
-pe1/public/stmaryrd/stmary10.pfb></usr/share/texmf-dist/fonts/type1/urw/helveti
-c/uhvb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/s
-hare/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on main.pdf (76 pages, 1203893 bytes).
+</usr/share/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf-dis
+t/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/lm
+/lmcsc10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/shar
+e/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf-dist/fonts/type
+1/public/lm/lmmi12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi5.pfb><
+/usr/share/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/share/texmf-dist/fo
+nts/type1/public/lm/lmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi
+8.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf-
+dist/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf-dist/fonts/type1/public/
+lm/lmr7.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/share/t
+exmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf-dist/fonts/type1/p
+ublic/lm/lmri12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb><
+/usr/share/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf-dist/f
+onts/type1/public/lm/lmsy7.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lms
+y8.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/share/texm
+f-dist/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf-dist/fonts/type1/publ
+ic/lm/lmtt12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtt8.pfb></usr/s
+hare/texmf-dist/fonts/type1/public/lm/lmtti10.pfb></usr/share/texmf-dist/fonts/
+type1/public/stmaryrd/stmary10.pfb></usr/share/texmf-dist/fonts/type1/urw/helve
+tic/uhvb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr
+/share/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on main.pdf (80 pages, 1520648 bytes).
 PDF statistics:
- 1484 PDF objects out of 1728 (max. 8388607)
- 1265 compressed objects within 13 object streams
- 354 named destinations out of 1000 (max. 500000)
- 1042 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1510 PDF objects out of 1728 (max. 8388607)
+ 1283 compressed objects within 13 object streams
+ 357 named destinations out of 1000 (max. 500000)
+ 1065 words of extra memory for PDF output out of 10000 (max. 10000000)
 

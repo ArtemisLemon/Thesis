@@ -7,118 +7,124 @@
 \contentsline {subsection}{\numberline {1.1.1}Object Models}{14}{subsection.1.1.1}%
 \contentsline {subsubsection}{Definitions}{14}{section*.8}%
 \contentsline {subsubsection}{Simple Example : Family Tree}{15}{section*.9}%
+\contentsline {subsubsection}{Example : Expressions in language as object models}{15}{section*.11}%
 \contentsline {subsection}{\numberline {1.1.2}Metamodels}{16}{subsection.1.1.2}%
-\contentsline {subsubsection}{Definitions}{17}{section*.14}%
-\contentsline {subsubsection}{Simple Examples of inline notation}{18}{section*.15}%
+\contentsline {subsubsection}{Definitions}{17}{section*.15}%
+\contentsline {subsubsection}{Simple Examples of inline notation}{18}{section*.16}%
 \contentsline {subsection}{\numberline {1.1.3}Model Validation and Transformation}{19}{subsection.1.1.3}%
 \contentsline {section}{\numberline {1.2}The Unified Modeling Language}{19}{section.1.2}%
 \contentsline {subsection}{\numberline {1.2.1}Meta-Object Facility}{20}{subsection.1.2.1}%
 \contentsline {subsection}{\numberline {1.2.2}Class Diagrams}{20}{subsection.1.2.2}%
-\contentsline {subsubsection}{UML Collection Types}{21}{section*.19}%
-\contentsline {subsection}{\numberline {1.2.3}Object Diagrams}{21}{subsection.1.2.3}%
-\contentsline {section}{\numberline {1.3}The Object Constraint Language}{22}{section.1.3}%
-\contentsline {subsection}{\numberline {1.3.1}Quick introduction to OCL}{22}{subsection.1.3.1}%
-\contentsline {subsubsection}{self: how ocl expressions are applied to object models}{22}{section*.21}%
-\contentsline {subsubsection}{Navigation: relation to the metamodel}{23}{section*.22}%
-\contentsline {subsubsection}{Query: getting and infering ints and objects from the model}{23}{section*.23}%
-\contentsline {subsubsection}{Constraint: constraining the model}{23}{section*.24}%
-\contentsline {section}{\numberline {1.4}EMF and ATL: State-of-the-Art}{24}{section.1.4}%
-\contentsline {subsection}{\numberline {1.4.1}Eclipse Modeling Framework}{24}{subsection.1.4.1}%
-\contentsline {subsection}{\numberline {1.4.2}Atlas Transformation Language}{26}{subsection.1.4.2}%
-\contentsline {section}{\numberline {1.5}Examples of Metamodels used in this Thesis}{26}{section.1.5}%
-\contentsline {subsection}{\numberline {1.5.1}Generic Example}{27}{subsection.1.5.1}%
-\contentsline {subsection}{\numberline {1.5.2}Graphical User-Interface Example}{28}{subsection.1.5.2}%
-\contentsline {subsection}{\numberline {1.5.3}Reconfigurable Manufacturing Example}{29}{subsection.1.5.3}%
-\contentsline {subsubsection}{OCL Constraints for RMS}{29}{section*.29}%
-\contentsline {subsection}{\numberline {1.5.4}Zoo Example}{30}{subsection.1.5.4}%
-\contentsline {subsection}{\numberline {1.5.5}Scheduling Example}{31}{subsection.1.5.5}%
-\contentsline {chapter}{\numberline {2}Constrain Programming: an exact and explainable Artificial Intelligence}{32}{chapter.2}%
-\contentsline {subsection}{\numberline {2.0.1}Constraint Satisfaction Problems}{32}{subsection.2.0.1}%
-\contentsline {subsection}{\numberline {2.0.2}Global Constraints}{32}{subsection.2.0.2}%
-\contentsline {subsubsection}{Propagation}{33}{section*.32}%
-\contentsline {subsection}{\numberline {2.0.3}CP Solvers}{34}{subsection.2.0.3}%
-\contentsline {subsection}{\numberline {2.0.4}Boolean Satisfiability}{34}{subsection.2.0.4}%
-\contentsline {chapter}{\numberline {3}Model Search using Artificial Intelligence:\emph {Object Oriented Constraint Programming}}{35}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Model Search}{35}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Model Search}{35}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Applications of Model Search}{36}{subsection.3.1.2}%
-\contentsline {section}{\numberline {3.2}State of the Art}{37}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}ATL$^{\text {c}}$}{37}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Alloy \& Kodkod}{37}{subsection.3.2.2}%
-\contentsline {subsubsection}{Alloy Language}{38}{section*.34}%
-\contentsline {subsubsection}{Kodkod}{38}{section*.35}%
-\contentsline {subsection}{\numberline {3.2.3}Grimm}{39}{subsection.3.2.3}%
-\contentsline {chapter}{\numberline {4}Contribution : OCL Variable Declaration \texttt {VarOperationExpression}}{41}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Problem}{41}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Denoting Variables}{44}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Base Syntax}{44}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Parameters to guide modeling and and search}{44}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Vocabulary for Annotated Expressions}{45}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}Refactoring OCL around annotations}{46}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Annotation in the OCL Abstract Syntax Tree}{46}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Refactoring OCL Around Annotations}{47}{subsection.4.3.2}%
-\contentsline {section}{\numberline {4.4}Discussions}{48}{section.4.4}%
-\contentsline {chapter}{\numberline {5}Contribution : UML CSP}{51}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Encoding Properties}{51}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Encoding References}{52}{subsection.5.1.1}%
-\contentsline {section}{\numberline {5.2}Constraint Models for UML Reference Types}{53}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Constraint Models for UML Collection Types}{53}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Using information from Variable Annotations}{55}{section.5.4}%
-\contentsline {chapter}{\numberline {6}Contribution : OCL Navigation}{57}{chapter.6}%
-\contentsline {section}{\numberline {6.1}CP model for OCL queries on the instance}{57}{section.6.1}%
-\contentsline {section}{\numberline {6.2}NavCSP experimentation}{59}{section.6.2}%
-\contentsline {subsubsection}{OCL Query Dimensions}{59}{section*.43}%
-\contentsline {subsubsection}{OCL Query Size}{59}{section*.44}%
-\contentsline {subsubsection}{Subset Sum Problem}{61}{section*.46}%
-\contentsline {chapter}{\numberline {7}Contribution : OCL CSP}{63}{chapter.7}%
-\contentsline {section}{\numberline {7.1}CP Models for OCL Integer and Boolean Operations}{63}{section.7.1}%
-\contentsline {section}{\numberline {7.2}CP Models for OCL Collection Type Casting Operations}{63}{section.7.2}%
-\contentsline {subsection}{\numberline {7.2.1}asBag()}{63}{subsection.7.2.1}%
-\contentsline {subsection}{\numberline {7.2.2}asSet()}{64}{subsection.7.2.2}%
-\contentsline {subsection}{\numberline {7.2.3}asSequence()}{65}{subsection.7.2.3}%
-\contentsline {subsection}{\numberline {7.2.4}asOrderedSet()}{67}{subsection.7.2.4}%
-\contentsline {subsection}{\numberline {7.2.5}Filtering Dummy Values in OCL Collection Operations}{68}{subsection.7.2.5}%
-\contentsline {section}{\numberline {7.3}CP Models for OCL Collection Operations}{70}{section.7.3}%
-\contentsline {section}{\numberline {7.4}CP Models for OCL Sequence Operations}{70}{section.7.4}%
-\contentsline {subsection}{\numberline {7.4.1}Prepend}{70}{subsection.7.4.1}%
-\contentsline {subsection}{\numberline {7.4.2}Append}{70}{subsection.7.4.2}%
-\contentsline {subsection}{\numberline {7.4.3}Insert At}{70}{subsection.7.4.3}%
-\contentsline {subsection}{\numberline {7.4.4}Ordered Sub-Set}{70}{subsection.7.4.4}%
-\contentsline {subsection}{\numberline {7.4.5}At}{70}{subsection.7.4.5}%
-\contentsline {subsection}{\numberline {7.4.6}Index Of}{70}{subsection.7.4.6}%
-\contentsline {subsection}{\numberline {7.4.7}First}{70}{subsection.7.4.7}%
-\contentsline {subsection}{\numberline {7.4.8}Last}{70}{subsection.7.4.8}%
-\contentsline {subsection}{\numberline {7.4.9}Reverse}{70}{subsection.7.4.9}%
-\contentsline {section}{\numberline {7.5}CP Models for OCL Set Operations}{70}{section.7.5}%
-\contentsline {subsection}{\numberline {7.5.1}Union}{70}{subsection.7.5.1}%
-\contentsline {subsection}{\numberline {7.5.2}Intersection}{70}{subsection.7.5.2}%
-\contentsline {subsection}{\numberline {7.5.3}Difference}{70}{subsection.7.5.3}%
-\contentsline {subsection}{\numberline {7.5.4}Symetric Difference}{70}{subsection.7.5.4}%
-\contentsline {subsection}{\numberline {7.5.5}including}{70}{subsection.7.5.5}%
-\contentsline {subsection}{\numberline {7.5.6}excluding}{70}{subsection.7.5.6}%
-\contentsline {section}{\numberline {7.6}CP Models for OCL Bag Operations}{70}{section.7.6}%
-\contentsline {section}{\numberline {7.7}CP Models for OCL Ordered Set Operations}{70}{section.7.7}%
-\contentsline {subsection}{\numberline {7.7.1}Prepend}{70}{subsection.7.7.1}%
-\contentsline {subsection}{\numberline {7.7.2}Append}{70}{subsection.7.7.2}%
-\contentsline {subsection}{\numberline {7.7.3}Insert At}{70}{subsection.7.7.3}%
-\contentsline {subsection}{\numberline {7.7.4}Ordered Sub-Set}{70}{subsection.7.7.4}%
-\contentsline {subsection}{\numberline {7.7.5}At}{70}{subsection.7.7.5}%
-\contentsline {subsection}{\numberline {7.7.6}Index Of}{70}{subsection.7.7.6}%
-\contentsline {subsection}{\numberline {7.7.7}First}{70}{subsection.7.7.7}%
-\contentsline {subsection}{\numberline {7.7.8}Last}{70}{subsection.7.7.8}%
-\contentsline {subsection}{\numberline {7.7.9}Reverse}{70}{subsection.7.7.9}%
-\contentsline {section}{\numberline {7.8}CP Models for Class Functions and Global Functions}{70}{section.7.8}%
-\contentsline {subsection}{\numberline {7.8.1}Prepend}{70}{subsection.7.8.1}%
-\contentsline {subsection}{\numberline {7.8.2}Append}{70}{subsection.7.8.2}%
-\contentsline {subsection}{\numberline {7.8.3}Insert At}{70}{subsection.7.8.3}%
-\contentsline {subsection}{\numberline {7.8.4}Ordered Sub-Set}{70}{subsection.7.8.4}%
-\contentsline {subsection}{\numberline {7.8.5}At}{70}{subsection.7.8.5}%
-\contentsline {subsection}{\numberline {7.8.6}Index Of}{70}{subsection.7.8.6}%
-\contentsline {subsection}{\numberline {7.8.7}First}{70}{subsection.7.8.7}%
-\contentsline {subsection}{\numberline {7.8.8}Last}{70}{subsection.7.8.8}%
-\contentsline {subsection}{\numberline {7.8.9}Reverse}{70}{subsection.7.8.9}%
-\contentsline {chapter}{Conclusion}{71}{chapter*.50}%
-\contentsline {section}{Première section de l'intro}{72}{section*.51}%
-\contentsline {chapter}{Bibliography}{75}{section*.52}%
+\contentsline {subsubsection}{UML Collection Types}{21}{section*.20}%
+\contentsline {subsubsection}{UML Reference Types}{21}{section*.21}%
+\contentsline {subsection}{\numberline {1.2.3}Object Diagrams}{22}{subsection.1.2.3}%
+\contentsline {section}{\numberline {1.3}The Object Constraint Language}{23}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Quick introduction to OCL}{23}{subsection.1.3.1}%
+\contentsline {subsubsection}{self: how ocl expressions are applied to the objects in object models}{23}{section*.23}%
+\contentsline {subsubsection}{Building OCL expressions by chaining operations}{24}{section*.24}%
+\contentsline {subsubsection}{Navigation: relation to the metamodel}{24}{section*.25}%
+\contentsline {subsubsection}{Query: getting and infering ints and objects from the model}{25}{section*.26}%
+\contentsline {subsubsection}{Constraint: constraining the model}{25}{section*.27}%
+\contentsline {subsection}{\numberline {1.3.2}Typing OCL Expressions}{26}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}OCL Expression Metamodel}{26}{subsection.1.3.3}%
+\contentsline {subsection}{\numberline {1.3.4}OCL Operations summary}{27}{subsection.1.3.4}%
+\contentsline {section}{\numberline {1.4}EMF and ATL: State-of-the-Art}{27}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Eclipse Modeling Framework}{27}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Atlas Transformation Language}{29}{subsection.1.4.2}%
+\contentsline {section}{\numberline {1.5}Examples of Metamodels used in this Thesis}{30}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Generic Example}{31}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}Graphical User-Interface Example}{32}{subsection.1.5.2}%
+\contentsline {subsection}{\numberline {1.5.3}Reconfigurable Manufacturing Example}{33}{subsection.1.5.3}%
+\contentsline {subsubsection}{OCL Constraints for RMS}{33}{section*.35}%
+\contentsline {subsection}{\numberline {1.5.4}Zoo Example}{34}{subsection.1.5.4}%
+\contentsline {subsection}{\numberline {1.5.5}Scheduling Example}{35}{subsection.1.5.5}%
+\contentsline {chapter}{\numberline {2}Constrain Programming: an exact and explainable Artificial Intelligence}{36}{chapter.2}%
+\contentsline {subsection}{\numberline {2.0.1}Constraint Satisfaction Problems}{36}{subsection.2.0.1}%
+\contentsline {subsection}{\numberline {2.0.2}Global Constraints}{36}{subsection.2.0.2}%
+\contentsline {subsubsection}{Propagation}{37}{section*.38}%
+\contentsline {subsection}{\numberline {2.0.3}CP Solvers}{38}{subsection.2.0.3}%
+\contentsline {subsection}{\numberline {2.0.4}Boolean Satisfiability}{38}{subsection.2.0.4}%
+\contentsline {chapter}{\numberline {3}Model Search using Artificial Intelligence:\emph {Object Oriented Constraint Programming}}{39}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Model Search}{39}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Model Search}{39}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Applications of Model Search}{40}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}State of the Art}{41}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}ATL$^{\text {c}}$}{41}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Alloy \& Kodkod}{41}{subsection.3.2.2}%
+\contentsline {subsubsection}{Alloy Language}{42}{section*.40}%
+\contentsline {subsubsection}{Kodkod}{42}{section*.41}%
+\contentsline {subsection}{\numberline {3.2.3}Grimm}{43}{subsection.3.2.3}%
+\contentsline {chapter}{\numberline {4}Contribution : OCL Variable Declaration \texttt {VarOperationExpression}}{45}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Problem}{45}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Denoting Variables}{48}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Base Syntax}{48}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Parameters to guide modeling and and search}{48}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Vocabulary for Annotated Expressions}{49}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}Refactoring OCL around annotations}{50}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Annotation in the OCL Abstract Syntax Tree}{50}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Refactoring OCL Around Annotations}{51}{subsection.4.3.2}%
+\contentsline {section}{\numberline {4.4}Discussions}{52}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Contribution : UML CSP}{55}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Encoding Properties}{55}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Encoding References}{56}{subsection.5.1.1}%
+\contentsline {section}{\numberline {5.2}Constraint Models for UML Reference Types}{57}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Constraint Models for UML Collection Types}{57}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Using information from Variable Annotations}{59}{section.5.4}%
+\contentsline {chapter}{\numberline {6}Contribution : OCL Navigation}{61}{chapter.6}%
+\contentsline {section}{\numberline {6.1}CP model for OCL queries on the instance}{61}{section.6.1}%
+\contentsline {section}{\numberline {6.2}NavCSP experimentation}{63}{section.6.2}%
+\contentsline {subsubsection}{OCL Query Dimensions}{63}{section*.49}%
+\contentsline {subsubsection}{OCL Query Size}{63}{section*.50}%
+\contentsline {subsubsection}{Subset Sum Problem}{65}{section*.52}%
+\contentsline {chapter}{\numberline {7}Contribution : OCL CSP}{67}{chapter.7}%
+\contentsline {section}{\numberline {7.1}CP Models for OCL Integer and Boolean Operations}{67}{section.7.1}%
+\contentsline {section}{\numberline {7.2}CP Models for OCL Collection Type Casting Operations}{67}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}asBag()}{67}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}asSet()}{68}{subsection.7.2.2}%
+\contentsline {subsection}{\numberline {7.2.3}asSequence()}{69}{subsection.7.2.3}%
+\contentsline {subsection}{\numberline {7.2.4}asOrderedSet()}{71}{subsection.7.2.4}%
+\contentsline {subsection}{\numberline {7.2.5}Filtering Dummy Values in OCL Collection Operations}{72}{subsection.7.2.5}%
+\contentsline {section}{\numberline {7.3}CP Models for OCL Collection Operations}{74}{section.7.3}%
+\contentsline {section}{\numberline {7.4}CP Models for OCL Sequence Operations}{74}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}Prepend}{74}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}Append}{74}{subsection.7.4.2}%
+\contentsline {subsection}{\numberline {7.4.3}Insert At}{74}{subsection.7.4.3}%
+\contentsline {subsection}{\numberline {7.4.4}Ordered Sub-Set}{74}{subsection.7.4.4}%
+\contentsline {subsection}{\numberline {7.4.5}At}{74}{subsection.7.4.5}%
+\contentsline {subsection}{\numberline {7.4.6}Index Of}{74}{subsection.7.4.6}%
+\contentsline {subsection}{\numberline {7.4.7}First}{74}{subsection.7.4.7}%
+\contentsline {subsection}{\numberline {7.4.8}Last}{74}{subsection.7.4.8}%
+\contentsline {subsection}{\numberline {7.4.9}Reverse}{74}{subsection.7.4.9}%
+\contentsline {section}{\numberline {7.5}CP Models for OCL Set Operations}{74}{section.7.5}%
+\contentsline {subsection}{\numberline {7.5.1}Union}{74}{subsection.7.5.1}%
+\contentsline {subsection}{\numberline {7.5.2}Intersection}{74}{subsection.7.5.2}%
+\contentsline {subsection}{\numberline {7.5.3}Difference}{74}{subsection.7.5.3}%
+\contentsline {subsection}{\numberline {7.5.4}Symetric Difference}{74}{subsection.7.5.4}%
+\contentsline {subsection}{\numberline {7.5.5}including}{74}{subsection.7.5.5}%
+\contentsline {subsection}{\numberline {7.5.6}excluding}{74}{subsection.7.5.6}%
+\contentsline {section}{\numberline {7.6}CP Models for OCL Bag Operations}{74}{section.7.6}%
+\contentsline {section}{\numberline {7.7}CP Models for OCL Ordered Set Operations}{74}{section.7.7}%
+\contentsline {subsection}{\numberline {7.7.1}Prepend}{74}{subsection.7.7.1}%
+\contentsline {subsection}{\numberline {7.7.2}Append}{74}{subsection.7.7.2}%
+\contentsline {subsection}{\numberline {7.7.3}Insert At}{74}{subsection.7.7.3}%
+\contentsline {subsection}{\numberline {7.7.4}Ordered Sub-Set}{74}{subsection.7.7.4}%
+\contentsline {subsection}{\numberline {7.7.5}At}{74}{subsection.7.7.5}%
+\contentsline {subsection}{\numberline {7.7.6}Index Of}{74}{subsection.7.7.6}%
+\contentsline {subsection}{\numberline {7.7.7}First}{74}{subsection.7.7.7}%
+\contentsline {subsection}{\numberline {7.7.8}Last}{74}{subsection.7.7.8}%
+\contentsline {subsection}{\numberline {7.7.9}Reverse}{74}{subsection.7.7.9}%
+\contentsline {section}{\numberline {7.8}CP Models for Class Functions and Global Functions}{74}{section.7.8}%
+\contentsline {subsection}{\numberline {7.8.1}Prepend}{74}{subsection.7.8.1}%
+\contentsline {subsection}{\numberline {7.8.2}Append}{74}{subsection.7.8.2}%
+\contentsline {subsection}{\numberline {7.8.3}Insert At}{74}{subsection.7.8.3}%
+\contentsline {subsection}{\numberline {7.8.4}Ordered Sub-Set}{74}{subsection.7.8.4}%
+\contentsline {subsection}{\numberline {7.8.5}At}{74}{subsection.7.8.5}%
+\contentsline {subsection}{\numberline {7.8.6}Index Of}{74}{subsection.7.8.6}%
+\contentsline {subsection}{\numberline {7.8.7}First}{74}{subsection.7.8.7}%
+\contentsline {subsection}{\numberline {7.8.8}Last}{74}{subsection.7.8.8}%
+\contentsline {subsection}{\numberline {7.8.9}Reverse}{74}{subsection.7.8.9}%
+\contentsline {chapter}{Conclusion}{75}{chapter*.56}%
+\contentsline {section}{Première section de l'intro}{76}{section*.57}%
+\contentsline {chapter}{Bibliography}{79}{section*.58}%
 \babel@toc {french}{}\relax 
 \babel@toc {english}{}\relax 
