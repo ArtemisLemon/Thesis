@@ -1,10 +1,10 @@
 \subsection{Atlas Transformation Language}
 % The Atlas Transformation Language provides a means to specify model-to-model transformations in EMF.
-The Atlas Transformation Language (ATL) provides a powerful framework for specifying model-to-model transformations within the Eclipse Modeling Framework (EMF). 
-ATL is designed to automate the conversion of models from one metamodel to another, enabling the creation of model transformation pipelines—a critical feature for modern Model-Driven Engineering (MDE) workflows.
+The Atlas Transformation Language (ATL) provides a framework for specifying and executing model-to-model transformations within the Eclipse Modeling Framework. 
+ATL is designed to automate the conversion of models from one metamodel to another, enabling the creation of model transformation pipelines—a critical feature for modern Model-Driven Engineering workflows.
 % ATL can be  to chain model to model transformations allowing for automated modeling pipelines.
 % ATL extends OCL to define rules in the context of multiple Classes.
-ATL extends OCL (Object Constraint Language) to define transformation rules that operate across multiple classes. These rules establish bindings, which associate properties between source and target model elements using OCL queries. This allows ATL to express complex mappings between metamodels in a declarative style, focusing on what should be transformed rather than how.
+ATL extends OCL to define transformation rules that operate across multiple classes. These rules establish bindings, which associate properties between source and target model elements using OCL queries. This allows ATL to express complex mappings between metamodels in a declarative style, focusing on what should be transformed rather than how.
 These rules associate properties across the classes using OCL queries, in what is called: a binding.
 
 Just like OCL, ATL can be written declaratively, but ATL also allows for imperative sections, which are sometimes necessary to specify \textit{steps} required to transform an object into another.

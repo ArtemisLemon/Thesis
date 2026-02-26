@@ -270,15 +270,37 @@ $$self.children.forall(c | c.age < self.age)$$
 
 
 The \inelineocl{CallExp} represents most of the words in ocl, notably model navigation and operation calls.
+Generally an \inelineocl{CallExp} has a source \inlineocl{OclExpression} to which it is applied.
 The simplest operations represented by \inlineocl{CallExp} are those applied to primitives, such as arithmetic operations for integers, and logical operations on booleans and integers: +,<,$\wedge$.
+
 The \inlineocl{FeatureCallExp} represents property access, providing attribute values and the objects resulting from references.
-Naturally the type of whats returned from property access varies greatly.
+Naturally the type of what is returned from property access varies greatly.
+
 The \inlineocl{LoopExp} groups operations applied to expressions of type \inlineocl{Collection}, notably \inelineocl{iterate}, and its special cases such as: \inelineocl{sum}, \inlineocl{size}, \inelineocl{forall}, etc\dots which make up the majority of the collection operations.
+The \inlineocl{LoopExp} generally has a \inlineocl{body:OclExpression}, except for builtins such as \inlineocl{sum}. 
+If a \inlineocl{LoopExp} has a body, it requires an \inlineocl{interator:Variable}.
+
+
+
+The expressions of type \inlineocl{TypeExp}, resolve to OCL types and Classes defined in the metamodel. Notably used in expressions such as \inlineocl{Person.allInstances()}, or \inlineocl{src.select(e|e.oclisTypeof(Person))}, in which \inlineocl{Person} is a \inlineocl{TypeExp}.
+
+The \inlineocl{LiteralExp} allows users to write literal expressions such as \inlineocl{3} or \inelineocl{Sequence(2,1,3,1)}.
+The \inlineocl{IfExp} exists for compatibly with older version and can be replaced by \inlineocl{implies}.
+
+The expressions of type \inlineocl{MessageExp} and \inlineocl{StateExp} are not covered in this thesis.
+
+\subsection{OCL Queries and Constraints}
+In this thesis we often categorize OCL expressions as either \textit{queries} or \textit{constraints}.
 
 \noindent \textbf{Query Expression:} 
 \inlineocl{self.ref.select(r | predicate(r)).prop.sum()}
 OCL expression resulting in a collection of integers or objects.
-% Can be filtered, or merged with other queries.
+
+\noindent \textbf{Constraint Expression:} 
+\inlineocl{inv: self.ref.forall(r | p(r))}
+OCL expression resulting in a boolean.
+Constaint expressions can be \textit{enforced} or \textit{reified}.
+In this invariant the \textit{forall expression} \inlineocl{self.ref.forall(...)} is enforced, and the \textit{predicate} \inlineocl{p} can be said to be a reified constraint.
 
 % In this thesis we'll many be focusing on \inlineocl{OperationCallExp} which are of type \inlineocl{CallExp}.
 % For this we will have to consider \inlineocl{VariableExp}.

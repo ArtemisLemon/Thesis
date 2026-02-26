@@ -22,7 +22,7 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     	- [ ] operation summary
     	- [x] typing OCL expressions
     	- [ ] OCL Metamodel
-  	- [ ] SotA
+  	- [x] SotA
     	- [x] EMF
     	- [x] ATL
 - [ ] Chapter 2: CSP
