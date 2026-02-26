@@ -1,7 +1,13 @@
+OCL is fundamentally a 4-valued logic, with values: True, False, Void, and invalid.
+We have chosen to not interpret expressions for which a sub-expression is invalid, so we only need 3-logic values.
 
+\ytodo{OCL\# also collapses to 3-valued logic using the empty set $\empty$ to encode void and invalid expressions.}
 
-/subsection{3-valued logic}
-\begin{table}[]
+The reason for this is can be explain by UML allowing for optional properties: \inlineocl{[0..1] Boolean}.
+For situations where the property is required, we can simply use arithmetic and logic operations.
+
+\subsection{3-valued logic of valid OCL}
+\begin{table}[!ht]
     \begin{tabular}{lllllll}
     a & b & a and b & a or b & a xor b & a implies b & not a \\
     2 & 2 & 2       & 2      & 0       & 2           & 0     \\
@@ -15,3 +21,31 @@
     0 & 0 & 0       & 0      & 0       & 2           & 2    
     \end{tabular}
 \end{table}
+In this table we find the semantics of boolean operations in valid OCL.
+the semantics can be simply model with arithmetic operations on int vars.
+
+\begin{itemize}
+    \item $\neg a \equiv 2-a$
+    \item $a \wedge b \equiv min(a,b)$
+    \item $a \vee b \equiv max(a,b)$
+    \item $a \rightarrow b \equiv min(2-a,b)$
+    \item $a \oplus b \equiv min(2-min(a,b),max(a,b))$
+\end{itemize}
+
+\subsection{Property encoding to 3-valued logic for optional Booleans}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 30 0 0},width=0.5\linewidth]{Contributions/OCLCSP/Operations/figures/negbool2halfboolAFD.png}
+    \caption{Part of the tree for \inlineocl{src.forall(a,b,c| (a<b and b<c) implies (a+b=c+c))}}
+    \label{fig:forallexample}
+\end{figure}
+In our base encoding for properties, True equals 1, False equals 0, and no information is -1.
+We could implement a different encoding for booleans, or simply convert from one encoding to the other using an regular expression constraint based on the AFD here.
+
+\subsection{Arithmetic with missing values}
+\ytodo{OCL Spec: The interpretation of operations is considered strict unless there is an explicit statement in the following. Hence, an
+invalid or null argument value causes an invalid operation result. This ensures the propagation of error conditions.}
+
+\ytodo{OCL^\sharp : in OCL^- there is no invalid or null, and arithmetic isn't done with missing values}
+
+\ytodo{Considering this, we don't need elaborate models to account for optional integers in simple arithmetic, but we should warn when such aritmetic is done}

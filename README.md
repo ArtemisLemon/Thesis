@@ -57,7 +57,7 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
 - [ ] Chapter 5: UML CSP
   - [x] Base Encoding
   - [ ] Enumerated Encoding (References)
-  - [ ] 3-valued Boolean Encoding (optional data)
+  - [ ] ~~3-valued Boolean Encoding (optional data)~~
   - [ ] Reference Types
     - [ ] ~~Containment~~
     - [ ] Opposite
@@ -77,11 +77,14 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [ ] ~~Closure Alloy~~
 - [ ] Chapter 7: OCL CSP
   - [ ] Int and Bool OP
-    - [ ] ~~1..1 Int and Bool~~
+    - [x] 1..1 Int and Bool
       - [ ] ~~models~~
-      - [ ] ~~text~~
-    - [ ] 0..1 Int and Bool
-      - [ ] models
+      - [x] text
+    - [x] 0..1 Bool
+      - [x] models
+      - [x] text
+    - [ ] 0..1 Int
+      - [ ] ~~models~~
       - [ ] text
   - [ ] ~~Iterate~~
     - [ ] ~~2 int model~~

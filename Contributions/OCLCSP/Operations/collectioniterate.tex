@@ -1,0 +1,17 @@
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:iterate}
+    iterate(X,y,exp):
+    \begin{cases}
+        itexp(X,A,a_0,exp)\\
+        y = A_n
+    \end{cases}
+\end{equation}
+
+\begin{equation}\label{csp:itexp}
+    itexp(X,A,a_0,exp):
+    \begin{cases}
+        \forall a_{i} \in A, \forall x_i \in X\\
+        ~~(x_i \neq d) \implies exp(a_{i},a_{i-1},x_i)\\
+        ~~(x_i = d) \implies a_{i-1}=a_{i}:
+    \end{cases}
+\end{equation}

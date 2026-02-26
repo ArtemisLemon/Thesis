@@ -1,0 +1,228 @@
+Some operation applied to collections result in a boolean.
+It is common to know the resulting boolean at compile time, such as at the top of an invariant expression.
+In the cases where the resulting truth value is known, we often have a simpler model. 
+
+
+\newpage\subsection{equals and different}
+\begin{equation}\label{csp:coleq}
+    coleq(X,Y):
+    \begin{cases}
+        x_i = y_i
+    \end{cases}
+\end{equation}
+
+\begin{equation}\label{csp:coleq_reif}
+    coleq(X,Y,z):
+    \begin{cases}
+        b_i \iff (x_i = y_i)\\
+        product\_ctr(B,"=",z)
+        % z = \Pi B
+    \end{cases}
+\end{equation}
+
+% \begin{equation}\label{csp:coldiff}
+%     coldiff(X,Y):
+%     \begin{cases}
+%         \bigvee x_i \neq y_i
+%     \end{cases}
+% \end{equation}
+
+\begin{equation}\label{csp:coldiff_reif}
+    coldiff(X,Y,z):
+    \begin{cases}
+        b_i \iff (x_i \neq y_i)\\
+        sum\_ctr(B,"=",z')\\
+        z \iff (z' > 0)
+    \end{cases}
+\end{equation}
+
+\newpage\subsection{includes(e)}
+Consider the expression \inlineocl{src.includes(e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers, and \inelineocl(e) is an (expression resulting in an) object or an integer.
+% Formal Definition:
+% \begin{equation}\label{def:includes}
+%     includes(X,y) \iff \llbracket x_i \neq d \rrbracket
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:includes}
+    includes(X,y,z):
+    \begin{cases}
+        count(y,X,c)\\
+        z = \llbracket c>0 \rrbracket
+    \end{cases}
+\end{equation}
+
+\newpage\subsection{excludes(e)}
+Consider the expression \inlineocl{src.excludes(e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers, and \inelineocl(e) is an (expression resulting in an) object or an integer.
+% Formal Definition:
+% \begin{equation}\label{def:excludes}
+%     excludes(X,y) \iff \llbracket x_i \neq d \rrbracket
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:excludes}
+    excludes(X,y,z):
+    \begin{cases}
+        count(y,X,c)\\
+        z = \llbracket \neg c>0 \rrbracket
+    \end{cases}
+\end{equation}
+
+\newpage\subsection{includesAll(e)}
+Consider the expression \inlineocl{src.includesAll(e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers, and \inelineocl(e) is (an expression resulting in) a collection of objects or an integers.
+% Formal Definition:
+% \begin{equation}\label{def:includesAll}
+%     includesAll(X,y) \iff \llbracket x_i \neq d \rrbracket
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:includesAll}
+    includesAll(X,Y,z):
+    \begin{cases}
+        \forall y \in Y, includes(X,y,z')\\
+        product\_ctr(Z',"=",z)
+    \end{cases}
+\end{equation}
+
+\newpage\subsection{excludesAll(e)}
+Consider the expression \inlineocl{src.excludesAll(e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers, and \inelineocl(e) is (an expression resulting in) a collection of objects or an integers.
+% Formal Definition:
+% \begin{equation}\label{def:excludesAll}
+%     excludesAll(X,y) \iff \llbracket x_i \neq d \rrbracket
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:excludesAll}
+    excludesAll(X,Y,z):
+    \begin{cases}
+        \forall y \in Y, excludes(X,y,z')\\
+        sum\_ctr(Z',"=",z'')
+        z = \llbracket z'' > 0 \rrbracket
+    \end{cases}
+\end{equation}
+
+\newpage\subsection{isEmpty()}
+Consider the expression \inlineocl{src.isEmpty()}, where \inlineocl{src} is an expression resulting in a collection of objects or integers.
+% Formal Definition:
+% \begin{equation}\label{def:isEmpty}
+%     isEmpty(X,y) \iff \llbracket x_i \neq d \rrbracket
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:isEmpty}
+    isEmpty(X,y):
+    \begin{cases}
+        count(d,X,s)\\
+        y = \llbracket s = |X| \rrbracket
+    \end{cases}
+\end{equation}
+
+\newpage\subsection{notEmpty()}
+Consider the expression \inlineocl{src.notEmpty()}, where \inlineocl{src} is an expression resulting in a collection of objects or integers.
+% Formal Definition:
+% \begin{equation}\label{def:notEmpty}
+%     notEmpty(X,y) \iff \llbracket x_i \neq d \rrbracket
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:notEmpty}
+    notEmpty(X,y):
+    \begin{cases}
+        count(d,X,s)\\
+        y = \llbracket s \neq |X| \rrbracket
+    \end{cases}
+\end{equation}
+
+\newpage\subsection{forall(exp)}
+Consider the expression \inlineocl{src.forall(exp)}, where the source \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{exp} is an sub-expression of type boolean which applies to a sub-collection of the collection from the source \inlineocl{src}.
+The expression as a whole resolves to true if all the sub-expressions resolves to true, and false otherwise.
+% Formal Definition:
+% \begin{equation}\label{def:forall}
+%     forall(X,e,y) \iff
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:forall}
+    forall(X,y,exp):
+    \begin{cases}
+        itpred(X,B,exp)\\
+        product\_ctr(B,"=",y)
+        % y = \Pi B
+    \end{cases}
+\end{equation}
+
+Reformulation in OCL when source is a collection of objects, the sub-expression is constant and has one iterator:
+$$\inlineocl{src.oclType().allInstances().select(exp).includesAll(src)}$$
+The first part of this expression, \inlineocl{src.oclType().allInstances().select(exp)}, remains constant if \inlineocl{exp} is constant.
+It can either be interpreted before building the OCL CSP, or with only require one propagation for each of the constraints modeling it.
+% This rewrite leverages the equivalence between implication and inclusion.
+
+\newpage\subsection{exists(exp)}
+Consider the expression \inlineocl{src.exists(exp)}, where the source \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{exp} is an sub-expression of type boolean which applies to a sub-collection of the collection from the source \inlineocl{src}.
+The expression as a whole resolves to true if at least one of the sub-expressions resolves to true, and false otherwise.
+% Formal Definition:
+% \begin{equation}\label{def:exists}
+%     exists(X,e,y) \iff
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:exists}
+    exists(X,y,exp):
+    \begin{cases}
+        itpred(X,B,exp)\\
+        sum\_ctr(B,"=",y')\\
+        y = \llbracket y' = 1 \rrbracket
+    \end{cases}
+\end{equation}
+
+Reformulation in OCL when source is a collection of objects, the sub-expression is constant and has one iterator:
+$$\inlineocl{src.oclType().allInstances().select(exp).intersect(src.asSet()).size()>0}$$
+The first part of this expression, \inlineocl{src.oclType().allInstances().select(exp)}, remains constant if \inlineocl{exp} is constant.
+It can either be interpreted before building the OCL CSP, or with only require one propagation for each of the constraints modeling it.
+
+\newpage\subsection{one(exp)}
+This operation can have at most one iterator variable.
+
+Consider the expression \inlineocl{src.one(exp)}, where the source \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{exp} is an sub-expression of type boolean which applies to the elements of the collection from the source \inlineocl{src}.
+The expression as a whole resolves to true if one of the sub-expressions resolves to true, and false otherwise.
+% Formal Definition:
+% \begin{equation}\label{def:one}
+%     one(X,exp,Y) \iff
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:one}
+    one(X,y,exp):
+    \begin{cases}
+        
+    \end{cases}
+\end{equation}
+
+\newpage\subsection{Iterating with predicates}
+\begin{equation}\label{csp:itpred}
+    itpred(X,B,exp):
+    \begin{cases}
+        \forall b_{ijk...} \in B, \forall x_i,x_j,x_k,... \in X\\
+        ~~b_{ijk...} \iff (((x_i \neq d) \wedge (x_j \neq d) \wedge ...) \implies exp(b_{ijk...},x_i,x_j,x_k,...))
+    \end{cases}
+\end{equation}
+Consider the expression \inlineocl{src.forall(a,b,c| (a<b and b<c) implies (a+b=c+c))}.
+\begin{equation}\label{csp:itpred_example}
+    exp(x_i,x_j,x_k):
+    \begin{cases}
+         (x_i<x_j \wedge x_j < x_k) \implies (x_i+x_j=x_k+x_k)
+    \end{cases}
+\end{equation}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 30 0 0},width=1\linewidth]{Contributions/OCLCSP/Operations/figures/forallexample.png}
+    \caption{Part of the tree for \inlineocl{src.forall(a,b,c| (a<b and b<c) implies (a+b=c+c))}}
+    \label{fig:forallexample}
+\end{figure}
+
+% \begin{equation}\label{csp:xpxp}
+%     xpxp(b,X,exp):
+%     \begin{cases}
+%         b=exp(X)
+%     \end{cases}
+% \end{equation}

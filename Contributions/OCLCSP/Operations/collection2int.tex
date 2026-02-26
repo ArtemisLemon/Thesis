@@ -1,0 +1,75 @@
+
+\subsection{size()}
+Consider the expression \inlineocl{src.size()}, where 
+Formal Definition:
+\begin{equation}\label{def:size}
+    size(X,y) \iff y = \sum_{0 < i \leq |X|} \llbracket x_i \neq d \rrbracket
+\end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:size}
+    size(X,y):
+    \begin{cases}
+        count(d,X,y') \\
+        Y = |X|-y'
+    \end{cases}
+\end{equation}
+
+\subsection{sum()}
+Definition:
+\begin{equation}\label{def:sum}
+    sum(X,y) \iff y = \sum_{0 < i \leq |X|} x_i * \llbracket x_i \neq d \rrbracket
+\end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:sum}
+    sum(X,y):
+    \begin{cases}
+        count(d,X,s') \\
+        y = sum(X) - ds'
+    \end{cases}
+\end{equation}
+
+
+\subsection{count()}
+Definition:
+\begin{equation}\label{def:cound}
+    count(X,y,z) \iff z = \sum_{0 < i \leq |X|} \llbracket x_i = y \rrbracket
+\end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:count}
+    count(X,y,z):
+    \begin{cases}
+        count(y,X,z)
+    \end{cases}
+\end{equation}
+
+\subsection{max()}
+Definition:
+\begin{equation}\label{def:max}
+    max(X,y) \iff (\forall x \in X, y \geq x) \wedge (\exists x \in X, x=y) 
+\end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:max}
+    max(X,y):
+    \begin{cases}
+        maximum(y,X)
+    \end{cases}
+\end{equation}
+
+\subsection{min()}
+Definition:
+\begin{equation}\label{def:min}
+    min(X,y) \iff (\forall x \in X, y \leq x) \wedge (\exists x \in X, x=y) 
+\end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:min}
+    min(X,y):
+    \begin{cases}
+        x'_i = x_i - (2d+1)*\llbracket x_i=d \rrbracket \\
+        minimum(y,X')
+    \end{cases}
+\end{equation}
