@@ -33,9 +33,9 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [x] Example Propagation
     - [ ] DPLL & Simplex
   - [ ] SotA
-    - [ ] SAT4j
-    - [ ] Choco
-    - [ ] $ECL^iPS_e$
+    - [ ] Choco (& others)
+    - [ ] Eclipse (& SWI-prolog)
+    - [ ] SAT4j (&Cassowary)
 - [ ] Chapter 3: Problem
   - [x] Model Search
   - [ ] SotA
@@ -66,6 +66,7 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [x] Set
     - [x] Bag
     - [x] OrderedSet
+  - [ ] Comparison to Alloy and EMF2CSP
 - [ ] Chapter 6: Nav CSP
   - [x] Base Model
   - [ ] ~~Enumerated Model~~
@@ -75,6 +76,7 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [ ] n-depth Alloy
     - [ ] ~~Closure our Method~~
     - [ ] ~~Closure Alloy~~
+  - [ ] Comparison to Alloy and EMF2CSP
 - [ ] Chapter 7: OCL CSP
   - [x] Int and Bool OP
     - [x] 1..1 Int and Bool
