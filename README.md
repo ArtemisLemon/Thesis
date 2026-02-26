@@ -76,16 +76,16 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [ ] ~~Closure our Method~~
     - [ ] ~~Closure Alloy~~
 - [ ] Chapter 7: OCL CSP
-  - [ ] Int and Bool OP
+  - [x] Int and Bool OP
     - [x] 1..1 Int and Bool
       - [ ] ~~models~~
       - [x] text
     - [x] 0..1 Bool
       - [x] models
       - [x] text
-    - [ ] 0..1 Int
+    - [x] 0..1 Int
       - [ ] ~~models~~
-      - [ ] text
+      - [x] text
   - [ ] ~~Iterate~~
     - [ ] ~~2 int model~~
     - [ ] ~~2 bool model~~
