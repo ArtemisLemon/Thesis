@@ -28,7 +28,7 @@ the semantics can be simply model with arithmetic operations on int vars.
     \item $\neg a \equiv 2-a$
     \item $a \wedge b \equiv min(a,b)$
     \item $a \vee b \equiv max(a,b)$
-    \item $a \rightarrow b \equiv min(2-a,b)$
+    \item $a \rightarrow b \equiv max(2-a,b)$
     \item $a \oplus b \equiv min(2-min(a,b),max(a,b))$
 \end{itemize}
 
@@ -46,6 +46,6 @@ We could implement a different encoding for booleans, or simply convert from one
 \ytodo{OCL Spec: The interpretation of operations is considered strict unless there is an explicit statement in the following. Hence, an
 invalid or null argument value causes an invalid operation result. This ensures the propagation of error conditions.}
 
-\ytodo{OCL^\sharp : in OCL^- there is no invalid or null, and arithmetic isn't done with missing values}
+\ytodo{OCL\# : in OCL- there is no invalid or null, and arithmetic isn't done with missing values}
 
 \ytodo{Considering this, we don't need elaborate models to account for optional integers in simple arithmetic, but we should warn when such aritmetic is done}

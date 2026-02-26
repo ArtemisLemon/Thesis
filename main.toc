@@ -69,57 +69,58 @@
 \contentsline {chapter}{\numberline {7}Contribution : OCL CSP}{59}{chapter.7}%
 \contentsline {section}{\numberline {7.1}CP Models for OCL Integer and Boolean Operations}{60}{section.7.1}%
 \contentsline {subsection}{\numberline {7.1.1}3-valued logic of valid OCL}{60}{subsection.7.1.1}%
-\contentsline {subsection}{\numberline {7.1.2}Property encoding to 3-valued logic}{60}{subsection.7.1.2}%
-\contentsline {section}{\numberline {7.2}CP Models for OCL Collection to Int Operations}{61}{section.7.2}%
-\contentsline {subsection}{\numberline {7.2.1}size()}{61}{subsection.7.2.1}%
-\contentsline {subsection}{\numberline {7.2.2}sum()}{61}{subsection.7.2.2}%
+\contentsline {subsection}{\numberline {7.1.2}Property encoding to 3-valued logic for optional Booleans}{61}{subsection.7.1.2}%
+\contentsline {subsection}{\numberline {7.1.3}Arithmetic with missing values}{61}{subsection.7.1.3}%
+\contentsline {section}{\numberline {7.2}CP Models for OCL Collection to Int Operations}{62}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}size()}{62}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}sum()}{62}{subsection.7.2.2}%
 \contentsline {subsection}{\numberline {7.2.3}count()}{62}{subsection.7.2.3}%
 \contentsline {subsection}{\numberline {7.2.4}max()}{62}{subsection.7.2.4}%
-\contentsline {subsection}{\numberline {7.2.5}min()}{62}{subsection.7.2.5}%
-\contentsline {section}{\numberline {7.3}CP Models for OCL Collection to Bool Operations}{62}{section.7.3}%
-\contentsline {subsection}{\numberline {7.3.1}equals and different}{63}{subsection.7.3.1}%
-\contentsline {subsection}{\numberline {7.3.2}includes(e)}{64}{subsection.7.3.2}%
-\contentsline {subsection}{\numberline {7.3.3}excludes(e)}{65}{subsection.7.3.3}%
-\contentsline {subsection}{\numberline {7.3.4}includesAll(e)}{66}{subsection.7.3.4}%
-\contentsline {subsection}{\numberline {7.3.5}excludesAll(e)}{67}{subsection.7.3.5}%
-\contentsline {subsection}{\numberline {7.3.6}isEmpty()}{68}{subsection.7.3.6}%
-\contentsline {subsection}{\numberline {7.3.7}notEmpty()}{69}{subsection.7.3.7}%
-\contentsline {subsection}{\numberline {7.3.8}forall(exp)}{70}{subsection.7.3.8}%
-\contentsline {subsection}{\numberline {7.3.9}exists(exp)}{71}{subsection.7.3.9}%
-\contentsline {subsection}{\numberline {7.3.10}one(exp)}{72}{subsection.7.3.10}%
-\contentsline {subsection}{\numberline {7.3.11}Iterating with predicates}{73}{subsection.7.3.11}%
-\contentsline {section}{\numberline {7.4}CP Models for OCL Collection Operations}{73}{section.7.4}%
-\contentsline {subsection}{\numberline {7.4.1}select(exp)}{74}{subsection.7.4.1}%
-\contentsline {subsection}{\numberline {7.4.2}reject(exp)}{75}{subsection.7.4.2}%
-\contentsline {subsection}{\numberline {7.4.3}sortedBy(exp)}{76}{subsection.7.4.3}%
-\contentsline {subsection}{\numberline {7.4.4}any()}{77}{subsection.7.4.4}%
-\contentsline {section}{\numberline {7.5}CP Models for OCL Collection Type Casting Operations}{77}{section.7.5}%
-\contentsline {subsection}{\numberline {7.5.1}asBag()}{77}{subsection.7.5.1}%
-\contentsline {subsection}{\numberline {7.5.2}asSet()}{78}{subsection.7.5.2}%
-\contentsline {subsection}{\numberline {7.5.3}asSequence()}{79}{subsection.7.5.3}%
-\contentsline {subsection}{\numberline {7.5.4}asOrderedSet()}{82}{subsection.7.5.4}%
-\contentsline {subsection}{\numberline {7.5.5}Filtering Dummy Values in OCL Collection Operations}{82}{subsection.7.5.5}%
-\contentsline {section}{\numberline {7.6}CP Models for OCL Sequence and Ordered Set Operations}{83}{section.7.6}%
-\contentsline {subsection}{\numberline {7.6.1}src.prepend(e)}{84}{subsection.7.6.1}%
-\contentsline {subsection}{\numberline {7.6.2}src.append(e)}{85}{subsection.7.6.2}%
-\contentsline {subsection}{\numberline {7.6.3}src.insertAt(i,e)}{86}{subsection.7.6.3}%
-\contentsline {subsection}{\numberline {7.6.4}src.subSequence(s,f)}{87}{subsection.7.6.4}%
-\contentsline {subsection}{\numberline {7.6.5}src.at(p)}{88}{subsection.7.6.5}%
-\contentsline {subsection}{\numberline {7.6.6}src.indexOf(p)}{89}{subsection.7.6.6}%
-\contentsline {subsection}{\numberline {7.6.7}src.first()}{90}{subsection.7.6.7}%
-\contentsline {subsection}{\numberline {7.6.8}src.last()}{91}{subsection.7.6.8}%
-\contentsline {subsection}{\numberline {7.6.9}src.reverse()}{92}{subsection.7.6.9}%
-\contentsline {section}{\numberline {7.7}CP Models for OCL Set Operations}{92}{section.7.7}%
-\contentsline {subsection}{\numberline {7.7.1}union(exp)}{93}{subsection.7.7.1}%
-\contentsline {subsection}{\numberline {7.7.2}Intersection}{94}{subsection.7.7.2}%
-\contentsline {subsection}{\numberline {7.7.3}set - set}{95}{subsection.7.7.3}%
-\contentsline {subsection}{\numberline {7.7.4}Symmetric Difference}{96}{subsection.7.7.4}%
-\contentsline {subsection}{\numberline {7.7.5}including}{96}{subsection.7.7.5}%
-\contentsline {subsection}{\numberline {7.7.6}excluding}{96}{subsection.7.7.6}%
-\contentsline {section}{\numberline {7.8}CP Models for OCL Bag Operations}{96}{section.7.8}%
-\contentsline {section}{\numberline {7.9}CP Models for Class Functions and Global Functions}{96}{section.7.9}%
-\contentsline {chapter}{Conclusion}{97}{chapter*.47}%
-\contentsline {section}{Première section de l'intro}{98}{section*.48}%
-\contentsline {chapter}{Bibliography}{101}{section*.49}%
+\contentsline {subsection}{\numberline {7.2.5}min()}{63}{subsection.7.2.5}%
+\contentsline {section}{\numberline {7.3}CP Models for OCL Collection to Bool Operations}{63}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}equals and different}{64}{subsection.7.3.1}%
+\contentsline {subsection}{\numberline {7.3.2}includes(e)}{65}{subsection.7.3.2}%
+\contentsline {subsection}{\numberline {7.3.3}excludes(e)}{66}{subsection.7.3.3}%
+\contentsline {subsection}{\numberline {7.3.4}includesAll(e)}{67}{subsection.7.3.4}%
+\contentsline {subsection}{\numberline {7.3.5}excludesAll(e)}{68}{subsection.7.3.5}%
+\contentsline {subsection}{\numberline {7.3.6}isEmpty()}{69}{subsection.7.3.6}%
+\contentsline {subsection}{\numberline {7.3.7}notEmpty()}{70}{subsection.7.3.7}%
+\contentsline {subsection}{\numberline {7.3.8}forall(exp)}{71}{subsection.7.3.8}%
+\contentsline {subsection}{\numberline {7.3.9}exists(exp)}{72}{subsection.7.3.9}%
+\contentsline {subsection}{\numberline {7.3.10}one(exp)}{73}{subsection.7.3.10}%
+\contentsline {subsection}{\numberline {7.3.11}Iterating with predicates}{74}{subsection.7.3.11}%
+\contentsline {section}{\numberline {7.4}CP Models for OCL Collection Operations}{74}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}select(exp)}{75}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}reject(exp)}{76}{subsection.7.4.2}%
+\contentsline {subsection}{\numberline {7.4.3}sortedBy(exp)}{77}{subsection.7.4.3}%
+\contentsline {subsection}{\numberline {7.4.4}any()}{78}{subsection.7.4.4}%
+\contentsline {section}{\numberline {7.5}CP Models for OCL Collection Type Casting Operations}{78}{section.7.5}%
+\contentsline {subsection}{\numberline {7.5.1}asBag()}{78}{subsection.7.5.1}%
+\contentsline {subsection}{\numberline {7.5.2}asSet()}{79}{subsection.7.5.2}%
+\contentsline {subsection}{\numberline {7.5.3}asSequence()}{80}{subsection.7.5.3}%
+\contentsline {subsection}{\numberline {7.5.4}asOrderedSet()}{83}{subsection.7.5.4}%
+\contentsline {subsection}{\numberline {7.5.5}Filtering Dummy Values in OCL Collection Operations}{83}{subsection.7.5.5}%
+\contentsline {section}{\numberline {7.6}CP Models for OCL Sequence and Ordered Set Operations}{84}{section.7.6}%
+\contentsline {subsection}{\numberline {7.6.1}src.prepend(e)}{85}{subsection.7.6.1}%
+\contentsline {subsection}{\numberline {7.6.2}src.append(e)}{86}{subsection.7.6.2}%
+\contentsline {subsection}{\numberline {7.6.3}src.insertAt(i,e)}{87}{subsection.7.6.3}%
+\contentsline {subsection}{\numberline {7.6.4}src.subSequence(s,f)}{88}{subsection.7.6.4}%
+\contentsline {subsection}{\numberline {7.6.5}src.at(p)}{89}{subsection.7.6.5}%
+\contentsline {subsection}{\numberline {7.6.6}src.indexOf(p)}{90}{subsection.7.6.6}%
+\contentsline {subsection}{\numberline {7.6.7}src.first()}{91}{subsection.7.6.7}%
+\contentsline {subsection}{\numberline {7.6.8}src.last()}{92}{subsection.7.6.8}%
+\contentsline {subsection}{\numberline {7.6.9}src.reverse()}{93}{subsection.7.6.9}%
+\contentsline {section}{\numberline {7.7}CP Models for OCL Set Operations}{93}{section.7.7}%
+\contentsline {subsection}{\numberline {7.7.1}union(exp)}{94}{subsection.7.7.1}%
+\contentsline {subsection}{\numberline {7.7.2}Intersection}{95}{subsection.7.7.2}%
+\contentsline {subsection}{\numberline {7.7.3}set - set}{96}{subsection.7.7.3}%
+\contentsline {subsection}{\numberline {7.7.4}Symmetric Difference}{97}{subsection.7.7.4}%
+\contentsline {subsection}{\numberline {7.7.5}including}{97}{subsection.7.7.5}%
+\contentsline {subsection}{\numberline {7.7.6}excluding}{97}{subsection.7.7.6}%
+\contentsline {section}{\numberline {7.8}CP Models for OCL Bag Operations}{97}{section.7.8}%
+\contentsline {section}{\numberline {7.9}CP Models for Class Functions and Global Functions}{97}{section.7.9}%
+\contentsline {chapter}{Conclusion}{99}{chapter*.47}%
+\contentsline {section}{Première section de l'intro}{100}{section*.48}%
+\contentsline {chapter}{Bibliography}{103}{section*.49}%
 \babel@toc {french}{}\relax 
 \babel@toc {english}{}\relax 
