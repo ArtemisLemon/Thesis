@@ -12,16 +12,17 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
 # Progress
 ## Context:
 - [ ] Chapter 0: Introduction
-- [ ] Chapter 1: MDE
+- [x] Chapter 1: MDE
 	- [x] UML
     	- [x] MOF
     	- [x] Class
     	- [x] Object 
-	- [ ] OCL
+	- [x] OCL
     	- [x] by example
     	- [ ] operation summary
     	- [x] typing OCL expressions
-    	- [ ] OCL Metamodel
+    	- [x] OCL Metamodel
+    	- [x] OCL queries and constraints
   	- [x] SotA
     	- [x] EMF
     	- [x] ATL
@@ -48,7 +49,7 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [ ] ~~OCLsolve~~
 
 ## Contrib:
-- [x] Chapter 4: var
+- [ ] Chapter 4: var
   - [x] RMS Problem
   - [x] Denoting Vars
   - [x] Refactoring Expressions
@@ -112,13 +113,16 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
   - [ ] Unordered Col OPs
     - [x] models
     - [ ] text
-- [ ] ~~Chapter 8: Comparison with Related Work~~
-- [ ] Chapter 9: Discussions
+- [ ] ~~Chapter 8: Implementation Details~~
+- [ ] ~~Chapter 9: Importing Globals into OCL~~
+  - [ ] ~~its free~~
+- [ ] ~~Chapter 10: Comparison with Related Work~~
+- [ ] Chapter 11: Discussions
   - [ ] Summary: Comparison with related work
   - [ ] OOCP Benchmark suite
   - [ ] Search Strategy
   - [ ] Sequence/String Variables to replace encoding and global constraints
-- [ ] Chapter 10: Conclusion
+- [ ] Chapter 12: Conclusion
 # ![(UK flag)](https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/50px-Flag_of_the_United_Kingdom.svg.png) Thesis template for Collège Doctoral de Bretagne
 
 *English explanations*
