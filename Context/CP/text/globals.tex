@@ -18,6 +18,7 @@ Global constraints are thus a key component to solving complex problems efficien
 % This also means all other variables must be functionally dependent on the \emph{problem variables}
 % Testing a value for a variable means we can re-run the filtering algorithms, to narrow the choice of values for the next variable.
 % Search strategies generally try to choose the best variable to test, and the best value to test it with.
+\subsection{Global Constraints used in this thesis}
 Some notable examples of global constraints used in this paper are:
 \begin{itemize}
     \item 
@@ -25,6 +26,7 @@ Some notable examples of global constraints used in this paper are:
     Element is useful when \emph{"selecting a variable from a list"} is part of the problem.
     }
     Let $X=[x_1,…,x_n]$ be an array of integer variables, $z \in \{1,…,n\}$ be an integer variable representing the index, and $y$ be an integer variable representing the selected value. \inlinecstr{element}{y,X,z}~\cite{DBLP:conf/aaai/HentenryckC88,van1999opl} holds iff $y=x_z$ and $1\leq z \leq n$, this means that   variable $y$ is constrained to take the value of the $z$-th element of array $X$.
+    This constraint is also known as $nth$ in systems like $ECL^iPS_e$ and swi-prolog.
     
     \item 
     \textcolor{black}{
@@ -58,7 +60,7 @@ Some notable examples of global constraints used in this paper are:
     % \item \inlinecstr{cumulative}{T,h} \ytodo{cite and define}
 \end{itemize}
 
-\subsubsection{Propagation}
+\subsection{Propagation of Element}
 %Here we can look at both propagation, and how the element constraint passes information between our variables.
 Propagation for a constraint is the action of updating the domains of the variables bound by that constraint.
 When solving, propagations will generally run when the domain of one of the variables bound by the constraint is updated.
@@ -77,3 +79,10 @@ Propagation is one of the fundamental pillars of constraint programming, along w
 Global constraints spanning a large number of variables allows one to leverage propagation to the fullest.
 The application of propagation to the problem of OCL is our fundamental difference to much of the related work.
 To apply it to OCL we need a systematic way to model OCL expressions using gobal constraints, and particularly to model OCL query expressions.
+
+
+\subsection{Propagation on boolean variables and CNF models}
+\ytodo{DDPL is a propagator for the gobal constraint "CNF model"}
+
+\subsection{Propagation on real variables and systems of linear equations}
+\ytodo{Simplex is a propagator for the gobal constraint "system of linear equations"}

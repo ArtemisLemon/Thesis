@@ -7,12 +7,13 @@ Additionally, we will use C-like syntax for Class specifications.
 \subsection{Meta-Object Facility}
 The Unified Modeling languguage is build ontop of the Meta-Object Facility standard.
 Formally: the UML metamodel conforms to MOF meta-metamodel.
-MOF provides a meta-metamodel similar to that presented in the previous section.
+% MOF provides a meta-metamodel similar to that presented in the previous section.
 
-The MOF standard also describes a four layer model hirearchy illustraiting its application.
+The MOF standard also describes a four layer model hierarchy illustrating its application.
 The MOF meta-metamodel exists as the top layer of abstraction in the MOF architecture, the M3 layer.
 The MOF architecture has three lower layers of abstraction, the lowest being that of the system under study, the M0 layer.
-UML exists at the M2 layer, and the M1 layer contains the UML conforming models and metamodels created by the user to represent the system under study.
+The UML metamodel exists at the M2 layer, and the M1 layer contains the UML conforming models and metamodels created by the user to represent the system under study.
+The UML languages we'll use to specify metamodels and models will are outlined in the following sections on class diagrams, object diagrams and the object constraint language.
 
 \begin{figure}[h]
     \centering
@@ -63,9 +64,9 @@ In a family tree for instance, the core concept is Person, with attributes such 
     \caption{UML Class Diagram as Metamodel}
     \label{fig:metamodel}
 \end{figure}
-In this figure we see a rectangle with a title, which represents a class.
-In the rectangle beneath the title, we find a list of attribute properties.
-From the rectangle to itself, we see an arrow representing the reference property.
+% In this figure we see a rectangle with a title, which represents a class.
+% In the rectangle beneath the title, we find a list of attribute properties.
+% From the rectangle to itself, we see an arrow representing the reference property.
 Here we present a generic metamodel.
 It describes a class named \inlineocl{Object}, which has two properties: 
 \inlineocl{attribute}: a collection of integers, with at least one and at most $m$ elements, \inlineocl{reference}: a collection of up to $n$ references to other \inlineocl{Object} instances.
@@ -74,6 +75,13 @@ These illustrate the two main types of properties in object-oriented modeling:
 Attributes, which store intrinsic data values (e.g., numbers or strings),
 References, which define relationships between objects in the model.
 
+\begin{lstlisting}
+class Person {  
+    age : int,
+    parents : Person[2..2] set
+}
+\end{lstlisting}
+Here we have a C-like description of a si
 %These are illustrative of the two types of object property : references and attributes.
 %References describe the relations across a graph of objects, whereas attributes colour the graph nodes.
 \subsubsection{UML Collection Types}

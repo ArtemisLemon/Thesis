@@ -16,7 +16,7 @@ Let $Ptr = \{ptr_1,...,ptr_z\}$ be the variables encoding the evaluation of \inl
 % Let $T$ be the $Class.property$ table identified by \inlineocl{property} flattened into an array, and $p$ be the number of columns in the property table.
 % Let $Y = \{y_1,...,y_{z\times p}\}$ be the variables created to represent \inlineocl{src.property}, and their domain is the same as for the variables in the property table.
 % To link $Y$ with the problem data in $T$, we define \inlinecstr{nav}{Ptr,T,Y} that ties values from $T$ into $Y$ according to $Ptr$.
-\begin{equation*}\label{csp:nav_def} \footnotesize 
+\begin{equation*}\label{csp:nav_def} 
 nav(Ptr,T,Y) \iff
 \begin{aligned}
 \forall i \in [1,z],\forall j \in [1,p] : y_{(i-1)p+j} = T_{ptr_i \times p+j} \\
@@ -30,7 +30,7 @@ nav(Ptr,T,Y) \iff
 This constraint links the source pointers to the appropriate rows in the property table. This is reformulated in CP as a conjunction of $\mathit{element}$ constraints, using intermediate variables for encoding the pointer arithmetic ($ptr_i \times p + j$):
 % The CP model for \inlinecstr{nav}{Ptr,T,Y} is reformulated using a conjunction of \inlinecstr{element}{y,\{t_1,...,t_n\},p} constraints and intermediate variables to hold the results of the \emph{pointer arithmetic} constraint:
 % for $y_k = T_{p_{ij}}$.
-\begin{equation}\label{csp:nav} \footnotesize
+\begin{equation}\label{csp:nav}
 nav(Ptr,T,Y):
 \begin{cases}
 \forall i \in [1,z],\forall j \in [1,p] :\\ 

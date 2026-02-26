@@ -1,17 +1,182 @@
-\subsection{Prepend}
+\newpage\subsection{src.prepend(e)}
 
-\subsection{Append}
+Consider the expression \inlineocl{src.prepend(e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{e} is an expression of resulting in an object or int.
+% Formal Definition:
+% \begin{equation}\label{def:prepend}
+%     prepend(X,Y,exp) \iff
+% \end{equation}
 
-\subsection{Insert At}
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:prepend}
+    prepend(X,Y,z):
+    \begin{cases}
+        Y = z\;\mathbin{\|}\;X
+    \end{cases}
+\end{equation}
 
-\subsection{Ordered Sub-Set}
 
-\subsection{At}
+\newpage\subsection{src.append(e)}
 
-\subsection{Index Of}
+Consider the expression \inlineocl{src.append(e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{e} is an expression of resulting in an object or int.
+% Formal Definition:
+% \begin{equation}\label{def:append}
+%     append(X,Y,exp) \iff
+% \end{equation}
 
-\subsection{First}
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:append}
+    append(X,Y,z):
+    \begin{cases}
+        Y' = X\;\mathbin{\|}\;z\\
+        asSequence(Y',Y)
+    \end{cases}
+\end{equation}
+% \begin{equation}\label{csp:append_seq}
+%     append(X,Y,z):
+%     \begin{cases}
+%         Y = X\;\mathbin{\|}\;z
+%     \end{cases}
+% \end{equation}
 
-\subsection{Last}
 
-\subsection{Reverse}
+
+
+\newpage\subsection{src.insertAt(i,e)}
+
+Consider the expression \inlineocl{src.insertAt(i,e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers, \inlineocl{i} is an expression resulting in an integer, and \inlineocl{e} is an expression of resulting in an object or int.
+% Formal Definition:
+% \begin{equation}\label{def:insertAt}
+%     insertAt(X,Y,exp) \iff
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:insertAt}
+    insertAt(X,Y,z,p):
+    \begin{cases}
+        p'_i = i + \llbracket i \geq z \rrbracket\\
+        element(x_i,Y,p'_i)\\
+        element(z,Y,p)
+    \end{cases}
+\end{equation}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 30 0 0},width=1\linewidth]{Contributions/OCLCSP/Operations/figures/insertAt.png}
+    \caption{example solution for insert at}
+    \label{fig:subsequence}
+\end{figure}
+
+% \newpage\subsection{Sub-Sequence}
+\newpage\subsection{src.subSequence(s,f)}
+
+Consider the expression \inlineocl{src.subSequence(e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{s,f} are expressions of resulting integers giving the start and finish of the sub-sequence in the sequence.
+% Formal Definition:
+% \begin{equation}\label{def:subSequence}
+%     subSequence(X,Y,exp) \iff
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:subSequence}
+    subSequence(X,Y,s,f):
+    \begin{cases}
+        X' = d\;\mathbin{\|}\;X\\
+        p_1 = s+1\\
+        p_i = (s+i)*\llbracket s+i\leq j\rrbracket\\
+        element(y_i,X',p_i)
+    \end{cases}
+\end{equation}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 30 0 0},width=1\linewidth]{Contributions/OCLCSP/Operations/figures/subSeq.png}
+    \caption{example solution for sub-sequence}
+    \label{fig:subsequence}
+\end{figure}
+
+% \newpage\subsection{At}
+\newpage\subsection{src.at(p)}
+
+Consider the expression \inlineocl{src.at(p)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{p} is an expression of resulting in an integer.
+% Formal Definition:
+% \begin{equation}\label{def:at}
+%     at(X,Y,exp) \iff
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:at}
+    at(X,y,p):
+    \begin{cases}
+        element(y,X,p)
+    \end{cases}
+\end{equation}
+
+% \newpage\subsection{Index Of}
+\newpage\subsection{src.indexOf(p)}
+
+Consider the expression \inlineocl{src.indexOf(p)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{p} is an expression of resulting in an integer.
+% Formal Definition:
+% \begin{equation}\label{def:indexOf}
+%     indexOf(X,Y,exp) \iff
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:indexOf}
+    indexOf(X,y,p):
+    \begin{cases}
+        element(y,X,p)
+    \end{cases}
+\end{equation}
+
+% \newpage\subsection{First}
+\newpage\subsection{src.first()}
+
+Consider the expression \inlineocl{src.first()}, where \inlineocl{src} is an expression resulting in a collection of objects or integers.
+% Formal Definition:
+% \begin{equation}\label{def:first}
+%     first(X,Y,exp) \iff
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:first}
+    first(X,y):
+    \begin{cases}
+        y = x_1
+    \end{cases}
+\end{equation}
+
+% \newpage\subsection{Last}
+\newpage\subsection{src.last()}
+
+Consider the expression \inlineocl{src.last()}, where \inlineocl{src} is an expression resulting in a collection of objects or integers.
+% Formal Definition:
+% \begin{equation}\label{def:last}
+%     last(X,Y,exp) \iff
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:last}
+    last(X,y):
+    \begin{cases}
+        size(X,p)\\
+        element(y,X,p)
+    \end{cases}
+\end{equation}
+
+% \newpage\subsection{Reverse}
+\newpage\subsection{src.reverse()}
+
+Consider the expression \inlineocl{src.reverse()}, where \inlineocl{src} is an expression resulting in a collection of objects or integers.
+% Formal Definition:
+% \begin{equation}\label{def:reverse}
+%     reverse(X,Y,exp) \iff
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:reverse}
+    reverse(X,Y):
+    \begin{cases}
+        size(X,s)\\
+        p_i = (s-i)*\llbracket i \leq s\rrbracket + i*\llbracket \neg(i \leq s)\rrbracket\\
+        element(x_i,Y,p_i)
+    \end{cases}
+\end{equation}

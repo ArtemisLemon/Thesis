@@ -34,7 +34,7 @@ Consider the expression \inlineocl{src.asBag()}, where the result is evaluated a
 % \end{aligned}
 % \end{equation*}
 %Our implementation reformulates \inlinecstr{asBag}{X,Y} using the \inlinecstr{sort}{X,Y} global constraint:
-\begin{equation}\label{csp:bag_XY} \footnotesize
+\begin{equation}\label{csp:bag_XY}
 asBag(X,Y):
 \begin{cases}
 sort(X,\reverse{Y}) \\
@@ -61,7 +61,7 @@ Consider the expression \inlineocl{src.asSet()}. The \inlineocl{asSet()} operati
 % For example given an instantiated array of variables such as $X=\{1,2,1,d\}$, \inlineocl{asSet} returns the array $Y=\{2,1,d,d\}$.
 % All values of $X$ appear in $Y$ once, and the only permutation allowed is that in descending order.
 % 
-\begin{equation}\label{csp:set_XY} \footnotesize
+\begin{equation}\label{csp:set_XY}
 asSet(X,Y) :
 \begin{cases} 
 sort(X,\reverse{S}) \\
@@ -102,7 +102,7 @@ To support cases where all positions in $Y$ are filled with unique values, we ap
 The \inlineocl{asSequence} operation retains all values from the source collection, including duplicates, and reorders them such that all non-dummy values appear first in their original relative order, followed by the dummy values.
 For example, if $X = \{1, d, 2, d, 1\}$, then \inlineocl{asSequence} yields $Y = \{1, 2, 1, d, d\}$. To enforce this transformation, we introduce the following CP model: 
 % \vspace*{-.2em}
-\begin{equation}\label{csp:seq_X2Y} \footnotesize
+\begin{equation}\label{csp:seq_X2Y}
 asSeq_{x2y}(X,Y) :
 \begin{cases}
 stable\_keysort(\langle B,X\rangle,\langle B',Y\rangle,1) \\
@@ -182,7 +182,7 @@ By scheduling the tasks derived from $X$ around the blocking intervals from $Y$,
 % This means given an expression such as \inlineocl{src.asSequence().sum()<3}, we would try values for \inlineocl{.sum()}, which would filter values for \inlineocl{src.asSequence}, and to continue filtering downwards to the \inlineocl{src} we need an additional model.
 % To filter from $Y$ to $X$ we use the cumulative constraint, which is generally used for task scheduling. 
 % We'll use it by making \emph{blocking tasks} out of the intervals between the values of $Y$, and scheduling the tasks made from $X$ around them:
-\begin{equation}\label{csp:seq_Y2X} \footnotesize
+\begin{equation}\label{csp:seq_Y2X}
 asSeq_{y2x}(X,Y):
 \begin{cases}
 &sort(Y,Y')\\
@@ -225,7 +225,7 @@ In Figure \ref{fig:cumulative}, blocking tasks (highlighted in red and blue) are
 \end{figure}
 Combining both the \emph{X to Y} and \emph{Y to X} models give us the complete model for \inlineocl{asSequence}.
 \vspace*{-.2cm}
-\begin{equation}\label{csp:seq_XY} \footnotesize
+\begin{equation}\label{csp:seq_XY}
 asSequence(X,Y) :
 \begin{cases}
 asSeq_{x2y}(X,Y)\\
@@ -255,7 +255,7 @@ asSeq_{y2x}(X,Y)\\
 \label{ssec:asOrderedSet}
 % \ytodo{give motivation, give rigorous definition, before formulation}
 Consider the expression \inlineocl{src.asOrderedSet()}. The \inlineocl{asOrderedSet()} operation removes duplicates from $X$ while preserving the relative order of first occurrences. Unused positions in $Y$ are filled with dummy values $d$. For example if $X=\{1,2,d,1\}$, then \inlineocl{asOrderedSet} returns the array $Y=\{1,2,d,d\}$. To enforce this behavior, we use the following CP model: 
-\begin{equation}\label{csp:ordseq_XY} \footnotesize
+\begin{equation}\label{csp:ordseq_XY}
 asOrdSet(X,Y):
 \begin{cases}
 % \mathit{stable\_keysort}(\{X,Y'\},\{\reverse{S},\reverse{T}\},1) \\
@@ -334,7 +334,7 @@ For many OCL collection operations, the filtering process from $X$ to $Y$ can be
 The filtering approach is inspired by the strategy used in Equation (\ref{csp:seq_X}), employing a $\mathit{regular}$ constraint over a masked array:
 % This filter borrows from the strategy used in CSP \ref{csp:seq_X} by using a regular constraint to accept a masked array.
 % It can also be applied the navigation model in CSP \ref{csp:nav}, with a slight alteration to the mask logic.
-\begin{equation}\label{csp:as_0} \footnotesize
+\begin{equation}\label{csp:as_0}
 \mathit{dChannel}(X,Y) :
 \begin{cases}
 \mathit{regular}(S,\mathit{NFA})\\

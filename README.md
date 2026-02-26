@@ -1,122 +1,126 @@
 # Object Oriented Constraint Programming
 
-This repo is based on that of the College Doctoral de Bretagne
+This repo is based on that of the College Doctoral de Bretagne (see below)
 
-Folders in ./ and ./Contributions/ represent Chapters
-Each Chapter Folder has a main .tex file, and two sub-folders:
-- text
-- figures
+Main folders are `./Context` and `./Contributions/`.
+Each Chapter Folder has a main .tex file, and two sub-folders for text and figures.
 
-
-
-
-# ![(French flag)](https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/50px-Flag_of_France.svg.png) Modèle de thèse Collège Doctoral de Bretagne
-
-*Explications en français*
-
-Ce dépôt contient un modèle latex pour le manuscrit de thèse supportant toutes les écoles doctorales du [Collège Doctoral de Bretagne](https://www.doctorat-bretagne.fr).
-
-Ce modèle a pour but principal de fournir une première et une quatrième de couverture du manuscrit de thèse intégralement écrites en latex.
-Tandis que la couverture du manuscrit se doit de respecter le format établi par CDL, la disposition du contenu interne du manuscrit est elle plus flexible.
-La disposition proposée dans ce modèle est donc donnée à titre d'exemple mais il n'est cependant pas obligatoire de la respecter.
+## quick guide
+to update `./main.pdf` edit the `./main.tex` file and run `make`.
 
 
-### Structure du dépôt
+# Progress
+## Context:
+- [ ] Chapter 0: Introduction
+- [ ] Chapter 1: MDE
+	- [x] UML
+    	- [x] MOF
+    	- [x] Class
+    	- [x] Object 
+	- [ ] OCL
+    	- [x] by example
+    	- [ ] operation summary
+    	- [x] typing OCL expressions
+    	- [ ] OCL Metamodel
+  	- [ ] SotA
+    	- [x] EMF
+    	- [x] ATL
+- [ ] Chapter 2: CSP
+  - [x] CSP
+  - [ ] ~~Propagation~~
+  - [x] Globals
+    - [x] Examples
+    - [x] Example Propagation
+    - [ ] DPLL & Simplex
+  - [ ] SotA
+    - [ ] SAT4j
+    - [ ] Choco
+    - [ ] $ECL^iPS_e$
+- [ ] Chapter 3: Problem
+  - [x] Model Search
+  - [ ] SotA
+    - [x] ATLc (QVTc (Grimm))
+    - [ ] EMFtoCSP (OCL\#)
+    - [x] Alloy & Kodkod (OCLsolve)
+    - [ ] ~~QVTc~~
+    - [ ] ~~Grimm~~
+    - [ ] ~~OCL\#~~
+    - [ ] ~~OCLsolve~~
 
-- `main.tex` contient le squelette du document, aucun texte du manuscrit n'est présent dans ce fichier
-- `these-dbl.cls` contient les dépendances, les paramètres de la bibliographie dont le style de citation et les paramètres de mise en page globale du manuscrit et plus particulièrement des deux couvertures
-- `Couverture-these/pagedegarde.tex` contient les variables à remplir par l'auteur pour compléter la page de garde, ces variables sont utilisées par `\maketitle` redéfini dans `these-dbl.cls`
-- `Couverture-these/resume.tex` contient les variables à remplir par l'auteur pour compléter la quatrième de couverture, ces variables sont utilisées par les macros définies dans `these-dbl.cls`
-- Le `Makefile` vous aide à compiler le latex et la bibliographie en un pdf (détails plus bas)
-- Les autres dossiers contiennent chacun un chapitre du document
-
-
-### Remplir la première et quatrième de couverture
-
-Les informations de la page de garde doivent être renseignées dans les variables du fichier `Couverture-these/pagedegarde.tex`.
-Il suffit de modifier les lignes appelant les commandes `\ecoledoctorale{}` et `\etablissement{}` pour adapter les couvertures à l'école doctorale et à l'établissement, ou les établissements, délivrant le diplôme (par défaut MathSTIC et Université de Rennes 1, respectivement).
-Le fichier `Couverture-these/README.md` liste Les écoles doctorales et établissements supportés ainsi que des liens vers les listes des spécialités et unités de recherche de chaque école doctorale pour aider à compléter la page de garde (commandes `\spec{}` et `\uniterecherche{}`).
-Modifier la disposition des éléments de la page de garde présente dans `these-dbl.cls` ne devrait  être nécessaire que pour rajouter quelques `\vspace` pour préserver la structure original après avoir renseigné les différents champs (e.g., spécialité, composition du jury).
-
-Les variables relatives à la quatrième de couverture sont à renseigner dans `Couverture-these/resume.tex`.
-
-
-### Dépendances
-
-Une distribution LaTeX comme texlive est nécessaire pour compiler le document. À noter que certains paquets nécessaires à ce document ne sont pas toujours directement inclus dans une installation de base de texlive.
-
-Paquets additionnels nécessaires :
-
-- Fedora (installer avec `dnf install`)
-	- texlive-abstract
-	- texlive-wallpaper
-- Autres distributions
-	- TODO (contributions bienvenues)
-
-
-### Compiler le latex en pdf
-
-Le `Makefile` fournis vous aide à compiler votre document.
-Il utilise `pdflatex` et `biber` pour générer le fichier pdf et peut l'afficher grâce à `evince` sur Linux et `open` sur MacOS.
-
-Compiler votre document (version locale) avec `pdflatex/biber` :
-
-    make
-
-Compiler la version complète du document (incluant les sections masquées)
-
-	make full
-
-Afficher le pdf généré :
-
-    make viewpdf
-
-Suppimer tous les fichiers générés, pdf inclus :
-
-    make clean
-
-
-### CI/CD (Gitlab)
-
-Il est possible de demander à gitlab de compiler automatiquement la version complète du manuscrit à chaque nouveau commit.
-Il faut effectuer les actions suivantes:
-
-
-- Settings -> General -> Visibility, project features, permissions -> Enable CI/CD
-- (Sur l'instance https://gitlab.com) Settings -> CI/CD -> Enable shared runners for this project
-
-Le document compilé sera disponible à cette URL: <repository url>-/jobs/artifacts/master/raw/main.pdf?job=building-latex-master
-
-Ex: https://gitlab.com/ed-matisse/latex-template/-/jobs/artifacts/master/raw/main.pdf?job=building-latex-master
-
-
-### Spécificités d'un document multilingue
-
-La liste des langues utilisées est définie dans `these-dbl.cls` où le paquet `babel` est importé.
-Etant donné que la quatrième de couverture contient du français et de l'anglais, il est nécessaire de conserver au moins ces deux langues dans la liste.
-Il faut utiliser `\selectlanguage{x}` (où x est `french` ou `english`) pour changer de langue après son insertion.
-
-Si la langue principale du contenu du document est l'anglais, vous devez effectuer quelques modifications au modèle :
-
-- remplacer `\selectlanguage{french}` par `\selectlanguage{english}` dans `main.tex`
-- modifier la ligne 488 de `these-dbl.cls` pour remplacer `Partie` par `Part` dans les entêtes
-- inclure un résumé en français d'au moins 4 pages
-
-
-### Changer la police du contenu
-
-La police imposée pour les couvertures est Arial mais vous pouvez utiliser une autre police pour le contenu de la thèse en redéfinissant les commandes `\rmdefault` et `\sfdefault` comme commenté dans `these-dbl.cls`.
-Actuellement la police par défaut de latex est celle utilisée pour le contenu.
-
-
------
-
+## Contrib:
+- [x] Chapter 4: var
+  - [x] RMS Problem
+  - [x] Denoting Vars
+  - [x] Refactoring Expressions
+  - [ ] Experimentation : Refactoring RMS
+  - [ ] Discussions
+- [ ] Chapter 5: UML CSP
+  - [x] Base Encoding
+  - [ ] Enumerated Encoding (References)
+  - [ ] 3-valued Boolean Encoding (optional data)
+  - [ ] Reference Types
+    - [ ] ~~Containment~~
+    - [ ] Opposite
+  - [x] Collection Types
+    - [x] Sequence
+    - [x] Set
+    - [x] Bag
+    - [x] OrderedSet
+- [ ] Chapter 6: Nav CSP
+  - [x] Base Model
+  - [ ] ~~Enumerated Model~~
+  - [ ] ~~Closure~~
+  - [ ] Experimentation : Subset Sum
+    - [x] n-depth Our Method
+    - [ ] n-depth Alloy
+    - [ ] ~~Closure our Method~~
+    - [ ] ~~Closure Alloy~~
+- [ ] Chapter 7: OCL CSP
+  - [ ] Int and Bool OP
+    - [ ] ~~1..1 Int and Bool~~
+      - [ ] ~~models~~
+      - [ ] ~~text~~
+    - [ ] 0..1 Int and Bool
+      - [ ] models
+      - [ ] text
+  - [ ] ~~Iterate~~
+    - [ ] ~~2 int model~~
+    - [ ] ~~2 bool model~~
+    - [ ] ~~2 collection~~
+  - [ ] Col to Int OP
+    - [x] models
+    - [ ] text
+  - [ ] Col to Bool OP
+    - [x] models
+      - [ ] forall <- many valued logic problem
+    - [ ] text
+  - [ ] Col to Col OP
+    - [x] models
+    - [ ] text
+  - [x] Col Type Casting
+    - [x] models
+    - [x] text
+    - [ ] experimentation: Zoo
+  - [ ] Ordered Col OPs
+    - [x] models
+    - [ ] text
+  - [ ] Unordered Col OPs
+    - [x] models
+    - [ ] text
+- [ ] ~~Chapter 8: Comparison with Related Work~~
+- [ ] Chapter 9: Discussions
+  - [ ] Summary: Comparison with related work
+  - [ ] OOCP Benchmark suite
+  - [ ] Search Strategy
+  - [ ] Sequence/String Variables to replace encoding and global constraints
+- [ ] Chapter 10: Conclusion
 # ![(UK flag)](https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/50px-Flag_of_the_United_Kingdom.svg.png) Thesis template for Collège Doctoral de Bretagne
 
 *English explanations*
 
 This repository contains a template for the thesis manuscript supporting all doctoral schools of the [Collège Doctoral de Bretagne](https://www.doctorat-bretagne.fr/en).
 
+<!-- 
 The main goal of this template is to provide both front and back covers of the thesis manuscript entirely written in latex.
 While the manuscript covers must follow the rules of CDL, the internal layout of the content is more flexible.
 The content layout provided in this template is therefore given as an exemple rather than as a  mandatory framework.
@@ -141,7 +145,7 @@ Modifying the front cover layout defined in `these-dbl.cls` should only be neces
 
 The back cover variables that must be filled are in `Couverture-these/resume.tex`.
 
-
+-->
 #### Dependencies
 
 A LaTeX distribution such as texlive is necessary in order to compile your document. Please note some necessary packages are not directly included in a base texlive installation.
@@ -174,7 +178,7 @@ Display the generated pdf:
 Remove all generated files, pdf included:
 
 	make clean
-
+<!--
 #### CI/CD (Gitlab only)
 
 This repository is able to automatically compile the LaTeX document when a new change is submitted.
@@ -208,6 +212,7 @@ Currently the latex default font is the one used for the content.
 
 
 -----
+-->
 
 # ![(git logo)](https://yousername.gitlab.io/img/logo_git_50x50.png) Contribute
 
@@ -218,6 +223,3 @@ Maintainers: Pierre-Louis Roman.
 Contributors: Louiza Yala (original & main developer), Josquin Debaz, Pierre-Louis Roman, Lucas Bourneuf, Corentin Guezenoc, Clément Elbaz, Florian Arrestier, Alexandre Honorat, Antonin Voyez, Pierre Le Barbenchon, Arthur Lecert, Pascal Cotret, Louis Béziaud, Karol Desnos.
 
 Upstream git repository: https://gitlab.com/ed-matisse/latex-template
-
-Previous repository hosting an older version from 2022:
-- https://gitlab.inria.fr/ed-mathstic/latex-template

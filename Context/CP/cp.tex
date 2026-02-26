@@ -1,57 +1,23 @@
-
-% \section{Exact and Explainable Artificial Intelligence}
-
-% \section{Exact and Explainable Artificial Intelligence}
-
-
-
-% \section{Constraint Programming}
-
-% \subsection{Symbolic AI}
-% \begin{itemize}
-%     \item SAT
-%     \item constraint satisfaction problems
-%     \item first order logic
-%     \item linear programming
-%     \item logic programming
-%     \item constraint programming
-% \end{itemize}
-
-% \subsection{Neural Networks}
-% \begin{itemize}
-%     \item machine learning
-%     \item Large Language Models, transformer architecture 
-%     \item great when applied to NLP
-%     \item doesn't provide \emph{proof}
-% \end{itemize}
-
-% \subsection{Constraint Programming}
-% \begin{itemize}
-%     \item a CP model = CSP (avoid confusion with MDE Model)
-%     \item CSP + Propagation + Search
-%     \item CSP = V,D,C
-%     \item global constraints: modeling and propagation
-%     \item problem variables, intermediate variables and search
-%     \item reification: constraints as variables
-%     \item notable global constraint for this paper: element, gcc, stable keysort, regular
-% \end{itemize}
-
 \textbf{Constraint Programming} \cite{HoeveK06} is a powerful paradigm that offers a generic and modular approach to modeling and solving combinatorial problems.
 
-\subsection{Constraint Satisfaction Problems}
-A CP model consists of a set of variables $X=\{x_1,\ldots, x_n\}$, a set of domains $\mathcal{D}$ mapping each variable $x_i\in X$ to a finite set of possible values $dom(x_i)$, and a set of constraints $\mathcal{C}$ on $X$, where each constraint $c$ defines a set of values that a subset of variables $X(c)$ can take. 
-%%
-Domains can be either bounded, defined as an interval $\{lb..ub\}$, or enumerated, explicitly listing all possible values (e.g., ${1, 10, 100, 1000}$). This distinction impacts the choice of constraints: for instance, the global cardinality constraint is more effective with enumerated domains. 
-%%
-An assignment on a set $Y \subseteq X$ of variables is a mapping from variables in $Y$ to values in their domains. A solution is an assignment on $X$ satisfying all constraints. 
 
-\subsection{Global Constraints}
+
+
+\section{Constraint Satisfaction Problems}
+\input{Context/CP/text/csp}
+% A CP model consists of a set of variables $X=\{x_1,\ldots, x_n\}$, a set of domains $\mathcal{D}$ mapping each variable $x_i\in X$ to a finite set of possible values $dom(x_i)$, and a set of constraints $\mathcal{C}$ on $X$, where each constraint $c$ defines a set of values that a subset of variables $X(c)$ can take. 
+% %%
+% Domains can be either bounded, defined as an interval $\{lb..ub\}$, or enumerated, explicitly listing all possible values (e.g., ${1, 10, 100, 1000}$). This distinction impacts the choice of constraints: for instance, the global cardinality constraint is more effective with enumerated domains. 
+% %%
+% An assignment on a set $Y \subseteq X$ of variables is a mapping from variables in $Y$ to values in their domains. A solution is an assignment on $X$ satisfying all constraints. 
+
+% \section{Propagation}
+% \input{Context/CP/text/propagation}
+
+\section{Global Constraints}
 \input{Context/CP/text/globals}
 
-\subsection{CP Solvers}
-\textbf{CP solvers} use backtracking search to explore the search space of partial assignments. The main concept used to speed up the search is constraint propagation by {\it filtering algorithms}. 
-At each assignment, constraint filtering algorithms prune
-the search space by enforcing local consistency properties like {\it domain consistency} (a.k.a., {\it Generalized Arc Consistency} (GAC)). A constraint $c$ on $X(c)$ is domain consistent, if and only if, for every  $x_i \in X(c)$ and every
-$v \in dom(x_i)$, there is an assignment satisfying $c$ such that $(x_i = v)$.
+\section{CP Solvers}
+\input{Context/CP/text/solvers}
 
-\subsection{Boolean Satisfiability}
+% \section{Similar AI}

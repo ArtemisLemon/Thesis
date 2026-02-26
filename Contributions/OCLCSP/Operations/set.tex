@@ -1,10 +1,75 @@
-\subsection{Union}
+\newpage\subsection{union(exp)}
+Consider the expression \inlineocl{src.union(e)}, where \inlineocl{src} is an expression resulting in a set of objects or integers, and \inelineocl(e) is (an expression resulting in) a set of objects or an integers.
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:union_setset}
+    union\_setset(X,Y,Z):
+    \begin{cases}
+        X \;\mathbin{\|}\; Y'
+        asSet(Y',Y)
+    \end{cases}
+\end{equation}
 
-\subsection{Intersection}
+Consider the expression \inlineocl{src.union(e)}, where \inlineocl{src} is an expression resulting in a set or bag of objects or integers, and \inelineocl(e) is (an expression resulting in) a bag of objects or an integers.
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:union_Xbag}
+    union\_Xbag(X,Y,Z):
+    \begin{cases}
+        X \;\mathbin{\|}\; Y'
+        asBag(Y',Y)
+    \end{cases}
+\end{equation}
 
-\subsection{Difference}
+\newpage\subsection{Intersection}
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:intersection}
+    intersection(X,Y,Z):
+    \begin{cases}
+        count(x_i,X,c_i)\\
+        count(x_i,Y,c_i')\\
+        count(x_i,Z,c_i'')\\
+        c_i'' = \llbracket x_i = d \rrbracket * a_i + \llbracket x_i \neq d \rrbracket * min(c_i,c_i')\\
+        a_i \geq max(c_i,c_i')\\
+        count(z_i,X,b_i)\\
+        count(z_i,Y,b_i')\\
+        count(z_i,Z,b_i'')\\
+        b_i'' = \llbracket z_i = d \rrbracket * a_i' + \llbracket z_i \neq d \rrbracket *min(b,b_i')\\
+        a_i' \geq max(b_i,b_i')\\
+    \end{cases}
+\end{equation}
 
-\subsection{Symetric Difference}
+% \begin{equation}\label{csp:intersection_setset}
+%     intersection\_setset(X,Y,Z):
+%     \begin{cases}
+%         b_{i1} = x_i \wedge b_{i2} = 1\\
+%         b_{(i+|X|)1} = y_i \wedge b_{i2} = 2\\
+%         stable\_keysort(B,B',2)\\
+%         c_n \iff (b_{n1}=b_{(n-1)1} \wedge b_{n2}\neq b_{(n-1)2})\\
+
+%     \end{cases}
+% \end{equation}
+
+\newpage\subsection{set - set}
+\begin{equation}\label{csp:diff_set}
+    diff\_set(X,Y,Z):
+    \begin{cases}
+        count(x_i,Y,s_i)\\
+        b_i \iff (s_i = 0)\\
+        z'_i = d - (d-x_i)*\llbracket b_i \rrbracket\\
+        sort(Z',\reverse{Z})
+    \end{cases}
+\end{equation}
+
+
+\newpage\subsection{Symmetric Difference}
+\begin{equation}\label{csp:symdiff_set}
+    symdiff\_set(X,Y,Z):
+    \begin{cases}
+        diff\_set(X,Y,S)\\
+        diff\_set(Y,X,T)\\
+        C = S \;\mathbin{\|}\; T\\
+        sort(C,\reverse{Z})
+    \end{cases}
+\end{equation}
 
 \subsection{including}
 

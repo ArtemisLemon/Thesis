@@ -1,14 +1,39 @@
 ATL$^{\text{c}}$ provides an extension to the ATL allowing users to add OCL invariants to the targets of transformation specifications.
-The two main model search applications of \atlc
+ATL$^{\text{c}}$ then translates the conjunction of these invariants into a CSP which can be solved by a range of solvers, such as: Choco and Cassowary (Simplex).
+In ATL$^{\text{c}}$ invariants, only integer attributes can be variables, and variables are identified by the last \inlineocl{PropertyCallExp} of a query expression.
 
-\atlc provides a tool for Model Space Exploration.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 0 0 0},width=1\linewidth]{Context/MDE/figures/libraryMM.png}
+    \caption{Target metamodel: Library}
+\end{figure}
 
+\begin{lstlisting}
+    rule CreateLibrary {
+    to
+        lib : LibraryMM!Library (
+            books <- BookMM!Book.allInstances()->collect(b | thisModule.BookToBookEntry(b))
+        )
+        cstr : Constraints!Constraint(
+            value <- lib.books.ID->isUnique() 
+        )
+}
 
+\end{lstlisting}
+Here we complete the transformation from the ATL \ytodo{section}, by providing a rule to create a library.
+In the \inlineocl{to} section, we see two targets: a \inlineocl{Library} object, for which the reference \inlineocl{books} is populated by a standard binding, and a \inlineocl{Constraint} object.
+The \inlineocl{cstr} target allows the user to add invariants to a transformation rule.
+Here the invariant states that \textit{books in a library must have unique IDs}.
+This invariant replaces a specification of how to make a unique ID.
+ATL$^{\text{c}}$ assumes \inlineocl{ID} is the variable in this invariant, not the \inlineocl{books} relation, as \inlineocl{ID} is the last \inlineocl{PropertyCallExp} in the query \inlineocl{lib.books.ID}.
 
-\begin{outline}
-    \item starting point of the thesis
-    \item ATL is a model transformation tooling
-    \item ATLc is a plugin, which allows you to gather constraint expressions from ATL code and pass it to different solvers
-    \item provides a object oriented constraint metamodel in ecore
-    \item instantiates constraint models for LP and CP solvers
-\end{outline}
+Describing a satisfactory model in such away, can be easier and shorter than describing how to make a satisfactory model.
+
+\ytodo{Can leverage different kinds of CP solvers, such as Cassowary (simplex) for positioning GUI elements.}
+
+\ytodo{Another effort similar to this one is QVTc: passing parts of a transformation to a solver to use model search to finish a transformation (uses Choco to make an $ECL^iPS_e$ spec)}
+
+\ytodo{Another effort similar to this one is Grimm: refining, uses Choco, adds heuristics to make statistically ineteresting targets}
+
+\ytodo{In the context of Model Search, the standard ATL transformation provides the relaxed-metamodel and produces the partial model. The relaxed-metamodel is completed with the ATL$^{\text{c}}$ invariants, and a solver is leveraged to finish the transformation.}
+

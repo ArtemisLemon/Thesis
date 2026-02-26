@@ -1,0 +1,7 @@
+A CP model consists of a set of variables $X=\{x_1,\ldots, x_n\}$, a set of domains $\mathcal{D}$ mapping each variable $x_i\in X$ to a finite set of possible values $dom(x_i)$, and a set of constraints $\mathcal{C}$ on $X$, where each constraint $c(X(c),R)$ defines a set of values that a subset of variables $X(c)$ can take.
+
+% A constraint $Ci = ( X_i , R_i )$ {\displaystyle C_{i}=({\mathcal {X}}_{i},{\mathcal {R}}_{i})} is defined by a set X i = { x i 1 , … , x i k } {\displaystyle {\mathcal {X}}_{i}=\{x_{i_{1}},\dots ,x_{i_{k}}\}} of variables and a relation R i ⊆ D i 1 × ⋯ × D i k {\displaystyle {\mathcal {R}}_{i}\subseteq {\mathcal {D}}_{i_{1}}\times \dots \times {\mathcal {D}}_{i_{k}}} that defines the set of values allowed simultaneously for the variables of X i {\displaystyle {\mathcal {X}}_{i}}.
+%%
+Domains can be either bounded, defined as an interval $\{lb..ub\}$, or enumerated, explicitly listing all possible values (e.g., ${1, 10, 100, 1000}$). This distinction impacts the choice of constraints: for instance, the global cardinality constraint is more effective with enumerated domains. 
+%%
+An assignment on a set $Y \subseteq X$ of variables is a mapping from variables in $Y$ to values in their domains. A solution is an assignment on $X$ satisfying all constraints. 

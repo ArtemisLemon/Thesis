@@ -1,16 +1,55 @@
 \clearemptydoublepage
 \chapter{Contribution : OCL CSP}
 
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[t]{0.48\linewidth}
+        \centering
+        \includegraphics[trim={0 0 0 0},width=1\linewidth]{Contributions/OCLCSP/figures/ocltypecoverage.png}
+        \caption{OCL Type Coverage}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\linewidth}
+        \centering
+        \includegraphics[trim={0 0 0 0},width=1\linewidth]{Contributions/OCLCSP/figures/oclexpressionMMcoverage.png}
+        \caption{OCL Expression MMCoverage}
+    \end{subfigure}
+\end{figure}
+
+\begin{table}[]
+    \begin{tabular}{|l|l|l|l|l|l|l|}
+    \hline
+    src \textbackslash out       & bool                                                                                                                            & int                                                                                            & element                                                                    & collection                                                                                        & Sequence                                                                            & Bag                                                                                  \\ \hline
+    bool                         & \cellcolor[HTML]{9AFF99}and                                                                                                     &                                                                                                &                                                                            &                                                                                                   &                                                                                     &                                                                                      \\ \hline
+    int                          & \cellcolor[HTML]{9AFF99}\textless{}                                                                                             & \cellcolor[HTML]{9AFF99}+                                                                      &                                                                            &                                                                                                   &                                                                                     &                                                                                      \\ \hline
+                                 & \cellcolor[HTML]{DAE8FC}                                                                                                        & \cellcolor[HTML]{CBCEFB}                                                                       & \cellcolor[HTML]{9698ED}                                                   & \cellcolor[HTML]{9698ED}                                                                          & \cellcolor[HTML]{96FFFB}asSequence                                                  & \cellcolor[HTML]{96FFFB}                                                             \\ \cline{6-6}
+    \multirow{-2}{*}{collection} & \multirow{-2}{*}{\cellcolor[HTML]{DAE8FC}\begin{tabular}[c]{@{}l@{}}=, \textless{}\textgreater\\ includes, forall\end{tabular}} & \multirow{-2}{*}{\cellcolor[HTML]{CBCEFB}\begin{tabular}[c]{@{}l@{}}size\\ count\end{tabular}} & \multirow{-2}{*}{\cellcolor[HTML]{9698ED}any}                              & \multirow{-2}{*}{\cellcolor[HTML]{9698ED}\begin{tabular}[c]{@{}l@{}}select\\ reject\end{tabular}} & \cellcolor[HTML]{9698ED}sortedBy                                                    & \multirow{-2}{*}{\cellcolor[HTML]{96FFFB}asBag}                                      \\ \hline
+    Sequence                     &                                                                                                                                 &                                                                                                & \cellcolor[HTML]{FFCCC9}\begin{tabular}[c]{@{}l@{}}first\\ at\end{tabular} &                                                                                                   & \cellcolor[HTML]{FFCCC9}\begin{tabular}[c]{@{}l@{}}subSequence\\ union\end{tabular} &                                                                                      \\ \hline
+    Bag                          &                                                                                                                                 &                                                                                                &                                                                            &                                                                                                   &                                                                                     & \cellcolor[HTML]{FFFC9E}\begin{tabular}[c]{@{}l@{}}union\\ intersection\end{tabular} \\ \hline
+    \end{tabular}
+\end{table}
+
+The first section covers integer and boolean operations.
+Collection operations are split across result types: operations of section 2 result in integer, section 3 in booleans, section 4 in collections.
+Collection type casting operations are in section 5, and typed collection operations are found in the following sections. 
+
+
 \section{CP Models for OCL Integer and Boolean Operations}
 \input{Contributions/OCLCSP/Operations/intbool}
 
-\section{CP Models for OCL Collection Type Casting Operations}
-\input{Contributions/OCLCSP/Operations/typecasting}
+\section{CP Models for OCL Collection to Int Operations}
+\input{Contributions/OCLCSP/Operations/collection2int}
+
+\section{CP Models for OCL Collection to Bool Operations}
+\input{Contributions/OCLCSP/Operations/collection2bool}
 
 \section{CP Models for OCL Collection Operations}
 \input{Contributions/OCLCSP/Operations/collection}
 
-\section{CP Models for OCL Sequence Operations}
+\section{CP Models for OCL Collection Type Casting Operations}
+\input{Contributions/OCLCSP/Operations/typecasting}
+
+\section{CP Models for OCL Sequence and Ordered Set Operations}
 \input{Contributions/OCLCSP/Operations/sequence}
 
 \section{CP Models for OCL Set Operations}
@@ -19,8 +58,8 @@
 \section{CP Models for OCL Bag Operations}
 \input{Contributions/OCLCSP/Operations/bag}
 
-\section{CP Models for OCL Ordered Set Operations}
-\input{Contributions/OCLCSP/Operations/orderedset}
+% \section{CP Models for OCL Ordered Set Operations}
+% \input{Contributions/OCLCSP/Operations/orderedset}
 
 \section{CP Models for Class Functions and Global Functions}
-\input{Contributions/OCLCSP/Operations/orderedset}
+% \input{Contributions/OCLCSP/Operations/orderedset}

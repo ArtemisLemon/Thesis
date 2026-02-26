@@ -1,0 +1,104 @@
+% \subsection{operation()}
+% Consider the expression \inlineocl{src.operation()}, where 
+% Formal Definition:
+% \begin{equation}\label{def:operation}
+%     operation(X,y) \iff \llbracket x_i \neq d \rrbracket
+% \end{equation}
+
+% Reformulation using Global Constraints:
+% \begin{equation}\label{csp:operation}
+%     operation(X,y):
+%     \begin{cases}
+
+%     \end{cases}
+% \end{equation}
+\newpage
+\subsection{select(exp)}
+This operation can have at most one iterator variable.
+
+Consider the expression \inlineocl{src.select(exp)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{exp} is an expression of type boolean.
+% Formal Definition:
+% \begin{equation}\label{def:select}
+%     select(X,Y,exp) \iff
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:select}
+    select(X,Y,exp):
+    \begin{cases}
+        y_i = d - (d-x_i)*\llbracket exp(x_i) \rrbracket
+    \end{cases}
+\end{equation}
+
+\newpage
+\subsection{reject(exp)}
+This operation can have at most one iterator variable.
+
+Consider the expression \inlineocl{src.reject(exp)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{exp} is an expression of type boolean.
+% Formal Definition:
+% \begin{equation}\label{def:reject}
+%     reject(X,Y,exp) \iff
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:reject}
+    reject(X,Y,exp):
+    \begin{cases}
+        y_i = d - (d-x_i)*\llbracket \neg exp(x_i) \rrbracket
+    \end{cases}
+\end{equation}
+
+\newpage\subsection{sortedBy(exp)}
+This operation can have at most one iterator variable.
+
+Consider the expression \inlineocl{src.sortedBy(exp)}, where exp is an expression of type int.
+% Formal Definition:
+% \begin{equation}\label{def:sortedBy}
+%     sortedBy(X,Y,exp) \iff
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:sortedBy}
+    sortedBy(X,Y,exp):
+    \begin{cases}
+        stable\_keysort(\langle K,X\rangle,\langle K',Y\rangle,1) \\
+        ~~k_i=exp(x_i), \forall i \in [1,z]
+        % ~~k'_i=\llbracket y_i=d \rrbracket, \forall i \in [1,z]
+    \end{cases}
+\end{equation}
+
+
+\newpage\subsection{any()}
+This operation can have at most one iterator variable.
+
+Consider the expression \inlineocl{src.any(exp)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{exp} is an expression of type boolean.
+% Formal Definition:
+% \begin{equation}\label{def:any}
+%     any(X,Y,exp) \iff
+% \end{equation}
+
+Reformulation using Global Constraints:
+\begin{equation}\label{csp:any}
+    any(X,y,exp):
+    \begin{cases}
+        select(X,Y,exp)\\
+        asBag(Y,Y')\\
+        y = y_1'
+    \end{cases}
+\end{equation}
+
+
+% \subsection{collect()}
+% Consider the expression \inlineocl{src.collect(exp)}, where exp is an expression.
+% Formal Definition:
+% \begin{equation}\label{def:collect}
+%     collect(X,Y,exp) \iff
+% \end{equation}
+
+% Reformulation using Global Constraints:
+% \begin{equation}\label{csp:collect}
+%     collect(X,Y,exp):
+%     \begin{cases}
+%         y_i = d - (d-x_i)*\llbracket not exp(x_i) \rrbracket
+%     \end{cases}
+% \end{equation}

@@ -1,9 +1,9 @@
-\begin{outline}
-    \item main tool from the SotA
-    \item Alloy modeling language
-    \item Kodkod Relation First Order Logic API, which outputs a CNF
-    \item SAT solver (SAT4J default)
-\end{outline}
+% \begin{outline}
+%     \item main tool from the SotA
+%     \item Alloy modeling language
+%     \item Kodkod Relation First Order Logic API, which outputs a CNF
+%     \item SAT solver (SAT4J default)
+% \end{outline}
 
 Alloy provides a framework for modeling problems and solving them using \textit{off-the-shelf} SAT solvers.
 The alloy language is inspired by the Z modeling language and the Object Constraint Language.
@@ -60,16 +60,38 @@ run {#S=2 #T=2}
 \end{lstlisting}
 \caption{Simple Alloy model, with two related concepts, with two instances each}
 \end{listing}
+Here we have a simple alloy specification which simply illustrates how types and relations are modeled when looking at the resulting \textit{relational first order logic} specification.
+This specification also describes the search space, by stating there should be two objects of type \inlineocl{S}, and two of type \inlineocl{T}
 
 \begin{equation}\label{eq:RFOL:base}
     \begin{aligned}
         \{a_1,a_2,a_3,a_4\}\\
-        S :_1 [\{\Tuple{a_1},\Tuple{a_2}\},\{\Tuple{a_1},\Tuple{a_2}\}]\\
-        T :_1 [\{\Tuple{a_3},\Tuple{a_4}\},\{\Tuple{a_3},\Tuple{a_4}\}]\\
-        R :_2 [\{\},\{\Tuple{a_1,a_3},\Tuple{a_1,a_4},\Tuple{a_2,a_3},\Tuple{a_2,a_4}\}]\\
+        S :_1 [\{\tuple{a_1},\tuple{a_2}\},\{\tuple{a_1},\tuple{a_2}\}]\\
+        T :_1 [\{\tuple{a_3},\tuple{a_4}\},\{\tuple{a_3},\tuple{a_4}\}]\\
+        R :_2 [\{\},\{\tuple{a_1,a_3},\tuple{a_1,a_4},\tuple{a_2,a_3},\tuple{a_2,a_4}\}]\\
         \forall s \in S : \vert R.s\vert = 1
     \end{aligned}
 \end{equation}
+Here we have a \textit{relational first order logic} model of the alloy specification.
+The first line lists the atoms. 
+There is one atom for each object of the model.
+When working with integers, each possible int value implies an additional atom.
+The next two lines represent the unary relations \textit{is of type S} and \textit{is of type T}.
+These relations are encoded as a set, for which we have the lower bound (objects that must be in the set) and upper bound (objects that maybe in the set).
+For these two relations \inlineocl{S} and \inlineocl{T} have identical upper and lower bounds, meaning its a constant of this problem.
+They identify atoms $a_1$ and $a_2$ as being of type S, and $a_3$ and $a_4$ of type T.
+
+Next is the binary relation \inlineocl{R}, which describes the links from objects of type S to those of type T.
+If we look at the upper bound for the possibilities we see \ytodo{stuff like} $\tuple{a_1,a_3}$, meaning maybe $a_1$ is linked to $a_3$.
+We have no information about existing relations between S and T objects, so the lower bound is empty.
+
+The final line uses relational language such as \inlineocl{R.s}: \textit{R join s}, to predicate on the relations.
+The $s$ in $\forall s \in S$, will be instantiated as singletons relations, which can be joined with the \inlineocl{R} relation, to get the subset of \inlineocl{R} corresponding to the $s$ object.
+Ultimately the alloy expression \inlineocl{one T} gets translated to $|R.s|=1$, or the size of the subset resulting from the join $R.s$ is equal to one.
+
+\ytodo{If you want to have a sequence of T, we need to add atoms for integers ($a_5$,$a_6$,$a_7$,etc..). And the relation \inlineocl{R} becomes a ternary relation where the tuples now include the integer atom representing the position of the link in the sequence: $\tuple{a_6,a_1,a_3}$ which would mean the first (1=$a_6$) link between from $a_1$:S is to $a_3$:T.}
+
+
 % % \subsection{Satisfiability Modulo Theories}
 % % \subsubsection{SMT}
 % % \subsubsection{Applied to Relational First Order Logic}
@@ -86,3 +108,5 @@ run {#S=2 #T=2}
 %         \forall t \in T : t.A \geq 0
 %     \end{aligned}
 % \end{equation}
+
+\ytodo{Similar to this work: OCLsolve}

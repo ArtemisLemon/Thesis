@@ -1,16 +1,78 @@
 \subsection{Atlas Transformation Language}
-The Atlas Transformation Language provides a means to specify model-to-model transformations in EMF.
+% The Atlas Transformation Language provides a means to specify model-to-model transformations in EMF.
+The Atlas Transformation Language (ATL) provides a powerful framework for specifying model-to-model transformations within the Eclipse Modeling Framework (EMF). 
+ATL is designed to automate the conversion of models from one metamodel to another, enabling the creation of model transformation pipelines—a critical feature for modern Model-Driven Engineering (MDE) workflows.
 % ATL can be  to chain model to model transformations allowing for automated modeling pipelines.
-ATL extends OCL to define rules in the context of multiple Classes.
+% ATL extends OCL to define rules in the context of multiple Classes.
+ATL extends OCL (Object Constraint Language) to define transformation rules that operate across multiple classes. These rules establish bindings, which associate properties between source and target model elements using OCL queries. This allows ATL to express complex mappings between metamodels in a declarative style, focusing on what should be transformed rather than how.
 These rules associate properties across the classes using OCL queries, in what is called: a binding.
+
 Just like OCL, ATL can be written declaratively, but ATL also allows for imperative sections, which are sometimes necessary to specify \textit{steps} required to transform an object into another.
 
-$$\inlineocl{rule A from s:Session to r:Rectangle (r.text <- s.name)}$$
-$$\inlineocl{rule B from w:Week to r:Rectangle (r.contains <- A(w.sessions))}$$
-Here we see two simplified rules which describe a transformation from the Scheduling example to the GUI example.
-Rule A describes how to make a GUI element from a session in the schedule.
-Rule A shows a simple binding \inlineocl{r.text <- s.name} between the text of a rectangle and the name of a session.
-Rule B describes how to make a GUI element from a week in the schedule.
-\inlineocl{w.sessions} is the collection of sessions assigned to a week.
-\inlineocl{A(w.sessions)} is the result of rule A applied to the prior collection, which is a collection of rectangles.
-Finally we bind \inlineocl{r.contains} of the resulting rectangle to the resulting collection.
+% $$\inlineocl{rule A from s:Session to r:Rectangle (r.text <- s.name)}$$
+% $$\inlineocl{rule B from w:Week to r:Rectangle (r.contains <- A(w.sessions))}$$
+% Here we see two simplified rules which describe a transformation from the Scheduling example to the GUI example.
+% Rule A describes how to make a GUI element from a session in the schedule.
+% Rule A shows a simple binding \inlineocl{r.text <- s.name} between the text of a rectangle and the name of a session.
+% Rule B describes how to make a GUI element from a week in the schedule.
+% \inlineocl{w.sessions} is the collection of sessions assigned to a week.
+% \inlineocl{A(w.sessions)} is the result of rule A applied to the prior collection, which is a collection of rectangles.
+% Finally we bind \inlineocl{r.contains} of the resulting rectangle to the resulting collection.
+
+% \begin{lstlisting}
+%     // Book.metamodel
+%     class Author {
+%         name : string;
+%         first_name :string;
+%     };
+    
+%     class Book {
+%         title : string;
+%         author : Author;
+%         year : int;
+%     };
+
+%     // BookEntry.metamodel
+%     class BookEntry {
+%         title : string;
+%         authorName: string; // Flattened from Author
+%         int publicationYear;
+%     };
+% \end{lstlisting}
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[t]{0.70\linewidth}
+        \centering
+        \includegraphics[trim={0 0 0 0},width=1\linewidth]{Context/MDE/figures/personANDbookMM.png}
+        \caption{Source metamodel: people and books}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.26\linewidth}
+        \centering
+        \includegraphics[trim={0 0 0 0},width=1\linewidth]{Context/MDE/figures/BookEntryMM.png}
+        \caption{Target metamodel: library book entry}
+    \end{subfigure}
+\end{figure}
+In these two figures we find a source and a target metamodels.
+The source metamodel describes books and their relation to people.
+And the target metamodel is a specification for a book entry in a library.
+
+
+\begin{lstlisting}
+    // ATL transformation rule
+    rule BookToBookEntry {
+    from
+        b : BookMM!Book
+    to
+        be : LibraryMM!BookEntry (
+            title <- b.title,
+            authorName <- b.author.family_name.toUpperCase() + b.author.name,
+            year <- b.year
+        )
+    }
+}
+\end{lstlisting}
+
+In this example, we focus on a transformation rule, which produces \inlineocl{BookEntry} objects from \inlineocl{Book} objects and their associated \inlineocl{Person} objects.
+A rule has two parts: a \inlineocl{from} section which identifies source classes and \inlineocl{to} which identify target classes, and binds their properties to those of the source.  
+In the binding \inlineocl{authorName <- b.author.name + b.author.first\_name}, we link the \inlineocl{authorName} property of an entry \inlineocl{be}, to the conjunction of the \inlineocl{name} and \inlineocl{family\_name} of the \inlineocl{Person} identified by the \inlineocl{author} property of the book \inlineocl{b}.

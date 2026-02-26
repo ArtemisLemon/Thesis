@@ -1,0 +1,19 @@
+\textbf{CP solvers} use backtracking search to explore the search space of partial assignments. The main concept used to speed up the search is constraint propagation by {\it filtering algorithms}. 
+At each assignment, constraint filtering algorithms prune
+the search space by enforcing local consistency properties like {\it domain consistency} (a.k.a., {\it Generalized Arc Consistency} (GAC)). A constraint $c$ on $X(c)$ is domain consistent, if and only if, for every  $x_i \in X(c)$ and every
+$v \in dom(x_i)$, there is an assignment satisfying $c$ such that $(x_i = v)$.
+
+
+\subsection{Choco (and Gecode and OR-tools)}
+\ytodo{API for using CP from source code}
+\ytodo{parse flatzinc}
+
+\subsection{SWI-prolog and $ECL^iPS_e$}
+\ytodo{Solvers using prolog like language to model problems}
+
+\ytodo{Combine traditional prolog techniques with constraint programming techniques}
+
+\subsection{SAT4j and Cassowary}
+\ytodo{focus on SAT and LP propagation: DDPL and Simplex}
+
+\ytodo{Often employed by CP solvers for globals such as "CNF model"}
