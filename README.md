@@ -53,7 +53,9 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
   - [x] RMS Problem
   - [x] Denoting Vars
   - [x] Refactoring Expressions
-  - [ ] Experimentation : Refactoring RMS
+  - [ ] Experimentation
+    - [ ] RMS Use-Case
+    - [ ] ~~All RMS models~~
   - [ ] Discussions
 - [ ] Chapter 5: UML CSP
   - [x] Base Encoding

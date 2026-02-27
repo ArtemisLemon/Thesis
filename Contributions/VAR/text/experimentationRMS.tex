@@ -1,0 +1,65 @@
+\ytodo{Add this estimate: no refactoring, single interpreter, CharCSTR= 12k variables and constraints, applied to all tasks = 522k, +UMLCSP and the other constraints}
+
+% \subsection{Refactored UseCase Expressions}
+In our running example, our instance will have 4 stages (S) and 43 task (T), directly taken from \cite{Wang2012-srms}. We infer 24 machines (M) from their constraint model.
+In our annotation of \texttt{machines} we will choose 24 as the maximum cardinality of the reference, and thus have 24 pointer variables in the associated \texttt{AdjList}.
+Notice that the combinatorial complexity of the problem is quite challenging, since there are around $2.10^{40}$ possible graphs satisfying these assumptions. Generating all graphs and checking the OCL constraints would be unfeasible.  
+The full code for this problem instance is available online.\footnote{\url{https://github.com/ArtemisLemon/navCSP_RMSTaskConstraints}}
+% Tasks are linked to at most one stage, so the reference is given an AdjLink variable with a single pointer variable.
+% The reference from stage to machine is unbounded in the metamodel of \autoref{fig:uc_uml}, an upper bound will there for have to be defined in the annotation.
+% In the original use case, the space constraint bounded this number to 6 for all stages, which will be the value used for times.
+% In other measurements, this value will be a variable $N$.
+
+% This work is also ... by previous work on ATLc, which provides an solving for OCL constraints on attributes. 
+% In a way, providing human-in-the-loop optimisation, and domain space exploration.
+% This requires fast solving.
+
+\begin{table}[ht]
+\begin{tabular}{|c|r|r|r|r|}
+\hline
+\multicolumn{1}{|l|}{\textbf{var()}} & \multicolumn{1}{l|}{\textbf{variables}} & \multicolumn{1}{l|}{\textbf{domain}} & \multicolumn{1}{l|}{\textbf{constraints}} & \multicolumn{1}{l|}{\textbf{time}} \\ \hline
+\multirow{2}{*}{stage}                                                      & 43 & S & \multirow{2}{*}{(43)} & \multirow{2}{*}{0.1s}              \\ \cline{2-3}
+                                                                            & 0 & M & & \\ \hline
+\multirow{2}{*}{machines}                                                   & 0 & S & \multirow{2}{*}{(96)} & \multirow{2}{*}{0.1s}              \\ \cline{2-3}
+                                                                            & 96 & M & &                                    \\ \hline
+\multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}stage\\ machines\end{tabular}}   & 43 & S & \multirow{2}{*}{2064 (+1032)} & \multirow{2}{*}{0.3s}              \\ \cline{2-3}
+                                                                            & 96+1032 & M &                                           &                                    \\ \hline
+\end{tabular}
+\caption{Size and resolution times of the refactored Expressions}
+\label{tab:rms_results}
+\end{table}
+
+In \autoref{tab:rms_results} we find the metrics for the three RMS scenarios.
+Additionally to the same characteristic constraint, we also enforce the precedence constraint in the scenarios where the reference \texttt{Task.stage} is annotated.    
+The first column identifies the annotations, and the scenarii.
+The second column gives the variable counts for each domain.
+The variable count includes all variables (problem and intermediate) involved in the expression.
+While the intermediate variable are unique to the model of this expression, the problem variables (tied to the instance objects) are shared by any other expression.
+Domains, informed by the third column, are identified by their upper bound, as the lower bound generally 0 for pointer variables.
+For the last row, we have both 96 problem variables of domain M, and because of the navigation from the 43 problem variables of domain S, each requiring their own copies of the variables of domain M, there are 1032 (43*N) intermediate variables.
+
+In the constraints column, we count constraints of the OCL CSP, mainly element constraints and pointer arithmetic.
+In between brackets is the counter of $member$ constraints.
+As $member$ only propagates once, by default our solver doesn't include them in the constraint count.
+As it is the only constraint in two of these cases, we have included them.
+
+Finally for times, we can see this problem is trivial for the solver.
+Most of the time taken is to build the model.
+
+% \subsection{Base UseCase Expressions}
+% \begin{table}[ht]
+%     \begin{tabular}{|c|r|r|r|r|}
+%     \hline
+%     \multicolumn{1}{|l|}{\textbf{var()}} & \multicolumn{1}{l|}{\textbf{variables}} & \multicolumn{1}{l|}{\textbf{domain}} & \multicolumn{1}{l|}{\textbf{constraints}} & \multicolumn{1}{l|}{\textbf{time}} \\ \hline
+%     \multirow{2}{*}{stage}                                                      & 43 & S & \multirow{2}{*}{(43)} & \multirow{2}{*}{0.1s}              \\ \cline{2-3}
+%                                                                                 & 0 & M & & \\ \hline
+%     \multirow{2}{*}{machines}                                                   & 0 & S & \multirow{2}{*}{(96)} & \multirow{2}{*}{0.1s}              \\ \cline{2-3}
+%                                                                                 & 96 & M & &                                    \\ \hline
+%     \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}stage\\ machines\end{tabular}}   & 43 & S & \multirow{2}{*}{2064 (+1032)} & \multirow{2}{*}{0.3s}              \\ \cline{2-3}
+%                                                                                 & 96+1032 & M &                                           &                                    \\ \hline
+%     \end{tabular}
+%     \caption{Size and resolution times of the starting expressions}
+%     \label{tab:rms_results}
+% \end{table}
+
+
