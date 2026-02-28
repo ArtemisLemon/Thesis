@@ -1,6 +1,6 @@
 \ytodo{Add this estimate: no refactoring, single interpreter, CharCSTR= 12k variables and constraints, applied to all tasks = 522k, +UMLCSP and the other constraints}
 
-% \subsection{Refactored UseCase Expressions}
+\subsection{Refactoring Expressions on our method}
 In our running example, our instance will have 4 stages (S) and 43 task (T), directly taken from \cite{Wang2012-srms}. We infer 24 machines (M) from their constraint model.
 In our annotation of \texttt{machines} we will choose 24 as the maximum cardinality of the reference, and thus have 24 pointer variables in the associated \texttt{AdjList}.
 Notice that the combinatorial complexity of the problem is quite challenging, since there are around $2.10^{40}$ possible graphs satisfying these assumptions. Generating all graphs and checking the OCL constraints would be unfeasible.  
@@ -63,3 +63,67 @@ Most of the time taken is to build the model.
 % \end{table}
 
 
+\subsection{Refactoring Expressions in Alloy Models}
+
+\begin{lstlisting}
+    abstract sig Characteristic {}
+    abstract sig Task { characteristics : set Characteristic,..}
+    abstract sig Machine { characteristics : set Characteristic,..}
+    
+    abstract sig Stage {
+        ..,
+        tasks: seq Task,
+        machines: seq Machine
+    }
+\end{lstlisting}
+Here we have a stripped down Alloy specification of the RMS metamodel.
+\ytodo{to be as close to our model, sequence variables \inlineocl{seq} are used for the problem variables, Task<->Stage<->Machines, and sets (which are much more efficient) are used for part of the constraint expression we interpret before building the CSP}
+
+\begin{lstlisting}
+    fact MachineContainment {
+        all s1,s2 : Stage | s1!=s2 => s1.machines.elems & s2.machines.elems=none
+    }
+
+    fact OppositeTaskStage {
+        all t : Task | t in t.stage.tasks.elems
+        all s : Stage | s = s.tasks.stage.elems
+    }
+\end{lstlisting}
+These two facts model the notions of UML Containment and Opposite relations.
+The containment constraint states \textit{for any two stages, if they are different then the intersection of their respective sets of machines is empty}.
+The opposite constraint comes in two parts.
+The first one states \textit{for any task, the stage its associated to, is associated to it}.
+The second one states \textit{for any stage, the tasks its associated to, are each associated to it}.
+
+\begin{lstlisting}
+    one sig Stage10 extends Stage{} {ID=10 maxMachines=3}
+    one sig Stage20 extends Stage{} {ID=20 maxMachines=3}
+    one sig Stage30 extends Stage{} {ID=30 maxMachines=3}
+    one sig Stage40 extends Stage{} {ID=40 maxMachines=3}
+\end{lstlisting}
+Along with the alloy specification of the metamodel, we can specify a partial model.
+In this listing we input the existing model data, by defining a class (signature) for each object instance.
+The object will be the only instance of its distinct subclass (defined by the known data), which inherits from its class.
+
+\begin{lstlisting}
+    // 2994706 vars. 17315 primary vars. 10035908 clauses. 5409ms.
+    // Instance found. Predicate is consistent. 7393ms.
+    fact SameCharacteristicConstraint{
+        all t: Task | t.characteristics in t.stage.machines.characteristics.elems
+    }
+\end{lstlisting}
+\begin{lstlisting}
+    // 2749262 vars. 17315 primary vars. 9551642 clauses. 4812ms.
+    // Instance found. Predicate is consistent. 2427ms.
+    fact SameCharacteristicConstraint_Refactored{
+        all t: Task | t.stage.machines.elems in { m:Machine | t.characteristics in m.characteristics }
+    }
+\end{lstlisting}
+In the two listings above, we have both forms of the \textit{same characteristic constraint}, and the solver output as comment.
+The variable and clause count of the output includes the rest of the model, such as the \textit{precedence constraint}, and UML specific constraints such as the \textit{UML Opposite Relation}, \textit{UML Containment Relation}.
+Without this constraint the model has 2611962 vars, 17315 primary vars, and 9305982 clauses.
+Meaning the first version of the expression requires 382744 vars and 9105316 clauses,
+The refactored version of the expression requires 137300 vars and 8621050 clauses, which is 245444 vars and 484266 clauses less than the original, 5.3\% the original number of variables and 94.6\% of the original number of clauses.
+
+Most notable is the time difference, the first version of the expression takes around 8 seconds to solve, while refactored version around 3 seconds.
+The times in the comments are the best times among a few reruns.
