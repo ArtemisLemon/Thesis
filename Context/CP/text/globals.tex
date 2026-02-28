@@ -81,8 +81,15 @@ The application of propagation to the problem of OCL is our fundamental differen
 To apply it to OCL we need a systematic way to model OCL expressions using gobal constraints, and particularly to model OCL query expressions.
 
 
-\subsection{Propagation on boolean variables and CNF models}
-\ytodo{DDPL is a propagator for the gobal constraint "CNF model"}
+% \subsection{Propagation on boolean variables and CNF models}
+% \ytodo{DDPL is a propagator for the gobal constraint "CNF model"}
 
-\subsection{Propagation on real variables and systems of linear equations}
-\ytodo{Simplex is a propagator for the gobal constraint "system of linear equations"}
+% \subsection{Propagation on real variables and systems of linear equations}
+% \ytodo{Simplex is a propagator for the gobal constraint "system of linear equations"}
+
+\subsection{DPLL and Simplex as Propagators}
+There are notable classes of CSP which come with their own specialized algorithm to solve them.
+When the variable domains are all 0/1 and the constraints in Conjunctive Normal Form (CNF), the DPLL algorithm is the best propagator.
+Similarly when the variable domains are all Real numbers, and the constraints are a system of linear equations, the Simplex algorithm is the best propagator.
+Traditionally, SAT and linear programming are distinct fields of symbolic AI, each with their own class for solvers. 
+However from the context of constraint programming, we can understand them global constraints and propagators, and CP solvers can employ these specialized solvers.

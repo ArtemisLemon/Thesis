@@ -4,4 +4,9 @@ A CP model consists of a set of variables $X=\{x_1,\ldots, x_n\}$, a set of doma
 %%
 Domains can be either bounded, defined as an interval $\{lb..ub\}$, or enumerated, explicitly listing all possible values (e.g., ${1, 10, 100, 1000}$). This distinction impacts the choice of constraints: for instance, the global cardinality constraint is more effective with enumerated domains. 
 %%
-An assignment on a set $Y \subseteq X$ of variables is a mapping from variables in $Y$ to values in their domains. A solution is an assignment on $X$ satisfying all constraints. 
+An assignment on a set $Y \subseteq X$ of variables is a mapping from variables in $Y$ to values in their domains. A solution is an assignment on $X$ satisfying all constraints.
+
+Constraint programming also provides for other types of discrete domains for variables, such as Set and Graph variables.
+Sets domains often use enumerations as lower and upper bound, to represent what \textit{must} be in the set, and what \textit{might} be in the set.
+Graph domains generally employ set variables to represent links from a node in a graph.
+For models of which the variables domains are boolean or real are covered in fields distinct from constraint programming, such as \textit{Boolean Satifiability}, \textit{Satifiability Modulo Theories} and \textit{Linear Programming}.
