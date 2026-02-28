@@ -3,17 +3,85 @@ At each assignment, constraint filtering algorithms prune
 the search space by enforcing local consistency properties like {\it domain consistency} (a.k.a., {\it Generalized Arc Consistency} (GAC)). A constraint $c$ on $X(c)$ is domain consistent, if and only if, for every  $x_i \in X(c)$ and every
 $v \in dom(x_i)$, there is an assignment satisfying $c$ such that $(x_i = v)$.
 
+To use a solver, you can specify a model using a modeling language such as prolog, minizinc and DIMACS.
+Many solvers also provide an API for a general purpose programming language such as Java.
 
-\subsection{Choco (and Gecode and OR-tools)}
-\ytodo{API for using CP from source code}
-\ytodo{parse flatzinc}
+% This section has paragraphs adjusted, clarified, and initialized from bullet points by Le Chat from mistral AI
+
+\subsection{Minizinc}
+MiniZinc is a high-level, declarative constraint modeling language. 
+It allows users to model complex combinatorial optimization and decision problems in a solver-independent way. 
+The language is designed to be readable and expressive, focusing on what needs to be solved rather than how to solve it.
+FlatZinc is a low-level, solver-specific intermediate language. 
+When you run a MiniZinc model, it is first compiled into FlatZinc, which can then be executed by any solver that supports the FlatZinc format.
+
+\begin{listing}[!h]
+    \begin{lstlisting}[language=xml] 
+include "globals.mzn";        % for alldifferent
+int: N = 16; %size of the sudoku
+int: M = 4; %sqrt of M
+int: MM = 3; %M-1 for subgrid logic
+array[1..N,1..N] of var 1..N: X;
+
+% Numbers in Rows and Columns are all different
+constraint forall(i in 1..N)(
+   let{ array[int] of var int: row = [ X[i,j] | j in 1..N ],
+        array[int] of var int: col = [ X[j,i] | j in 1..N ]} in
+   alldifferent(row) 
+/\ alldifferent(col)
+);
+
+% Numbers in Groups are all different (3x3 groups in a 9x9 sudoku)
+constraint forall(i,j in 0..MM)(
+   let{ array[int] of var int: grp = 
+       [ X[ii+i*M,jj+j*M] | ii,jj in 1..M ] 
+   } in
+   alldifferent(grp)
+);
+\end{lstlisting}
+\caption{Sudoku model in Minizinc}
+\end{listing}
+This model encodes a Sudoku puzzle of size N×N (here, N=16, so a 16×16 grid) using constraint programming.
+The globals.mzn library is included for the alldifferent global constraint.
+
+This specification starts with the declaration of the constants, and the variables and their domains.
+Among the constants are:
+$N$ the size of the Sudoku grid (16).
+$M$ Square root of N (4), defining the size of each subgrid.
+$MM$ equal to M-1 (3), used for indexing subgrids.
+\texttt{X[1..N,1..N]} is a 2D array of decision variables, each representing a cell in the Sudoku grid. Each cell can take a value from 1 to N.
+
+Then we have a specification of the constraints.
+We first have the constraints for rows and columns.
+For every row and column, all values must be different (alldifferent).
+The we have the constraint for subgrids.
+The grid is divided into M×M subgrids (here, M=4, so 4×4 subgrids). 
+All values in each subgrid must also be different.
+
+
+\subsection{Choco}
+Choco is the primary solver used for our implementation. It is also used by ATL$^{c}$, Grimm, and by the QVTc approach to organize $ECL^iPS_e$ prolog rules.
+Choco Solver is an open-source Java library for constraint programming. 
+It allows users to model and solve complex combinatorial problems by defining variables, domains, and constraints with language similar to a minizinc specification.
+
+Choco is among a class of solvers which provide implementations for the various global constraints.
+It is known for its rich set of global constraints, such as cumulative for scheduling, and globals for graph variables.
+Coupled with advanced search strategies, Choco a powerful tool for both research and industry, widely used in scheduling, planning, optimization, and decision-making applications.
+Additionally Choco supports the FlatZinc format, and internally employs a SAT solver for a \textit{CNF} global constraint and can interface with linear programming solvers. 
 
 \subsection{SWI-prolog and $ECL^iPS_e$}
-\ytodo{Solvers using prolog like language to model problems}
-
-\ytodo{Combine traditional prolog techniques with constraint programming techniques}
+SWI-Prolog and ECLiPSe Prolog are both powerful Prolog systems, each with a distinct focus but sharing core strengths in logic and constraint programming.
+Both provide support for many global constraints, enabling efficient modeling and solving of complex combinatorial problems.
+At their core, they combine Prolog’s logical inference and search strategies, with constraint propagation: as constraints are posted, propagation algorithms reduce variable domains and detect inconsistencies, while Prolog’s backtracking search explores possible solutions, resulting in a hybrid approach that leverages the strengths of both paradigms.
+SWI-Prolog is a general-purpose, open-source Prolog environment, renowned for its extensive libraries, and active community. 
+It integrates constraint logic programming, making it versatile for a wide range of applications—from knowledge representation and natural language processing to constraint-based problem solving.
+ECLiPSe Prolog is specialized for constraint logic programming, offering built-in, advanced constraint solvers (like finite domain and linear constraints) out of the box. It is particularly suited for complex combinatorial problems, scheduling, and optimization, and is widely used in both research and industry for these purposes.
 
 \subsection{SAT4j and Cassowary}
-\ytodo{focus on SAT and LP propagation: DDPL and Simplex}
+SAT4J is a Java library for solving Boolean satisfiability problems, where constraints are expressed in conjunctive normal form (CNF) over 0/1 variables. 
+It efficiently handles propositional logic constraints, making it suitable for problems reducible to SAT, such as configuration, verification, and combinatorial search. 
+SAT4J is often used as a back-end for constraint programming systems when dealing with discrete, logical constraints.
 
-\ytodo{Often employed by CP solvers for globals such as "CNF model"}
+Cassowary is a simplex-based constraint solver designed for systems of linear equations and inequalities over real numbers. 
+It is widely used for layout and graphical constraint solving, such as UI design and geometric problems, where constraints are expressed as linear relationships between real-valued variables. 
+Cassowary’s incremental solving and efficient handling of under-constrained systems make it ideal for interactive applications.
