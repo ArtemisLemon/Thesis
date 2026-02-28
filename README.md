@@ -11,6 +11,7 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
 
 # Progress
 ## Context:
+- [ ] Chapter -1: Bibliography and citations
 - [ ] Chapter 0: Introduction
 - [x] Chapter 1: MDE
 	- [x] UML
@@ -32,7 +33,7 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
   - [x] Globals
     - [x] Examples
     - [x] Example Propagation
-    - [ ] DPLL & Simplex
+    - [x] DPLL & Simplex
   - [ ] SotA
     - [ ] Choco (& others)
     - [ ] Eclipse (& SWI-prolog)
@@ -54,8 +55,9 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
   - [x] Denoting Vars
   - [x] Refactoring Expressions
   - [ ] Experimentation
-    - [ ] RMS Use-Case
+    - [x] RMS Use-Case
     - [ ] ~~All RMS models~~
+    - [x] RMS Use-Case, in Alloy
   - [ ] Discussions
 - [ ] Chapter 5: UML CSP
   - [x] Base Encoding
