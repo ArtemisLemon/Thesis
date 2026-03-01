@@ -27,7 +27,7 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
   	- [x] SotA
     	- [x] EMF
     	- [x] ATL
-- [ ] Chapter 2: CSP
+- [x] Chapter 2: CSP
   - [x] CSP
   - [ ] ~~Propagation~~
   - [x] Globals
@@ -38,9 +38,9 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [x] Choco
     - [x] Eclipse (& SWI-prolog)
     - [x] SAT4j (&Cassowary)
-- [ ] Chapter 3: Problem
+- [x] Chapter 3: Problem
   - [x] Model Search
-  - [ ] SotA
+  - [x] SotA
     - [x] ATLc (QVTc (Grimm))
     - [ ] EMFtoCSP (OCL\#)
     - [x] Alloy & Kodkod (OCLsolve)
@@ -50,11 +50,11 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [ ] ~~OCLsolve~~
 
 ## Contrib:
-- [ ] Chapter 4: var
+- [x] Chapter 4: var
   - [x] RMS Problem
   - [x] Denoting Vars
   - [x] Refactoring Expressions
-  - [ ] Experimentation
+  - [x] Experimentation
     - [x] RMS Use-Case
     - [ ] ~~All RMS models~~
     - [x] RMS Use-Case, in Alloy
@@ -102,7 +102,7 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [ ] text
   - [ ] Col to Bool OP
     - [x] models
-      - [ ] forall <- many valued logic problem
+      - [x] forall <- many valued logic problem
     - [ ] text
   - [ ] Col to Col OP
     - [x] models
