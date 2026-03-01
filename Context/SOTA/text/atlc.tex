@@ -9,31 +9,51 @@ In ATL$^{\text{c}}$ invariants, only integer attributes can be variables, and va
 \end{figure}
 
 \begin{lstlisting}
+    rule BookToBookEntry {
+    from
+        b : BookMM!Book
+    to
+        be : LibraryMM!BookEntry (
+            title <- b.title,
+            authorName <- b.author.family_name.toUpperCase() + b.author.name,
+            year <- b.year
+        )
+        cstr : Constraints!Constraint(
+            value <- (be.ID / 1000) = year
+        )
+    }
+}
     rule CreateLibrary {
     to
         lib : LibraryMM!Library (
             books <- BookMM!Book.allInstances()->collect(b | thisModule.BookToBookEntry(b))
         )
         cstr : Constraints!Constraint(
-            value <- lib.books.ID->isUnique() 
+            value <- lib.books.ID->isUnique()
         )
 }
 
 \end{lstlisting}
-Here we complete the transformation from the ATL \ytodo{section}, by providing a rule to create a library.
-In the \inlineocl{to} section, we see two targets: a \inlineocl{Library} object, for which the reference \inlineocl{books} is populated by a standard binding, and a \inlineocl{Constraint} object.
+% Here we complete the transformation from the ATL \ytodo{section}, by providing a rule to create a library.
+Here we see how to add ATL$^{\text{c}}$ invariants to a familiar ATL transformation, which constrain the ID number for the book entries.  
+For the library rule the \inlineocl{to} section, we see two targets: a \inlineocl{Library} object, for which the reference \inlineocl{books} is populated by a standard binding, and a \inlineocl{Constraint} object.
 The \inlineocl{cstr} target allows the user to add invariants to a transformation rule.
 Here the invariant states that \textit{books in a library must have unique IDs}.
 This invariant replaces a specification of how to make a unique ID.
 ATL$^{\text{c}}$ assumes \inlineocl{ID} is the variable in this invariant, not the \inlineocl{books} relation, as \inlineocl{ID} is the last \inlineocl{PropertyCallExp} in the query \inlineocl{lib.books.ID}.
 
 Describing a satisfactory model in such away, can be easier and shorter than describing how to make a satisfactory model.
+% However ATL$^{\text{c}}$ doesn't cover all of OCL;
+% we can't solve the problem where the relation between libraries and books is missing and if we were to add a constraint such as 
+A notable example is positioning GUI elements in the provided JavaFX metamodel.
+This kind of problem is best solved with a solver such as Cassowary.
+By chaining ATL$^{\text{c}}$ model transformations on can also chain solvers best suited to each aspect of the problem.
 
-\ytodo{Can leverage different kinds of CP solvers, such as Cassowary (simplex) for positioning GUI elements.}
+% \ytodo{Can leverage different kinds of CP solvers, such as Cassowary (simplex) for positioning GUI elements.}
 
-\ytodo{Another effort similar to this one is QVTc: passing parts of a transformation to a solver to use model search to finish a transformation (uses Choco to make an $ECL^iPS_e$ spec)}
 
-\ytodo{Another effort similar to this one is Grimm: refining, uses Choco, adds heuristics to make statistically ineteresting targets}
+% \ytodo{Another effort similar to this one is Grimm: refining, uses Choco, adds heuristics to make statistically ineteresting targets}
 
-\ytodo{In the context of Model Search, the standard ATL transformation provides the relaxed-metamodel and produces the partial model. The relaxed-metamodel is completed with the ATL$^{\text{c}}$ invariants, and a solver is leveraged to finish the transformation.}
+In the context of Model Search, the standard ATL transformation provides the relaxed-metamodel and produces the partial model. The relaxed-metamodel is completed with the ATL$^{\text{c}}$ invariants, and a solver is leveraged to finish the transformation.
 
+% Another effort similar to this one is Solverational \ytodo{cite}, which models the transformation using $ECL^iPS_e$, for which it uses Choco to sort prolog rules.

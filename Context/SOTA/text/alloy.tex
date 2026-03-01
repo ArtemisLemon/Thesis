@@ -12,32 +12,27 @@ It provides both a means to specifiy class models and model constraints.
 \subsubsection{Alloy Language}
 \begin{listing}[!h]
     \begin{lstlisting}[language=xml]
-sig Species {}
+        sig BookEntry {
+            year : Int,
+            ID : Int
+        }
 
-sig Animal {
-    cage: one Cage,
-    species: one Species
-}
-
-sig Cage {
-    capacity: Int,
-    animals: seq Animal
-//	animals: set Animal
-}{
-    #animals <= capacity
-    #animals.species.elems <2
-//	one animals.species
-}     
+        sig Library {
+            books : set BookEntry
+        } {
+            #books=#books.ID
+        }
     \end{lstlisting}
     \caption{Minimal Object Model in the XMI-like format}
 \end{listing}
-In this listing we see our example zoo model.
+In this listing we see our Library Example.
 In alloy a class can be modeled using signatures.
 We can see, signatures are similarly named lists of properties.
 Properties are similarly typed using primitives for attributes, and other signatures for references. 
 Properties in alloy hold a single value by default, but can declared to be a collection, such as set and sequence. 
 Signatures can also be used as the context for model constraints.
-This is similar to how contraints are defined using OCL.
+Such as here \textit{the number of books, must equal the number of IDs}
+This expressions accesses the ID property of the library's books, using notation similar to OCL.
 
 \subsubsection{Kodkod}
 Kodkod is an API to model relational first order logic problems and translate them to Conjunctive Normal Form (CNF) model.
@@ -61,7 +56,7 @@ run {#S=2 #T=2}
 \caption{Simple Alloy model, with two related concepts, with two instances each}
 \end{listing}
 Here we have a simple alloy specification which simply illustrates how types and relations are modeled when looking at the resulting \textit{relational first order logic} specification.
-This specification also describes the search space, by stating there should be two objects of type \inlineocl{S}, and two of type \inlineocl{T}
+This specification also describes the partial model, by stating there should be two objects of type \inlineocl{S}, and two of type \inlineocl{T}
 
 \begin{equation}\label{eq:RFOL:base}
     \begin{aligned}
