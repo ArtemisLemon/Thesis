@@ -73,15 +73,19 @@ Additionally Choco supports the FlatZinc format, and internally employs a SAT so
 SWI-Prolog and ECLiPSe Prolog are both powerful Prolog systems, each with a distinct focus but sharing core strengths in logic and constraint programming.
 Both provide support for many global constraints, enabling efficient modeling and solving of complex combinatorial problems.
 At their core, they combine Prolog’s logical inference and search strategies, with constraint propagation: as constraints are posted, propagation algorithms reduce variable domains and detect inconsistencies, while Prolog’s backtracking search explores possible solutions, resulting in a hybrid approach that leverages the strengths of both paradigms.
+
 SWI-Prolog is a general-purpose, open-source Prolog environment, renowned for its extensive libraries, and active community. 
 It integrates constraint logic programming, making it versatile for a wide range of applications—from knowledge representation and natural language processing to constraint-based problem solving.
+
 ECLiPSe Prolog is specialized for constraint logic programming, offering built-in, advanced constraint solvers (like finite domain and linear constraints) out of the box. It is particularly suited for complex combinatorial problems, scheduling, and optimization, and is widely used in both research and industry for these purposes.
 
 \subsection{SAT4j and Cassowary}
+Both these solvers from fields distinct from constraint programming, namely Boolean satisfiability problems and linear programming.
+
 SAT4J is a Java library for solving Boolean satisfiability problems, where constraints are expressed in conjunctive normal form (CNF) over 0/1 variables. 
 It efficiently handles propositional logic constraints, making it suitable for problems reducible to SAT, such as configuration, verification, and combinatorial search. 
 SAT4J is often used as a back-end for constraint programming systems when dealing with discrete, logical constraints.
 
-Cassowary is a simplex-based constraint solver designed for systems of linear equations and inequalities over real numbers. 
+Cassowary is a simplex-based constraint solver designed for systems of linear equations and inequalities over real numbers.
 It is widely used for layout and graphical constraint solving, such as UI design and geometric problems, where constraints are expressed as linear relationships between real-valued variables. 
 Cassowary’s incremental solving and efficient handling of under-constrained systems make it ideal for interactive applications.

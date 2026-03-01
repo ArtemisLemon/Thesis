@@ -1,15 +1,9 @@
 \textbf{Constraint Programming} \cite{HoeveK06} is a powerful paradigm that offers a generic and modular approach to modeling and solving combinatorial problems.
-
-
-
+In the wider field of artificial intelligence, constraint programming stands out by expressing problems in terms of variables, domains, and constraints.
+This declarative approach allows for reusable models and leverages advanced constraint propagation and search techniques to efficiently explore solution spaces.
 
 \section{Constraint Satisfaction Problems}
 \input{Context/CP/text/csp}
-% A CP model consists of a set of variables $X=\{x_1,\ldots, x_n\}$, a set of domains $\mathcal{D}$ mapping each variable $x_i\in X$ to a finite set of possible values $dom(x_i)$, and a set of constraints $\mathcal{C}$ on $X$, where each constraint $c$ defines a set of values that a subset of variables $X(c)$ can take. 
-% %%
-% Domains can be either bounded, defined as an interval $\{lb..ub\}$, or enumerated, explicitly listing all possible values (e.g., ${1, 10, 100, 1000}$). This distinction impacts the choice of constraints: for instance, the global cardinality constraint is more effective with enumerated domains. 
-% %%
-% An assignment on a set $Y \subseteq X$ of variables is a mapping from variables in $Y$ to values in their domains. A solution is an assignment on $X$ satisfying all constraints. 
 
 % \section{Propagation}
 % \input{Context/CP/text/propagation}
@@ -17,7 +11,7 @@
 \section{Global Constraints}
 \input{Context/CP/text/globals}
 
-\section{CP Solvers}
+\section{State-of-the-Art}
 \input{Context/CP/text/solvers}
 
 % \section{Similar AI}
