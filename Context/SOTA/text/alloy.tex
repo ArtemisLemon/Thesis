@@ -92,7 +92,7 @@ For instance in the \textit{Book ID starts with year} constraint, requires a lar
 \begin{listing}[!h]
     \begin{lstlisting}[language=xml]
         //1134759 vars. 49163 primary vars. 4416342 clauses. 14524ms
-        //
+        //Instance found. Predicate is consistent. 246893ms. //4min
         one sig A extends BookEntry{}{year=356}
         one sig B extends BookEntry{}{year=356}
         one sig C extends BookEntry{}{year=365}
@@ -108,6 +108,16 @@ For instance in the \textit{Book ID starts with year} constraint, requires a lar
 With the partial model from this listing, linking a library to three books, of which 2 some from a same year.
 The dates are offset, to better fit in the bit-width, and there are 10 possible values for the last digit in the reference number.
 However solving this problem took minutes.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 0 0 0},width=1\linewidth]{Context/SOTA/figures/alloyBookMMsolution.png}
+    \caption{Alloy visualization of the solution}
+    \label{fig:metamodel}
+\end{figure}
+This solution illustrates each possible integer being an object in the model.
+Each object here corresponds to an atom.
+Unused integers are hidden in this diagram, but they do need exist in the relational first order logic model as atoms.
 
 If you want to have a sequences, we need to add atoms for integers. And the relation \inlineocl{R} from the relational first order logic model becomes a ternary relation where the tuples now include the integer atom representing the position of the link in the sequence: $\tuple{a_6,a_1,a_3}$ which would mean the first (1=$a_6$) link between from $a_1$:S is to $a_3$:T.
 Which further increases complexity in alloy models.

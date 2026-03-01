@@ -43,12 +43,22 @@ This invariant replaces a specification of how to make a unique ID.
 ATL$^{\text{c}}$ assumes \inlineocl{ID} is the variable in this invariant, not the \inlineocl{books} relation, as \inlineocl{ID} is the last \inlineocl{PropertyCallExp} in the query \inlineocl{lib.books.ID}.
 
 Describing a satisfactory model in such away, can be easier and shorter than describing how to make a satisfactory model.
-% However ATL$^{\text{c}}$ doesn't cover all of OCL;
-% we can't solve the problem where the relation between libraries and books is missing and if we were to add a constraint such as 
 A notable example is positioning GUI elements in the provided JavaFX metamodel.
 This kind of problem is best solved with a solver such as Cassowary.
 By chaining ATL$^{\text{c}}$ model transformations on can also chain solvers best suited to each aspect of the problem.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 0 0 0},width=1\linewidth]{Context/SOTA/figures/atlcschedule.png}
+    \caption{Alloy visualization of the solution}
+    \label{fig:metamodel}
+\end{figure}
+In this figure, we see an example result from a chain of ATL$^{\text{c}}$ transformations.
+A first transformation repairs Schedule edits using Choco, and the second transformation generate an interactive visualization using Cassowary to position the elements.
 
+However ATL$^{\text{c}}$ doesn't cover all of OCL;
+we can't solve the problem where the relation between libraries and books is missing.
+To do so, first requires being able to identify variables in invariants to continue leveraging the standard OCL interpreter to find the variables.
+And second: requires further coverage of UML and OCL, for the translation of OCL expressions to constraint models.
 % \ytodo{Can leverage different kinds of CP solvers, such as Cassowary (simplex) for positioning GUI elements.}
 
 
