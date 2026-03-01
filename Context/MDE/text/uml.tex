@@ -122,13 +122,13 @@ UML also gives us different kinds of relations between objects, notably containm
 The opposite of \textit{child-of} for instance, is \textit{parent-of}.
 Sometimes references may need to be one-way for encapsulation.
 
-\noindent \textbf{Containment} means that the \textit{contained} object is only related to one \textit{container} object through this instance of the relation.
+\noindent \textbf{Containment} means that the \textit{contained} object is only related to one \textit{container} object through this relation.
 
 
 
 \subsection{Object Diagrams}
 % Object diagrams 
-describe instances of the classes defined in a class diagram.
+An object diagram describe instances of the concepts defined in a class diagram.
 %Object (or instance) diagrams show the data, as instances of the concepts described in a class diagram.
 For example, Figure~\ref{fig:model} shows an instance conforming to the class diagram in Figure~\ref{fig:metamodel}. It includes three objects, each identified by a unique ID (e.g., \inlineocl{o1}, \inlineocl{o2}, \inlineocl{o3}). For instance, object \inlineocl{o1} has as attribute a collection of 3 integers and is connected to other objects (e.g., \inlineocl{o2} and \inlineocl{o3}).
 % Similarly to class diagrams, EMF also supports the use of object diagrams to visually manipulate data instances. 
@@ -143,9 +143,9 @@ For example, Figure~\ref{fig:model} shows an instance conforming to the class di
     \caption{UML Instance Diagram as Model}
     \label{fig:model}
 \end{figure}
-This diagram is also built from rectangles and lines connecting them.
+% This diagram is also built from rectangles and lines connecting them.
 Here each rectangle represents an object, and the title area is used to give the \texttt{:Type} and optionally a name.
-Below the title area, we again use the rectangle to list the attributes and the information associated.
+Below the title area, we again list the attributes and the information associated.
 The arrows between the rectangles represent instances of the references between objects.
 In Figure \ref{fig:model} we see a model which conforms to the metamodel from Figure \ref{fig:metamodel}, for which we chose $n=2$ and $m=3$. This here shows objects of the type described by the class, and the values assigned to their properties.
 % This instance will serve to illustrate the result of queries and the operations upon them.
