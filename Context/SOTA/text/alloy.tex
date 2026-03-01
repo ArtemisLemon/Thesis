@@ -15,6 +15,8 @@ It provides both a means to specifiy class models and model constraints.
         sig BookEntry {
             year : Int,
             ID : Int
+        }{
+            ID.div[10] = year
         }
 
         sig Library {
@@ -84,7 +86,31 @@ The final line uses relational language such as \inlineocl{R.s}: \textit{R join 
 The $s$ in $\forall s \in S$, will be instantiated as singletons relations, which can be joined with the \inlineocl{R} relation, to get the subset of \inlineocl{R} corresponding to the $s$ object.
 Ultimately the alloy expression \inlineocl{one T} gets translated to $|R.s|=1$, or the size of the subset resulting from the join $R.s$ is equal to one.
 
-\ytodo{If you want to have a sequence of T, we need to add atoms for integers ($a_5$,$a_6$,$a_7$,etc..). And the relation \inlineocl{R} becomes a ternary relation where the tuples now include the integer atom representing the position of the link in the sequence: $\tuple{a_6,a_1,a_3}$ which would mean the first (1=$a_6$) link between from $a_1$:S is to $a_3$:T.}
+To include integers in such a model implies having atoms for each value of the integer domains.
+This has an important impact of the size of integers users can model with.
+For instance in the \textit{Book ID starts with year} constraint, requires a large domain to span a few centuries.
+\begin{listing}[!h]
+    \begin{lstlisting}[language=xml]
+        //1134759 vars. 49163 primary vars. 4416342 clauses. 14524ms
+        //
+        one sig A extends BookEntry{}{year=356}
+        one sig B extends BookEntry{}{year=356}
+        one sig C extends BookEntry{}{year=365}
+        one sig L extends Library {}{books = A+B+C}
+        
+        run {
+            #BookEntry=3
+            #Library=1
+        } for 13 Int
+    \end{lstlisting}
+    \caption{Partial model and resolution parameters}
+\end{listing}
+With the partial model from this listing, linking a library to three books, of which 2 some from a same year.
+The dates are offset, to better fit in the bit-width, and there are 10 possible values for the last digit in the reference number.
+However solving this problem took minutes.
+
+If you want to have a sequences, we need to add atoms for integers. And the relation \inlineocl{R} from the relational first order logic model becomes a ternary relation where the tuples now include the integer atom representing the position of the link in the sequence: $\tuple{a_6,a_1,a_3}$ which would mean the first (1=$a_6$) link between from $a_1$:S is to $a_3$:T.
+Which further increases complexity in alloy models.
 
 
 % % \subsection{Satisfiability Modulo Theories}

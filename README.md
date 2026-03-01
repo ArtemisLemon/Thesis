@@ -9,7 +9,7 @@ Each Chapter Folder has a main .tex file, and two sub-folders for text and figur
 to update `./main.pdf` edit the `./main.tex` file and run `make`.
 
 
-# Progress
+# (Draft v0.00.0.1) Progress
 ## Context:
 - [ ] Chapter -1: Bibliography and citations
 - [ ] Chapter 0: Introduction
@@ -34,10 +34,10 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [x] Examples
     - [x] Example Propagation
     - [x] DPLL & Simplex
-  - [ ] SotA
-    - [ ] Choco (& others)
-    - [ ] Eclipse (& SWI-prolog)
-    - [ ] SAT4j (&Cassowary)
+  - [x] SotA
+    - [x] Choco
+    - [x] Eclipse (& SWI-prolog)
+    - [x] SAT4j (&Cassowary)
 - [ ] Chapter 3: Problem
   - [x] Model Search
   - [ ] SotA
