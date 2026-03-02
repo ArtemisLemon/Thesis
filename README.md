@@ -9,10 +9,10 @@ Each Chapter Folder has a main .tex file, and two sub-folders for text and figur
 to update `./main.pdf` edit the `./main.tex` file and run `make`.
 
 
-# (Draft v0.00.0.1) Progress
+# (Draft v0.00.0.2) Progress
 ## Context:
 - [ ] Chapter -1: Bibliography and citations
-- [ ] Chapter 0: Introduction
+- [x] Chapter 0: Introduction
 - [x] Chapter 1: MDE
 	- [x] UML
     	- [x] MOF
@@ -56,8 +56,8 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
   - [x] Refactoring Expressions
   - [x] Experimentation
     - [x] RMS Use-Case
-    - [ ] ~~All RMS models~~
     - [x] RMS Use-Case, in Alloy
+    - [ ] ~~All RMS models (book graph)~~
   - [ ] Discussions
 - [x] Chapter 5: UML CSP
   - [x] Base Encoding
@@ -102,7 +102,7 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [ ] text
   - [ ] Col to Bool OP
     - [x] models
-      - [x] forall <- many valued logic problem
+      - [x] ~~forall <- many valued logic problem~~
     - [ ] text
   - [ ] Col to Col OP
     - [x] models
