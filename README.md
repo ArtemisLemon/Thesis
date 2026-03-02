@@ -41,7 +41,7 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
 - [x] Chapter 3: Problem
   - [x] Model Search
   - [x] SotA
-    - [x] ATLc (QVTc (Grimm))
+    - [x] ATLc
     - [ ] EMFtoCSP (OCL\#)
     - [x] Alloy & Kodkod (OCLsolve)
     - [ ] ~~QVTc~~
@@ -59,20 +59,20 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [ ] ~~All RMS models~~
     - [x] RMS Use-Case, in Alloy
   - [ ] Discussions
-- [ ] Chapter 5: UML CSP
+- [x] Chapter 5: UML CSP
   - [x] Base Encoding
-  - [ ] Enumerated Encoding (References)
+  - [x] Enumerated Encoding (References)
   - [ ] ~~3-valued Boolean Encoding (optional data)~~
-  - [ ] Reference Types
-    - [ ] ~~Containment~~
-    - [ ] Opposite
+  - [x] Reference Types
+    - [x] ~~Containment~~
+    - [x] Opposite
   - [x] Collection Types
     - [x] Sequence
     - [x] Set
     - [x] Bag
     - [x] OrderedSet
   - [ ] Comparison to Alloy and EMF2CSP
-- [ ] Chapter 6: Nav CSP
+- [x] Chapter 6: Nav CSP
   - [x] Base Model
   - [ ] ~~Enumerated Model~~
   - [ ] ~~Closure~~
