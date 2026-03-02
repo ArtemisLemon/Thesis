@@ -1,11 +1,20 @@
 \clearemptydoublepage
 \chapter{Contribution : UML CSP}
+In this chapter we present the encoding of the UML model as a constraint satisfaction problem.
 
-\begin{outline}
-    \item We can model Integer Collections type properties (it is possible to encode a lot of finite domain problems for different property types)
-    \item This encoding works for both integer attributes and object references
-    \item References has have extra "layers of models", leveraging the limited domains for pointer variables
-\end{outline}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 0 0 0},width=1\linewidth]{Contributions/UMLCSP/figures/UMLCSP.png}
+    \caption{Property Tables in our metamodel of UMLCSP}
+    \label{fig:metamodel}
+\end{figure}
+
+We can model Integer Collections type properties using arrays of integer variables. 
+It is possible to encode a lot of finite domain problems for different property types.
+This encoding works for both integer attributes and object references.
+
+
+References has have \textit{extra layers} of models, leveraging the limited domains for pointer variables
 
 
 \section{Encoding Properties}

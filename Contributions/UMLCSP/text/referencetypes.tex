@@ -2,6 +2,10 @@
 
 % $$\forall i,j \in \{0..n\}*\{0..n'\} A.refOcc_{ij},\neq 0 \iff B.oppOcc_{ji}\neq 0$$
 
-When two references are opposites, such as \emph{child} and \emph{parent}, we need to do stuff:
+UML offers an array of specific reference types, an important one for our models is \inlineocl{Opposite}.
+An example of opposite relation is the parental between two \inlineocl{Person}: the opposite of \inlineocl{Person.child} is \inlineocl{Person.parent}.
+Using the \textit{occurrence variable encoding} of the two references' property tables, we simply apply a \textit{if it occurs in one, it occurs in the other}:  
+$$A_i.refOcc_{j},\neq 0 \iff B_j.oppOcc_{i}\neq 0$$s
 
-$$\forall i,j \in \{0..n\}*\{0..n'\} A.refOcc_{ij},\neq 0 \iff B.oppOcc_{ji}\neq 0$$s
+Additionally UML offers a containment relation which can easily be modeled with an additional $gcc$ on the whole property table, for which the occurrence variables domains are 0/1.
+To do containment on a self-referential reference, we need to add the CSP equivalent to \inlineocl{self.ref.closure().excludes(self)}.

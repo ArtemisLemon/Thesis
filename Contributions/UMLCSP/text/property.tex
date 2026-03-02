@@ -56,7 +56,8 @@ Table~\ref{tab:encoding} shows the encoding of the instance from Figure~\ref{fig
 Model construction proceeds in two steps. First, we create matrices of variables with their full domains. Second, we instantiate some of these variables using data from the actual instance. In our current setting, we assign the exact values from the instance. Variables that remain uninstantiated may either be assigned dummy values or left free to explore during search, depending on the objective of the analysis.
 To choose between these behaviors and to reduce the size of the CSP, in previous work we've proposed an annotation system for OCL \cite{coyle_towards_2025}, which allows the user to identify variables. 
 These annotations split the OCL expressions into parts which can be dispatched between our CP interpretation, and that of a standard interpreter.
-This reduces the scope and size of the CSP, notably in terms of modeled properties. 
+This reduces the scope and size of the CSP, notably in terms of modeled properties.
+If the domain of the problem variables is limited and order doesn't matter, this encoding can suffice to model properties. 
 
 
 % In Table \ref{tab:encoding} we can see the encoding resulting from the instance in Figure \ref{fig:model}, and the metamodel in Figure \ref{fig:metamodel} with $n=2$ and $m=3$.
@@ -78,17 +79,11 @@ References are a special case of property, with a grately restricted domain.
 The values in the domain of pointer variables identify rows of property tables.
 The domain of relation variables is generally small enough to be enumerated.
 Therefore, we give them accompanying variables counting the occurrences for each value of the domain.
-
-\begin{equation}
-\begin{cases}
-\forall Class_o.ref \in Class.reference\\
-\implies gcc(Class_o.ref, Class_o.refOcc)
-\end{cases}
-\end{equation}
-
-
-$$Class.ref = \{r_{00},...,r_{nm}\}$$
-$$Class.refOcc = \{occ_{00},...,occ_{nm}\}$$
-$$\forall r \in Class.ref,\;domain(r) = \{0..n'\}$$
-$$\forall occ \in Class.refOcc,\;domain(occ) = \{0..m\}$$
-$$\forall n :object \in Class,\; gcc(Class_o.ref, Class_o.refOcc)$$
+$$Class.propOcc = \{occ_{00},...,occ_{oq}\}$$
+$$\forall x \in Class.propOcc,\;domain(x) = \{0..q\}$$
+We similarly declare a table of variables, where $o$ is the number of objects of the class, but $q$ is the number of objects in the target class.
+The domain of these variables is 
+These variables are constrained to the property variables with the \textit{global cardinality constraint} $gcc$: 
+$$gcc(\mathit{Class_o.property}, \mathit{Class_o.propOcc})$$
+The $gcc$ constraint in applied to each object (or row) individually.
+We can also use this encoding and constraint to apply set constraints, and to navigate the graph with multiplicity.
