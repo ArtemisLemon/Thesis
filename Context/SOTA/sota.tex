@@ -4,7 +4,7 @@
 
 
 \section{State of the Art}
-\subsection{ATL$^{\text{c}}$}
+\subsection{\atlc}
 \input{Context/SOTA/text/atlc}
 
 \subsection{EMFtoCSP}
@@ -18,3 +18,13 @@
 
 % \subsection{Grimm}
 % \input{Context/SOTA/text/grimm}
+
+
+\section{Problem Statement}
+\ytodo{Model Search is an important problem}
+\ytodo{EMF provides an industry standanrd for models}
+\ytodo{EMFtoCSP aptly uses prolog to describe the language, and the prolog flavour provides global constraints but backtracking on collection sizes don't seem great, and tool is hard to get working because old}
+\ytodo{Alloy & Kodkod provide a very powerful framework for solving relational problems on sets, but it struggles with large integers}
+\ytodo{\atlc an interesting framework to build upon, but has an incomplete coverage of OCL}
+
+\ytodo{We will continue in the spirit of \atlc, builing a tool it can employ but can also independtly can be used for Model Search with UML and OCL. We will use variables modeling integers, encode for sequences first, add the collection size problem to the CSP, use the Best Models$^{TM}$ and try to approach Bound Consistency across the whole model.}

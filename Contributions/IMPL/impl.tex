@@ -1,17 +1,33 @@
 \clearemptydoublepage
 \chapter{Contribution : Object Oriented Constraint Programming}
+In this chapter we will give an overview of our method for building a CSP from an EMF instance with OCL constraints.
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[trim={0 0 0 0},width=1\linewidth]{Contributions/IMPL/figures/architecture.png}
-    \caption{architecture of OOCP}
+    \includegraphics[trim={0 0 0 0},width=1\linewidth]{Contributions/IMPL/figures/MMsimplified.png}
+    \caption{architecture of OOCP models}
     \label{fig:modelsearch}
 \end{figure}
+The interpreter is broken up into two main projects $OOCP$, which builds constraint satisfaction problems from EMF instances and OCL constraints, and $OCLinChoco$ which models the semantics of UML and OCL using Choco.
+Not present in this diagram are the concepts such as $solver$ and $strategy$, as is focuses on the CSP.
+The EMF package is coloured orange, from which we'll be accessing the concepts of \inlineocl{EObject} modeling the instance, \inlineocl{EClass} which describe the objects, and \inlineocl{EStructuralFeature} which describe the objects' properties. These are described in chapter 1.3.
+In green we have the OCL package, described in chapter 1.2, from which we have its most general concept \inlineocl{OclExpression}.  
+Finally at the bottom, in blue, we have the Choco package, providing our variables, constraints, and the solver. These are all described in chapter 2.
 
+The central package is \textit{Object Oriented Constraint Programming} (OOCP), which runs the interpretation associating EMF model elements and constraints, to interconnecting parts of a constraint satisfaction problem.
+An interpretation can also employ several models and/or solvers.
+It is also responsible for handling the \inlineocl{VarOpExp} expression, in red. 
+The use of \inlineocl{VarOpExp} to declare variables, identifies parts of the instance to model, and allows OOCP to dispatch OCL interpretation between a standard interpretation for \textit{constant expressions}, and the CSPs interpretation for \textit{variable expressions}.
 
+The package making up the majority of this thesis is \textit{OCLinChoco}, for which we'll have three parts: the UML CSP in light blue, the navigation CSP in pink, which is a special part of the OCL CSP in purple.
+% In this thesis, the main contributions discussed are the \inlineocl{VarOpExp} in red, explained in the following chapter, and then the CSP -- light blue, pink and purple-- will be detailed in the chapters after that.
 \begin{figure}[!ht]
     \centering
     \includegraphics[trim={0 0 0 0},width=1\linewidth]{Contributions/IMPL/figures/OCLinChocoMM.png}
     \caption{OCLinChoco metamodel}
     \label{fig:modelsearch}
 \end{figure}
+For the chapters describing OCLinChoco, we have a simplified metamodel which focuses on those sections.
+This model outlines how each the UML CSP and OCL CSP associate EMF, OCL and Choco concepts,
+and how UML CSP, OCL CSP and navCSP concepts are related.
+We will reuse this diagram for each of those chapters to show \textit{where we are}, and will further explain each part of this metamodel in the relevant chapters.
