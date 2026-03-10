@@ -29,7 +29,7 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     	- [x] ATL
 - [x] Chapter 2: CSP
   - [x] CSP
-  - [ ] ~~Propagation~~
+  - [x] ~~Propagation~~
   - [x] Globals
     - [x] Examples
     - [x] Example Propagation
@@ -48,9 +48,11 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [ ] ~~Grimm~~
     - [ ] ~~OCL\#~~
     - [ ] ~~OCLsolve~~
+  - [ ] Problem Statement
 
 ## Contrib:
-- [x] Chapter 4: var
+- [ ] Chapter 4: Solution Outline
+- [x] Chapter 5: var
   - [x] RMS Problem
   - [x] Denoting Vars
   - [x] Refactoring Expressions
@@ -59,7 +61,7 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [x] RMS Use-Case, in Alloy
     - [ ] ~~All RMS models (book graph)~~
   - [ ] Discussions
-- [x] Chapter 5: UML CSP
+- [x] Chapter 6: UML CSP
   - [x] Base Encoding
   - [x] Enumerated Encoding (References)
   - [ ] ~~3-valued Boolean Encoding (optional data)~~
@@ -72,17 +74,17 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [x] Bag
     - [x] OrderedSet
   - [ ] Comparison to Alloy and EMF2CSP
-- [x] Chapter 6: Nav CSP
+- [x] Chapter 7: Nav CSP
   - [x] Base Model
-  - [ ] ~~Enumerated Model~~
-  - [ ] ~~Closure~~
-  - [ ] Experimentation : Subset Sum
+  - [x] ~~Enumerated Model~~
+  - [x] ~~Closure~~
+  - [x] Experimentation : Subset Sum
     - [x] n-depth Our Method
     - [ ] n-depth Alloy
     - [ ] ~~Closure our Method~~
     - [ ] ~~Closure Alloy~~
   - [ ] Comparison to Alloy and EMF2CSP
-- [ ] Chapter 7: OCL CSP
+- [ ] Chapter 8: OCL CSP
   - [x] Int and Bool OP
     - [x] 1..1 Int and Bool
       - [ ] ~~models~~
@@ -97,9 +99,9 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [ ] ~~2 int model~~
     - [ ] ~~2 bool model~~
     - [ ] ~~2 collection~~
-  - [ ] Col to Int OP
+  - [x] Col to Int OP
     - [x] models
-    - [ ] text
+    - [x] text
   - [ ] Col to Bool OP
     - [x] models
       - [x] ~~forall <- many valued logic problem~~
@@ -117,10 +119,11 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
   - [ ] Unordered Col OPs
     - [x] models
     - [ ] text
-- [ ] ~~Chapter 8: Implementation Details~~
-- [ ] ~~Chapter 9: Importing Globals into OCL~~
-  - [ ] ~~its free~~
-- [ ] ~~Chapter 10: Comparison with Related Work~~
+- [ ] ~~Chapter 9: Search Strategies~~
+  - [ ] ~~choosing variables~~
+  - [ ] ~~choosing values considering the dummy values~~
+- [ ] ~~Chapter 10: Importing Globals into OCL~~
+- [ ] ~~Chapter 11: Comparison with Related Work~~
 - [ ] Chapter 11: Discussions
   - [ ] Summary: Comparison with related work
   - [ ] OOCP Benchmark suite
