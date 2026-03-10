@@ -1,26 +1,38 @@
+In this section we'll consider expressions of the type \inlineocl{src.op()} where \inlineocl{src} is a collection and the result of the operation is a single integer.
+
 
 \subsection{size()}
-Consider the expression \inlineocl{src.size()}, where 
-Formal Definition:
+Consider the expression \inlineocl{src.size()}, where \inlineocl{src} is an expression resulting in a collection: the \inlineocl{size} operation returns the size of the \inlineocl{src} collection.
+
+Because of our encoding with collections using dummy variables, we define the size constraint around them, where $X$ are the variables representing \inlineocl{src} and $y$ is the output of the \inlineocl{size} operation: 
 \begin{equation}\label{def:size}
     size(X,y) \iff y = \sum_{0 < i \leq |X|} \llbracket x_i \neq d \rrbracket
 \end{equation}
-
+This definition states that $y$ is equal to the count of values not equal to $d$.
 Reformulation using Global Constraints:
 \begin{equation}\label{csp:size}
     size(X,y):
     \begin{cases}
         count(d,X,y') \\
-        Y = |X|-y'
+        y = |X|-y'
     \end{cases}
 \end{equation}
+In this model, we simply count the number of times the dummy value $d$ appears in the source collection $X$.
+The output $y$ is constrained to equal the difference between the size of the variable array $X$, and the count of $d$: $y = |X|-y'$.
+
+For example, given the collection $[3,1,2,d,d]$ we count 2 $d$, the size of the array is 5, so the number of values in the collection is 5-2=3. 
 
 \subsection{sum()}
-Definition:
+Consider the expression \inlineocl{src.sum()}, where \inlineocl{src} is an expression resulting in a collection of integers: the \inlineocl{sum} operation returns the sum of the \inlineocl{src} collection.
+
+Because of our encoding with collections using dummy variables, we define the sum constraint around them, where $X$ are the variables representing \inlineocl{src} and $y$ is the output of the \inlineocl{sum} operation.
+The sum operation can be defined similarly to \inlineocl{size}, by additionally multiplying by the value of each variable of the source:  
+% Definition:
 \begin{equation}\label{def:sum}
     sum(X,y) \iff y = \sum_{0 < i \leq |X|} x_i * \llbracket x_i \neq d \rrbracket
 \end{equation}
-
+This definition states that $y$ is equal to the sum of values not equal to $d$.
+Among the globals there is a sum constraint which we can employ.
 Reformulation using Global Constraints:
 \begin{equation}\label{csp:sum}
     sum(X,y):
@@ -29,15 +41,19 @@ Reformulation using Global Constraints:
         y = sum(X) - ds'
     \end{cases}
 \end{equation}
+In this model use $y=sum(X)$, and then simply subtracts the dummies.
 
+For example, given the collection $[3,1,2,d,d]$ we count 2 $d$.
+The sum of the array being $6+2d$, we use the count to negate the occurrences of $d$:
+$6+2d-2d$.
 
-\subsection{count()}
-Definition:
-\begin{equation}\label{def:cound}
+\subsection{count(exp)}
+Consider the expression \inlineocl{src.count()}, where \inlineocl{src} is an expression resulting in a collection and \inlineocl{exp} is an expression resulting in a single element: the \inlineocl{count} operation returns the count of \inlineocl{exp} in \inlineocl{src}.
+With $X$ as the variables representing \inlineocl{src}, $y$ as the variable representing \inlineocl{exp}, and $z$ representing the count, we can define the operation as follows:
+\begin{equation}\label{def:count}
     count(X,y,z) \iff z = \sum_{0 < i \leq |X|} \llbracket x_i = y \rrbracket
 \end{equation}
-
-Reformulation using Global Constraints:
+Meaning simply applying the appropriate global:
 \begin{equation}\label{csp:count}
     count(X,y,z):
     \begin{cases}
@@ -46,11 +62,10 @@ Reformulation using Global Constraints:
 \end{equation}
 
 \subsection{max()}
-Definition:
+Consider the expression \inlineocl{src.max()}, where \inlineocl{src} is an expression resulting in a collection of integers: the \inlineocl{max} operation returns the highest value in the \inlineocl{src} collection:
 \begin{equation}\label{def:max}
     max(X,y) \iff (\forall x \in X, y \geq x) \wedge (\exists x \in X, x=y) 
 \end{equation}
-
 Reformulation using Global Constraints:
 \begin{equation}\label{csp:max}
     max(X,y):
@@ -60,16 +75,24 @@ Reformulation using Global Constraints:
 \end{equation}
 
 \subsection{min()}
-Definition:
+Consider the expression \inlineocl{src.min()}, where \inlineocl{src} is an expression resulting in a collection of integers: the \inlineocl{min} operation returns the lowest value in the \inlineocl{src} collection.
+
+Because of our encoding with collections using dummy variables, and using the lowest value of the domain as dummy value, our definition of minimum needs to exclude that value:
 \begin{equation}\label{def:min}
-    min(X,y) \iff (\forall x \in X, y \leq x) \wedge (\exists x \in X, x=y) 
+    min(X,y) \iff \\
+    ~~(\forall x \in X, x\neq d \iff y \leq x)\\
+    ~\wedge (\exists x \in X, x=y)\\
+    ~\wedge y\neq d
 \end{equation}
 
-Reformulation using Global Constraints:
+In order to employ the $minimum$ global constraint, we create a copy of the list, where variables equal to $d$ get flipped to the beyond the upper bound of the domain, giving us the following reformulation using Global Constraints:
 \begin{equation}\label{csp:min}
     min(X,y):
     \begin{cases}
-        x'_i = x_i - (2d+1)*\llbracket x_i=d \rrbracket \\
+        \forall i \in [1..z]\\
+        ~~x'_i = x_i - (2d+1)*\llbracket x_i=d \rrbracket \\
         minimum(y,X')
     \end{cases}
 \end{equation}
+
+For example, given the collection $[3,1,2,d,d]$ we create the copy flipping the dummy: $[3,1,2,-2d+1,-2d+1]$, because $d$ is the smallest value of the domain and $-2d+1$ is just above the domain of valid values in our encoding.

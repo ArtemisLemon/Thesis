@@ -1,46 +1,63 @@
-Some operation applied to collections result in a boolean.
+In this section we'll consider expressions which result in a single boolean.
 It is common to know the resulting boolean at compile time, such as at the top of an invariant expression.
 In the cases where the resulting truth value is known, we often have a simpler model. 
 
-
-\newpage\subsection{equals and different}
+\subsection{equals and different}
+Consider an expression of the form \inlineocl{exp = exp2}, where both expressions resolve to a collection. If one array is smaller than the other, we append variables instantiated to $d$.
+To model equals and different in OCL, we can simply use a conjunction or disjunction.  
 \begin{equation}\label{csp:coleq}
     coleq(X,Y):
     \begin{cases}
-        x_i = y_i
+        \forall i \in [1..z]\\
+        ~~ x_i = y_i
+    \end{cases}
+\end{equation}
+\begin{equation}\label{csp:coldiff}
+    coldiff(X,Y):
+    \begin{cases}
+        \exists i \in [1..z]\\
+        ~~ x_i \neq y_i
     \end{cases}
 \end{equation}
 
+In expressions such as \inlineocl{(exp = exp2) implies exp3}, the equality between collections is no longer enforced, but checked. 
+In other words, we need a reified version of this constraint model.
 \begin{equation}\label{csp:coleq_reif}
     coleq(X,Y,z):
     \begin{cases}
-        b_i \iff (x_i = y_i)\\
-        product\_ctr(B,"=",z)
-        % z = \Pi B
+        \forall i \in I\\
+        ~~b_i \iff (x_i = y_i)\\
+        minimum(B,z)
     \end{cases}
 \end{equation}
-
-% \begin{equation}\label{csp:coldiff}
-%     coldiff(X,Y):
-%     \begin{cases}
-%         \bigvee x_i \neq y_i
-%     \end{cases}
-% \end{equation}
+In this first model for equals, we reify the individual equalities.
+The reified value for this constraint model, is the minimum value for the reified equalities.
 
 \begin{equation}\label{csp:coldiff_reif}
     coldiff(X,Y,z):
     \begin{cases}
-        b_i \iff (x_i \neq y_i)\\
-        sum\_ctr(B,"=",z')\\
-        z \iff (z' > 0)
+        \forall i \in I\\
+        ~~b_i \iff (x_i \neq y_i)\\
+        maximum(B,z)
+        % z \iff (z' > 0)
     \end{cases}
 \end{equation}
+In this model for not equal, we reify the individual inequalities.
+The reified value for this constraint model, is the maximum value for the reified equalities.
+
+For example, given the collections $X=[3,1,2,d,d]$ and $Y=[3,0,2]$, we pad the second with $d$, to make it the same length as the longer array: $Y'=[3,0,2,d,d]$.
+Because $x_1=1$ and $y'_1=0$. These two collections are different.
+If $y_1=1$, they would be equal.
+
+When reifying, for each couple $(x_i,y'_i)$ we reify the equality to $b_i$:
+$B=[1,0,1,1,1]$. The minimum of this array $z$ gives us the truth value of this reified constraint.
+
 
 \newpage\subsection{includes(e)}
 Consider the expression \inlineocl{src.includes(e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers, and \inelineocl(e) is an (expression resulting in an) object or an integer.
 % Formal Definition:
 % \begin{equation}\label{def:includes}
-%     includes(X,y) \iff \llbracket x_i \neq d \rrbracket
+%     includes(X,y) \iff y \in X
 % \end{equation}
 
 Reformulation using Global Constraints:
@@ -51,8 +68,13 @@ Reformulation using Global Constraints:
         z = \llbracket c>0 \rrbracket
     \end{cases}
 \end{equation}
+For this model, we simply count the number of times the element is found in the list.
+The reified value of the constraint $z$, is equal to weather or not the count is greater than zero.
 
-\newpage\subsection{excludes(e)}
+For example given $X=[3,1,3,2,d]$ for \inlineocl{src}, and $y=3$ for \inlineocl{exp}, the count $c$ is equal to the count of $y$ in $X$, here $c=2$.
+Finally the output $z$ constrained to wether or not, $c>2$. 
+
+\subsection{excludes(e)}
 Consider the expression \inlineocl{src.excludes(e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers, and \inelineocl(e) is an (expression resulting in an) object or an integer.
 % Formal Definition:
 % \begin{equation}\label{def:excludes}
@@ -64,9 +86,14 @@ Reformulation using Global Constraints:
     excludes(X,y,z):
     \begin{cases}
         count(y,X,c)\\
-        z = \llbracket \neg c>0 \rrbracket
+        z = \llbracket c=0 \rrbracket
     \end{cases}
 \end{equation}
+For this model, we simply count the number of times the element is found in the list.
+The reified value of the constraint $z$, is equal to weather or not the count is equal to zero.
+
+For example, given $X=[3,1,3,2,d]$ for \inlineocl{src}, and $y=4$ for \inlineocl{exp}, the count $c$ is equal to the count of $y$ in $X$, here $c=0$.
+Finally the output $z$ is constrained to be equal to wether or not, $c=0$.
 
 \newpage\subsection{includesAll(e)}
 Consider the expression \inlineocl{src.includesAll(e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers, and \inelineocl(e) is (an expression resulting in) a collection of objects or an integers.
@@ -79,12 +106,16 @@ Reformulation using Global Constraints:
 \begin{equation}\label{csp:includesAll}
     includesAll(X,Y,z):
     \begin{cases}
-        \forall y \in Y, includes(X,y,z')\\
-        product\_ctr(Z',"=",z)
+        \forall y_i \in Y,\\
+        ~~includes(X,y_i,z_i')\\
+        minimum(Z',z)
     \end{cases}
 \end{equation}
 
-\newpage\subsection{excludesAll(e)}
+For example, given $X=[3,1,3,2,d]$ and $Y=[3,2]$, we use the previous $includes$ model to return an array of booleans $B=[1,1]$, representing the inclusion of each element.
+The minimum of $B$ is the truth value of the reified constraint. 
+
+\subsection{excludesAll(e)}
 Consider the expression \inlineocl{src.excludesAll(e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers, and \inelineocl(e) is (an expression resulting in) a collection of objects or an integers.
 % Formal Definition:
 % \begin{equation}\label{def:excludesAll}
@@ -95,11 +126,16 @@ Reformulation using Global Constraints:
 \begin{equation}\label{csp:excludesAll}
     excludesAll(X,Y,z):
     \begin{cases}
-        \forall y \in Y, excludes(X,y,z')\\
-        sum\_ctr(Z',"=",z'')
-        z = \llbracket z'' > 0 \rrbracket
+        \forall y_i \in Y,\\
+        ~~excludes(X,y_i,z_i')\\
+        minimum(Z',z)
+        % z = \llbracket z'' > 0 \rrbracket
     \end{cases}
 \end{equation}
+
+For example, given $X=[3,1,3,2,d]$ and $Y=[4,2]$, we use the previous $includes$ model to return an array of booleans $B=[1,0]$, representing the exclusion of each element.
+The minimum of $B$ is the truth value of the reified constraint.
+Here because 2 isn't excluded from $X$, the minimum found in $B$ is 0, or false.
 
 \newpage\subsection{isEmpty()}
 Consider the expression \inlineocl{src.isEmpty()}, where \inlineocl{src} is an expression resulting in a collection of objects or integers.
@@ -117,7 +153,7 @@ Reformulation using Global Constraints:
     \end{cases}
 \end{equation}
 
-\newpage\subsection{notEmpty()}
+\subsection{notEmpty()}
 Consider the expression \inlineocl{src.notEmpty()}, where \inlineocl{src} is an expression resulting in a collection of objects or integers.
 % Formal Definition:
 % \begin{equation}\label{def:notEmpty}
@@ -146,7 +182,7 @@ Reformulation using Global Constraints:
     forall(X,y,exp):
     \begin{cases}
         itpred(X,B,exp)\\
-        product\_ctr(B,"=",y)
+        minimum(B,y)
         % y = \Pi B
     \end{cases}
 \end{equation}
@@ -170,8 +206,8 @@ Reformulation using Global Constraints:
     exists(X,y,exp):
     \begin{cases}
         itpred(X,B,exp)\\
-        sum\_ctr(B,"=",y')\\
-        y = \llbracket y' = 1 \rrbracket
+        maximum(B,y)
+        % y = \llbracket y' > 0 \rrbracket
     \end{cases}
 \end{equation}
 
@@ -180,7 +216,7 @@ $$\inlineocl{src.oclType().allInstances().select(exp).intersect(src.asSet()).siz
 The first part of this expression, \inlineocl{src.oclType().allInstances().select(exp)}, remains constant if \inlineocl{exp} is constant.
 It can either be interpreted before building the OCL CSP, or with only require one propagation for each of the constraints modeling it.
 
-\newpage\subsection{one(exp)}
+\subsection{one(exp)}
 This operation can have at most one iterator variable.
 
 Consider the expression \inlineocl{src.one(exp)}, where the source \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{exp} is an sub-expression of type boolean which applies to the elements of the collection from the source \inlineocl{src}.
@@ -194,7 +230,9 @@ Reformulation using Global Constraints:
 \begin{equation}\label{csp:one}
     one(X,y,exp):
     \begin{cases}
-        
+        itpred(X,B,exp)\\
+        count(\top,B,y')\\
+        y = \llbracket y' = 1 \rrbracket
     \end{cases}
 \end{equation}
 
