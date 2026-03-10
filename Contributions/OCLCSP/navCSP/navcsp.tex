@@ -1,13 +1,19 @@
 \clearemptydoublepage
 \chapter{Contribution : OCL Navigation}
-In this chapter we present the model for the navigation, preserving order and multiplicity.
-
 \begin{figure}[!ht]
     \centering
     \includegraphics[trim={0 0 0 0},width=1\linewidth]{Contributions/OCLCSP/figures/navCSPMM.png}
     \caption{navCSP in our method}
     \label{fig:metamodel}
 \end{figure}
+In this chapter we'll be modeling the link between the UML CSP modeling the instance, and the OCL CSP modeling the constraint expressions.
+We'll be considering expressions such as \inlineocl{src.prop} and \inlineocl{src.var(prop)}, which means also connecting with the interpretation of the \textit{constant expressions} which can be done independently.
+When building the model for navigation we can assume to have access to all the information accessible to a \inlineocl{PropExp}, such as the domains for the variables of the \inlineocl{src} expression and the \inlineocl{PropertyTable} identified by \inlineocl{prop}.
+
+We will first show and test the main model for this thesis, which preserves order.
+Then we'll present a secondary model which only preserves multiplicity.
 
 \input{Contributions/OCLCSP/navCSP/text/model}
 \input{Contributions/OCLCSP/navCSP/text/experimentation}
+
+\input{Contributions/OCLCSP/navCSP/text/occmodel}
