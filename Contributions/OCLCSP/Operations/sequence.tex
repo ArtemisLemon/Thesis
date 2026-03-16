@@ -1,11 +1,12 @@
-\newpage\subsection{src.prepend(e)}
+In this section we'll consider OCL operations which can be applied to ordered collections, namely: sequence and ordered set.
 
-Consider the expression \inlineocl{src.prepend(e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{e} is an expression of resulting in an object or int.
+% \newpage
+\subsection{src.prepend(e)}
+Consider the expression \inlineocl{src.prepend(e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{e} is an expression of resulting in an object or int: the output of the operation is the sequence starting with \inlineocl{e} followed by \inlineocl{src}.
 % Formal Definition:
 % \begin{equation}\label{def:prepend}
 %     prepend(X,Y,exp) \iff
 % \end{equation}
-
 Reformulation using Global Constraints:
 \begin{equation}\label{csp:prepend}
     prepend(X,Y,z):
@@ -13,11 +14,11 @@ Reformulation using Global Constraints:
         Y = z\;\mathbin{\|}\;X
     \end{cases}
 \end{equation}
+In this model we simply need to prepend the variable to our array of variables.
 
-
-\newpage\subsection{src.append(e)}
-
-Consider the expression \inlineocl{src.append(e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{e} is an expression of resulting in an object or int.
+% \newpage
+\subsection{src.append(e)}
+Consider the expression \inlineocl{src.append(e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{e} is an expression of resulting in an object or int: the output of the operation is the sequence starting with \inlineocl{src} followed by \inlineocl{e}.
 % Formal Definition:
 % \begin{equation}\label{def:append}
 %     append(X,Y,exp) \iff
@@ -31,6 +32,7 @@ Reformulation using Global Constraints:
         asSequence(Y',Y)
     \end{cases}
 \end{equation}
+In this model, we append the variable to the array of variables, and call the constraint to cast it to a sequence.
 % \begin{equation}\label{csp:append_seq}
 %     append(X,Y,z):
 %     \begin{cases}
@@ -42,22 +44,23 @@ Reformulation using Global Constraints:
 
 
 \newpage\subsection{src.insertAt(i,e)}
-
-Consider the expression \inlineocl{src.insertAt(i,e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers, \inlineocl{i} is an expression resulting in an integer, and \inlineocl{e} is an expression of resulting in an object or int.
+Consider the expression \inlineocl{src.insertAt(i,e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers, \inlineocl{i} is an expression resulting in an integer, and \inlineocl{e} is an expression of resulting in an object or int: the output is the sequence composed of the i-1 first values of \inlineocl{src}, then \inlineocl{e}, followed by the rest of \inlineocl{src}.
 % Formal Definition:
 % \begin{equation}\label{def:insertAt}
 %     insertAt(X,Y,exp) \iff
 % \end{equation}
-
 Reformulation using Global Constraints:
 \begin{equation}\label{csp:insertAt}
     insertAt(X,Y,z,p):
     \begin{cases}
-        p'_i = i + \llbracket i \geq z \rrbracket\\
+        \forall i \in [1..|X|]
+        ~~p'_i = i + \llbracket i \geq p \rrbracket\\
         element(x_i,Y,p'_i)\\
         element(z,Y,p)
     \end{cases}
 \end{equation}
+This model finds the positions of values of $X$ in $Y$.
+Their position in $Y$ is unchanged if they're before the included element: $p'_i = i$, and incremented after the included element: $p'_i = i + \llbracket i \geq p \rrbracket$.
 
 \begin{figure}[!ht]
     \centering
@@ -65,16 +68,15 @@ Reformulation using Global Constraints:
     \caption{example solution for insert at}
     \label{fig:subsequence}
 \end{figure}
+In this figure we illustrate a solution for this constraint, showing how $X$ is organized into $Y$ around $z$.
 
 % \newpage\subsection{Sub-Sequence}
 \newpage\subsection{src.subSequence(s,f)}
-
-Consider the expression \inlineocl{src.subSequence(e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{s,f} are expressions of resulting integers giving the start and finish of the sub-sequence in the sequence.
+Consider the expression \inlineocl{src.subSequence(s,f)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{s,f} are expressions of resulting integers giving the start and finish of the sub-sequence in the sequence: the output is the sub-sequence of \inlineocl{src} starting at s, ending at f.
 % Formal Definition:
 % \begin{equation}\label{def:subSequence}
 %     subSequence(X,Y,exp) \iff
 % \end{equation}
-
 Reformulation using Global Constraints:
 \begin{equation}\label{csp:subSequence}
     subSequence(X,Y,s,f):
@@ -85,6 +87,9 @@ Reformulation using Global Constraints:
         element(y_i,X',p_i)
     \end{cases}
 \end{equation}
+In this model we constrain the position of the \textit{output values} in the source variables: $element(y_i,X',p_i)$.
+Because we generally need to pack the output with dummies, those dummies need a position in the source list.
+To guarantee the presence of the dummy value in the source, we make $X'$, which a variable instantiated to the dummy value, followed by $X$. 
 
 \begin{figure}[!ht]
     \centering
@@ -92,16 +97,15 @@ Reformulation using Global Constraints:
     \caption{example solution for sub-sequence}
     \label{fig:subsequence}
 \end{figure}
+In this figure, we can see that each value of $Y$ has a position in $X'$. 
 
 % \newpage\subsection{At}
 \newpage\subsection{src.at(p)}
-
-Consider the expression \inlineocl{src.at(p)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{p} is an expression of resulting in an integer.
+Consider the expression \inlineocl{src.at(p)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{p} is an expression of resulting in an integer: the output of this operation is the p-th element of \inlineocl{src}. 
 % Formal Definition:
 % \begin{equation}\label{def:at}
 %     at(X,Y,exp) \iff
 % \end{equation}
-
 Reformulation using Global Constraints:
 \begin{equation}\label{csp:at}
     at(X,y,p):
@@ -109,16 +113,16 @@ Reformulation using Global Constraints:
         element(y,X,p)
     \end{cases}
 \end{equation}
+Naturally for this model we simply use the element constraint as intended.
 
 % \newpage\subsection{Index Of}
-\newpage\subsection{src.indexOf(p)}
-
-Consider the expression \inlineocl{src.indexOf(p)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{p} is an expression of resulting in an integer.
+% \newpage
+\subsection{src.indexOf(e)}
+Consider the expression \inlineocl{src.indexOf(e)}, where \inlineocl{src} is an expression resulting in a collection of objects or integers and \inlineocl{e} is an expression of resulting in an object or an integer: the output of this operation is the position of \inlineocl{e} in \inlineocl{src}.
 % Formal Definition:
 % \begin{equation}\label{def:indexOf}
 %     indexOf(X,Y,exp) \iff
 % \end{equation}
-
 Reformulation using Global Constraints:
 \begin{equation}\label{csp:indexOf}
     indexOf(X,y,p):
@@ -126,28 +130,29 @@ Reformulation using Global Constraints:
         element(y,X,p)
     \end{cases}
 \end{equation}
+For this model, we again employ the element constraint.
 
 % \newpage\subsection{First}
-\newpage\subsection{src.first()}
-
-Consider the expression \inlineocl{src.first()}, where \inlineocl{src} is an expression resulting in a collection of objects or integers.
+% \newpage
+\subsection{src.first()}
+Consider the expression \inlineocl{src.first()}, where \inlineocl{src} is an expression resulting in a collection of objects or integers: the output is the first element of \inlineocl{src}.
 % Formal Definition:
 % \begin{equation}\label{def:first}
 %     first(X,Y,exp) \iff
 % \end{equation}
-
-Reformulation using Global Constraints:
+% Reformulation using Global Constraints:
 \begin{equation}\label{csp:first}
     first(X,y):
     \begin{cases}
         y = x_1
     \end{cases}
 \end{equation}
+For this we operation, we simply need to constrain the output to be equal to the first value of $X$.
 
 % \newpage\subsection{Last}
-\newpage\subsection{src.last()}
-
-Consider the expression \inlineocl{src.last()}, where \inlineocl{src} is an expression resulting in a collection of objects or integers.
+% \newpage
+\subsection{src.last()}
+Consider the expression \inlineocl{src.last()}, where \inlineocl{src} is an expression resulting in a collection of objects or integers: the output is the last element of \inlineocl{src}.
 % Formal Definition:
 % \begin{equation}\label{def:last}
 %     last(X,Y,exp) \iff
@@ -161,11 +166,11 @@ Reformulation using Global Constraints:
         element(y,X,p)
     \end{cases}
 \end{equation}
+Because in out encoding, dummies are packed at the tail end of an array of variables, to get the last value we need to use the size operation to identify the position of the last element.
 
 % \newpage\subsection{Reverse}
 \newpage\subsection{src.reverse()}
-
-Consider the expression \inlineocl{src.reverse()}, where \inlineocl{src} is an expression resulting in a collection of objects or integers.
+Consider the expression \inlineocl{src.reverse()}, where \inlineocl{src} is an expression resulting in a collection of objects or integers: the output of the operations is the sequence in reversed order.
 % Formal Definition:
 % \begin{equation}\label{def:reverse}
 %     reverse(X,Y,exp) \iff
@@ -180,3 +185,15 @@ Reformulation using Global Constraints:
         element(x_i,Y,p_i)
     \end{cases}
 \end{equation}
+Because our collections are packed with dummies at the tail end, and we wish to keep them there, we reverse the positions values but not dummies.
+To get the new position of a value, we find its distance to then end, and make that its distance from the start in the new list.
+If variable holds the dummy value, the value is copied to the same position in the output.
+
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 30 0 0},width=1\linewidth]{Contributions/OCLCSP/Operations/figures/seqreverse.png}
+    \caption{example solution for reverse}
+    \label{fig:seqreverse}
+\end{figure}
+In this figure we have an example solution, and the intermediate variables giving the positions of values of $X$ in $Y$.

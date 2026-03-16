@@ -59,7 +59,7 @@ This model uses both the input and output to activate the column for the output 
     \caption{Diagram of closure solution}
     % \label{fig:metamodel}
 \end{figure}
-In this figure the arrows towards the matrix are the \textit{and} between the input and output, and the arrow towards the output is the \textit{or} on the column.
+In this figure the arrows towards the matrix are the \textit{and} between the values of the column and the input or output, and the arrow towards the output is the \textit{or} on the column.
 In this diagram we see an expression equivalent to \inlineocl{self.ref.closure()} where \inlineocl{self} points to the first object, and \inlineocl{ref} is a reflexive reference.
 The source occurrences point to the first object, but no relation in the \inlineocl{refTable} goes towards the first object. Hence, the first object isn't in the output.
 However the first object points to the second, and having the second in the output gets us the third in the output.

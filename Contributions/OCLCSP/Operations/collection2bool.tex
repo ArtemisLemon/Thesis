@@ -186,11 +186,51 @@ Reformulation using Global Constraints:
         % y = \Pi B
     \end{cases}
 \end{equation}
+Our model for \inlineocl{forall} gathers a collection of booleans, and simply textit{ands} across them.
 
-Reformulation in OCL when source is a collection of objects, the sub-expression is constant and has one iterator:
-$$\inlineocl{src.oclType().allInstances().select(exp).includesAll(src)}$$
-The first part of this expression, \inlineocl{src.oclType().allInstances().select(exp)}, remains constant if \inlineocl{exp} is constant.
-It can either be interpreted before building the OCL CSP, or with only require one propagation for each of the constraints modeling it.
+\subsubsection{Iterating with predicates}
+The \inlineocl{forall} expression, along with \inlineocl{exists} and \inlineocl{one}, take an iterable expression which can take several iterators, such as \inlineocl{a,b | pred(a,b)} where \inlineocl{pred} is a predicate applied to a and b.
+% In the OCL standard, \inlineocl{forall} takes up to two iterators,  
+
+\begin{equation}\label{csp:itpred}
+    itpred(X,B,exp):
+    \begin{cases}
+        % \forall b_{ijk...} \in B, \forall x_i,x_j,x_k,... \in X\\
+        \forall i,j,k,... \in [1..|X|]\\
+        ~~b_{ijk...} \iff (((x_i \neq d) \wedge (x_j \neq d) \wedge ...) \implies exp(x_i,x_j,x_k,...))
+    \end{cases}
+\end{equation}
+In this first equation, we focus on the core of $itpred$ associating the input $X$ and the output $B$.
+The number of variables in $B$ is equal to $(|X|)^z$ where $z$ is the number of iterators.
+To index $B$ we'll use $z$ indices, ranging from 1 to $|X|$.
+Each $b_{ijk...}$ , where i,j,k,.. are in [1..|X|], is associated to the combination variables $x_i,x_j,x_k,...,x_z$.
+The $itpred$ constraint can be understood as a dispatcher, applying the expression $exp$ of every combination of variables from $X$.
+Each combination of variables is associated to a boolean, which is false only if variables have valid values and the expression upon them is false.
+% The objective here, is to only apply the expression if no variable the expression is applied to is equal to the dummy value of the domain.
+To complete the model, lets consider the expression \inlineocl{src.forall(a,b,c| (a<b and b<c) implies (a+b=c))}, \inlineocl{exp} in the above would be replaced with:
+$$(x_i<x_j \wedge x_j < x_k) \implies (x_i+x_j=x_k+x_k)$$
+
+
+
+% \begin{figure}[!ht]
+%     \centering
+%     \includegraphics[trim={0 30 0 0},width=1\linewidth]{Contributions/OCLCSP/Operations/figures/forallexample.png}
+%     \caption{Part of the tree for \inlineocl{src.forall(a,b,c| (a<b and b<c) implies (a+b=c+c))}}
+%     \label{fig:forallexample}
+% \end{figure}
+% In this figure we illustrate the variables instantiated for one combination of variables involved in the forall expression of \inlineocl{src.forall(a,b,c| (a<b and b<c) implies (a+b=c+c))}.
+% In this illustration $X$, to the left, has three variables of which $x_1$ and $x_2$ are visible.
+% Because there are three iterators, we show $B$ as a large cube of variables.
+% The visible variable $b_{112} will hold the truth value of the expression applied to $x_1$ (twice) and $x_2$.  
+% In between $X$ and $B$ we see the variables conecting them.
+% These variables hold the results of arithmetic, relational and logical operations.
+% At the top we see the variables involved in checking for the dummy value, and below the spherical variables encoding the \inlineocl{exp} expression applied to $x_1$ and $x_2$. 
+% \subsubsection{Reformulation around constant expressions}
+% In the case where \textit{exp} is a \textit{constant expression}, we can also employ a systematic reformulation to improve propagation or to leverage a compiler   
+% Reformulation in OCL when source is a collection of objects, the sub-expression is constant and has one iterator:
+% $$\inlineocl{src.oclType().allInstances().select(exp).includesAll(src)}$$
+% The first part of this expression, \inlineocl{src.oclType().allInstances().select(exp)}, remains constant if \inlineocl{exp} is constant.
+% It can either be interpreted before building the OCL CSP, or with only require one propagation for each of the constraints modeling it.
 % This rewrite leverages the equivalence between implication and inclusion.
 
 \newpage\subsection{exists(exp)}
@@ -211,10 +251,10 @@ Reformulation using Global Constraints:
     \end{cases}
 \end{equation}
 
-Reformulation in OCL when source is a collection of objects, the sub-expression is constant and has one iterator:
-$$\inlineocl{src.oclType().allInstances().select(exp).intersect(src.asSet()).size()>0}$$
-The first part of this expression, \inlineocl{src.oclType().allInstances().select(exp)}, remains constant if \inlineocl{exp} is constant.
-It can either be interpreted before building the OCL CSP, or with only require one propagation for each of the constraints modeling it.
+% Reformulation in OCL when source is a collection of objects, the sub-expression is constant and has one iterator:
+% $$\inlineocl{src.oclType().allInstances().select(exp).intersect(src.asSet()).size()>0}$$
+% The first part of this expression, \inlineocl{src.oclType().allInstances().select(exp)}, remains constant if \inlineocl{exp} is constant.
+% It can either be interpreted before building the OCL CSP, or with only require one propagation for each of the constraints modeling it.
 
 \subsection{one(exp)}
 This operation can have at most one iterator variable.
@@ -235,28 +275,6 @@ Reformulation using Global Constraints:
         y = \llbracket y' = 1 \rrbracket
     \end{cases}
 \end{equation}
-
-\newpage\subsection{Iterating with predicates}
-\begin{equation}\label{csp:itpred}
-    itpred(X,B,exp):
-    \begin{cases}
-        \forall b_{ijk...} \in B, \forall x_i,x_j,x_k,... \in X\\
-        ~~b_{ijk...} \iff (((x_i \neq d) \wedge (x_j \neq d) \wedge ...) \implies exp(b_{ijk...},x_i,x_j,x_k,...))
-    \end{cases}
-\end{equation}
-Consider the expression \inlineocl{src.forall(a,b,c| (a<b and b<c) implies (a+b=c+c))}.
-\begin{equation}\label{csp:itpred_example}
-    exp(x_i,x_j,x_k):
-    \begin{cases}
-         (x_i<x_j \wedge x_j < x_k) \implies (x_i+x_j=x_k+x_k)
-    \end{cases}
-\end{equation}
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[trim={0 30 0 0},width=1\linewidth]{Contributions/OCLCSP/Operations/figures/forallexample.png}
-    \caption{Part of the tree for \inlineocl{src.forall(a,b,c| (a<b and b<c) implies (a+b=c+c))}}
-    \label{fig:forallexample}
-\end{figure}
 
 % \begin{equation}\label{csp:xpxp}
 %     xpxp(b,X,exp):

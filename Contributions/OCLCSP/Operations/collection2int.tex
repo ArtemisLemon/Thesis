@@ -47,9 +47,9 @@ For example, given the collection $[3,1,2,d,d]$ we count 2 $d$.
 The sum of the array being $6+2d$, we use the count to negate the occurrences of $d$:
 $6+2d-2d$.
 
-\subsection{count(exp)}
-Consider the expression \inlineocl{src.count()}, where \inlineocl{src} is an expression resulting in a collection and \inlineocl{exp} is an expression resulting in a single element: the \inlineocl{count} operation returns the count of \inlineocl{exp} in \inlineocl{src}.
-With $X$ as the variables representing \inlineocl{src}, $y$ as the variable representing \inlineocl{exp}, and $z$ representing the count, we can define the operation as follows:
+\subsection{count(e)}
+Consider the expression \inlineocl{src.count(e)}, where \inlineocl{src} is an expression resulting in a collection and \inlineocl{e} is an expression resulting in a single element: the \inlineocl{count} operation returns the count of \inlineocl{e} in \inlineocl{src}.
+With $X$ as the variables representing \inlineocl{src}, $y$ as the variable representing \inlineocl{e}, and $z$ representing the count, we can define the operation as follows:
 \begin{equation}\label{def:count}
     count(X,y,z) \iff z = \sum_{0 < i \leq |X|} \llbracket x_i = y \rrbracket
 \end{equation}
@@ -73,6 +73,7 @@ Reformulation using Global Constraints:
         maximum(y,X)
     \end{cases}
 \end{equation}
+Because for our encoding using the minimum of the domain as the dummy it doesn't effect the constraint model.
 
 \subsection{min()}
 Consider the expression \inlineocl{src.min()}, where \inlineocl{src} is an expression resulting in a collection of integers: the \inlineocl{min} operation returns the lowest value in the \inlineocl{src} collection.
@@ -84,7 +85,6 @@ Because of our encoding with collections using dummy variables, and using the lo
     ~\wedge (\exists x \in X, x=y)\\
     ~\wedge y\neq d
 \end{equation}
-
 In order to employ the $minimum$ global constraint, we create a copy of the list, where variables equal to $d$ get flipped to the beyond the upper bound of the domain, giving us the following reformulation using Global Constraints:
 \begin{equation}\label{csp:min}
     min(X,y):
@@ -94,5 +94,4 @@ In order to employ the $minimum$ global constraint, we create a copy of the list
         minimum(y,X')
     \end{cases}
 \end{equation}
-
 For example, given the collection $[3,1,2,d,d]$ we create the copy flipping the dummy: $[3,1,2,-2d+1,-2d+1]$, because $d$ is the smallest value of the domain and $-2d+1$ is just above the domain of valid values in our encoding.

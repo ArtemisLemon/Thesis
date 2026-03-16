@@ -17,7 +17,7 @@ Let $X = \{x_1,...,x_z\}$ be the array of variables modeling the values of \inli
 \subsection{asBag()}
 \smallskip
 \noindent
-\textbf{A. asBag():}
+% \textbf{A. asBag():}
 \label{ssec:asBag}
 % Consider an expression \inlineocl{src.asBag()} where \inlineocl{src} is an expression such as \inlineocl{self.attribute}. Let $X = \{x_1,...,x_z\}$ be the array of variables representing \inlineocl{src}, the result of \inlineocl{src.asBag()} is a multiset $Y = \{y_1,...,y_z\}$ that preserves all values from $X$, including duplicates, but with symmetries removed. 
 Consider the expression \inlineocl{src.asBag()}, where the result is evaluated as a multiset $Y$ that preserves all values from the source collection $X$, including repeated elements. Because OCL bags are insensitive to permutations, multiple orderings of the same values are semantically equivalent. To avoid such symmetries in the model, we impose a canonical form by sorting $Y$ in descending order. This also ensures that any dummy values $d$ used to pad the collection appear at the end. For example, given $X=\{1,2,d,1\}$, we enforce the canonical bag representation $Y=\{2,1,1,d\}$. This transformation is modeled using the global constraint \inlinecstr{sort}{X, Y}, which sorts $X$ into $Y$. 
@@ -48,10 +48,11 @@ $\reverse{Y}$ denotes the reverse of $Y$, used to enforce descending order.
 % For instance if $X=\{x_1,x_2\}$ then $\reverse{X}=\{x_2,x_1\}$.
 % This allows us to use \inlinecstr{sort}{X,Y} for a descending order.
 
+\newpage
 \subsection{asSet()}
 \smallskip
 \noindent
-\textbf{B. asSet():}
+% \textbf{B. asSet():}
 \label{ssec:asSet}
 Consider the expression \inlineocl{src.asSet()}. The \inlineocl{asSet()} operation removes duplicate elements from the source collection $X$ while disregarding order. In our encoding, this corresponds to extracting the distinct values from $X$ and placing them into the result array $Y$ in a canonical form. Since the number of unique elements in $X$ is not known beforehand, $Y$ is defined with the same arity as $X$, and any unused positions are filled with a dummy value $d$. For instance, given an instantiation $X=\{1,2,1,d\}$, the result of \inlineocl{asSet()} would be $Y=\{2,1,d,d\}$. 
 % Let $X = \{x_1,...,x_z\}$ represent the source collection, and $Y = \{y_1,...,y_z\}$ the resulting set with possible padding using the dummy value $d$. Because the number of distinct elements in $X$ is not known in advance, $Y$ is defined with the same arity, and dummy values are used to fill unused positions. For example given an instantiated array of variables such as $X=\{1,2,1,d\}$, \inlineocl{asSet} returns the array $Y=\{2,1,d,d\}$.
@@ -97,7 +98,7 @@ To support cases where all positions in $Y$ are filled with unique values, we ap
 \subsection{asSequence()}
 \smallskip
 \noindent
-\textbf{C. asSequence():}
+% \textbf{C. asSequence():}
 \label{ssec:asSeq}
 The \inlineocl{asSequence} operation retains all values from the source collection, including duplicates, and reorders them such that all non-dummy values appear first in their original relative order, followed by the dummy values.
 For example, if $X = \{1, d, 2, d, 1\}$, then \inlineocl{asSequence} yields $Y = \{1, 2, 1, d, d\}$. To enforce this transformation, we introduce the following CP model: 
@@ -251,7 +252,7 @@ asSeq_{y2x}(X,Y)\\
 \subsection{asOrderedSet()}
 \smallskip
 \noindent
-\textbf{D. asOrderedSet():}
+% \textbf{D. asOrderedSet():}
 \label{ssec:asOrderedSet}
 % \ytodo{give motivation, give rigorous definition, before formulation}
 Consider the expression \inlineocl{src.asOrderedSet()}. The \inlineocl{asOrderedSet()} operation removes duplicates from $X$ while preserving the relative order of first occurrences. Unused positions in $Y$ are filled with dummy values $d$. For example if $X=\{1,2,d,1\}$, then \inlineocl{asOrderedSet} returns the array $Y=\{1,2,d,d\}$. To enforce this behavior, we use the following CP model: 
