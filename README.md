@@ -9,7 +9,7 @@ Each Chapter Folder has a main .tex file, and two sub-folders for text and figur
 to update `./main.pdf` edit the `./main.tex` file and run `make`.
 
 
-# (Draft v0.00.0.2) Progress
+# (Draft v0.00.0.4) Progress
 ## Context:
 - [ ] Chapter -1: Bibliography and citations
 - [x] Chapter 0: Introduction
@@ -36,13 +36,13 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [x] DPLL & Simplex
   - [x] SotA
     - [x] Choco
-    - [x] Eclipse (& SWI-prolog)
+    - [x] ~~Eclipse (& SWI-prolog)~~
     - [x] SAT4j (&Cassowary)
 - [x] Chapter 3: Problem
   - [x] Model Search
   - [x] SotA
     - [x] ATLc
-    - [ ] EMFtoCSP (OCL\#)
+    - [ ] ~~EMFtoCSP~~
     - [x] Alloy & Kodkod (OCLsolve)
     - [ ] ~~QVTc~~
     - [ ] ~~Grimm~~
@@ -83,7 +83,7 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [ ] n-depth Alloy
     - [ ] ~~Closure our Method~~
     - [ ] ~~Closure Alloy~~
-  - [ ] Comparison to Alloy and EMF2CSP
+  - [ ] ~~Comparison to Alloy and EMF2CSP~~
 - [ ] Chapter 8: OCL CSP
   - [x] Int and Bool OP
     - [x] 1..1 Int and Bool
@@ -93,7 +93,7 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
       - [x] models
       - [x] text
     - [x] 0..1 Int
-      - [ ] ~~models~~
+      - [x] ~~models~~
       - [x] text
   - [ ] ~~Iterate~~
     - [ ] ~~2 int model~~
@@ -102,23 +102,23 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
   - [x] Col to Int OP
     - [x] models
     - [x] text
-  - [ ] Col to Bool OP
+  - [x] Col to Bool OP
     - [x] models
       - [x] ~~forall <- many valued logic problem~~
-    - [ ] text
-  - [ ] Col to Col OP
+    - [x] text
+  - [x] Col to Col OP
     - [x] models
-    - [ ] text
+    - [x] text
   - [x] Col Type Casting
     - [x] models
     - [x] text
     - [ ] experimentation: Zoo
-  - [ ] Ordered Col OPs
+  - [x] Ordered Col OPs
     - [x] models
-    - [ ] text
-  - [ ] Unordered Col OPs
+    - [x] text
+  - [x] Unordered Col OPs
     - [x] models
-    - [ ] text
+    - [x] text
 - [ ] ~~Chapter 9: Search Strategies~~
   - [ ] ~~choosing variables~~
   - [ ] ~~choosing values considering the dummy values~~

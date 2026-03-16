@@ -75,3 +75,10 @@ If during another constraint's propagation, or during search, 0 is removed from 
 Here, because the domains of $x_0$ and $z$ are disjoint, then $z$ can not be equal to $x_0$, hence the element constraint propagation can remove 0 from the domain of $y$.
 %From here-on we have $y=1,z=x_1$.
 Finally, if the element constraint is given the following variable instances: $y=0, x_0=0, z=2$, propagation for the constraint would tell us it is not satisfiable, and serve as a counter proof in model validation.
+
+\subsection{DPLL and Simplex as Propagators}
+There are notable classes of CSP which come with their own specialized algorithm to solve them.
+When the variable domains are all 0/1 and the constraints in Conjunctive Normal Form (CNF), the DPLL algorithm is the best propagator.
+Similarly when the variable domains are all Real numbers, and the constraints are a system of linear equations, the Simplex algorithm is the best propagator.
+Traditionally, SAT and linear programming are distinct fields of symbolic AI, each with their own class for solvers. 
+However from the context of constraint programming, we can understand them global constraints and propagators, and CP solvers can employ these specialized solvers.
