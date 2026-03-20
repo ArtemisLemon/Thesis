@@ -1,6 +1,8 @@
 \clearemptydoublepage
 \chapter{Contribution : OCL CSP}
 In this chapter we'll cover the bulk of the CSPs which model OCL operations.
+Because of our use of a dummy variable in our encoding of collections, the CSPs will often have to model the semantics of the OCL operations around them.
+\ytodo{This can, in most cases, also manage the behaviour of invalid or void expressions.}
 
 \begin{figure}[!ht]
     \centering
@@ -8,6 +10,12 @@ In this chapter we'll cover the bulk of the CSPs which model OCL operations.
     \caption{metamodel of expressions in OCLCSP}
     \label{fig:mm:oclcsp}
 \end{figure}
+Using our \textit{map}, are now on the side of the \textit{OCL CSP}, for which all models inherit from \inlineocl{Exp}, which corresponds to a \inlineocl{OclExpression}.
+Every OCL expression will be associated to a CSP: a collection of variables holding the result of the operation, their initial shared domain, and constraints modeling the semantics of the operation.
+OCL expressions generally have a \textit{source}, and can have \textit{arguments}, all of which are also OCL expressions (the source can be understood as a special argument).
+When building a CSP, we may use information found in the arguments to determine the number of variables required, and their domain.
+% All models will have access to information specified here, such as details about domain ranges for intermediate variables.
+We've added the special case of \inlineocl{Singleton} which will be used for arithmetic, relational and logic operations, and some other operations operations such as \inlineocl{sum} and \inlineocl{first}.
 
 \begin{figure}[!ht]
     \centering
@@ -23,9 +31,12 @@ In this chapter we'll cover the bulk of the CSPs which model OCL operations.
         \caption{OCL Expression MMCoverage}
     \end{subfigure}
 \end{figure}
+In this chapter we'll cover most of this subset of OCL.
+For types this means focusing on Collections of booleans, integers and Objects (references).
+For the OCL expression metamodel, we cover most CallExp on collections of booleans, integers and Objects.
 
 
-\begin{table}[]
+\begin{table}[!ht]
     \begin{tabular}{|l|l|l|l|l|l|l|}
     \hline
     src \textbackslash out       & bool                                                                                                                            & int                                                                                            & element                                                                    & collection                                                                                        & Sequence                                                                            & Bag                                                                                  \\ \hline
@@ -37,10 +48,65 @@ In this chapter we'll cover the bulk of the CSPs which model OCL operations.
     Bag                          &                                                                                                                                 &                                                                                                &                                                                            &                                                                                                   &                                                                                     & \cellcolor[HTML]{FFFC9E}\begin{tabular}[c]{@{}l@{}}union\\ intersection\end{tabular} \\ \hline
     \end{tabular}
 \end{table}
+With this table we want to describe how we have divided the different operations across different sections.
+For the following sections we'll be grouping operations based on input amd output type: in green we have grouped operation for which the input and output are integers or booleans, and of type \inlineocl{Singleton}.
+For collections, in various shades of blue, we'll split based on output: \inlineocl{Singleton} integer, \inlineocl{Singleton} boolean, elements and collections, and typed collections.
+For typed collections, the split is on whether the collection is ordered, in red, or not, in yellow.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 0 0 0},width=1\linewidth]{Contributions/OCLCSP/figures/cheatsheetcoverage.png}
+    \caption{cheat sheet coverage in OCLCSP}
+    \label{fig:mm:oclcsp}
+\end{figure}
+We can similarly color the OCL cheat sheet, and show our coverage with a bit more detail.
+We can see the previous chapter on OCL navigation in pink.
+We can also clearly see operations we don't cover.
+Not present in the following sections are \inlineocl{collect} and \inlineocl{iterate}, though some special cases are employed in the models of collection operations, such as \inlineocl{select} and \inlineocl{forall}.
+Other operations which aren't included but can be inferred, such as: \inlineocl{allInstances} and other typed based operations.
+A similar encoding could also provide coverage for \textit{non-flat} collections and their associated operations, enumerations and tuples.
+Not covered with our method are operations on real numbers, and strings.
 
 The first section covers integer and boolean operations.
 Collection operations are split across result types: operations of section 2 result in integer, section 3 in booleans, section 4 in collections.
 Collection type casting operations are in section 5, and typed collection operations are found in the following sections. 
+The type casting operation are among some of the more complicated ones, but most are much less complex, and some are even simple.
+
+\subsection{..metamodel of the CSPs?}
+
+All of the following CSP will have the same pattern as for the navigation CSP.
+\begin{equation}\label{csp:operationGC}
+    operation(X,y):
+    \begin{cases}
+        GlobalConstraint1(X,X')\\
+        GlobalConstraint2(X',y)
+    \end{cases}
+\end{equation}
+Where the operation is described as a conjunction of global constraints.
+We will use uppercase letters such as $X$ to indicate arrays of variables.
+We will use lowercase letters, here $y$ to indicate a single variables.
+We will also generally use X for \textit{source} variables, and Y for the variables encoding the result of an operation.
+Commonly we'll need to introduce intermediate variables, such as $X'$.
+Importantly regarding propagation, for all these CSP: if the input variables $X$ are solved, their domains have only one value, the output variables $Y$ is also solved.
+
+Some times we will have to predicate on individual variables of the arrays.
+\begin{equation}\label{csp:operationI}
+    operation(X,Y):
+    \begin{cases}
+        \forall i \in [1..|X|]\\
+        ~~ y_i = x_i \times 3
+    \end{cases}
+\end{equation}
+Here each variable is $Y$ is equal to its corresponding value in $X$ times three.
+Some of the operation will also take the result of an expression, which in most cases doesn't apply to the source variables $X$.
+\begin{equation}\label{csp:operationEXP}
+    operation(X,y,exp):
+    \begin{cases}
+        y = \llbracket exp(X)\rrbracket
+    \end{cases}
+\end{equation}
+In this example, $y$ is equal to the result of applying $exp$ on $X$.
+This appears is only a few cases, such as \inlineocl{forall} and \inlineocl{select}
+Here we also introduce the $\llbracket \rrbracket$ notation indicating we're interpreting a boolean as an integer.
 
 
 \newpage
@@ -72,8 +138,12 @@ Collection type casting operations are in section 5, and typed collection operat
 \input{Contributions/OCLCSP/Operations/set}
 
 \newpage
-\section{CP Models for OCL Bag Operations}
-\input{Contributions/OCLCSP/Operations/bag}
+% \section{CP Models for OCL Bag Operations}
+% \input{Contributions/OCLCSP/Operations/bag}
+
+\newpage
+\section{Experimentation}
+\input{Contributions/OCLCSP/Operations/experimentation}
 
 % \section{CP Models for OCL Ordered Set Operations}
 % \input{Contributions/OCLCSP/Operations/orderedset}

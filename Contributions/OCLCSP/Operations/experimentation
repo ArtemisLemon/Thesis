@@ -1,0 +1,156 @@
+\textcolor{black}{
+In order to perform our experiments we use our EMF interpreter, which employs the Choco Solver, to build and solve a CSP representing an instance and the associated model constraints. 
+As input the interpreter takes a metamodel (fig.\ref{fig:metamodel}) in ecore format, and a model (fig. \ref{fig:model}) in xmi format producing what we call the \emph{UML CSP}.
+\textcolor{black}{
+The UML CSP will employ the models \ref{csp:seq_X} to \ref{csp:ordset_X} to enforce the collection property types.
+}
+With as input the UML CSP and the model constraint written in ATL OCL, the interpreter builds the \emph{OCL CSP}.
+The OCL CSP is composed of models such as \ref{csp:nav} and \ref{csp:bag_XY} to \ref{csp:ordseq_XY}.
+}
+
+% We also modeled the following problems using Alloy, to compare with the State-of-the-Art. 
+As previously discussed, Alloy encodes models into SAT using bit-vectors for integers, while our approach translates to Constraint Programming (CP) using domain variables. In this experiment, the key parameter is the integer domain size, analogous to the bit-width in Alloy.
+%%
+To configure integer size in Alloy, we specify a bit-width using the solver call, e.g., \inlineocl{run\{\} for 8 int} sets a bit-width of 8. In CP, this corresponds to setting explicit lower and upper bounds for the integer variables.
+% \textcolor{blue}{
+% The second experiment looks at a case where the focus of the problem is finding associations, and we use the number of objects as variable.
+% }
+
+\smallskip
+\noindent
+\textbf{Zoo Model}. We conduct experiments on a zoo model, which includes three core classes:
+\inlineocl{Cage} with a sequence of \inlineocl{animals} and an integer attribute \inlineocl{capacity}.
+\inlineocl{Animal} linked to one Species and one Cage.
+\inlineocl{Species} has an integer attribute \inlineocl{space} indicating how much space one animal requires.
+% \vspace*{-.2cm}
+% \begin{itemize}
+%     \item \inlineocl{Cage} with a sequence of \inlineocl{animals} and an integer attribute \inlineocl{capacity}.
+%     \item \inlineocl{Animal} linked to one Species and one Cage.
+%     \item \inlineocl{Species} has an integer attribute \inlineocl{space} indicating how much space one animal requires.
+% \end{itemize}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 0 0 0},width=1\linewidth]{Articles/ICTAI2025/figures/zooMM.pdf}
+    \caption{Zoo Metamodel}
+    \label{fig:zoomm}
+\end{figure}
+
+We want to ensure that each cage contains only one species and does not exceed its capacity. 
+Space requirements are expressed in a unit such as square meters. 
+For instance, 3 lions needing $1000m^2$ each, 2 gnous needing $3000m^2$ each, and 2 cages with capacities of $3000m^2$ and $6000m^2$.
+Encoding such values in Alloy requires sufficient bit-width: 14 bits for encoding in square meters ($m^2$), 12 bits for decameters squared ($dam^2$), and 8–10 bits for hectometers squared ($hm^2$). In our CP model, we define domain bounds accordingly.
+%%
+The model has two cages, two species, and five animals. The associations (which animal is in which cage) are unknown and must be inferred. Constraints ensure:
+% \vspace*{-.2cm}
+\begin{enumerate}
+    \item A cage contains at most one species.
+    \item The total required space of animals in a cage does not exceed its capacity.
+\end{enumerate}
+To express the species constraint, we use collection type casting as discussed earlier. For the capacity constraint, we navigate over the sequence of animals to retrieve each individual's space requirement from their species, and then sum these values.
+
+% As previously discussed, Alloy relies on a translation of this problem to SAT, where we translate to CP.
+% The SAT problem from Alloy models integers using bit-vectors, while we use domain variables.
+% The size of the integer domain will be our main variable in this experiment.
+% To configure this in Alloy, we specify the bit-width in the solver call: \inlineocl{run\{\} for 8 int} sets the bit-width to 8.
+% Configuring this aspect for our solution means choosing the lower and upper bounds of property variables.
+
+% This experimentation uses the model our example zoo constraint comes from.
+% The metamodel describes three concepts: Cage, Animal and Species.
+% Cages have a sequence of animals \inlineocl{animals} and an integer attribute \inlineocl{capacity}.
+% Animals have one species \inlineocl{species} and one cage, which implies an animal must be in a cage. 
+% The Species class has an integer attribute \inlineocl{space} which tell us how much space an animal of that species requires. 
+% We wish to express capacities and space requirements in a unit such as square meters: for instance, we have three lions who each need $1000m^2$ and two gnou who each need $3000m^2$, and two cages: $3000m^2$ and $6000m^2$.
+% Depending on bit-width, we may need to round to decameters $dam^2$ or hectometers $hm^2$ for the value to fit in the encoding;
+% to encode capacity in $m^2$ we need a bit-width of at least 14.
+% A bit-width of 12 can encode the capacity in $dam^2$, while bit-widths of 8 and 10 can encode in $hm^2$.
+% We'll also specify the relation from Cage to Animal is a Sequence.
+% The model has two cages,
+% % : $3000m^2$ and $6000m^2$
+% two species,
+% % : Lions and Gnou which need $3000m^2$ each
+% and five animals, however the model data is incomplete and we need to find the associations between cages and animals.
+% The model constraints require cages aren't over-capacity and only contain one species of animal.
+% To express the species constraint, we use collection type casting as previously discussed,
+% and to express the capacity constraint, we leverage navigating from a sequence to get for each animal their individual space requirement, which we sum:
+\begin{lstlisting}
+context Cage inv:
+    self.animals.species.asSet().size() < 2
+and self.animals.species.space.sum() <= self.capacity
+\end{lstlisting}
+% Alloy doesn't have all the collection types and casting operations UML\&OCL has, but it does have an equivalent to \inlineocl{asSet} for it's sequence type: given an Alloy declaration such as \inlineocl{x:seq Type} meaning \inlineocl{x} is a sequence of \inlineocl{Type}, we can cast it to a set using the \inlineocl{elems} operation: \inlineocl{x.elems} is the set of elements in the sequence \inlineocl{x}.
+% To get the size of the set, we have the \inlineocl{\#} operator.
+% Similarly to perform the sum over the sequence of \emph{space} values, we need to slightly reformulate the OCL expression to explicitly iterate over the values and sum them.
+% \begin{lstlisting}
+% pred inv[c : Cage] {
+%     #c.animals.species.elems < 2
+% and (sum i: c.animals.species.space.inds 
+%         | c.animals.species.space[i]) 
+%             <= c.capacity
+% \end{lstlisting}
+% This choice in model illustrates an intersection of expressivity between the Alloy and UML\&OCL modeling languages.
+We compare our CP-based encoding of the OCL constraints with an equivalent Alloy model that incorporates sequences and type casting.
+Additionally, we also include an optimized Alloy variant that uses only sets, omitting sequence order over animals.
+The solver employed here is SAT4J.
+% \textcolor{blue}{
+% Using sets over sequences greatly reduces symmetries in the search space
+% }
+% Both Alloy models are provided in the supplementary materials.
+% , using both collection types available in Alloy that have equivalents in UML\&OCL.
+% We will also test a similar Alloy model using only sets, by declaring \inlineocl{animals: set Animal} and reformulating the constraint in consequence: \inlineocl{one animals.species}.
+
+% \begin{outline}
+%     % \item using zoo model: cages have a Sequence of Animals
+%     % \item testing our solution VS Alloy
+%     % \item the main variable in this test is size of domain for the integer variables, for Alloy this means choosing the bit-width of integers.
+%     \item the result is the size of the model, and if it fits in memory: the time to solve it. 
+%     \item With this model the maximum bit-width for Alloy is 10: meaning at most $2^{10}=1024$ different int values
+%     \item With a set based version of this model the maximum bit-width for Alloy is 12: 4096 different int values.
+%     \item We used upto an equivalent equivalent of bit-width=16 (we can do wider, but 16 allows for integer operations such as $\sqrt{}$ and $\times$). 
+% \end{outline}
+\begin{table}[!t]
+\centering
+\begin{tabular}{|ll|l|l|l|l|l|}
+\hline
+\multicolumn{2}{|r|}{bit-width} & 8               & 10            & 12         & 14           & 16             \\ \hline
+\multicolumn{1}{|l|}{Alloy Seq}    & \makecell[l]{variables\\clauses\\build (sec)\\solve (sec)}   & 
+\makecell[r]{84k\\316k\\0.1\\\textless{} 0.1} & 
+\makecell[r]{382k\\1.5M\\0.6\\ 0.3}            & Atm               & Atm               & Atm               \\ \hline
+\multicolumn{1}{|l|}{Alloy Set}    &  \makecell[l]{variables\\clauses\\build (sec)\\solve (sec)}  & \makecell[r]{35k\\128k\\\textless{} 0.1\\\textless{} 0.1} & 
+\makecell[r]{157k\\589k\\0.2\\0.1} & 
+\makecell[r]{703k\\2.7M\\2.6\\0.5}            & 
+\makecell[r]{3.1M\\11.2M\\26\\2.3}              & Mem               \\ \hline
+\multicolumn{1}{|l|}{OCL in CP}           &  \makecell[l]{variables\\constraints\\build (sec)\\solve (sec)}  & 
+\makecell[r]{223\\126\\0.6\\\textless{} 0.1} & 
+\makecell[r]{223\\126\\0.6\\\textless{} 0.1} & 
+\makecell[r]{223\\126\\0.6\\\textless{} 0.1} & 
+\makecell[r]{223\\126\\0.6\\\textless{} 0.1} & 
+\makecell[r]{223\\126\\0.6\\\textless{} 0.1} \\ \hline
+\end{tabular} 
+    \caption{Comparison of Alloy and our work for models with integer properties}
+    \label{tab:experiment}
+\end{table}
+% 
+Table \ref{tab:experiment} compares the Alloy (Sequence and Set) and our CP models across different integer bit-widths (8 to 16 bits). 
+As a reminder: 8-bit allows for integers ranging from -128 to 127, and 16-bit ranges from -32768 to 32767.
+For Alloy, we report the number of SAT variables and clauses, while for the CP model we provide the number of variables and constraints. 
+While these metrics aren’t directly comparable across paradigms, they illustrate model growth with respect to integer encoding. 
+We also show solver build times. Some Alloy configurations failed\footnote{The generated model is too large to fit within a 2.5 gigabyte memory limit} due to memory limits ("Mem") or excessive atoms ("Atm"). Resolution times are low across all models, reflecting the relative simplicity of the problem.
+% In Table \ref{tab:experiment} we have the results for the Alloy Sequence and Set models, and our model.
+% The models are each solved with growing domains for the internal integer model, ranging from 8-bit to 16-bit.
+% As a reminder: 8-bit allows for integers ranging from -128 to 127, and 16-bit ranges from -32k to 32k.
+% The resulting SAT models are described by the number of variables and clauses (binary constraint on booleans), and for our CP model we display variable and constraint count.
+% These measures illustrate how the size of the solver model changes relative to the integer encoding.
+% There is little meaning comparing such counts between SAT and CP.
+% We also give the build time for the solver model, in some cases the model is too large to fit within a 2.5 gigabyte memory limit (marked Mem) or has too many atoms for the translation process (marked Atm).
+% Finally, for resolution times, we averaged over several runs; the problem being somewhat trivial to solve.
+% , most solutions were found in tens of milliseconds.
+\textcolor{black}{
+% TODO: make the table say more, 
+% explain Alloy Seq vs Set, 
+Alloy models explode when faced with integers: each extra bit roughly doubles the number of variables and clauses in the SAT model, you can approximate the model growth with regards to bit-width with: $2^{\text{bit-width}}$. 
+The CP model's size however, is independent from the integer domain, and the model size remains constant.
+This trend can also be found in resolution times, where incrementing bit-width doubles resolution time for Alloy.
+}
+This experiment shows that our CP solution scales independently of the integer domain size. While Alloy models hit limitations due to memory or atom count at higher bit-widths, our approach continues to support larger domains and remains solvable. 
+Moreover, our model can exceed 16-bit integers, with the only limitation being operations, such as addition and multiplication, that require wider domains to hold intermediate results.
