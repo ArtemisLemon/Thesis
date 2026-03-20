@@ -1,0 +1,141 @@
+% \chapter{Related Work, Future Work, and Discussions}
+% \section{Related Work in }
+% \ytodo{EMFtoCSP}
+% \ytodo{ViatraGen}
+% \ytodo{OCL\#}
+% \ytodo{Sequence Variables (scheduling)}
+
+% \section{Discussions}
+\ytodo{Lots of questions raised}
+\subsection*{Summary of what we can do}
+% \addcontentsline{toc}{subsection}{Method Summary}
+\ytodo{We can take EMF metamodel/model with integer or boolean attributes}
+\ytodo{We can handle most OCL invariants upon the properties we can encode}
+\ytodo{We can preserve order and multiplicity over navigation and collection operations}
+\ytodo{Propagation up the OCL tree is good.}
+\ytodo{down the OCL tree not always as good, can be improved with more models, need to look into bag navigation effect on seq navigation progation}
+In this thesis, we extended the ATLc approach by generalizing the Constraint Programming (CP) encoding of UML/OCL models to fully support collection types: Sequence, Bag, Set, and OrderedSet. We introduced modular and semantically faithful constraint models for collection type casting using global constraints such as keysort, regular, and cumulative. Additionally, we proposed filtering constraints, such as $dChannel$ to help prune symmetries of dummy values. These encodings allow precise control over ordering, multiplicity, and filtering, leveraging constraint propagation mechanisms for effective instance generation and validation.
+We also demonstrated how to model the core of OCL queries and navigations using CP, laying the foundation for modeling OCL with global constraints, rwith respect to collection sizes. Our models encode the orderedness and non-uniqueness of OCL Sequences, which represent the most complex version of the problem. To facilitate compilation and guide CP modeling, we proposed the var() operator as an annotation for the OCL constraint model. This work also raises the question of how to better model OCL with enforcement in mind, hinting at a systematic method applied during static analysis.
+
+
+\subsection*{Experimentation Summary}
+% \addcontentsline{toc}{subsection}{Experimentation Summary}
+\ytodo{Two real experiements: RMS and Zoo}
+\ytodo{RMS advantage from spliting problem in two, and refactoring around that}
+\ytodo{Zoo (and Library) advatage over Alloy will integer attributes}
+We evaluated our encodings against Alloy’s SAT-based analysis, demonstrating that our CP models scale independently of integer domain size, unlike Alloy, where performance degrades with increasing bit-width. Our CP models remain tractable even beyond 16-bit integers, showcasing better adaptability for data-intensive configurations.
+Overall, our method offers a flexible and scalable foundation for interpreting UML/OCL models through constraint programming. Future work includes extending support to more OCL operations, exploring optimization techniques for larger problem instances, further modeling OCL using global constraints, implementation atop of ATLc, and evaluation and comparison with other methods.
+
+
+
+% \subsection*{FAQ}
+% \subsubsection*{why not use minizinc}
+% \ytodo{We wanted to not have to produce minizinc code and parse minizinc output}
+% \ytodo{EMF, ATLc, Choco are all in Java}
+% \subsubsection*{Why this encoding: array of variables}
+% \ytodo{it covers more of OCL, especially ordered collections with non-unique elements, can easily be combined with simpler encodings, and other domain types such as sets and graphs}
+% \subsubsection*{Why this encoding: dummy}
+% \ytodo{make size of the collection part of the problem we're solving}
+% \ytodo{better to propagate on collection size, for sure}
+% \ytodo{possible EMF2CSP doesn't propagate on collection size, tbd}
+
+\subsection*{Future works: my questions, future LLM prompts and work for future interns}
+% \addcontentsline{toc}{subsection}{Future Work}
+
+\subsubsection*{More models for enumarated domains}
+\ytodo{We show models primary for operations on collections and navigation while preserving order}
+\ytodo{We also show ocl navigation using adjacency matricies, which don't encode order}
+\ytodo{We don't show set and bag operations using this better encoding}
+In this thesis, we primarily focus on modeling operations involving collections and navigation while explicitly preserving the order of elements. This is particularly relevant for scenarios where the sequence or position of elements within a collection is semantically significant, such as in ordered lists or sequences. Additionally, we demonstrate how OCL navigation can be represented using adjacency matrices, which provide an efficient but order-agnostic encoding of relationships between objects. While adjacency matrices are well-suited for capturing connectivity and reachability, they do not inherently encode the ordering of elements.
+However, one area not yet explored in this work is the application of these encodings to set and bag operations. The current models could be extended to leverage more efficient encodings for these operations, particularly for scenarios where order is irrelevant but membership, uniqueness, or multiplicity are key. Future work could address this gap by adapting the proposed encodings to better support the semantics of sets and bags, potentially improving both expressiveness and solver performance.
+
+
+\subsubsection*{Encoding Type: \inlineocl{self.animals.select(a|a.oclisTypeOf(Cat)).lives=9} could be nvalue}
+\ytodo{reorganise existing variables}
+\ytodo{PropertyTable for each Class}
+\ytodo{reuse variables for classes of higher hierachy}
+\ytodo{more pointer arithmetic, like we did}
+
+\subsubsection*{\inlineocl{src.asSet().size()<=n} could be nvalue}
+\ytodo{found in Zoo model}
+\ytodo{Nicolas suggested nvalue}
+Constraints of the form src.asSet().size() ≤ n can be naturally expressed using the nvalue global constraint. In this setting, the collection src is represented as a vector of variables, and applying asSet() corresponds to considering only the distinct values within that vector. The size() operation on the resulting set therefore captures the number of unique elements. This can be directly modeled by constraining the number of distinct values in the vector to be at most 
+𝑛
+n, i.e., using an nvalue constraint. This formulation enables the solver to reason globally about value diversity within the collection, providing stronger propagation than decompositions based on pairwise disequality constraints.
+
+\subsubsection*{\inlineocl{src.ref.ref.ref.att.sum()=n} is a flow problem}
+Certain OCL aggregation constraints of the form self.a.b.c.attribute.sum() ≥ x can, under appropriate assumptions, be interpreted as network flow problems. In such cases, objects reachable through the navigation chain are represented as nodes in a layered graph, while associations (a, b, c) define edges with capacity constraints derived from multiplicities. Selecting objects to contribute to the sum corresponds to sending flow through this network, and the attribute values can be modeled as weights or capacities on nodes or edges. The constraint sum ≥ x then corresponds to requiring that at least 
+𝑥
+x units of flow reach the sink. However, this correspondence holds only when selection is governed by the relational structure and capacity constraints, and does not apply to the general case of unconstrained aggregation.
+
+\subsubsection*{Experimentation with Search Strategies}
+\ytodo{we have done some tests on choice of variables to enumerate upon}
+\ytodo{we enumerate on the variables of the UML CSP}
+\ytodo{dummy adds some nuance}
+\ytodo{search could do better at choosing good values to try}
+\ytodo{searches we'd like to try is around suggested values}
+
+% \subsubsection*{Finished interpreter}
+% \ytodo{Interpreter is currently experimental$^{TM}$}
+% \ytodo{OCLinChoco provides enough coverage for experiments}
+% \ytodo{redo experimentation with final interpreter, as some models were hand made}
+
+\subsubsection*{Comparison to EMFtoCSP}
+% \ytodo{I don't fully understand the theory behind it, and the models it makes}
+% \ytodo{I do have the model it makes for an instance, and the core models}
+% \ytodo{can't get it running on my machine, ran out of time}
+% \ytodo{real question is, do they encode the size of the collections as part of the problem?}
+The EMFtoCSP framework provides a robust approach to modeling OCL constraints using Prolog and ECLiPSe, with a focus on translating OCL operations into global constraints like sum and element. While EMFtoCSP’s use of Prolog and constraint programming is elegant, its handling of collection sizes remains a point of ambiguity. Specifically, the framework generates separate constraint problems for each combination of collection sizes, rather than integrating the size of collections as a variable within the CSP. This distinction is critical for modeling UML relations, where collection sizes can vary dynamically. Unfortunately, due to time constraints and technical challenges, I was unable to fully replicate or run EMFtoCSP on my local machine, which limited my ability to directly compare its performance and scalability with other approaches. However, the core models and OCL operations provided by EMFtoCSP offer valuable insights into how constraint propagation could be further optimized in future work.
+
+
+
+\subsubsection*{Benchmark for Model Search with Collections of Integers}
+% \ytodo{find collection of problems which are apltly modeled with OOCP}
+% \ytodo{Test solvers}
+To rigorously evaluate the effectiveness of model search techniques, particularly those involving integer collections, it is essential to curate a benchmark suite of problems that are naturally modeled using EMF/OCL. This suite should include a diverse collection of scenarios, such as:
+\begin{itemize}
+\item Structural constraints 
+% (e.g., ensuring unique identifiers, valid ranges for attributes).
+\item Resource allocation problems 
+% (e.g., scheduling, capacity planning).
+\item Complex relational constraints 
+% (e.g., hierarchical or networked models).
+\end{itemize}
+The goal is to systematically test the performance and scalability of different solvers (e.g., Choco, SAT4J, or custom graph solvers) on these benchmarks. This will not only highlight the strengths and weaknesses of each solver but also provide a foundation for future experimentation as the final interpreter becomes available. For now, the OCLinChoco implementation offers sufficient coverage for preliminary experiments, though some models were manually constructed due to the experimental nature of the current toolchain.
+\ytodo{Alloy also kicked our arse in places we can improve}
+
+
+\subsubsection*{Other DSL for more specific constraint problems, such as Task Scheduling}
+Choco Solver offers powerful Task variables and Cumulative constraints, enabling efficient modeling and solving of resource allocation and scheduling problems. This provides a robust foundation for handling complex constraints in real-world scenarios.
+
+Model-Driven Engineering allows the creation of Domain-Specific Languages tailored to these models. By leveraging MDE, users can design intuitive, high-level DSLs that abstract the intricacies of Choco’s constraints, making them accessible to domain experts.
+Using a Task-Resource metamodel as a base, users can customize and extend the model to fit their specific types of tasks and resources, such as: people, rooms, or equipment.
+\begin{lstlisting}
+    for group in YearOneGroups, 
+    for td in ComputerTD: 
+    td requires group, Teacher, ComputerRoom
+\end{lstlisting}
+This flexibility ensures the metamodel adapts to diverse domains, from meeting room scheduling to workforce allocation.
+UML typing and OCL enhances the expressiveness of the DSL by enabling users to define additional constraints on associations and attributes. 
+This allows for fine-grained control over the model’s behavior, ensuring that domain-specific rules and invariants are respected during problem-solving.
+
+\subsubsection*{Target Language for LLM agent finding constraint models in text}
+% \ytodo{UML and OCL metamodels are more concise than CSP}
+% \ytodo{UML and OCL metamodels are based on object oriented practices, which is a lot of code to be trained on}
+% \ytodo{UML and OCL metamodels are concise human readable constraint models in a formal language that can be systematically reduced to a CSP, see this thesis and related work}
+
+% \ytodo{Think LLMs and people producing Java, vs ASM}
+% \ytodo{Java is easier than ASM}
+UML and OCL metamodels offer a more concise representation of problems compared to directly designing a full Constraint Satisfaction Problem. These metamodels are based on object-oriented practices are also more accessible for training large language models (LLMs), given the abundance of OOP code in existing datasets. Importantly, these metamodels are human-readable and formal, making them suitable for both manual and automated reasoning. They can be systematically reduced to a CSP, as demonstrated in this thesis and related work, thus bridging the gap between high-level modeling and efficient constraint solving.
+
+This distinction is analogous to comparing LLMs producing Java code, which is more approachable and widely available in training data, with producing x86 assembly (ASM), which is more complex and less represented in LLM training. While Java is easier to write and interpret due to its high-level abstractions, ASM requires deep expertise and focuses on precise, low-level operations. Similarly, UML and OCL metamodels strike a balance: they are concise and formal enough to enable direct mapping to CSPs, while remaining intuitive and practical for modelers and LLMs to work with, leveraging the familiarity and prevalence of OOP paradigms.
+
+Domain-Specific Languages can also directly interface with UML/OCL specifications, enabling seamless reuse of existing methods and models. By leveraging our established approach for constraint modeling, a DSL can provide a more intuitive and domain-specific syntax while still benefiting from the precision and automated transformations of UML/OCL. This integration allows users to work with high-level abstractions while retaining the ability to systematically reduce problems to efficient constraint representations, such as CSPs. In this way, DSLs can extend and simplify the application of your method, making it more accessible and adaptable to diverse problem domains.
+
+
+
+
+
+
+
+
