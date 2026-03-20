@@ -1,6 +1,7 @@
 The Object Constraint Language (OCL) is a declarative language used to specify additional rules and constraints on UML models that 
 cannot be expressed using diagrams alone. 
 It enables the formalization of conditions that instances of the model must satisfy, serving as a powerful complement to class and object diagrams.
+We will consider these rules as an optional part of a metamodel, and not distinguish between \textit{metamodel} and textit{constrained metamodel}.
 
 Given an instance such as the one shown in Figure \ref{fig:model}, OCL is typically used to verify whether it satisfies the specified constraints. In this work, however, we aim to use OCL as a means to guide model search, thereby enabling the completion or correction of partial or inconsistent data. To this end, we propose an approach that reformulates OCL specifications as constraint satisfaction problems (CSPs). This paper focuses on how OCL’s collection typing, defined in the Class Diagram, and type casting operations can be modeled using global constraints over bounded domains.
 
@@ -34,7 +35,7 @@ However, a constraint such as \emph{“a child must be younger than their parent
 % \inlineocl{context Person inv: self.parents.age.forall(a | a > self.age)}.
 \begin{lstlisting}
 context Person inv: 
-  self.children.age.forall(a| a < self.age)
+  self.children.forall(c| c.age < self.age)
 \end{lstlisting}
 % The most litteral translation of which being: \emph{given any person, that person's children's ages are all less than that of the given person}.
 This constraint states that for every Person instance, all of their children must be younger. 
@@ -46,6 +47,7 @@ The \inlineocl{context} keyword specifies the class to which the constraint appl
 % Table \ref{tab:queries_tgt} shows how different OCL queries evaluate on a sample object model (cf. Figure \ref{fig:model}). 
 The expression \inlineocl{self} refers to the current object of the set identified by the context. 
 It identified the main variable of the expression. 
+This implies this expression will have a different interpretation for each individual object.
 \inlineocl{self.attribute} returns its attribute values, and \inlineocl{self.reference} retrieve related objects. 
 Chained queries like \inlineocl{self.reference.attribute} retrieve the attributes of referenced objects.
 
@@ -82,7 +84,7 @@ $$source.operation(arguments)$$
 OCL operations generally are applied OCL expressions identified as \textit{source}, which can be understood as the first argument for the operation.
 Operation arguments generally take the form of OCL expressions.
 
-\subsubsection{Navigation: relation to the metamodel}
+\subsubsection{Navigation: accessing data from the model}
 The primary operation on object models, is accessing their properties, and navigating the graph of objects. 
 OCL provides language to navigate the model and retrieve it's information.
 
@@ -98,6 +100,7 @@ $$\inlineocl{self.children}$$
 \textbf{Navigation}
 
 To access the children's age, we need to navigate away from the object designated \inlineocl{self}, to the objects representing their parents, and access their age attribute. 
+$$$\inlineocl{self.children.age}$
 
 In the general case, if the source expression results in a collection of objects, we can navigate their references to a new collection of objects and access their properties.
 $$\inlineocl{source.prop}$$
@@ -174,7 +177,7 @@ OCL supports a rich set of operations on primitive types and collections. Exampl
   \caption{snippet from the OCL Cheat Sheet provided by eScribis}
   % \label{fig:model}
 \end{figure}
-This cheat sheet outlines all the available OCL expressions, organized by the types the can be applied to.
+This cheat sheet outlines all the available OCL expressions, organized by the types they can be applied to.
 % \ytodo{OCL provides lots of operations}
 % OCL also provides operations, such as \inlineocl{forall} and \inlineocl{>} seen in the family tree constraint, but also integer and collection operations such as \inlineocl{sum}, \inlineocl{size}.
 % Each collection type also comes with their operations, and there are operations to cast a collection from one type to another.

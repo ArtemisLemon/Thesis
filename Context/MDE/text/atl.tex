@@ -1,7 +1,13 @@
 \subsection{Atlas Transformation Language}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[trim={0 0 0 0},width=0.5\linewidth]{Context/MDE/figures/atl.png}
+    \caption{ATL Transformations}
+    \label{fig:GACandBC}
+\end{figure}
 % The Atlas Transformation Language provides a means to specify model-to-model transformations in EMF.
 The Atlas Transformation Language (ATL) provides a framework for specifying and executing model-to-model transformations within the Eclipse Modeling Framework. 
-ATL is designed to automate the conversion of models from one metamodel to another, enabling the creation of model transformation pipelines—a critical feature for modern Model-Driven Engineering workflows.
+ATL is designed to automate the conversion of models from one metamodel to another, enabling the creation of model transformation pipelines, a critical feature for modern Model-Driven Engineering workflows.
 % ATL can be  to chain model to model transformations allowing for automated modeling pipelines.
 % ATL extends OCL to define rules in the context of multiple Classes.
 ATL extends OCL to define transformation rules that operate across multiple classes. These rules establish bindings, which associate properties between source and target model elements using OCL queries. This allows ATL to express complex mappings between metamodels in a declarative style, focusing on what should be transformed rather than how.

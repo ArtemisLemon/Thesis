@@ -7,11 +7,14 @@
 \subsection{\atlc}
 \input{Context/SOTA/text/atlc}
 
-% \subsection{EMFtoCSP}
-% \input{Context/SOTA/text/emf2csp}
+\subsection{EMFtoCSP}
+\input{Context/SOTA/text/emf2csp}
 
 \subsection{Alloy \& Kodkod}
 \input{Context/SOTA/text/alloy}
+
+\subsection{Viatra Solver}
+\input{Context/SOTA/text/viatraGen}
 
 % \subsection{OCLsolve}
 % % \input{Context/SOTA/text/oclsolve}
@@ -21,10 +24,15 @@
 
 
 \section{Problem Statement}
-\ytodo{Model Search is an important problem}
-\ytodo{EMF provides an industry standanrd for models}
-\ytodo{EMFtoCSP aptly uses prolog to describe the language, and the prolog flavour provides global constraints but backtracking on collection sizes don't seem great, and tool is hard to get working because old}
-\ytodo{Alloy & Kodkod provide a very powerful framework for solving relational problems on sets, but it struggles with large integers}
-\ytodo{\atlc an interesting framework to build upon, but has an incomplete coverage of OCL}
+% Again mistral helped
+% \ytodo{Model Search is an important problem}
+% \ytodo{EMF provides an industry standanrd for models}
+% \ytodo{EMFtoCSP aptly uses prolog to describe the language, and the prolog flavour provides global constraints but backtracking on collection sizes don't seem great, and tool is hard to get working because old}
+% \ytodo{Alloy & Kodkod provide a very powerful framework for solving relational problems on sets, but it struggles with large integers}
+% \ytodo{\atlc an interesting framework to build upon, but has an incomplete coverage of OCL}
 
-\ytodo{We will continue in the spirit of \atlc, builing a tool it can employ but can also independtly can be used for Model Search with UML and OCL. We will use variables modeling integers, encode for sequences first, add the collection size problem to the CSP, use the Best Models$^{TM}$ and try to approach Bound Consistency across the whole model.}
+% \ytodo{We will continue in the spirit of \atlc, builing a tool it can employ but can also independtly can be used for Model Search with UML and OCL. We will use variables modeling integers, encode for sequences first, add the collection size problem to the CSP, use the Best Models$^{TM}$ and try to approach Bound Consistency across the whole model.}
+Model Search is a critical challenge at the intersection of Model-Driven Engineering and Artificial Intelligence. It encompasses a range of tasks, including model instantiation (generating models conforming to a metamodel), model completion (inferring missing information in partial models), model optimization (transforming models toward optimality with respect to an objective function), model repair (correcting non-conforming models), and model space exploration (navigating the space of possible models). These processes are essential for validating metamodels, ensuring correctness, and enabling automated reasoning over complex systems.
+EMF provides an industry-standard framework for modeling, but existing tools like EMFtoCSP, while effectively using Prolog to describe language semantics and leveraging global constraints, struggle with backtracking over collection sizes and suffer from maintainability issues due to outdated dependencies. Alloy & Kodkod offer a powerful framework for solving relational problems on sets, but their performance degrades with large integer domains, limiting their scalability for real-world applications. ATLc, though promising, has incomplete coverage of OCL, restricting its applicability for comprehensive model search.
+
+In this work, we build on the spirit of \atlc, developing a tool that can be employed both independently and by \atlc. We introduce a novel approach that models integers as variables, encodes sequences and collections, and integrates collection size as part of the CSP. By leveraging global constraints which provide bound consistency or better, we'll strive to have the same level of consistency in our models of OCL operations (such as \inlineocl{sum}) and UML based constraints (such as containment), we aim to address the limitations of existing tools and provide a robust, scalable solution for model search and completion.

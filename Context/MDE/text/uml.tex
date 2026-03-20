@@ -6,7 +6,7 @@ Additionally, we will use C-like syntax for Class specifications.
 
 \subsection{Meta-Object Facility}
 The Unified Modeling languguage is build ontop of the Meta-Object Facility standard.
-Formally: the UML metamodel conforms to MOF meta-metamodel.
+Formally: the UML metamodel conforms to MOF meta-metamodel. \ytodo{cite}
 % MOF provides a meta-metamodel similar to that presented in the previous section.
 
 The MOF standard also describes a four layer model hierarchy illustrating its application.
@@ -78,11 +78,11 @@ References, which define relationships between objects in the model.
 \begin{lstlisting}
 class Person {  
     age : int,
-    parents : Person[2..2] set
+    children : Person[0..*] ordered unique
 }
 \end{lstlisting}
 Here we have a C-like or Alloy-like description of the \inlineocl{Person} metamodel.
-We will commonly use \texttt{:} to express type, and \texttt{[]} for collections. 
+We will commonly use \texttt{:} to express type, and \texttt{[n..m]} for collection cardinalities, and we'll use \textit{[2,3,1,1]} to describe a collections literally. 
 %These are illustrative of the two types of object property : references and attributes.
 %References describe the relations across a graph of objects, whereas attributes colour the graph nodes.
 \subsubsection{UML Collection Types}

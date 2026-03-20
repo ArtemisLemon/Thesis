@@ -79,7 +79,7 @@ For these two relations \inlineocl{S} and \inlineocl{T} have identical upper and
 They identify atoms $a_1$ and $a_2$ as being of type S, and $a_3$ and $a_4$ of type T.
 
 Next is the binary relation \inlineocl{R}, which describes the links from objects of type S to those of type T.
-If we look at the upper bound for the possibilities we see \ytodo{stuff like} $\tuple{a_1,a_3}$, meaning maybe $a_1$ is linked to $a_3$.
+If we look at the upper bound for the possibilities we see tuples of atoms $\tuple{a_1,a_3}$, meaning maybe $a_1$ is linked to $a_3$.
 We have no information about existing relations between S and T objects, so the lower bound is empty.
 
 The final line uses relational language such as \inlineocl{R.s}: \textit{R join s}, to predicate on the relations.
@@ -105,7 +105,7 @@ For instance in the \textit{Book ID starts with year} constraint, requires a lar
     \end{lstlisting}
     \caption{Partial model and resolution parameters}
 \end{listing}
-With the partial model from this listing, linking a library to three books, of which 2 some from a same year.
+With the partial model from this listing, linking a single library to three books, of which 2 come from the same year, we have a very small problem to solve.
 The dates are offset, to better fit in the bit-width, and there are 10 possible values for the last digit in the reference number.
 However solving this problem took minutes.
 
@@ -141,3 +141,9 @@ Which further increases complexity in alloy models.
 % \end{equation}
 
 \ytodo{Similar to this work: OCLsolve}
+
+\subsubsection{OCLsolve}
+\ytodo{cite}
+OCLsolve similarly translates UML/OCL constraints into Boolean satisfiability problems, which are then solved using standard SAT solvers. 
+% The library supports both the Java-based SAT4J solver and the MiniSat solver for enhanced performance on compatible systems. By relying on SAT4J, OCLsolve ensures portability across any Java Virtual Machine (JVM) environment. 
+Additionally, OCLsolve leverages some components from the Kodkod solver to interface efficiently with these SAT solvers.
