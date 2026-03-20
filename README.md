@@ -30,6 +30,8 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
 - [x] Chapter 2: CSP
   - [x] CSP
   - [x] ~~Propagation~~
+    - [x] LC
+    - [x] GAC & BC
   - [x] Globals
     - [x] Examples
     - [x] Example Propagation

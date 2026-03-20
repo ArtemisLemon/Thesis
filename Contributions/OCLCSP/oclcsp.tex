@@ -71,7 +71,7 @@ Collection operations are split across result types: operations of section 2 res
 Collection type casting operations are in section 5, and typed collection operations are found in the following sections. 
 The type casting operation are among some of the more complicated ones, but most are much less complex, and some are even simple.
 
-\subsection{..metamodel of the CSPs?}
+\subsection*{..metamodel of the CSPs?}
 
 All of the following CSP will have the same pattern as for the navigation CSP.
 \begin{equation}\label{csp:operationGC}
@@ -108,6 +108,31 @@ In this example, $y$ is equal to the result of applying $exp$ on $X$.
 This appears is only a few cases, such as \inlineocl{forall} and \inlineocl{select}
 Here we also introduce the $\llbracket \rrbracket$ notation indicating we're interpreting a boolean as an integer.
 
+\newpage
+\subsubsection*{Example in Java Code}
+\begin{lstlisting}
+class SumCSP extends ExpCSP implements Singleton {
+    IntVar sum;
+    //int d,ub,lb;
+
+    public SumCSP(CSP csp, Exp src){
+        super(csp,src);
+        //src.vars() is X
+        //this.var() is y
+        IntVar nullcount = csp.model().count("", src.null(), src.vars());
+        IntVar nullsum = src.null().mul(nullcount).intVar();
+        IntVar rawsum = csp.model().sum("", src.vars());
+        sum = rawsum.sub(nullsum).intVar();
+    }
+
+    //Singleton methods
+    public IntVar var() {return sum;}
+}
+\end{lstlisting}
+Here we can see how an operation is translated into Java using the Choco API in our OCLinChoco project. In this code \inlineocl{csp.model()} is a Choco model, and IntVar is imported from Choco. 
+This model is further explained in its section, but we already see how it matches the same pattern, and explicitly how we access information when building the CSPs.
+The overall CSP is given to each Object representing a node of an OCL AST applied to an instance (collection of Objects), for them to each add their variables and constraints.
+Intermediate variables are generally instantiated by applying a global constraint, but we also can access a lot of information from the source object.
 
 \newpage
 \section{CP Models for OCL Integer and Boolean Operations}

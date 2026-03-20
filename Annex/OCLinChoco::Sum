@@ -1,0 +1,16 @@
+\begin{lstlisting}
+    public class SumExp implements Singleton{
+    IntVar sum;
+
+    public SumNode(CSP csp, Exp src){
+        IntVar nullcount = csp.model().count("", src.null(), src.vars());
+        IntVar nullsum = src.null().mul(nullcount).intVar();
+        IntVar rawsum = csp.model().sum("", src.vars());
+        sum = rawsum.sub(nullsum).intVar();
+    }
+
+    @Override
+    public IntVar var() {return sum;}
+
+}
+\end{lstlisting}

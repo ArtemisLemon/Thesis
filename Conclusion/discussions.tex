@@ -16,7 +16,7 @@
 \ytodo{down the OCL tree not always as good, can be improved with more models, need to look into bag navigation effect on seq navigation progation}
 In this thesis, we extended the ATLc approach by generalizing the Constraint Programming (CP) encoding of UML/OCL models to fully support collection types: Sequence, Bag, Set, and OrderedSet. We introduced modular and semantically faithful constraint models for collection type casting using global constraints such as keysort, regular, and cumulative. Additionally, we proposed filtering constraints, such as $dChannel$ to help prune symmetries of dummy values. These encodings allow precise control over ordering, multiplicity, and filtering, leveraging constraint propagation mechanisms for effective instance generation and validation.
 We also demonstrated how to model the core of OCL queries and navigations using CP, laying the foundation for modeling OCL with global constraints, rwith respect to collection sizes. Our models encode the orderedness and non-uniqueness of OCL Sequences, which represent the most complex version of the problem. To facilitate compilation and guide CP modeling, we proposed the var() operator as an annotation for the OCL constraint model. This work also raises the question of how to better model OCL with enforcement in mind, hinting at a systematic method applied during static analysis.
-
+\ytodo{we can take partial EMF models and solve them}
 
 \subsection*{Experimentation Summary}
 % \addcontentsline{toc}{subsection}{Experimentation Summary}
