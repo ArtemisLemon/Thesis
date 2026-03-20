@@ -1,0 +1,52 @@
+\begin{lstlisting}
+    module Zoo
+
+    sig Species {
+        space: Int
+    }
+    
+    sig Animal {
+        cage: one Cage,
+        species: one Species
+    }
+    
+    sig Cage {
+        capacity: Int,
+        animals: seq Animal
+    }{
+    //    #animals <= capacity
+    //	(sum i: animals.species.inds | animals.species[i].space) <= capacity
+    //	#animals.species.elems <2
+        inv[this]
+    }
+    
+    pred inv[c: Cage]  {
+            #c.animals.species.elems <2		
+    and (sum i: c.animals.species.space.inds | c.animals.species.space[i]) <= c.capacity 
+    }
+    
+    // Synchronizing Animal.cage and Cage.animals
+    fact {
+        all a: Animal | some a.cage implies a in a.cage.animals.elems
+        all c: Cage | all i: c.animals.inds | c.animals[i].cage = c
+    }
+    
+    // Defining specific species
+    one sig Lion extends Species{} {space = 10}
+    one sig Gnou extends Species{} {space = 30}
+    
+    // Defining specific animals
+    one sig Lea, Leo, Lou extends Animal {}{ species = Lion }
+    one sig gNathan, gNatalie extends Animal {}{ species = Gnou }
+    
+    // Defining specific cages with different capacities
+    one sig C1 extends Cage {}{ capacity = 60 }
+    one sig C2 extends Cage {}{ capacity = 30 }
+    
+    // Ensuring a valid instance exists
+    run {
+        #Animal = 5
+        #Cage = 2
+    } for 10 int
+    //} for 8 int    
+\end{lstlisting}

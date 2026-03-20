@@ -1,0 +1,178 @@
+\begin{lstlisting}
+module RMS
+
+abstract sig Characteristic {}
+abstract sig Task {
+    stage: one Stage,
+    prev: lone Task,
+    characteristics : set Characteristic
+}
+abstract sig Machine {
+    characteristics : set Characteristic
+}
+abstract sig Stage {
+    ID: Int,
+	maxMachines: Int,
+	tasks: seq Task,
+    machines: seq Machine
+}
+
+fact TasksConstraint {
+	all s: Stage | (#s.tasks.elems)<=15
+}
+fact sizeConstraint {
+	all s: Stage | (#s.machines.elems)<s.maxMachines and (#s.machines.elems)>0
+}
+fact PrecedenceConstraint {
+    all t: Task | t.prev != none => t.stage.ID >= t.prev.stage.ID
+}
+
+//Without SameCharacteristic
+// 2611962 vars. 17315 primary vars. 9305982 clauses.
+
+// 2994706 vars. 17315 primary vars. 10035908 clauses. 5409ms.
+// Instance found. Predicate is consistent. 7393ms.
+/*
+fact SameCharacteristicConstraint{
+   all t: Task | t.characteristics in t.stage.machines.characteristics.elems
+}
+*/
+// 2749262 vars. 17315 primary vars. 9551642 clauses. 4812ms.
+// Instance found. Predicate is consistent. 2427ms.
+// Both is slower.
+fact SameCharacteristicConstraint_Refactored{
+   all t: Task | t.stage.machines.elems in { m:Machine | t.characteristics in m.characteristics }
+}
+/*
+fact SameCharacteristicConstraint_Refactored{
+	let proc = { m:Machine | t.characteristics in m.characteristics } |
+   all t: Task | t.stage.machines.elems in proc
+}
+*/
+
+
+fact MachineContainment {
+	all s1,s2 : Stage | s1!=s2 => s1.machines.elems & s2.machines.elems=none
+	}
+	fact OppositeTaskStage {
+		all t : Task | t in t.stage.tasks.elems
+		all s: Stage | s = s.tasks.stage.elems
+		}
+		
+
+//Partial Model
+one sig Stage10 extends Stage{} {ID=10 maxMachines=3}
+one sig Stage20 extends Stage{} {ID=20 maxMachines=3}
+one sig Stage30 extends Stage{} {ID=30 maxMachines=3}
+one sig Stage40 extends Stage{} {ID=40 maxMachines=3}
+
+one sig Drill, Bore, Tap, Face, Guide, Autotool, axis1, axis3, axis4, axis5 extends Characteristic{}
+
+one sig Machine1, Machine2, Machine3, Machine4, Machine5 extends Machine {}{
+	characteristics = Drill + Tap + Guide + axis1
+}
+
+one sig Machine6, Machine7, Machine8, Machine9, Machine10 extends Machine {}{
+	characteristics = Drill + Tap + axis1 + axis3 + Autotool
+}
+
+one sig Machine11, Machine12, Machine13, Machine14, Machine15, Machine16, Machine17, Machine18, Machine19, Machine20, Machine21, Machine22, Machine23, Machine24 extends Machine {}{
+	characteristics = Drill + Bore + Tap + Guide + Autotool + axis1 + axis3 + axis4 + axis5
+}
+
+one sig Task1 extends Task {} 
+	{ characteristics = Guide + axis1}
+one sig Task2 extends Task {} 
+	{ characteristics = Guide + axis3 }
+one sig Task3 extends Task {} 
+	{ prev = Task1 characteristics = Drill + axis3}
+one sig Task4 extends Task {} 
+	{ prev = Task2 characteristics = Drill + axis3}
+one sig Task5 extends Task {} 
+	{ prev = Task3 characteristics = Drill + axis3}
+one sig Task6 extends Task {} 
+	{ prev = Task4 characteristics = Drill + axis3}
+one sig Task7 extends Task {} 
+	{ prev = Task4 characteristics = Bore + axis3}
+one sig Task8 extends Task {} 
+	{ prev = Task4 characteristics = Bore + axis3}
+one sig Task9 extends Task {} 
+	{ prev = Task4 characteristics = Bore + axis4}
+one sig Task10 extends Task {} 
+	{ prev = Task4 characteristics = Drill + axis1}
+one sig Task11 extends Task {} 
+	{ prev = Task4 characteristics = Drill + axis1}
+one sig Task12 extends Task {} 
+	{ prev = Task4 characteristics = Drill + axis1}
+one sig Task13 extends Task {} 
+	{ prev = Task5 characteristics = Drill + axis3}
+one sig Task14 extends Task {} 
+	{ prev = Task6 characteristics = Drill + axis1}
+one sig Task15 extends Task {} 
+	{ prev = Task7 characteristics = Drill + axis3}
+one sig Task16 extends Task {} 
+	{ prev = Task8 characteristics = Drill + axis1}
+one sig Task17 extends Task {} 
+	{ prev = Task9 characteristics = Drill + axis1}
+one sig Task18 extends Task {} 
+	{ prev = Task9 characteristics = Drill + axis1}
+one sig Task19 extends Task {} 
+	{ prev = Task9 characteristics = Drill + axis1}
+one sig Task20 extends Task {} 
+	{ prev = Task9 characteristics = Drill + axis1}
+one sig Task21 extends Task {} 
+	{ prev = Task7 characteristics = Drill + axis1}
+one sig Task22 extends Task {} 
+	{ prev = Task7 characteristics = Drill + axis1}
+one sig Task23 extends Task {} 
+	{ prev = Task7 characteristics = Drill + axis1}
+one sig Task24 extends Task {} 
+	{ prev = Task7 characteristics = Drill + axis1}
+one sig Task25 extends Task {} 
+	{ prev = Task6 characteristics = Drill + axis1}
+one sig Task26 extends Task {} 
+	{ prev = Task5 characteristics = Drill + axis1}
+one sig Task27 extends Task {} 
+	{ prev = Task7 characteristics = Drill + axis1}
+one sig Task28 extends Task {} 
+	{ prev = Task6 characteristics = Drill + axis1}
+one sig Task29 extends Task {} 
+	{ prev = Task8 characteristics = Drill + axis1}
+one sig Task30 extends Task {} 
+	{ prev = Task7 characteristics = Drill + axis1}
+one sig Task31 extends Task {} 
+	{ prev = Task10 characteristics = Drill + axis1}
+one sig Task32 extends Task {} 
+	{ prev = Task20 characteristics = Drill + axis1}
+one sig Task33 extends Task {} 
+	{ prev = Task30 characteristics = Tap + axis1}
+one sig Task34 extends Task {} 
+	{ prev = Task22 characteristics = Tap + axis1}
+one sig Task35 extends Task {} 
+	{ prev = Task23 characteristics = Tap + axis1}
+one sig Task36 extends Task {} 
+	{ prev = Task34 characteristics = Drill + axis1}
+one sig Task37 extends Task {} 
+	{ prev = Task23 characteristics = Drill + axis1}
+one sig Task38 extends Task {} 
+	{ prev = Task12 characteristics = Drill + axis1}
+one sig Task39 extends Task {} 
+	{ prev = Task14 characteristics = Drill + axis1}
+one sig Task40 extends Task {} 
+	{ prev = Task15 characteristics = Tap + axis1}
+one sig Task41 extends Task {} 
+	{ prev = Task15 characteristics = Tap + axis1}
+one sig Task42 extends Task {} 
+	{ prev = Task16 characteristics = Drill + axis1}
+one sig Task43 extends Task {} 
+	{ prev = Task17 characteristics = Drill + axis1}
+
+
+//run {}
+run {
+	#Machine = 24
+	#Stage = 4
+	#Task = 43
+	#Characteristic = 10
+} for 10 Int, 24 seq
+\end{lstlisting}
