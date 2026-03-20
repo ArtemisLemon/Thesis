@@ -6,7 +6,9 @@ To apply it to OCL we need a systematic way to model OCL expressions using gobal
 
 
 \subsection{Local Consistency}
-\ytodo{Local Consistency is around a single constraint, enforced/checked by its propagation algorithm}
+% mistral helped me again.
+% \ytodo{Local Consistency is around a single constraint, enforced/checked by its propagation algorithm}
+Local consistency in constraint programming refers to a property of constraint networks where each individual constraint, or small group of constraints, is satisfied with respect to the current domains of the involved variables. Rather than seeking a globally valid solution for the entire problem, local consistency techniques focus on eliminating values from variable domains that cannot participate in any valid solution for the constraint(s) being considered. Common forms of local consistency include node consistency (unary constraints), arc consistency (binary constraints), and path consistency (for more complex interactions). These techniques are used to prune the search space early, improving the efficiency of constraint solvers by reducing the number of possible value combinations that need to be explored. Local consistency is a foundational concept for more advanced consistency levels and is often a precursor to achieving global consistency in constraint satisfaction problems.
 
 \begin{figure}[!ht]
     \centering
@@ -18,8 +20,11 @@ In this figure we see local consistency enforced over the expressions $X<Y$ and 
 For every possible value of each domain, we can find at least one value in the other domain(s) which satisfy the constraint.
 
 \subsection{Generalized Arc Consistency and Bound Consistency}
-\ytodo{General Arc Consistency is ideal, Bound Consistency is reasonable}
-\ytodo{These generalized consistencies can be approched by combining local consistencies}
+% \ytodo{General Arc Consistency is ideal, Bound Consistency is reasonable}
+% \ytodo{These generalized consistencies can be approched by combining local consistencies}
+Generalized Arc Consistency (GAC) is a fundamental local consistency property in Constraint Programming that extends the concept of arc consistency to constraints involving more than two variables. A constraint is GAC if, for every variable in the constraint, each value in its domain can participate in at least one valid assignment of the other variables that satisfies the constraint. GAC ensures that no value is left in a variable’s domain that cannot be part of any solution involving that constraint, thus significantly reducing the search space.
+Bound Consistency (BC) is a specialized form of consistency used primarily for numerical constraints. It focuses on maintaining consistency at the bounds (minimum and maximum values) of variable domains, rather than checking every value within the domain. BC ensures that, for each constraint, the lower and upper bounds of the variables can potentially participate in a valid solution. This approach is particularly efficient for continuous or large discrete domains, as it avoids the computational overhead of checking every possible value.
+
 \begin{figure}[!ht]
     \centering
     \includegraphics[trim={0 0 0 0},width=0.5\linewidth]{Context/CP/figures/GACandBC.png}

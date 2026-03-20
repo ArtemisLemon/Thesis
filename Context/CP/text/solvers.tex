@@ -63,22 +63,24 @@ All values in each subgrid must also be different.
 Choco is the primary solver used for our implementation. 
 % It is also used by ATL$^{c}$, Grimm, and by the QVTc approach to organize $ECL^iPS_e$ prolog rules.
 Choco Solver is an open-source Java library for constraint programming. 
-It allows users to model and solve complex combinatorial problems by defining variables, domains, and constraints with language similar to a minizinc specification.
+It allows users to model and solve complex combinatorial problems by defining variables, domains, and constraints with language/patterns similar to a minizinc specification.
+Choco is also supports the FlatZinc format.
 
 Choco is among a class of solvers which provide implementations for the various global constraints.
 It is known for its rich set of global constraints, such as cumulative for scheduling, and globals for graph variables.
 Coupled with advanced search strategies, Choco a powerful tool for both research and industry, widely used in scheduling, planning, optimization, and decision-making applications.
 Additionally Choco supports the FlatZinc format, and internally employs a SAT solver for a \textit{CNF} global constraint and can interface with linear programming solvers. 
 
-% \subsection{SWI-prolog and $ECL^iPS_e$}
-% SWI-Prolog and ECLiPSe Prolog are both powerful Prolog systems, each with a distinct focus but sharing core strengths in logic and constraint programming.
-% Both provide support for many global constraints, enabling efficient modeling and solving of complex combinatorial problems.
-% At their core, they combine Prolog’s logical inference and search strategies, with constraint propagation: as constraints are posted, propagation algorithms reduce variable domains and detect inconsistencies, while Prolog’s backtracking search explores possible solutions, resulting in a hybrid approach that leverages the strengths of both paradigms.
+\subsection{SWI-prolog and $ECL^iPS_e$}
+SWI-Prolog and ECLiPSe Prolog are both powerful Prolog systems, each with a distinct focus but sharing core strengths in logic and constraint programming.
+Both provide support for many global constraints, enabling efficient modeling and solving of complex combinatorial problems.
+At their core, they combine Prolog’s logical inference and search strategies, with constraint propagation: as constraints are posted, propagation algorithms reduce variable domains and detect inconsistencies, while Prolog’s backtracking search explores possible solutions, resulting in a hybrid approach that leverages the strengths of both paradigms.
 
-% SWI-Prolog is a general-purpose, open-source Prolog environment, renowned for its extensive libraries, and active community. 
-% It integrates constraint logic programming, making it versatile for a wide range of applications—from knowledge representation and natural language processing to constraint-based problem solving.
+SWI-Prolog is a general-purpose, open-source Prolog environment, renowned for its extensive libraries, and active community. 
+It integrates constraint logic programming, making it versatile for a wide range of applications, from knowledge representation and natural language processing to constraint-based problem solving.
+% This is also our \textit{go to} for constraint logic programming, and has been helpful in testing some of our models.
 
-% ECLiPSe Prolog is specialized for constraint logic programming, offering built-in, advanced constraint solvers (like finite domain and linear constraints) out of the box. It is particularly suited for complex combinatorial problems, scheduling, and optimization, and is widely used in both research and industry for these purposes.
+ECLiPSe Prolog is specialized for constraint logic programming, offering built-in, advanced constraint solvers (like finite domain and linear constraints) out of the box. It is particularly suited for complex combinatorial problems, scheduling, and optimization, and is widely used in both research and industry for these purposes.
 
 \subsection{SAT4j and Cassowary}
 Both these solvers from fields distinct from constraint programming, namely Boolean satisfiability problems and linear programming.
