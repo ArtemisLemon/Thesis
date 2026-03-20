@@ -42,16 +42,17 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
   - [x] Model Search
   - [x] SotA
     - [x] ATLc
-    - [ ] ~~EMFtoCSP~~
+    - [x] ~~EMFtoCSP~~
     - [x] Alloy & Kodkod (OCLsolve)
     - [ ] ~~QVTc~~
     - [ ] ~~Grimm~~
     - [ ] ~~OCL\#~~
     - [ ] ~~OCLsolve~~
-  - [ ] Problem Statement
+    - [x] Viatra Solve
+  - [x] Problem Statement
 
 ## Contrib:
-- [ ] Chapter 4: Solution Outline
+- [x] Chapter 4: Solution Outline
 - [x] Chapter 5: var
   - [x] RMS Problem
   - [x] Denoting Vars
@@ -84,7 +85,7 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
     - [ ] ~~Closure our Method~~
     - [ ] ~~Closure Alloy~~
   - [ ] ~~Comparison to Alloy and EMF2CSP~~
-- [ ] Chapter 8: OCL CSP
+- [x] Chapter 8: OCL CSP
   - [x] Int and Bool OP
     - [x] 1..1 Int and Bool
       - [ ] ~~models~~
@@ -112,23 +113,23 @@ to update `./main.pdf` edit the `./main.tex` file and run `make`.
   - [x] Col Type Casting
     - [x] models
     - [x] text
-    - [ ] experimentation: Zoo
+    - [x] ~~experimentation: Zoo~~
   - [x] Ordered Col OPs
     - [x] models
     - [x] text
   - [x] Unordered Col OPs
     - [x] models
     - [x] text
+  - [x] Zoo Experimentation 
 - [ ] ~~Chapter 9: Search Strategies~~
   - [ ] ~~choosing variables~~
   - [ ] ~~choosing values considering the dummy values~~
 - [ ] ~~Chapter 10: Importing Globals into OCL~~
 - [ ] ~~Chapter 11: Comparison with Related Work~~
-- [ ] Chapter 11: Discussions
-  - [ ] Summary: Comparison with related work
-  - [ ] OOCP Benchmark suite
-  - [ ] Search Strategy
-  - [ ] Sequence/String Variables to replace encoding and global constraints
+- [ ] Chapter 11: Discussions and Future Work
+  - [ ] Summary
+  - [ ] Experimental Summary
+  - [ ] Future Work
 - [ ] Chapter 12: Conclusion
 # ![(UK flag)](https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/50px-Flag_of_the_United_Kingdom.svg.png) Thesis template for Collège Doctoral de Bretagne
 

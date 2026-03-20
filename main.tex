@@ -18,7 +18,7 @@
 \addbibresource{./biblio/biblio.bib}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% GLOBAL IMPORT SECTION
+% GLOBAL IMPORT SECTION 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{graphicx} % Required for inserting images
 \usepackage{subcaption}
@@ -35,10 +35,10 @@
 \usepackage{tcolorbox}
 \usepackage{hyperref}
 \usepackage{appendix}
-\usepackage{ulem}
+% \usepackage{ulem} 
 \usepackage{pgfplots}
 
-\usepackage{cite}
+% \usepackage{cite} 
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
 % \usepackage{graphicx}
@@ -60,7 +60,7 @@
 
 \usepackage{stmaryrd}
 \usepackage{makecell}
-\usepackage{subfigure}
+% \usepackage{subfigure} 
 
 \usepackage{url}
 
@@ -110,7 +110,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% CONTENT SECTION                                                                                         
+% CONTENT SECTION                                                                                                                                                                                                                                             
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearemptydoublepage
 \input{./Introduction/introduction}
@@ -145,12 +145,13 @@
 
 
 
-
-
+\input{./Conclusion/discussions}
 
 \clearemptydoublepage
 \backmatter
 \input{./Conclusion/conclusion}
+   
+\input{./Annex/annex}
 
 % Chapitre pour la bibliographie
 % Bibliography chapter
@@ -161,10 +162,11 @@
 % nocite: Pour citer la totalit\'{e} des r\'{e}f\'{e}rences contenues dans le fichier biblio
 % nocite: In order to cite all the references included biblio
 \nocite{*}
-\printbibliography[heading=primary,keyword=primary]
+% \printbibliography[heading=primary,keyword=primary]   
+\printbibliography  
 \newpage
-\nocite{*}
-\printbibliography[heading=secondary,keyword=secondary]
+% \nocite{*}
+% \printbibliography[heading=secondary,keyword=secondary]
 
 \clearemptydoublepage
 % Pour avoir la quatrième de couverture sur une page paire

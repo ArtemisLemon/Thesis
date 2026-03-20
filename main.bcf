@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bcf:controlfile version="3.11" bltxversion="3.20" xmlns:bcf="https://sourceforge.net/projects/biblatex">
+<bcf:controlfile version="3.11" bltxversion="3.21" xmlns:bcf="https://sourceforge.net/projects/biblatex">
   <!-- BIBER OPTIONS -->
   <bcf:options component="biber" type="global">
     <bcf:option type="singlevalued">
@@ -514,6 +514,7 @@
     <bcf:option datatype="string">alphaothers</bcf:option>
     <bcf:option datatype="string">sortalphaothers</bcf:option>
     <bcf:option datatype="string">presort</bcf:option>
+    <bcf:option datatype="string">citepagerange</bcf:option>
     <bcf:option datatype="string">texencoding</bcf:option>
     <bcf:option datatype="string">bibencoding</bcf:option>
     <bcf:option datatype="string">sortingtemplatename</bcf:option>
@@ -559,7 +560,6 @@
     <bcf:option datatype="string">datelabel</bcf:option>
     <bcf:option datatype="string">backrefstyle</bcf:option>
     <bcf:option datatype="string">arxiv</bcf:option>
-    <bcf:option datatype="string">citepages</bcf:option>
     <bcf:option datatype="boolean">familyinits</bcf:option>
     <bcf:option datatype="boolean">giveninits</bcf:option>
     <bcf:option datatype="boolean">prefixinits</bcf:option>
@@ -643,9 +643,7 @@
     <bcf:option datatype="boolean">doi</bcf:option>
     <bcf:option datatype="boolean">eprint</bcf:option>
     <bcf:option datatype="boolean">related</bcf:option>
-    <bcf:option datatype="boolean">dashed</bcf:option>
-    <bcf:option datatype="boolean">ibidpage</bcf:option>
-    <bcf:option datatype="boolean">strict</bcf:option>
+    <bcf:option datatype="boolean">subentry</bcf:option>
     <bcf:option datatype="boolean">bibtexcaseprotection</bcf:option>
     <bcf:option datatype="integer">mincrossrefs</bcf:option>
     <bcf:option datatype="integer">minxrefs</bcf:option>
@@ -727,6 +725,7 @@
     <bcf:option datatype="boolean">doi</bcf:option>
     <bcf:option datatype="boolean">eprint</bcf:option>
     <bcf:option datatype="boolean">related</bcf:option>
+    <bcf:option datatype="boolean">subentry</bcf:option>
     <bcf:option datatype="boolean">bibtexcaseprotection</bcf:option>
     <bcf:option datatype="xml">labelalphatemplate</bcf:option>
     <bcf:option datatype="xml">translit</bcf:option>
@@ -815,6 +814,7 @@
     <bcf:option datatype="boolean" backendout="1">doi</bcf:option>
     <bcf:option datatype="boolean" backendout="1">eprint</bcf:option>
     <bcf:option datatype="boolean" backendout="1">related</bcf:option>
+    <bcf:option datatype="boolean" backendout="1">subentry</bcf:option>
     <bcf:option datatype="boolean" backendout="1">bibtexcaseprotection</bcf:option>
     <bcf:option datatype="integer" backendin="maxcitenames,maxbibnames,maxsortnames">maxnames</bcf:option>
     <bcf:option datatype="integer" backendin="mincitenames,minbibnames,minsortnames">minnames</bcf:option>
@@ -2373,7 +2373,39 @@
     <bcf:datasource type="file" datatype="bibtex" glob="false">./biblio/biblio.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1" intorder="1">Pierre1901</bcf:citekey>
+    <bcf:citekey order="1" intorder="1">jouault2008atl</bcf:citekey>
+    <bcf:citekey order="1" intorder="2">Le_Calvar2019-atol</bcf:citekey>
+    <bcf:citekey order="2" intorder="1">ViatraSolver</bcf:citekey>
+    <bcf:citekey order="3" intorder="1">Gonzalez2012-emf2csp</bcf:citekey>
+    <bcf:citekey order="4" intorder="1">Jackson2002-alloy</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">uml2alloy</bcf:citekey>
+    <bcf:citekey order="6" intorder="1">Prudhomme2022-choco</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">Jackson2002-alloy</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">alloyMT</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">uml2alloy</bcf:citekey>
+    <bcf:citekey order="9" intorder="2">uml2alloy2uml</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">ferdjoukh_instantiation_2015</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">Gonzalez2012-emf2csp</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">Le_Calvar2021-solvers</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">HoeveK06</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">beldiceanu2010global</bcf:citekey>
+    <bcf:citekey order="14" intorder="2">HoeveK06</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">DBLP:conf/aaai/HentenryckC88</bcf:citekey>
+    <bcf:citekey order="15" intorder="2">van1999opl</bcf:citekey>
+    <bcf:citekey order="16" intorder="1">pesant2004regular</bcf:citekey>
+    <bcf:citekey order="17" intorder="1">beldiceanu2002sweep</bcf:citekey>
+    <bcf:citekey order="17" intorder="2">DBLP:conf/gcai/BeldiceanuCFLPP15</bcf:citekey>
+    <bcf:citekey order="18" intorder="1">beldiceanu1994chip</bcf:citekey>
+    <bcf:citekey order="18" intorder="2">DBLP:journals/informs/MercierH08</bcf:citekey>
+    <bcf:citekey order="19" intorder="1">cumulative</bcf:citekey>
+    <bcf:citekey order="20" intorder="1">Koren1999-rms</bcf:citekey>
+    <bcf:citekey order="21" intorder="1">Wang2012-srms</bcf:citekey>
+    <bcf:citekey order="22" intorder="1">Wang2012-srms</bcf:citekey>
+    <bcf:citekey order="23" intorder="1">Wang2012-srms</bcf:citekey>
+    <bcf:citekey order="24" intorder="1">Wang2012-srms</bcf:citekey>
+    <bcf:citekey order="25" intorder="1">coyle_towards_2025</bcf:citekey>
+    <bcf:citekey order="26" intorder="1">coyle_towards_2025</bcf:citekey>
+    <bcf:citekey order="27" intorder="1" nocite="1">*</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">
