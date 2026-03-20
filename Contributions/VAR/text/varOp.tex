@@ -24,13 +24,15 @@ We can add extra parameters to \texttt{var} to drive CP modeling, e.g. for bound
 \begin{itemize}
     \item \textbf{max\_card} allows a user to set the maximum number of elements in the property. Required if a property's max cardinality is set to infinite.
     \item \textbf{min\_card} allows a user to set the minimum number of elements in the property.
+    \item \textbf{complete} allows a user to preserve the values that may already be present for the collection property, and add more values.
     \item \textbf{lb} allows a user to set a lower bound for the domain of the variables encoding the property.
     \item \textbf{ub} allows a user to set an upper bound for the domain of the variables encoding the property.
+    \item \textbf{suggest} allows user to suggest a value to guide search, and guide repair using ATL$^{\text{c}}$ suggestion system.
     \item \textbf{enumerate-domain} applies an encoding which enumerates the domain, allowing for additional filtering models.
     \item \textbf{branch-priority} make the solver prefer to branch off these variables.
     \item \textbf{branch-max} make the solver prefer to try large values for these variables.
     \item \textbf{branch-min} make the solver prefer to try small values for these variables.
-    \item \textbf{fill} allows a user to preserve the values that may already be present for the property.
+    % \item \textbf{complete} allows a user to preserve the values that may already be present for the properties.
     \item \textbf{stay} guides model repair, uses ATL$^{\text{c}}$ weights for weighted CSP.
     \item \textbf{temp} guides model repair, positive temperatures allow for values to change, negative values allow for values to resist change.
 \end{itemize}
